@@ -1,0 +1,55 @@
+{
+  "name": "allan/swoole-api-stack",
+  "description": "Base de ecossistema minimalista para criação de apis",
+  "type": "boilerplate",
+  "version": "0.0.1",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "PortMaster\\": "src/",
+      "Tests\\": "tests/",
+      "App\\": "src/App/",
+      "API\\": "src/API/",
+      "Infra\\": "src/Infra/",
+      "Domain\\": "src/Domain/",
+      "Shared\\": "src/Shared/"
+    }
+  },
+  "authors": [
+    {
+      "name": "allan-rcos",
+      "email": "ricardoallancosta@hotmail.com"
+    }
+  ],
+  "require-dev": {
+    "openswoole/ide-helper": "^22.1",
+    "php-ds/php-ds": "^2.0",
+    "phpstan/phpstan": "^2.2",
+    "pestphp/pest": "^4.7",
+    "mockery/mockery": "^1.6"
+  },
+  "require": {
+    "nikic/fast-route": "^1.3",
+    "vlucas/phpdotenv": "^5.6",
+    "php-di/php-di": "^7.1",
+    "monolog/monolog": "^3.10",
+    "atlas/query": "^2.0",
+    "ext-ds": "*",
+    "ext-pdo": "*",
+    "ext-pdo_mysql": "*",
+    "ext-mbstring": "*",
+    "google/flatbuffers": "^25.12",
+    "openswoole/core": "^26.2"
+  },
+  "scripts": {
+    "phpstan": "phpstan analyse",
+    "pest": "pest",
+    "flatbuffers": "flatc --php -o $(pwd)/src/ $(pwd)/swagger/flatbuffers/schemas/*.fbs"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true,
+      "php-http/discovery": true
+    }
+  }
+}
