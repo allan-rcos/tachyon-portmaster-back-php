@@ -6,7 +6,7 @@ namespace API\Fbs\Account;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class AccountPasswordChangeRequest extends Table
 {
@@ -32,32 +32,32 @@ class AccountPasswordChangeRequest extends Table
         return $this;
     }
 
-    public function getCurrentPassword()
+    public function getCurrentPassword(): ?string
     {
         $o = $this->__offset(4);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    public function getNewPassword()
+    public function getNewPassword(): ?string
     {
         $o = $this->__offset(6);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startAccountPasswordChangeRequest(FlatBufferBuilder $builder)
+    public static function startAccountPasswordChangeRequest(FlatbufferBuilder $builder)
     {
         $builder->StartObject(2);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return AccountPasswordChangeRequest
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createAccountPasswordChangeRequest(FlatBufferBuilder $builder, $current_password, $new_password)
+    public static function createAccountPasswordChangeRequest(FlatbufferBuilder $builder, $current_password, $new_password)
     {
         $builder->startObject(2);
         self::addCurrentPassword($builder, $current_password);
@@ -69,30 +69,30 @@ class AccountPasswordChangeRequest extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addCurrentPassword(FlatBufferBuilder $builder, $currentPassword)
+    public static function addCurrentPassword(FlatbufferBuilder $builder, $currentPassword)
     {
         $builder->addOffsetX(0, $currentPassword, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addNewPassword(FlatBufferBuilder $builder, $newPassword)
+    public static function addNewPassword(FlatbufferBuilder $builder, $newPassword)
     {
         $builder->addOffsetX(1, $newPassword, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endAccountPasswordChangeRequest(FlatBufferBuilder $builder)
+    public static function endAccountPasswordChangeRequest(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         $builder->required($o, 4);  // current_password

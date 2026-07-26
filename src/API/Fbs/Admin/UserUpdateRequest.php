@@ -6,7 +6,7 @@ namespace API\Fbs\Admin;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class UserUpdateRequest extends Table
 {
@@ -32,32 +32,32 @@ class UserUpdateRequest extends Table
         return $this;
     }
 
-    public function getName()
+    public function getName(): ?string
     {
         $o = $this->__offset(4);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    public function getEmail()
+    public function getEmail(): ?string
     {
         $o = $this->__offset(6);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startUserUpdateRequest(FlatBufferBuilder $builder)
+    public static function startUserUpdateRequest(FlatbufferBuilder $builder)
     {
         $builder->StartObject(2);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return UserUpdateRequest
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createUserUpdateRequest(FlatBufferBuilder $builder, $name, $email)
+    public static function createUserUpdateRequest(FlatbufferBuilder $builder, $name, $email)
     {
         $builder->startObject(2);
         self::addName($builder, $name);
@@ -69,30 +69,30 @@ class UserUpdateRequest extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addName(FlatBufferBuilder $builder, $name)
+    public static function addName(FlatbufferBuilder $builder, $name)
     {
         $builder->addOffsetX(0, $name, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addEmail(FlatBufferBuilder $builder, $email)
+    public static function addEmail(FlatbufferBuilder $builder, $email)
     {
         $builder->addOffsetX(1, $email, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endUserUpdateRequest(FlatBufferBuilder $builder)
+    public static function endUserUpdateRequest(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         $builder->required($o, 4);  // name

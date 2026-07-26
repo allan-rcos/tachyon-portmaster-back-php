@@ -6,7 +6,7 @@ namespace API\Fbs\Common;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class ProblemDetails extends Table
 {
@@ -32,13 +32,13 @@ class ProblemDetails extends Table
         return $this;
     }
 
-    public function getType()
+    public function getType(): ?string
     {
         $o = $this->__offset(4);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    public function getTitle()
+    public function getTitle(): ?string
     {
         $o = $this->__offset(6);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
@@ -53,32 +53,32 @@ class ProblemDetails extends Table
         return $o != 0 ? $this->bb->getInt($o + $this->bb_pos) : 0;
     }
 
-    public function getDetail()
+    public function getDetail(): ?string
     {
         $o = $this->__offset(10);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    public function getInstance()
+    public function getInstance(): ?string
     {
         $o = $this->__offset(12);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startProblemDetails(FlatBufferBuilder $builder)
+    public static function startProblemDetails(FlatbufferBuilder $builder)
     {
         $builder->StartObject(5);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return ProblemDetails
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createProblemDetails(FlatBufferBuilder $builder, $type, $title, $status, $detail, $instance)
+    public static function createProblemDetails(FlatbufferBuilder $builder, $type, $title, $status, $detail, $instance)
     {
         $builder->startObject(5);
         self::addType($builder, $type);
@@ -91,60 +91,60 @@ class ProblemDetails extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addType(FlatBufferBuilder $builder, $type)
+    public static function addType(FlatbufferBuilder $builder, $type)
     {
         $builder->addOffsetX(0, $type, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addTitle(FlatBufferBuilder $builder, $title)
+    public static function addTitle(FlatbufferBuilder $builder, $title)
     {
         $builder->addOffsetX(1, $title, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param int
      * @return void
      */
-    public static function addStatus(FlatBufferBuilder $builder, $status)
+    public static function addStatus(FlatbufferBuilder $builder, $status)
     {
         $builder->addIntX(2, $status, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addDetail(FlatBufferBuilder $builder, $detail)
+    public static function addDetail(FlatbufferBuilder $builder, $detail)
     {
         $builder->addOffsetX(3, $detail, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addInstance(FlatBufferBuilder $builder, $instance)
+    public static function addInstance(FlatbufferBuilder $builder, $instance)
     {
         $builder->addOffsetX(4, $instance, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endProblemDetails(FlatBufferBuilder $builder)
+    public static function endProblemDetails(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         return $o;

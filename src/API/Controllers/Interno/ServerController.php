@@ -1,87 +1,48 @@
 <?php
 
-/**
- * Server Controller Implementation Module.
- *
- * A module containing the concrete implementation of server queries.
- *
- * @category Api\Controllers\Interno
- *
- * @since 0.0.1 File creation.
- *
- * @version 0.0.1
- *
- * @license {@link https://www.gnu.org/licenses/gpl-3.0.pt-br.html GPL-3}
- * @copyright 2026 Ricardo Állan Costa
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @filesource
- */
+declare(strict_types=1);
 
 namespace API\Controllers\Interno;
 
+use API\Config\ApiConfig;
 use API\Controllers\IServerController;
-use API\DTO\ProjectInfoDTO;
-use OpenSwoole\Http\Request;
-use OpenSwoole\Http\Response;
-use Shared\Logging\ILogger;
+use API\Fbs\Server\ProjectInfoProxy;
+use API\Http\ApiResponse;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Internal controller implementation for server-related endpoints.
+ * `GET /info` — server metadata.
  *
- * Responsible for returning structured data related strictly to the server
- * internals status and properties.
+ * The response is a {@see ProjectInfoProxy}, declared in `server.fbs` and
+ * published in swagger.json, so it is content-negotiated like every other
+ * endpoint. It previously built a `ProjectInfoDTO` and called `json_encode`
+ * by hand, which put an endpoint outside the contract entirely.
  *
- * @license {@link https://www.gnu.org/licenses/gpl-3.0.pt-br.html GPL-3}
- * @copyright 2026 Ricardo Állan Costa
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @see IServerController
- *
- * @since 0.0.1 File creation.
- *
- * @version 0.0.1
+ * The environment is read from {@see ApiConfig} rather than hard-coded, so the
+ * value actually reflects how the server was started.
  */
-class ServerController implements IServerController
+final readonly class ServerController implements IServerController
 {
+    private const string NAME = 'tachyon/portmaster';
+    private const string VERSION = '0.0.1';
+
     public function __construct(
-        private ILogger $logger
+        private ApiConfig $config,
     ) {
-        $this->logger = $this->logger->withChannel("ServerController");
     }
 
     /**
      * @inheritDoc
      */
-    public function getInfo(
-        Request $request,
-        Response $response,
-        array $vars = []
-    ): void {
-        $dto = new ProjectInfoDTO(
-            name: "allan/swoole-api-stack",
-            version: "0.0.1",
-            environment: "development",
-            runtime: "PHP ".PHP_VERSION." + OpenSwoole",
-            memory_usage_mb: round(memory_get_usage() / 1024 / 1024, 2)
-        );
-
-        $json = json_encode($dto);
-        if ($json === false) {
-            $this->logger->error(
-                "Failed to serialize project info DTO",
-                ['error' => json_last_error_msg()]
-            );
-            $response->status(500);
-            $response->end('{"error": "Internal Server Error"}');
-            return;
-        }
-
-        $this->logger->debug(
-            "Project info retrieved",
-            $dto->jsonSerialize()
-        );
-        $response->status(200);
-        $response->end($json);
+    public function getInfo(ServerRequestInterface $request): ResponseInterface
+    {
+        return ApiResponse::body(new ProjectInfoProxy(
+            name: self::NAME,
+            version: self::VERSION,
+            environment: $this->config->environment->value,
+            runtime: 'PHP '.PHP_VERSION.' + OpenSwoole',
+            memoryUsageMb: round(memory_get_usage() / 1024 / 1024, 2),
+        ));
     }
 }

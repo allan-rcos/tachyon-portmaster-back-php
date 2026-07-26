@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Infra\Database;
+
+use PDO;
+use Shared\Exceptions\Result;
+
+/**
+ * Hands a repository the connection enlisted in the caller's open boundary.
+ *
+ * The counterpart of {@see IUnitOfWork}, and separate from it on purpose: a
+ * repository needs the connection but has no business opening or closing the
+ * boundary, and a use case owns the boundary but has no business touching the
+ * connection. Each side receives exactly one of the two contracts, so neither
+ * can reach across — a repository that could `commit()` would silently truncate
+ * its caller's work.
+ *
+ * There is no `begin()` here, so the transaction must already be open:
+ * {@see getTransaction()} fails when it is not, rather than quietly starting one
+ * whose lifetime nobody owns.
+ */
+interface IPdoTransaction
+{
+    /**
+     * @return Result<PDO> Failure 500 when no boundary is open in the current
+     *                     coroutine — a caller forgot {@see IUnitOfWork::begin()}.
+     */
+    public function getTransaction(): Result;
+}

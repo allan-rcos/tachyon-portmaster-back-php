@@ -6,7 +6,7 @@ namespace API\Fbs\Auth;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class LoginResponse extends Table
 {
@@ -32,13 +32,13 @@ class LoginResponse extends Table
         return $this;
     }
 
-    public function getToken()
+    public function getToken(): ?string
     {
         $o = $this->__offset(4);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    public function getTokenType()
+    public function getTokenType(): ?string
     {
         $o = $this->__offset(6);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
@@ -48,23 +48,23 @@ class LoginResponse extends Table
     {
         $obj = new User();
         $o = $this->__offset(8);
-        return $o != 0 ? $obj->init($this->__indirect($o + $this->bb_pos), $this->bb) : 0;
+        return $o != 0 ? $obj->init($this->__indirect($o + $this->bb_pos), $this->bb) : null;
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startLoginResponse(FlatBufferBuilder $builder)
+    public static function startLoginResponse(FlatbufferBuilder $builder)
     {
         $builder->StartObject(3);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return LoginResponse
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createLoginResponse(FlatBufferBuilder $builder, $token, $token_type, $user)
+    public static function createLoginResponse(FlatbufferBuilder $builder, $token, $token_type, $user)
     {
         $builder->startObject(3);
         self::addToken($builder, $token);
@@ -75,40 +75,40 @@ class LoginResponse extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addToken(FlatBufferBuilder $builder, $token)
+    public static function addToken(FlatbufferBuilder $builder, $token)
     {
         $builder->addOffsetX(0, $token, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addTokenType(FlatBufferBuilder $builder, $tokenType)
+    public static function addTokenType(FlatbufferBuilder $builder, $tokenType)
     {
         $builder->addOffsetX(1, $tokenType, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param VectorOffset
      * @return void
      */
-    public static function addUser(FlatBufferBuilder $builder, $user)
+    public static function addUser(FlatbufferBuilder $builder, $user)
     {
         $builder->addOffsetX(2, $user, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endLoginResponse(FlatBufferBuilder $builder)
+    public static function endLoginResponse(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         return $o;

@@ -4,7 +4,7 @@ namespace Domain\Models;
 
 interface IUser
 {
-    public int $id {
+    public string $id {
         get;
     }
 
@@ -20,6 +20,7 @@ interface IUser
         get;
     }
 
+    /** @var list<IRole> */
     public array $roles {
         get;
     }

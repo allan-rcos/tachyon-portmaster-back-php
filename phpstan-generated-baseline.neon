@@ -1,0 +1,1570 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to method init\(\) on an unknown class API\\Fbs\\Admin\\RoleResponse\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleListResponse.php
+		-
+			message: '#^Call to method init\(\) on an unknown class API\\Fbs\\Admin\\RoleResponse\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserAdminResponse.php
+		-
+			message: '#^Call to method init\(\) on an unknown class API\\Fbs\\Manifest\\ContainerResponse\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/ManifestResponse.php
+		-
+			message: '#^Instantiated class API\\Fbs\\Admin\\RoleResponse not found\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleListResponse.php
+		-
+			message: '#^Instantiated class API\\Fbs\\Admin\\RoleResponse not found\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserAdminResponse.php
+		-
+			message: '#^Instantiated class API\\Fbs\\Manifest\\ContainerResponse not found\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/ManifestResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountPasswordChangeRequest\:\:addCurrentPassword\(\) has parameter \$currentPassword with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountPasswordChangeRequest.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountPasswordChangeRequest\:\:addNewPassword\(\) has parameter \$newPassword with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountPasswordChangeRequest.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountPasswordChangeRequest\:\:createAccountPasswordChangeRequest\(\) has parameter \$current_password with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountPasswordChangeRequest.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountPasswordChangeRequest\:\:createAccountPasswordChangeRequest\(\) has parameter \$new_password with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountPasswordChangeRequest.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountProfileResponse\:\:addEmail\(\) has parameter \$email with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountProfileResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountProfileResponse\:\:addId\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountProfileResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountProfileResponse\:\:addName\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountProfileResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountProfileResponse\:\:addRoles\(\) has parameter \$roles with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountProfileResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountProfileResponse\:\:createAccountProfileResponse\(\) has parameter \$email with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountProfileResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountProfileResponse\:\:createAccountProfileResponse\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountProfileResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountProfileResponse\:\:createAccountProfileResponse\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountProfileResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountProfileResponse\:\:createAccountProfileResponse\(\) has parameter \$roles with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountProfileResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountProfileResponse\:\:createRolesVector\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountProfileResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountProfileResponse\:\:getRoles\(\) has no return type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountProfileResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountProfileResponse\:\:getRoles\(\) has parameter \$j with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountProfileResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountUpdateRequest\:\:addEmail\(\) has parameter \$email with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountUpdateRequest\:\:addName\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountUpdateRequest\:\:createAccountUpdateRequest\(\) has parameter \$email with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Account\\AccountUpdateRequest\:\:createAccountUpdateRequest\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Account\\RoleResponse\:\:addId\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/RoleResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\RoleResponse\:\:addName\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/RoleResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\RoleResponse\:\:addPermissions\(\) has parameter \$permissions with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/RoleResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\RoleResponse\:\:addUserCount\(\) has parameter \$userCount with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/RoleResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\RoleResponse\:\:createPermissionsVector\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			count: 1
+			path: src/API/Fbs/Account/RoleResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\RoleResponse\:\:createRoleResponse\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/RoleResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\RoleResponse\:\:createRoleResponse\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/RoleResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\RoleResponse\:\:createRoleResponse\(\) has parameter \$permissions with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/RoleResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\RoleResponse\:\:createRoleResponse\(\) has parameter \$user_count with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/RoleResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\RoleResponse\:\:getPermissions\(\) has parameter \$j with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Account/RoleResponse.php
+		-
+			message: '#^Method API\\Fbs\\Account\\RoleResponse\:\:getPermissions\(\) should return string but returns int\|string\.$#'
+			count: 1
+			path: src/API/Fbs/Account/RoleResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RoleCreateRequest\:\:addName\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RoleCreateRequest\:\:addPermissions\(\) has parameter \$permissions with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RoleCreateRequest\:\:createPermissionsVector\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RoleCreateRequest\:\:createRoleCreateRequest\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RoleCreateRequest\:\:createRoleCreateRequest\(\) has parameter \$permissions with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RoleCreateRequest\:\:getPermissions\(\) has parameter \$j with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RoleCreateRequest\:\:getPermissions\(\) should return string but returns int\|string\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RoleListResponse\:\:addData\(\) has parameter \$data with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RoleListResponse\:\:addNextCursor\(\) has parameter \$nextCursor with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RoleListResponse\:\:addTotal\(\) has parameter \$total with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RoleListResponse\:\:createDataVector\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RoleListResponse\:\:createRoleListResponse\(\) has parameter \$data with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RoleListResponse\:\:createRoleListResponse\(\) has parameter \$next_cursor with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RoleListResponse\:\:createRoleListResponse\(\) has parameter \$total with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RoleListResponse\:\:getData\(\) has no return type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RoleListResponse\:\:getData\(\) has parameter \$j with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RolePermissionsUpdateRequest\:\:addPermissions\(\) has parameter \$permissions with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RolePermissionsUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RolePermissionsUpdateRequest\:\:createPermissionsVector\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RolePermissionsUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RolePermissionsUpdateRequest\:\:createRolePermissionsUpdateRequest\(\) has parameter \$permissions with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RolePermissionsUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RolePermissionsUpdateRequest\:\:getPermissions\(\) has parameter \$j with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RolePermissionsUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\RolePermissionsUpdateRequest\:\:getPermissions\(\) should return string but returns int\|string\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/RolePermissionsUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserAdminPasswordResetRequest\:\:addNewPassword\(\) has parameter \$newPassword with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserAdminPasswordResetRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserAdminPasswordResetRequest\:\:createUserAdminPasswordResetRequest\(\) has parameter \$new_password with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserAdminPasswordResetRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserAdminResponse\:\:addEmail\(\) has parameter \$email with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserAdminResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserAdminResponse\:\:addId\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserAdminResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserAdminResponse\:\:addName\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserAdminResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserAdminResponse\:\:addRoles\(\) has parameter \$roles with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserAdminResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserAdminResponse\:\:createRolesVector\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserAdminResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserAdminResponse\:\:createUserAdminResponse\(\) has parameter \$email with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserAdminResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserAdminResponse\:\:createUserAdminResponse\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserAdminResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserAdminResponse\:\:createUserAdminResponse\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserAdminResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserAdminResponse\:\:createUserAdminResponse\(\) has parameter \$roles with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserAdminResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserAdminResponse\:\:getRoles\(\) has no return type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserAdminResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserAdminResponse\:\:getRoles\(\) has parameter \$j with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserAdminResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserCreateRequest\:\:addEmail\(\) has parameter \$email with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserCreateRequest\:\:addInitialPassword\(\) has parameter \$initialPassword with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserCreateRequest\:\:addName\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserCreateRequest\:\:addRoleIds\(\) has parameter \$roleIds with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserCreateRequest\:\:createRoleIdsVector\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserCreateRequest\:\:createUserCreateRequest\(\) has parameter \$email with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserCreateRequest\:\:createUserCreateRequest\(\) has parameter \$initial_password with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserCreateRequest\:\:createUserCreateRequest\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserCreateRequest\:\:createUserCreateRequest\(\) has parameter \$role_ids with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserCreateRequest\:\:getRoleIds\(\) has parameter \$j with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserCreateRequest\:\:getRoleIds\(\) should return string but returns int\|string\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserListResponse\:\:addData\(\) has parameter \$data with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserListResponse\:\:createDataVector\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserListResponse\:\:createUserListResponse\(\) has parameter \$data with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserListResponse\:\:getData\(\) has no return type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserListResponse\:\:getData\(\) has parameter \$j with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserUpdateRequest\:\:addEmail\(\) has parameter \$email with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserUpdateRequest\:\:addName\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserUpdateRequest\:\:createUserUpdateRequest\(\) has parameter \$email with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserUpdateRequest\:\:createUserUpdateRequest\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\LoginRequest\:\:addEmail\(\) has parameter \$email with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/LoginRequest.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\LoginRequest\:\:addPassword\(\) has parameter \$password with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/LoginRequest.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\LoginRequest\:\:createLoginRequest\(\) has parameter \$email with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/LoginRequest.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\LoginRequest\:\:createLoginRequest\(\) has parameter \$password with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/LoginRequest.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\LoginResponse\:\:addToken\(\) has parameter \$token with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/LoginResponse.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\LoginResponse\:\:addTokenType\(\) has parameter \$tokenType with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/LoginResponse.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\LoginResponse\:\:addUser\(\) has parameter \$user with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/LoginResponse.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\LoginResponse\:\:createLoginResponse\(\) has parameter \$token with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/LoginResponse.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\LoginResponse\:\:createLoginResponse\(\) has parameter \$token_type with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/LoginResponse.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\LoginResponse\:\:createLoginResponse\(\) has parameter \$user with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/LoginResponse.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\LoginResponse\:\:getUser\(\) has no return type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/LoginResponse.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\SetupRequest\:\:addEmail\(\) has parameter \$email with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/SetupRequest.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\SetupRequest\:\:addName\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/SetupRequest.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\SetupRequest\:\:addPassword\(\) has parameter \$password with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/SetupRequest.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\SetupRequest\:\:createSetupRequest\(\) has parameter \$email with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/SetupRequest.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\SetupRequest\:\:createSetupRequest\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/SetupRequest.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\SetupRequest\:\:createSetupRequest\(\) has parameter \$password with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/SetupRequest.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\User\:\:addEmail\(\) has parameter \$email with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/User.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\User\:\:addId\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/User.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\User\:\:addName\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/User.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\User\:\:createUser\(\) has parameter \$email with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/User.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\User\:\:createUser\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/User.php
+		-
+			message: '#^Method API\\Fbs\\Auth\\User\:\:createUser\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/User.php
+		-
+			message: '#^Method API\\Fbs\\Common\\ContainerStatus\:\:Name\(\) has no return type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/ContainerStatus.php
+		-
+			message: '#^Method API\\Fbs\\Common\\ContainerStatus\:\:Name\(\) has parameter \$e with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/ContainerStatus.php
+		-
+			message: '#^Method API\\Fbs\\Common\\ProblemDetails\:\:addDetail\(\) has parameter \$detail with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/ProblemDetails.php
+		-
+			message: '#^Method API\\Fbs\\Common\\ProblemDetails\:\:addInstance\(\) has parameter \$instance with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/ProblemDetails.php
+		-
+			message: '#^Method API\\Fbs\\Common\\ProblemDetails\:\:addStatus\(\) has parameter \$status with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/ProblemDetails.php
+		-
+			message: '#^Method API\\Fbs\\Common\\ProblemDetails\:\:addTitle\(\) has parameter \$title with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/ProblemDetails.php
+		-
+			message: '#^Method API\\Fbs\\Common\\ProblemDetails\:\:addType\(\) has parameter \$type with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/ProblemDetails.php
+		-
+			message: '#^Method API\\Fbs\\Common\\ProblemDetails\:\:createProblemDetails\(\) has parameter \$detail with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/ProblemDetails.php
+		-
+			message: '#^Method API\\Fbs\\Common\\ProblemDetails\:\:createProblemDetails\(\) has parameter \$instance with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/ProblemDetails.php
+		-
+			message: '#^Method API\\Fbs\\Common\\ProblemDetails\:\:createProblemDetails\(\) has parameter \$status with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/ProblemDetails.php
+		-
+			message: '#^Method API\\Fbs\\Common\\ProblemDetails\:\:createProblemDetails\(\) has parameter \$title with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/ProblemDetails.php
+		-
+			message: '#^Method API\\Fbs\\Common\\ProblemDetails\:\:createProblemDetails\(\) has parameter \$type with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/ProblemDetails.php
+		-
+			message: '#^Method API\\Fbs\\Common\\RiskClass\:\:Name\(\) has no return type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/RiskClass.php
+		-
+			message: '#^Method API\\Fbs\\Common\\RiskClass\:\:Name\(\) has parameter \$e with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/RiskClass.php
+		-
+			message: '#^Method API\\Fbs\\Container\\CargoManifestItem\:\:addProductId\(\) has parameter \$productId with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/CargoManifestItem.php
+		-
+			message: '#^Method API\\Fbs\\Container\\CargoManifestItem\:\:addProductName\(\) has parameter \$productName with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/CargoManifestItem.php
+		-
+			message: '#^Method API\\Fbs\\Container\\CargoManifestItem\:\:addQuantity\(\) has parameter \$quantity with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/CargoManifestItem.php
+		-
+			message: '#^Method API\\Fbs\\Container\\CargoManifestItem\:\:addWeight\(\) has parameter \$weight with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/CargoManifestItem.php
+		-
+			message: '#^Method API\\Fbs\\Container\\CargoManifestItem\:\:createCargoManifestItem\(\) has parameter \$product_id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/CargoManifestItem.php
+		-
+			message: '#^Method API\\Fbs\\Container\\CargoManifestItem\:\:createCargoManifestItem\(\) has parameter \$product_name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/CargoManifestItem.php
+		-
+			message: '#^Method API\\Fbs\\Container\\CargoManifestItem\:\:createCargoManifestItem\(\) has parameter \$quantity with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/CargoManifestItem.php
+		-
+			message: '#^Method API\\Fbs\\Container\\CargoManifestItem\:\:createCargoManifestItem\(\) has parameter \$weight with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/CargoManifestItem.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerCreateRequest\:\:addCode\(\) has parameter \$code with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerCreateRequest\:\:addMaxCapacity\(\) has parameter \$maxCapacity with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerCreateRequest\:\:createContainerCreateRequest\(\) has parameter \$code with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerCreateRequest\:\:createContainerCreateRequest\(\) has parameter \$max_capacity with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerListResponse\:\:addData\(\) has parameter \$data with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerListResponse\:\:addNextCursor\(\) has parameter \$nextCursor with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerListResponse\:\:addTotal\(\) has parameter \$total with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerListResponse\:\:createContainerListResponse\(\) has parameter \$data with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerListResponse\:\:createContainerListResponse\(\) has parameter \$next_cursor with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerListResponse\:\:createContainerListResponse\(\) has parameter \$total with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerListResponse\:\:createDataVector\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerListResponse\:\:getData\(\) has no return type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerListResponse\:\:getData\(\) has parameter \$j with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerResponse\:\:addCode\(\) has parameter \$code with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerResponse\:\:addCurrentWeight\(\) has parameter \$currentWeight with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerResponse\:\:addId\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerResponse\:\:addMaxCapacity\(\) has parameter \$maxCapacity with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerResponse\:\:addStatus\(\) has parameter \$status with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerResponse\:\:createContainerResponse\(\) has parameter \$code with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerResponse\:\:createContainerResponse\(\) has parameter \$current_weight with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerResponse\:\:createContainerResponse\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerResponse\:\:createContainerResponse\(\) has parameter \$max_capacity with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerResponse\:\:createContainerResponse\(\) has parameter \$status with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerResponse\:\:getStatus\(\) should return int but returns mixed\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryListResponse\:\:addData\(\) has parameter \$data with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryListResponse\:\:addNextCursor\(\) has parameter \$nextCursor with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryListResponse\:\:addTotal\(\) has parameter \$total with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryListResponse\:\:createContainerSummaryListResponse\(\) has parameter \$data with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryListResponse\:\:createContainerSummaryListResponse\(\) has parameter \$next_cursor with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryListResponse\:\:createContainerSummaryListResponse\(\) has parameter \$total with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryListResponse\:\:createDataVector\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryListResponse\:\:getData\(\) has no return type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryListResponse\:\:getData\(\) has parameter \$j with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryResponse\:\:addContainer\(\) has parameter \$container with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryResponse\:\:addManifest\(\) has parameter \$manifest with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryResponse\:\:addRecentLogs\(\) has parameter \$recentLogs with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryResponse\:\:createContainerSummaryResponse\(\) has parameter \$container with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryResponse\:\:createContainerSummaryResponse\(\) has parameter \$manifest with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryResponse\:\:createContainerSummaryResponse\(\) has parameter \$recent_logs with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryResponse\:\:createManifestVector\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryResponse\:\:createRecentLogsVector\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryResponse\:\:getContainer\(\) has no return type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryResponse\:\:getManifest\(\) has no return type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryResponse\:\:getManifest\(\) has parameter \$j with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryResponse\:\:getRecentLogs\(\) has no return type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerSummaryResponse\:\:getRecentLogs\(\) has parameter \$j with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryResponse.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerUpdateRequest\:\:addMaxCapacity\(\) has parameter \$maxCapacity with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Container\\ContainerUpdateRequest\:\:createContainerUpdateRequest\(\) has parameter \$max_capacity with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Container\\TelemetryLogItem\:\:addDescription\(\) has parameter \$description with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/TelemetryLogItem.php
+		-
+			message: '#^Method API\\Fbs\\Container\\TelemetryLogItem\:\:addEvent\(\) has parameter \$event with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/TelemetryLogItem.php
+		-
+			message: '#^Method API\\Fbs\\Container\\TelemetryLogItem\:\:addId\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/TelemetryLogItem.php
+		-
+			message: '#^Method API\\Fbs\\Container\\TelemetryLogItem\:\:addTimestamp\(\) has parameter \$timestamp with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/TelemetryLogItem.php
+		-
+			message: '#^Method API\\Fbs\\Container\\TelemetryLogItem\:\:createTelemetryLogItem\(\) has parameter \$description with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/TelemetryLogItem.php
+		-
+			message: '#^Method API\\Fbs\\Container\\TelemetryLogItem\:\:createTelemetryLogItem\(\) has parameter \$event with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/TelemetryLogItem.php
+		-
+			message: '#^Method API\\Fbs\\Container\\TelemetryLogItem\:\:createTelemetryLogItem\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/TelemetryLogItem.php
+		-
+			message: '#^Method API\\Fbs\\Container\\TelemetryLogItem\:\:createTelemetryLogItem\(\) has parameter \$timestamp with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Container/TelemetryLogItem.php
+		-
+			message: '#^Method API\\Fbs\\Manifest\\LoadItemRequest\:\:addContainerId\(\) has parameter \$containerId with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/LoadItemRequest.php
+		-
+			message: '#^Method API\\Fbs\\Manifest\\LoadItemRequest\:\:addProductId\(\) has parameter \$productId with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/LoadItemRequest.php
+		-
+			message: '#^Method API\\Fbs\\Manifest\\LoadItemRequest\:\:addQuantity\(\) has parameter \$quantity with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/LoadItemRequest.php
+		-
+			message: '#^Method API\\Fbs\\Manifest\\LoadItemRequest\:\:createLoadItemRequest\(\) has parameter \$container_id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/LoadItemRequest.php
+		-
+			message: '#^Method API\\Fbs\\Manifest\\LoadItemRequest\:\:createLoadItemRequest\(\) has parameter \$product_id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/LoadItemRequest.php
+		-
+			message: '#^Method API\\Fbs\\Manifest\\LoadItemRequest\:\:createLoadItemRequest\(\) has parameter \$quantity with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/LoadItemRequest.php
+		-
+			message: '#^Method API\\Fbs\\Manifest\\ManifestResponse\:\:addContainer\(\) has parameter \$container with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/ManifestResponse.php
+		-
+			message: '#^Method API\\Fbs\\Manifest\\ManifestResponse\:\:addMessage\(\) has parameter \$message with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/ManifestResponse.php
+		-
+			message: '#^Method API\\Fbs\\Manifest\\ManifestResponse\:\:createManifestResponse\(\) has parameter \$container with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/ManifestResponse.php
+		-
+			message: '#^Method API\\Fbs\\Manifest\\ManifestResponse\:\:createManifestResponse\(\) has parameter \$message with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/ManifestResponse.php
+		-
+			message: '#^Method API\\Fbs\\Manifest\\ManifestResponse\:\:getContainer\(\) has no return type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/ManifestResponse.php
+		-
+			message: '#^Method API\\Fbs\\Manifest\\UnloadItemRequest\:\:addContainerId\(\) has parameter \$containerId with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/UnloadItemRequest.php
+		-
+			message: '#^Method API\\Fbs\\Manifest\\UnloadItemRequest\:\:addProductId\(\) has parameter \$productId with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/UnloadItemRequest.php
+		-
+			message: '#^Method API\\Fbs\\Manifest\\UnloadItemRequest\:\:addQuantity\(\) has parameter \$quantity with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/UnloadItemRequest.php
+		-
+			message: '#^Method API\\Fbs\\Manifest\\UnloadItemRequest\:\:createUnloadItemRequest\(\) has parameter \$container_id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/UnloadItemRequest.php
+		-
+			message: '#^Method API\\Fbs\\Manifest\\UnloadItemRequest\:\:createUnloadItemRequest\(\) has parameter \$product_id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/UnloadItemRequest.php
+		-
+			message: '#^Method API\\Fbs\\Manifest\\UnloadItemRequest\:\:createUnloadItemRequest\(\) has parameter \$quantity with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Manifest/UnloadItemRequest.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\MetricsResponse\:\:addActiveContainers\(\) has parameter \$activeContainers with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/MetricsResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\MetricsResponse\:\:addOccupancyDivision\(\) has parameter \$occupancyDivision with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/MetricsResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\MetricsResponse\:\:addRegisteredProducts\(\) has parameter \$registeredProducts with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/MetricsResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\MetricsResponse\:\:addTotalContainers\(\) has parameter \$totalContainers with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/MetricsResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\MetricsResponse\:\:addYardLoad\(\) has parameter \$yardLoad with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/MetricsResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\MetricsResponse\:\:createMetricsResponse\(\) has parameter \$active_containers with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/MetricsResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\MetricsResponse\:\:createMetricsResponse\(\) has parameter \$occupancy_division with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/MetricsResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\MetricsResponse\:\:createMetricsResponse\(\) has parameter \$registered_products with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/MetricsResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\MetricsResponse\:\:createMetricsResponse\(\) has parameter \$total_containers with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/MetricsResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\MetricsResponse\:\:createMetricsResponse\(\) has parameter \$yard_load with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/MetricsResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\MetricsResponse\:\:getOccupancyDivision\(\) has no return type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/MetricsResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\OccupancyDivision\:\:addEmpty\(\) has parameter \$empty with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/OccupancyDivision.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\OccupancyDivision\:\:addInTransit\(\) has parameter \$inTransit with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/OccupancyDivision.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\OccupancyDivision\:\:addLoading\(\) has parameter \$loading with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/OccupancyDivision.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\OccupancyDivision\:\:addSealed\(\) has parameter \$sealed with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/OccupancyDivision.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\OccupancyDivision\:\:createOccupancyDivision\(\) has parameter \$empty with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/OccupancyDivision.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\OccupancyDivision\:\:createOccupancyDivision\(\) has parameter \$in_transit with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/OccupancyDivision.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\OccupancyDivision\:\:createOccupancyDivision\(\) has parameter \$loading with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/OccupancyDivision.php
+		-
+			message: '#^Method API\\Fbs\\Metrics\\OccupancyDivision\:\:createOccupancyDivision\(\) has parameter \$sealed with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/OccupancyDivision.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductCreateRequest\:\:addDensity\(\) has parameter \$density with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductCreateRequest\:\:addName\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductCreateRequest\:\:addRiskClass\(\) has parameter \$riskClass with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductCreateRequest\:\:createProductCreateRequest\(\) has parameter \$density with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductCreateRequest\:\:createProductCreateRequest\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductCreateRequest\:\:createProductCreateRequest\(\) has parameter \$risk_class with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductCreateRequest\:\:getRiskClass\(\) should return int but returns mixed\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductCreateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductListResponse\:\:addData\(\) has parameter \$data with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductListResponse\:\:addNextCursor\(\) has parameter \$nextCursor with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductListResponse\:\:addTotal\(\) has parameter \$total with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductListResponse\:\:createDataVector\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductListResponse\:\:createProductListResponse\(\) has parameter \$data with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductListResponse\:\:createProductListResponse\(\) has parameter \$next_cursor with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductListResponse\:\:createProductListResponse\(\) has parameter \$total with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductListResponse\:\:getData\(\) has no return type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductListResponse\:\:getData\(\) has parameter \$j with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductResponse\:\:addDensity\(\) has parameter \$density with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductResponse.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductResponse\:\:addId\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductResponse.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductResponse\:\:addName\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductResponse.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductResponse\:\:addRiskClass\(\) has parameter \$riskClass with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductResponse.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductResponse\:\:createProductResponse\(\) has parameter \$density with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductResponse.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductResponse\:\:createProductResponse\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductResponse.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductResponse\:\:createProductResponse\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductResponse.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductResponse\:\:createProductResponse\(\) has parameter \$risk_class with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductResponse.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductResponse\:\:getRiskClass\(\) should return int but returns mixed\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductResponse.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductUpdateRequest\:\:addDensity\(\) has parameter \$density with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductUpdateRequest\:\:addName\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductUpdateRequest\:\:addRiskClass\(\) has parameter \$riskClass with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductUpdateRequest\:\:createProductUpdateRequest\(\) has parameter \$density with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductUpdateRequest\:\:createProductUpdateRequest\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductUpdateRequest\:\:createProductUpdateRequest\(\) has parameter \$risk_class with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Product\\ProductUpdateRequest\:\:getRiskClass\(\) should return int but returns mixed\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Server\\ProjectInfo\:\:addEnvironment\(\) has parameter \$environment with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Server/ProjectInfo.php
+		-
+			message: '#^Method API\\Fbs\\Server\\ProjectInfo\:\:addMemoryUsageMb\(\) has parameter \$memoryUsageMb with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Server/ProjectInfo.php
+		-
+			message: '#^Method API\\Fbs\\Server\\ProjectInfo\:\:addName\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Server/ProjectInfo.php
+		-
+			message: '#^Method API\\Fbs\\Server\\ProjectInfo\:\:addRuntime\(\) has parameter \$runtime with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Server/ProjectInfo.php
+		-
+			message: '#^Method API\\Fbs\\Server\\ProjectInfo\:\:addVersion\(\) has parameter \$version with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Server/ProjectInfo.php
+		-
+			message: '#^Method API\\Fbs\\Server\\ProjectInfo\:\:createProjectInfo\(\) has parameter \$environment with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Server/ProjectInfo.php
+		-
+			message: '#^Method API\\Fbs\\Server\\ProjectInfo\:\:createProjectInfo\(\) has parameter \$memory_usage_mb with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Server/ProjectInfo.php
+		-
+			message: '#^Method API\\Fbs\\Server\\ProjectInfo\:\:createProjectInfo\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Server/ProjectInfo.php
+		-
+			message: '#^Method API\\Fbs\\Server\\ProjectInfo\:\:createProjectInfo\(\) has parameter \$runtime with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Server/ProjectInfo.php
+		-
+			message: '#^Method API\\Fbs\\Server\\ProjectInfo\:\:createProjectInfo\(\) has parameter \$version with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Server/ProjectInfo.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenRole\:\:addId\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenRole.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenRole\:\:addName\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenRole.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenRole\:\:addPermissions\(\) has parameter \$permissions with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenRole.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenRole\:\:createPermissionsVector\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenRole.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenRole\:\:createTokenRole\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenRole.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenRole\:\:createTokenRole\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenRole.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenRole\:\:createTokenRole\(\) has parameter \$permissions with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenRole.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenRole\:\:getPermissions\(\) has parameter \$j with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenRole.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenRole\:\:getPermissions\(\) should return string but returns int\|string\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenRole.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenUser\:\:addEmail\(\) has parameter \$email with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenUser.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenUser\:\:addId\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenUser.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenUser\:\:addName\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenUser.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenUser\:\:addRoles\(\) has parameter \$roles with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenUser.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenUser\:\:createRolesVector\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenUser.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenUser\:\:createTokenUser\(\) has parameter \$email with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenUser.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenUser\:\:createTokenUser\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenUser.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenUser\:\:createTokenUser\(\) has parameter \$name with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenUser.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenUser\:\:createTokenUser\(\) has parameter \$roles with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenUser.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenUser\:\:getRoles\(\) has no return type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenUser.php
+		-
+			message: '#^Method API\\Fbs\\Token\\TokenUser\:\:getRoles\(\) has parameter \$j with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenUser.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 2
+			path: src/API/Fbs/Account/AccountPasswordChangeRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 3
+			path: src/API/Fbs/Account/AccountProfileResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 2
+			path: src/API/Fbs/Account/AccountUpdateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 2
+			path: src/API/Fbs/Account/RoleResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleCreateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserAdminPasswordResetRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 3
+			path: src/API/Fbs/Admin/UserAdminResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 3
+			path: src/API/Fbs/Admin/UserCreateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 2
+			path: src/API/Fbs/Admin/UserUpdateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 2
+			path: src/API/Fbs/Auth/LoginRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 2
+			path: src/API/Fbs/Auth/LoginResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 3
+			path: src/API/Fbs/Auth/SetupRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 3
+			path: src/API/Fbs/Auth/User.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 4
+			path: src/API/Fbs/Common/ProblemDetails.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 2
+			path: src/API/Fbs/Container/CargoManifestItem.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerCreateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 2
+			path: src/API/Fbs/Container/ContainerResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 4
+			path: src/API/Fbs/Container/TelemetryLogItem.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 2
+			path: src/API/Fbs/Manifest/LoadItemRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Manifest/ManifestResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 2
+			path: src/API/Fbs/Manifest/UnloadItemRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductCreateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 2
+			path: src/API/Fbs/Product/ProductResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductUpdateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 4
+			path: src/API/Fbs/Server/ProjectInfo.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 2
+			path: src/API/Fbs/Token/TokenRole.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 3
+			path: src/API/Fbs/Token/TokenUser.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountProfileResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Account/RoleResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleCreateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Admin/RolePermissionsUpdateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserAdminResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserCreateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Auth/LoginResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 3
+			path: src/API/Fbs/Container/ContainerSummaryResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Manifest/ManifestResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Metrics/MetricsResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenRole.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenUser.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountProfileResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Account/RoleResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleCreateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Admin/RolePermissionsUpdateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserAdminResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserCreateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
+			count: 2
+			path: src/API/Fbs/Container/ContainerSummaryResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenRole.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenUser.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(byte\)\: Unexpected token "\\n     \* ", expected variable at offset 63 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(byte\)\: Unexpected token "\\n     \* ", expected variable at offset 63 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductCreateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(byte\)\: Unexpected token "\\n     \* ", expected variable at offset 63 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(byte\)\: Unexpected token "\\n     \* ", expected variable at offset 63 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductUpdateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(double\)\: Unexpected token "\\n     \* ", expected variable at offset 65 on line 3$#'
+			count: 2
+			path: src/API/Fbs/Container/CargoManifestItem.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(double\)\: Unexpected token "\\n     \* ", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerCreateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(double\)\: Unexpected token "\\n     \* ", expected variable at offset 65 on line 3$#'
+			count: 2
+			path: src/API/Fbs/Container/ContainerResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(double\)\: Unexpected token "\\n     \* ", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerUpdateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(double\)\: Unexpected token "\\n     \* ", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Manifest/LoadItemRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(double\)\: Unexpected token "\\n     \* ", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Manifest/UnloadItemRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(double\)\: Unexpected token "\\n     \* ", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Metrics/MetricsResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(double\)\: Unexpected token "\\n     \* ", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductCreateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(double\)\: Unexpected token "\\n     \* ", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(double\)\: Unexpected token "\\n     \* ", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductUpdateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(double\)\: Unexpected token "\\n     \* ", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Server/ProjectInfo.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(int offset\)\: Unexpected token "offset", expected variable at offset 22 on line 2$#'
+			count: 1
+			path: src/API/Fbs/Account/RoleResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(int offset\)\: Unexpected token "offset", expected variable at offset 22 on line 2$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleCreateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(int offset\)\: Unexpected token "offset", expected variable at offset 22 on line 2$#'
+			count: 1
+			path: src/API/Fbs/Admin/RolePermissionsUpdateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(int offset\)\: Unexpected token "offset", expected variable at offset 22 on line 2$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserCreateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(int offset\)\: Unexpected token "offset", expected variable at offset 22 on line 2$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenRole.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(int\)\: Unexpected token "\\n     \* ", expected variable at offset 62 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Account/RoleResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(int\)\: Unexpected token "\\n     \* ", expected variable at offset 62 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Admin/RoleListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(int\)\: Unexpected token "\\n     \* ", expected variable at offset 62 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Common/ProblemDetails.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(int\)\: Unexpected token "\\n     \* ", expected variable at offset 62 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(int\)\: Unexpected token "\\n     \* ", expected variable at offset 62 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(int\)\: Unexpected token "\\n     \* ", expected variable at offset 62 on line 3$#'
+			count: 3
+			path: src/API/Fbs/Metrics/MetricsResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(int\)\: Unexpected token "\\n     \* ", expected variable at offset 62 on line 3$#'
+			count: 4
+			path: src/API/Fbs/Metrics/OccupancyDivision.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(int\)\: Unexpected token "\\n     \* ", expected variable at offset 62 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductListResponse.php
+		-
+			message: '#^Parameter \#1 \$_i of method API\\Fbs\\Account\\RoleResponse\:\:init\(\) expects int, mixed given\.$#'
+			count: 1
+			path: src/API/Fbs/Account/AccountProfileResponse.php
+		-
+			message: '#^Parameter \#1 \$_i of method API\\Fbs\\Admin\\UserAdminResponse\:\:init\(\) expects int, mixed given\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserListResponse.php
+		-
+			message: '#^Parameter \#1 \$_i of method API\\Fbs\\Auth\\User\:\:init\(\) expects int, mixed given\.$#'
+			count: 1
+			path: src/API/Fbs/Auth/LoginResponse.php
+		-
+			message: '#^Parameter \#1 \$_i of method API\\Fbs\\Container\\CargoManifestItem\:\:init\(\) expects int, mixed given\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryResponse.php
+		-
+			message: '#^Parameter \#1 \$_i of method API\\Fbs\\Container\\ContainerResponse\:\:init\(\) expects int, mixed given\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerListResponse.php
+		-
+			message: '#^Parameter \#1 \$_i of method API\\Fbs\\Container\\ContainerResponse\:\:init\(\) expects int, mixed given\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryResponse.php
+		-
+			message: '#^Parameter \#1 \$_i of method API\\Fbs\\Container\\ContainerSummaryResponse\:\:init\(\) expects int, mixed given\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryListResponse.php
+		-
+			message: '#^Parameter \#1 \$_i of method API\\Fbs\\Container\\TelemetryLogItem\:\:init\(\) expects int, mixed given\.$#'
+			count: 1
+			path: src/API/Fbs/Container/ContainerSummaryResponse.php
+		-
+			message: '#^Parameter \#1 \$_i of method API\\Fbs\\Metrics\\OccupancyDivision\:\:init\(\) expects int, mixed given\.$#'
+			count: 1
+			path: src/API/Fbs/Metrics/MetricsResponse.php
+		-
+			message: '#^Parameter \#1 \$_i of method API\\Fbs\\Product\\ProductResponse\:\:init\(\) expects int, mixed given\.$#'
+			count: 1
+			path: src/API/Fbs/Product/ProductListResponse.php
+		-
+			message: '#^Parameter \#1 \$_i of method API\\Fbs\\Token\\TokenRole\:\:init\(\) expects int, mixed given\.$#'
+			count: 1
+			path: src/API/Fbs/Token/TokenUser.php
+		-
+			message: '#^Property API\\Fbs\\Common\\ContainerStatus\:\:\$names has no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/ContainerStatus.php
+		-
+			message: '#^Property API\\Fbs\\Common\\RiskClass\:\:\$names has no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/RiskClass.php

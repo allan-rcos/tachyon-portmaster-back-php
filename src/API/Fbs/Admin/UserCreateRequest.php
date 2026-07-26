@@ -6,7 +6,7 @@ namespace API\Fbs\Admin;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class UserCreateRequest extends Table
 {
@@ -32,19 +32,19 @@ class UserCreateRequest extends Table
         return $this;
     }
 
-    public function getName()
+    public function getName(): ?string
     {
         $o = $this->__offset(4);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    public function getEmail()
+    public function getEmail(): ?string
     {
         $o = $this->__offset(6);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    public function getInitialPassword()
+    public function getInitialPassword(): ?string
     {
         $o = $this->__offset(8);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
@@ -52,12 +52,12 @@ class UserCreateRequest extends Table
 
     /**
      * @param int offset
-     * @return int
+     * @return string
      */
     public function getRoleIds($j)
     {
         $o = $this->__offset(10);
-        return $o != 0 ? $this->bb->getInt($this->__vector($o) + $j * 4) : 0;
+        return $o != 0 ? $this->__string($this->__vector($o) + $j * 4) : 0;
     }
 
     /**
@@ -70,19 +70,19 @@ class UserCreateRequest extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startUserCreateRequest(FlatBufferBuilder $builder)
+    public static function startUserCreateRequest(FlatbufferBuilder $builder)
     {
         $builder->StartObject(4);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return UserCreateRequest
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createUserCreateRequest(FlatBufferBuilder $builder, $name, $email, $initial_password, $role_ids)
+    public static function createUserCreateRequest(FlatbufferBuilder $builder, $name, $email, $initial_password, $role_ids)
     {
         $builder->startObject(4);
         self::addName($builder, $name);
@@ -97,74 +97,74 @@ class UserCreateRequest extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addName(FlatBufferBuilder $builder, $name)
+    public static function addName(FlatbufferBuilder $builder, $name)
     {
         $builder->addOffsetX(0, $name, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addEmail(FlatBufferBuilder $builder, $email)
+    public static function addEmail(FlatbufferBuilder $builder, $email)
     {
         $builder->addOffsetX(1, $email, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addInitialPassword(FlatBufferBuilder $builder, $initialPassword)
+    public static function addInitialPassword(FlatbufferBuilder $builder, $initialPassword)
     {
         $builder->addOffsetX(2, $initialPassword, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param VectorOffset
      * @return void
      */
-    public static function addRoleIds(FlatBufferBuilder $builder, $roleIds)
+    public static function addRoleIds(FlatbufferBuilder $builder, $roleIds)
     {
         $builder->addOffsetX(3, $roleIds, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param array offset array
      * @return int vector offset
      */
-    public static function createRoleIdsVector(FlatBufferBuilder $builder, array $data)
+    public static function createRoleIdsVector(FlatbufferBuilder $builder, array $data)
     {
         $builder->startVector(4, count($data), 4);
         for ($i = count($data) - 1; $i >= 0; $i--) {
-            $builder->putInt($data[$i]);
+            $builder->putOffset($data[$i]);
         }
         return $builder->endVector();
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param int $numElems
      * @return void
      */
-    public static function startRoleIdsVector(FlatBufferBuilder $builder, $numElems)
+    public static function startRoleIdsVector(FlatbufferBuilder $builder, $numElems)
     {
         $builder->startVector(4, $numElems, 4);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endUserCreateRequest(FlatBufferBuilder $builder)
+    public static function endUserCreateRequest(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         $builder->required($o, 4);  // name

@@ -447,7 +447,11 @@ composer.phar
 
 # Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
 # You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
-composer.lock
+#
+# This is an application, not a library: the Dockerfile copies composer.lock and
+# installs from it, so ignoring it would break the build from a clean clone —
+# and `composer audit --locked` would have nothing to check.
+!composer.lock
 
 ##### PHP CodeSniffer
 # gitignore for the PHP Codesniffer framework

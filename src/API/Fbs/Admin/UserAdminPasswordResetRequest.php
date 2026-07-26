@@ -6,7 +6,7 @@ namespace API\Fbs\Admin;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class UserAdminPasswordResetRequest extends Table
 {
@@ -32,26 +32,26 @@ class UserAdminPasswordResetRequest extends Table
         return $this;
     }
 
-    public function getNewPassword()
+    public function getNewPassword(): ?string
     {
         $o = $this->__offset(4);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startUserAdminPasswordResetRequest(FlatBufferBuilder $builder)
+    public static function startUserAdminPasswordResetRequest(FlatbufferBuilder $builder)
     {
         $builder->StartObject(1);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return UserAdminPasswordResetRequest
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createUserAdminPasswordResetRequest(FlatBufferBuilder $builder, $new_password)
+    public static function createUserAdminPasswordResetRequest(FlatbufferBuilder $builder, $new_password)
     {
         $builder->startObject(1);
         self::addNewPassword($builder, $new_password);
@@ -61,20 +61,20 @@ class UserAdminPasswordResetRequest extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addNewPassword(FlatBufferBuilder $builder, $newPassword)
+    public static function addNewPassword(FlatbufferBuilder $builder, $newPassword)
     {
         $builder->addOffsetX(0, $newPassword, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endUserAdminPasswordResetRequest(FlatBufferBuilder $builder)
+    public static function endUserAdminPasswordResetRequest(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         $builder->required($o, 4);  // new_password

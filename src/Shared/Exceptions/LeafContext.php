@@ -36,7 +36,7 @@ use JsonSerializable;
  *
  * @version 0.0.1
  */
-readonly class LeafContext implements JsonSerializable
+final readonly class LeafContext implements JsonSerializable
 {
     /**
      * Constructs generic map definitions structure.

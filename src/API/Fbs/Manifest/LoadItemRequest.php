@@ -6,7 +6,7 @@ namespace API\Fbs\Manifest;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class LoadItemRequest extends Table
 {
@@ -32,26 +32,20 @@ class LoadItemRequest extends Table
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getContainerId()
+    public function getContainerId(): ?string
     {
         $o = $this->__offset(4);
-        return $o != 0 ? $this->bb->getInt($o + $this->bb_pos) : 0;
+        return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    /**
-     * @return int
-     */
-    public function getProductId()
+    public function getProductId(): ?string
     {
         $o = $this->__offset(6);
-        return $o != 0 ? $this->bb->getInt($o + $this->bb_pos) : 0;
+        return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
     /**
-     * @return double
+     * @return float
      */
     public function getQuantity()
     {
@@ -60,19 +54,19 @@ class LoadItemRequest extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startLoadItemRequest(FlatBufferBuilder $builder)
+    public static function startLoadItemRequest(FlatbufferBuilder $builder)
     {
         $builder->StartObject(3);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return LoadItemRequest
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createLoadItemRequest(FlatBufferBuilder $builder, $container_id, $product_id, $quantity)
+    public static function createLoadItemRequest(FlatbufferBuilder $builder, $container_id, $product_id, $quantity)
     {
         $builder->startObject(3);
         self::addContainerId($builder, $container_id);
@@ -83,40 +77,40 @@ class LoadItemRequest extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @param int
+     * @param FlatbufferBuilder $builder
+     * @param StringOffset
      * @return void
      */
-    public static function addContainerId(FlatBufferBuilder $builder, $containerId)
+    public static function addContainerId(FlatbufferBuilder $builder, $containerId)
     {
-        $builder->addIntX(0, $containerId, 0);
+        $builder->addOffsetX(0, $containerId, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @param int
+     * @param FlatbufferBuilder $builder
+     * @param StringOffset
      * @return void
      */
-    public static function addProductId(FlatBufferBuilder $builder, $productId)
+    public static function addProductId(FlatbufferBuilder $builder, $productId)
     {
-        $builder->addIntX(1, $productId, 0);
+        $builder->addOffsetX(1, $productId, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param double
      * @return void
      */
-    public static function addQuantity(FlatBufferBuilder $builder, $quantity)
+    public static function addQuantity(FlatbufferBuilder $builder, $quantity)
     {
         $builder->addDoubleX(2, $quantity, 0.0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endLoadItemRequest(FlatBufferBuilder $builder)
+    public static function endLoadItemRequest(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         return $o;

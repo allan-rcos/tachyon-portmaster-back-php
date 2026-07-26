@@ -6,7 +6,7 @@ namespace API\Fbs\Metrics;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class MetricsResponse extends Table
 {
@@ -51,7 +51,7 @@ class MetricsResponse extends Table
     }
 
     /**
-     * @return double
+     * @return float
      */
     public function getYardLoad()
     {
@@ -72,23 +72,23 @@ class MetricsResponse extends Table
     {
         $obj = new OccupancyDivision();
         $o = $this->__offset(12);
-        return $o != 0 ? $obj->init($this->__indirect($o + $this->bb_pos), $this->bb) : 0;
+        return $o != 0 ? $obj->init($this->__indirect($o + $this->bb_pos), $this->bb) : null;
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startMetricsResponse(FlatBufferBuilder $builder)
+    public static function startMetricsResponse(FlatbufferBuilder $builder)
     {
         $builder->StartObject(5);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return MetricsResponse
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createMetricsResponse(FlatBufferBuilder $builder, $active_containers, $total_containers, $yard_load, $registered_products, $occupancy_division)
+    public static function createMetricsResponse(FlatbufferBuilder $builder, $active_containers, $total_containers, $yard_load, $registered_products, $occupancy_division)
     {
         $builder->startObject(5);
         self::addActiveContainers($builder, $active_containers);
@@ -101,60 +101,60 @@ class MetricsResponse extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param int
      * @return void
      */
-    public static function addActiveContainers(FlatBufferBuilder $builder, $activeContainers)
+    public static function addActiveContainers(FlatbufferBuilder $builder, $activeContainers)
     {
         $builder->addIntX(0, $activeContainers, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param int
      * @return void
      */
-    public static function addTotalContainers(FlatBufferBuilder $builder, $totalContainers)
+    public static function addTotalContainers(FlatbufferBuilder $builder, $totalContainers)
     {
         $builder->addIntX(1, $totalContainers, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param double
      * @return void
      */
-    public static function addYardLoad(FlatBufferBuilder $builder, $yardLoad)
+    public static function addYardLoad(FlatbufferBuilder $builder, $yardLoad)
     {
         $builder->addDoubleX(2, $yardLoad, 0.0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param int
      * @return void
      */
-    public static function addRegisteredProducts(FlatBufferBuilder $builder, $registeredProducts)
+    public static function addRegisteredProducts(FlatbufferBuilder $builder, $registeredProducts)
     {
         $builder->addIntX(3, $registeredProducts, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param VectorOffset
      * @return void
      */
-    public static function addOccupancyDivision(FlatBufferBuilder $builder, $occupancyDivision)
+    public static function addOccupancyDivision(FlatbufferBuilder $builder, $occupancyDivision)
     {
         $builder->addOffsetX(4, $occupancyDivision, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endMetricsResponse(FlatBufferBuilder $builder)
+    public static function endMetricsResponse(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         return $o;

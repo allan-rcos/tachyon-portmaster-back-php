@@ -6,7 +6,7 @@ namespace API\Fbs\Metrics;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class OccupancyDivision extends Table
 {
@@ -69,19 +69,19 @@ class OccupancyDivision extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startOccupancyDivision(FlatBufferBuilder $builder)
+    public static function startOccupancyDivision(FlatbufferBuilder $builder)
     {
         $builder->StartObject(4);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return OccupancyDivision
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createOccupancyDivision(FlatBufferBuilder $builder, $empty, $loading, $sealed, $in_transit)
+    public static function createOccupancyDivision(FlatbufferBuilder $builder, $empty, $loading, $sealed, $in_transit)
     {
         $builder->startObject(4);
         self::addEmpty($builder, $empty);
@@ -93,50 +93,50 @@ class OccupancyDivision extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param int
      * @return void
      */
-    public static function addEmpty(FlatBufferBuilder $builder, $empty)
+    public static function addEmpty(FlatbufferBuilder $builder, $empty)
     {
         $builder->addIntX(0, $empty, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param int
      * @return void
      */
-    public static function addLoading(FlatBufferBuilder $builder, $loading)
+    public static function addLoading(FlatbufferBuilder $builder, $loading)
     {
         $builder->addIntX(1, $loading, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param int
      * @return void
      */
-    public static function addSealed(FlatBufferBuilder $builder, $sealed)
+    public static function addSealed(FlatbufferBuilder $builder, $sealed)
     {
         $builder->addIntX(2, $sealed, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param int
      * @return void
      */
-    public static function addInTransit(FlatBufferBuilder $builder, $inTransit)
+    public static function addInTransit(FlatbufferBuilder $builder, $inTransit)
     {
         $builder->addIntX(3, $inTransit, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endOccupancyDivision(FlatBufferBuilder $builder)
+    public static function endOccupancyDivision(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         return $o;

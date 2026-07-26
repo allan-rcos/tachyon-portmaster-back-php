@@ -6,7 +6,7 @@ namespace API\Fbs\Account;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class RoleResponse extends Table
 {
@@ -32,16 +32,13 @@ class RoleResponse extends Table
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?string
     {
         $o = $this->__offset(4);
-        return $o != 0 ? $this->bb->getInt($o + $this->bb_pos) : 0;
+        return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    public function getName()
+    public function getName(): ?string
     {
         $o = $this->__offset(6);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
@@ -58,12 +55,12 @@ class RoleResponse extends Table
 
     /**
      * @param int offset
-     * @return byte
+     * @return string
      */
     public function getPermissions($j)
     {
         $o = $this->__offset(10);
-        return $o != 0 ? $this->bb->getByte($this->__vector($o) + $j * 1) : \API\Fbs\Common\Permission::ProductRead;
+        return $o != 0 ? $this->__string($this->__vector($o) + $j * 4) : 0;
     }
 
     /**
@@ -76,27 +73,19 @@ class RoleResponse extends Table
     }
 
     /**
-     * @return string
-     */
-    public function getPermissionsBytes()
-    {
-        return $this->__vector_as_bytes(10);
-    }
-
-    /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startRoleResponse(FlatBufferBuilder $builder)
+    public static function startRoleResponse(FlatbufferBuilder $builder)
     {
         $builder->StartObject(4);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return RoleResponse
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createRoleResponse(FlatBufferBuilder $builder, $id, $name, $user_count, $permissions)
+    public static function createRoleResponse(FlatbufferBuilder $builder, $id, $name, $user_count, $permissions)
     {
         $builder->startObject(4);
         self::addId($builder, $id);
@@ -108,74 +97,74 @@ class RoleResponse extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @param int
-     * @return void
-     */
-    public static function addId(FlatBufferBuilder $builder, $id)
-    {
-        $builder->addIntX(0, $id, 0);
-    }
-
-    /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addName(FlatBufferBuilder $builder, $name)
+    public static function addId(FlatbufferBuilder $builder, $id)
+    {
+        $builder->addOffsetX(0, $id, 0);
+    }
+
+    /**
+     * @param FlatbufferBuilder $builder
+     * @param StringOffset
+     * @return void
+     */
+    public static function addName(FlatbufferBuilder $builder, $name)
     {
         $builder->addOffsetX(1, $name, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param int
      * @return void
      */
-    public static function addUserCount(FlatBufferBuilder $builder, $userCount)
+    public static function addUserCount(FlatbufferBuilder $builder, $userCount)
     {
         $builder->addIntX(2, $userCount, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param VectorOffset
      * @return void
      */
-    public static function addPermissions(FlatBufferBuilder $builder, $permissions)
+    public static function addPermissions(FlatbufferBuilder $builder, $permissions)
     {
         $builder->addOffsetX(3, $permissions, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param array offset array
      * @return int vector offset
      */
-    public static function createPermissionsVector(FlatBufferBuilder $builder, array $data)
+    public static function createPermissionsVector(FlatbufferBuilder $builder, array $data)
     {
-        $builder->startVector(1, count($data), 1);
+        $builder->startVector(4, count($data), 4);
         for ($i = count($data) - 1; $i >= 0; $i--) {
-            $builder->putByte($data[$i]);
+            $builder->putOffset($data[$i]);
         }
         return $builder->endVector();
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param int $numElems
      * @return void
      */
-    public static function startPermissionsVector(FlatBufferBuilder $builder, $numElems)
+    public static function startPermissionsVector(FlatbufferBuilder $builder, $numElems)
     {
-        $builder->startVector(1, $numElems, 1);
+        $builder->startVector(4, $numElems, 4);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endRoleResponse(FlatBufferBuilder $builder)
+    public static function endRoleResponse(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         return $o;

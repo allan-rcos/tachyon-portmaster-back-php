@@ -4,7 +4,7 @@ namespace Domain\Models;
 
 interface IRole
 {
-    public int $id {
+    public string $id {
         get;
     }
 
@@ -12,6 +12,7 @@ interface IRole
         get;
     }
 
+    /** @var list<string> */
     public array $permissions {
         get;
     }

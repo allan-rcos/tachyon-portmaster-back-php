@@ -6,7 +6,7 @@ namespace API\Fbs\Admin;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class RoleCreateRequest extends Table
 {
@@ -32,7 +32,7 @@ class RoleCreateRequest extends Table
         return $this;
     }
 
-    public function getName()
+    public function getName(): ?string
     {
         $o = $this->__offset(4);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
@@ -40,12 +40,12 @@ class RoleCreateRequest extends Table
 
     /**
      * @param int offset
-     * @return byte
+     * @return string
      */
     public function getPermissions($j)
     {
         $o = $this->__offset(6);
-        return $o != 0 ? $this->bb->getByte($this->__vector($o) + $j * 1) : \API\Fbs\Common\Permission::ProductRead;
+        return $o != 0 ? $this->__string($this->__vector($o) + $j * 4) : 0;
     }
 
     /**
@@ -58,27 +58,19 @@ class RoleCreateRequest extends Table
     }
 
     /**
-     * @return string
-     */
-    public function getPermissionsBytes()
-    {
-        return $this->__vector_as_bytes(6);
-    }
-
-    /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startRoleCreateRequest(FlatBufferBuilder $builder)
+    public static function startRoleCreateRequest(FlatbufferBuilder $builder)
     {
         $builder->StartObject(2);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return RoleCreateRequest
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createRoleCreateRequest(FlatBufferBuilder $builder, $name, $permissions)
+    public static function createRoleCreateRequest(FlatbufferBuilder $builder, $name, $permissions)
     {
         $builder->startObject(2);
         self::addName($builder, $name);
@@ -89,54 +81,54 @@ class RoleCreateRequest extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addName(FlatBufferBuilder $builder, $name)
+    public static function addName(FlatbufferBuilder $builder, $name)
     {
         $builder->addOffsetX(0, $name, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param VectorOffset
      * @return void
      */
-    public static function addPermissions(FlatBufferBuilder $builder, $permissions)
+    public static function addPermissions(FlatbufferBuilder $builder, $permissions)
     {
         $builder->addOffsetX(1, $permissions, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param array offset array
      * @return int vector offset
      */
-    public static function createPermissionsVector(FlatBufferBuilder $builder, array $data)
+    public static function createPermissionsVector(FlatbufferBuilder $builder, array $data)
     {
-        $builder->startVector(1, count($data), 1);
+        $builder->startVector(4, count($data), 4);
         for ($i = count($data) - 1; $i >= 0; $i--) {
-            $builder->putByte($data[$i]);
+            $builder->putOffset($data[$i]);
         }
         return $builder->endVector();
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param int $numElems
      * @return void
      */
-    public static function startPermissionsVector(FlatBufferBuilder $builder, $numElems)
+    public static function startPermissionsVector(FlatbufferBuilder $builder, $numElems)
     {
-        $builder->startVector(1, $numElems, 1);
+        $builder->startVector(4, $numElems, 4);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endRoleCreateRequest(FlatBufferBuilder $builder)
+    public static function endRoleCreateRequest(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         $builder->required($o, 4);  // name

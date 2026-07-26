@@ -6,7 +6,7 @@ namespace API\Fbs\Container;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class ContainerCreateRequest extends Table
 {
@@ -32,14 +32,14 @@ class ContainerCreateRequest extends Table
         return $this;
     }
 
-    public function getCode()
+    public function getCode(): ?string
     {
         $o = $this->__offset(4);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
     /**
-     * @return double
+     * @return float
      */
     public function getMaxCapacity()
     {
@@ -48,19 +48,19 @@ class ContainerCreateRequest extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startContainerCreateRequest(FlatBufferBuilder $builder)
+    public static function startContainerCreateRequest(FlatbufferBuilder $builder)
     {
         $builder->StartObject(2);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return ContainerCreateRequest
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createContainerCreateRequest(FlatBufferBuilder $builder, $code, $max_capacity)
+    public static function createContainerCreateRequest(FlatbufferBuilder $builder, $code, $max_capacity)
     {
         $builder->startObject(2);
         self::addCode($builder, $code);
@@ -70,30 +70,30 @@ class ContainerCreateRequest extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addCode(FlatBufferBuilder $builder, $code)
+    public static function addCode(FlatbufferBuilder $builder, $code)
     {
         $builder->addOffsetX(0, $code, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param double
      * @return void
      */
-    public static function addMaxCapacity(FlatBufferBuilder $builder, $maxCapacity)
+    public static function addMaxCapacity(FlatbufferBuilder $builder, $maxCapacity)
     {
         $builder->addDoubleX(1, $maxCapacity, 0.0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endContainerCreateRequest(FlatBufferBuilder $builder)
+    public static function endContainerCreateRequest(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         return $o;

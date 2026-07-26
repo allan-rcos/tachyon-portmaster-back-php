@@ -6,7 +6,7 @@ namespace API\Fbs\Manifest;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class ManifestResponse extends Table
 {
@@ -32,7 +32,7 @@ class ManifestResponse extends Table
         return $this;
     }
 
-    public function getMessage()
+    public function getMessage(): ?string
     {
         $o = $this->__offset(4);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
@@ -42,23 +42,23 @@ class ManifestResponse extends Table
     {
         $obj = new ContainerResponse();
         $o = $this->__offset(6);
-        return $o != 0 ? $obj->init($this->__indirect($o + $this->bb_pos), $this->bb) : 0;
+        return $o != 0 ? $obj->init($this->__indirect($o + $this->bb_pos), $this->bb) : null;
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startManifestResponse(FlatBufferBuilder $builder)
+    public static function startManifestResponse(FlatbufferBuilder $builder)
     {
         $builder->StartObject(2);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return ManifestResponse
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createManifestResponse(FlatBufferBuilder $builder, $message, $container)
+    public static function createManifestResponse(FlatbufferBuilder $builder, $message, $container)
     {
         $builder->startObject(2);
         self::addMessage($builder, $message);
@@ -68,30 +68,30 @@ class ManifestResponse extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addMessage(FlatBufferBuilder $builder, $message)
+    public static function addMessage(FlatbufferBuilder $builder, $message)
     {
         $builder->addOffsetX(0, $message, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param VectorOffset
      * @return void
      */
-    public static function addContainer(FlatBufferBuilder $builder, $container)
+    public static function addContainer(FlatbufferBuilder $builder, $container)
     {
         $builder->addOffsetX(1, $container, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endManifestResponse(FlatBufferBuilder $builder)
+    public static function endManifestResponse(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         return $o;

@@ -6,7 +6,7 @@ namespace API\Fbs\Container;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class TelemetryLogItem extends Table
 {
@@ -32,50 +32,44 @@ class TelemetryLogItem extends Table
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?string
     {
         $o = $this->__offset(4);
-        return $o != 0 ? $this->bb->getInt($o + $this->bb_pos) : 0;
+        return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    /**
-     * @return byte
-     */
-    public function getEvent()
+    public function getEvent(): ?string
     {
         $o = $this->__offset(6);
-        return $o != 0 ? $this->bb->getByte($o + $this->bb_pos) : \API\Fbs\Common\TelemetryEvent::Create;
+        return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    public function getDescription()
+    public function getDescription(): ?string
     {
         $o = $this->__offset(8);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    public function getTimestamp()
+    public function getTimestamp(): ?string
     {
         $o = $this->__offset(10);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startTelemetryLogItem(FlatBufferBuilder $builder)
+    public static function startTelemetryLogItem(FlatbufferBuilder $builder)
     {
         $builder->StartObject(4);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return TelemetryLogItem
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createTelemetryLogItem(FlatBufferBuilder $builder, $id, $event, $description, $timestamp)
+    public static function createTelemetryLogItem(FlatbufferBuilder $builder, $id, $event, $description, $timestamp)
     {
         $builder->startObject(4);
         self::addId($builder, $id);
@@ -87,50 +81,50 @@ class TelemetryLogItem extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @param int
-     * @return void
-     */
-    public static function addId(FlatBufferBuilder $builder, $id)
-    {
-        $builder->addIntX(0, $id, 0);
-    }
-
-    /**
-     * @param FlatBufferBuilder $builder
-     * @param byte
-     * @return void
-     */
-    public static function addEvent(FlatBufferBuilder $builder, $event)
-    {
-        $builder->addByteX(1, $event, 0);
-    }
-
-    /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addDescription(FlatBufferBuilder $builder, $description)
+    public static function addId(FlatbufferBuilder $builder, $id)
+    {
+        $builder->addOffsetX(0, $id, 0);
+    }
+
+    /**
+     * @param FlatbufferBuilder $builder
+     * @param StringOffset
+     * @return void
+     */
+    public static function addEvent(FlatbufferBuilder $builder, $event)
+    {
+        $builder->addOffsetX(1, $event, 0);
+    }
+
+    /**
+     * @param FlatbufferBuilder $builder
+     * @param StringOffset
+     * @return void
+     */
+    public static function addDescription(FlatbufferBuilder $builder, $description)
     {
         $builder->addOffsetX(2, $description, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addTimestamp(FlatBufferBuilder $builder, $timestamp)
+    public static function addTimestamp(FlatbufferBuilder $builder, $timestamp)
     {
         $builder->addOffsetX(3, $timestamp, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endTelemetryLogItem(FlatBufferBuilder $builder)
+    public static function endTelemetryLogItem(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         return $o;

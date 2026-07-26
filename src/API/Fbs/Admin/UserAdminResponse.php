@@ -6,7 +6,7 @@ namespace API\Fbs\Admin;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class UserAdminResponse extends Table
 {
@@ -32,22 +32,19 @@ class UserAdminResponse extends Table
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?string
     {
         $o = $this->__offset(4);
-        return $o != 0 ? $this->bb->getInt($o + $this->bb_pos) : 0;
+        return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    public function getName()
+    public function getName(): ?string
     {
         $o = $this->__offset(6);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    public function getEmail()
+    public function getEmail(): ?string
     {
         $o = $this->__offset(8);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
@@ -73,19 +70,19 @@ class UserAdminResponse extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startUserAdminResponse(FlatBufferBuilder $builder)
+    public static function startUserAdminResponse(FlatbufferBuilder $builder)
     {
         $builder->StartObject(4);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return UserAdminResponse
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createUserAdminResponse(FlatBufferBuilder $builder, $id, $name, $email, $roles)
+    public static function createUserAdminResponse(FlatbufferBuilder $builder, $id, $name, $email, $roles)
     {
         $builder->startObject(4);
         self::addId($builder, $id);
@@ -97,51 +94,51 @@ class UserAdminResponse extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @param int
-     * @return void
-     */
-    public static function addId(FlatBufferBuilder $builder, $id)
-    {
-        $builder->addIntX(0, $id, 0);
-    }
-
-    /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addName(FlatBufferBuilder $builder, $name)
+    public static function addId(FlatbufferBuilder $builder, $id)
+    {
+        $builder->addOffsetX(0, $id, 0);
+    }
+
+    /**
+     * @param FlatbufferBuilder $builder
+     * @param StringOffset
+     * @return void
+     */
+    public static function addName(FlatbufferBuilder $builder, $name)
     {
         $builder->addOffsetX(1, $name, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addEmail(FlatBufferBuilder $builder, $email)
+    public static function addEmail(FlatbufferBuilder $builder, $email)
     {
         $builder->addOffsetX(2, $email, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param VectorOffset
      * @return void
      */
-    public static function addRoles(FlatBufferBuilder $builder, $roles)
+    public static function addRoles(FlatbufferBuilder $builder, $roles)
     {
         $builder->addOffsetX(3, $roles, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param array offset array
      * @return int vector offset
      */
-    public static function createRolesVector(FlatBufferBuilder $builder, array $data)
+    public static function createRolesVector(FlatbufferBuilder $builder, array $data)
     {
         $builder->startVector(4, count($data), 4);
         for ($i = count($data) - 1; $i >= 0; $i--) {
@@ -151,20 +148,20 @@ class UserAdminResponse extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param int $numElems
      * @return void
      */
-    public static function startRolesVector(FlatBufferBuilder $builder, $numElems)
+    public static function startRolesVector(FlatbufferBuilder $builder, $numElems)
     {
         $builder->startVector(4, $numElems, 4);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endUserAdminResponse(FlatBufferBuilder $builder)
+    public static function endUserAdminResponse(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         return $o;

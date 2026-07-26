@@ -6,7 +6,7 @@ namespace API\Fbs\Container;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class CargoManifestItem extends Table
 {
@@ -32,23 +32,20 @@ class CargoManifestItem extends Table
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getProductId()
+    public function getProductId(): ?string
     {
         $o = $this->__offset(4);
-        return $o != 0 ? $this->bb->getInt($o + $this->bb_pos) : 0;
+        return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    public function getProductName()
+    public function getProductName(): ?string
     {
         $o = $this->__offset(6);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
     /**
-     * @return double
+     * @return float
      */
     public function getQuantity()
     {
@@ -57,7 +54,7 @@ class CargoManifestItem extends Table
     }
 
     /**
-     * @return double
+     * @return float
      */
     public function getWeight()
     {
@@ -66,19 +63,19 @@ class CargoManifestItem extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startCargoManifestItem(FlatBufferBuilder $builder)
+    public static function startCargoManifestItem(FlatbufferBuilder $builder)
     {
         $builder->StartObject(4);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return CargoManifestItem
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createCargoManifestItem(FlatBufferBuilder $builder, $product_id, $product_name, $quantity, $weight)
+    public static function createCargoManifestItem(FlatbufferBuilder $builder, $product_id, $product_name, $quantity, $weight)
     {
         $builder->startObject(4);
         self::addProductId($builder, $product_id);
@@ -90,50 +87,50 @@ class CargoManifestItem extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @param int
-     * @return void
-     */
-    public static function addProductId(FlatBufferBuilder $builder, $productId)
-    {
-        $builder->addIntX(0, $productId, 0);
-    }
-
-    /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addProductName(FlatBufferBuilder $builder, $productName)
+    public static function addProductId(FlatbufferBuilder $builder, $productId)
+    {
+        $builder->addOffsetX(0, $productId, 0);
+    }
+
+    /**
+     * @param FlatbufferBuilder $builder
+     * @param StringOffset
+     * @return void
+     */
+    public static function addProductName(FlatbufferBuilder $builder, $productName)
     {
         $builder->addOffsetX(1, $productName, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param double
      * @return void
      */
-    public static function addQuantity(FlatBufferBuilder $builder, $quantity)
+    public static function addQuantity(FlatbufferBuilder $builder, $quantity)
     {
         $builder->addDoubleX(2, $quantity, 0.0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param double
      * @return void
      */
-    public static function addWeight(FlatBufferBuilder $builder, $weight)
+    public static function addWeight(FlatbufferBuilder $builder, $weight)
     {
         $builder->addDoubleX(3, $weight, 0.0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endCargoManifestItem(FlatBufferBuilder $builder)
+    public static function endCargoManifestItem(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         return $o;

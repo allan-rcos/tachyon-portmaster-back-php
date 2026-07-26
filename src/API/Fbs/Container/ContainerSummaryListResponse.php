@@ -6,7 +6,7 @@ namespace API\Fbs\Container;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class ContainerSummaryListResponse extends Table
 {
@@ -51,7 +51,7 @@ class ContainerSummaryListResponse extends Table
         return $o != 0 ? $this->__vector_len($o) : 0;
     }
 
-    public function getNextCursor()
+    public function getNextCursor(): ?string
     {
         $o = $this->__offset(6);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
@@ -67,19 +67,19 @@ class ContainerSummaryListResponse extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startContainerSummaryListResponse(FlatBufferBuilder $builder)
+    public static function startContainerSummaryListResponse(FlatbufferBuilder $builder)
     {
         $builder->StartObject(3);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return ContainerSummaryListResponse
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createContainerSummaryListResponse(FlatBufferBuilder $builder, $data, $next_cursor, $total)
+    public static function createContainerSummaryListResponse(FlatbufferBuilder $builder, $data, $next_cursor, $total)
     {
         $builder->startObject(3);
         self::addData($builder, $data);
@@ -90,21 +90,21 @@ class ContainerSummaryListResponse extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param VectorOffset
      * @return void
      */
-    public static function addData(FlatBufferBuilder $builder, $data)
+    public static function addData(FlatbufferBuilder $builder, $data)
     {
         $builder->addOffsetX(0, $data, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param array offset array
      * @return int vector offset
      */
-    public static function createDataVector(FlatBufferBuilder $builder, array $data)
+    public static function createDataVector(FlatbufferBuilder $builder, array $data)
     {
         $builder->startVector(4, count($data), 4);
         for ($i = count($data) - 1; $i >= 0; $i--) {
@@ -114,40 +114,40 @@ class ContainerSummaryListResponse extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param int $numElems
      * @return void
      */
-    public static function startDataVector(FlatBufferBuilder $builder, $numElems)
+    public static function startDataVector(FlatbufferBuilder $builder, $numElems)
     {
         $builder->startVector(4, $numElems, 4);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addNextCursor(FlatBufferBuilder $builder, $nextCursor)
+    public static function addNextCursor(FlatbufferBuilder $builder, $nextCursor)
     {
         $builder->addOffsetX(1, $nextCursor, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param int
      * @return void
      */
-    public static function addTotal(FlatBufferBuilder $builder, $total)
+    public static function addTotal(FlatbufferBuilder $builder, $total)
     {
         $builder->addIntX(2, $total, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endContainerSummaryListResponse(FlatBufferBuilder $builder)
+    public static function endContainerSummaryListResponse(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         return $o;

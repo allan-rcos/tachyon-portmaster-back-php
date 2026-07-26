@@ -2,12 +2,13 @@
 
 namespace Domain\Models\Internal;
 
+use Domain\Models\IRole;
 use Domain\Models\IUser;
 
 class User implements IUser
 {
     public function __construct(
-        public int $id {
+        public string $id {
             get {
                 return $this->id;
             }
@@ -27,7 +28,7 @@ class User implements IUser
                 return $this->passwordHash;
             }
         },
-        /** @var Role[] */
+        /** @var list<IRole> */
         public array $roles {
             get {
                 return $this->roles;

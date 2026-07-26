@@ -1,0 +1,41 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Services;
+
+use App\Context\UserContext;
+use Domain\Models\IUser;
+use Shared\Exceptions\Result;
+
+/**
+ * Re-reads the user behind a session and confirms it is still a valid one.
+ *
+ * Declares no permission, and must not: it runs during authentication, before
+ * any caller has been established — the same position {@see ILoginUseCase}
+ * occupies.
+ *
+ * It takes the {@see UserContext} the caller's token carried rather than a bare
+ * id, because that context is exactly what is under suspicion: a signed token
+ * proves *we issued these claims*, never that they are still true. Between issue
+ * and use the account may have been deleted or its roles changed, so this reads
+ * the user afresh and answers with the current truth. Without it, a permission
+ * revoked mid-session would ride forward through every refresh, for as long as
+ * the user kept refreshing.
+ *
+ * It is deliberately separate from the marker check in
+ * {@see \API\Auth\IRefreshTokenService}: that one asks whether the *token* is
+ * still live, this one asks whether the *user* still is. A token can be
+ * perfectly valid and belong to an account that no longer exists.
+ */
+interface IValidateSessionUseCase
+{
+    /**
+     * @param  UserContext  $context  The claims to validate, not to trust.
+     * @return Result<IUser> The user with their current roles, or 401 when they
+     *                       no longer exist — to the caller a deleted account and
+     *                       an invalid session are the same thing, and saying
+     *                       which would leak the difference.
+     */
+    public function execute(UserContext $context): Result;
+}

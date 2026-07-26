@@ -6,7 +6,7 @@ namespace API\Fbs\Container;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class ContainerResponse extends Table
 {
@@ -32,23 +32,20 @@ class ContainerResponse extends Table
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?string
     {
         $o = $this->__offset(4);
-        return $o != 0 ? $this->bb->getInt($o + $this->bb_pos) : 0;
+        return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    public function getCode()
+    public function getCode(): ?string
     {
         $o = $this->__offset(6);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
     /**
-     * @return double
+     * @return float
      */
     public function getCurrentWeight()
     {
@@ -57,7 +54,7 @@ class ContainerResponse extends Table
     }
 
     /**
-     * @return double
+     * @return float
      */
     public function getMaxCapacity()
     {
@@ -66,7 +63,7 @@ class ContainerResponse extends Table
     }
 
     /**
-     * @return byte
+     * @return int
      */
     public function getStatus()
     {
@@ -75,19 +72,19 @@ class ContainerResponse extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startContainerResponse(FlatBufferBuilder $builder)
+    public static function startContainerResponse(FlatbufferBuilder $builder)
     {
         $builder->StartObject(5);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return ContainerResponse
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createContainerResponse(FlatBufferBuilder $builder, $id, $code, $current_weight, $max_capacity, $status)
+    public static function createContainerResponse(FlatbufferBuilder $builder, $id, $code, $current_weight, $max_capacity, $status)
     {
         $builder->startObject(5);
         self::addId($builder, $id);
@@ -100,60 +97,60 @@ class ContainerResponse extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @param int
-     * @return void
-     */
-    public static function addId(FlatBufferBuilder $builder, $id)
-    {
-        $builder->addIntX(0, $id, 0);
-    }
-
-    /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addCode(FlatBufferBuilder $builder, $code)
+    public static function addId(FlatbufferBuilder $builder, $id)
+    {
+        $builder->addOffsetX(0, $id, 0);
+    }
+
+    /**
+     * @param FlatbufferBuilder $builder
+     * @param StringOffset
+     * @return void
+     */
+    public static function addCode(FlatbufferBuilder $builder, $code)
     {
         $builder->addOffsetX(1, $code, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param double
      * @return void
      */
-    public static function addCurrentWeight(FlatBufferBuilder $builder, $currentWeight)
+    public static function addCurrentWeight(FlatbufferBuilder $builder, $currentWeight)
     {
         $builder->addDoubleX(2, $currentWeight, 0.0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param double
      * @return void
      */
-    public static function addMaxCapacity(FlatBufferBuilder $builder, $maxCapacity)
+    public static function addMaxCapacity(FlatbufferBuilder $builder, $maxCapacity)
     {
         $builder->addDoubleX(3, $maxCapacity, 0.0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param byte
      * @return void
      */
-    public static function addStatus(FlatBufferBuilder $builder, $status)
+    public static function addStatus(FlatbufferBuilder $builder, $status)
     {
         $builder->addByteX(4, $status, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endContainerResponse(FlatBufferBuilder $builder)
+    public static function endContainerResponse(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         return $o;

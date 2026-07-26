@@ -18,7 +18,7 @@
  * @filesource
  */
 
-namespace \API\DTO;
+namespace API\DTO;
 
 /**
  * Data Transfer Object representing project metadata and runtime information.
@@ -35,7 +35,7 @@ namespace \API\DTO;
  *
  * @version 0.0.1
  */
-readonly class ProjectInfoDTO implements JsonSerializable
+readonly class ProjectInfoDTO implements \JsonSerializable
 {
     /**
      * ProjectInfoDTO constructor.

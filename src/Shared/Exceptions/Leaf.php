@@ -41,6 +41,27 @@ class Leaf
     private static int $globalErrorId = 0;
 
     /**
+     * Fallback store for errors raised **outside** a coroutine.
+     *
+     * The coroutine context is the right home during a request: it isolates
+     * concurrent requests and is freed with them. But errors also occur where no
+     * coroutine exists — the composition root at WorkerStart, CLI entry points,
+     * and unit tests — and there the context write is silently dropped, leaving
+     * {@see getError()} to return null and the caller to report "unknown error".
+     * This keeps those recoverable.
+     *
+     * @var array<int, LeafContext>
+     */
+    private static array $processErrors = [];
+
+    /**
+     * Cap for {@see $processErrors}. The fallback is only exercised off the
+     * request path, where a handful of entries is the norm; the bound exists so a
+     * pathological caller cannot grow it without limit in a long-lived worker.
+     */
+    private const int PROCESS_ERROR_LIMIT = 256;
+
+    /**
      * Stashes a given custom error against Coroutine scope and registers its ID.
      *
      * @param  LeafContext  $errorObject  The custom domain mapped error structure.
@@ -67,8 +88,17 @@ class Leaf
                 $errors = isset($context['__leaf_errors']) ? $context['__leaf_errors'] : [];
                 $errors[self::$globalErrorId] = $errorObject;
                 $context['__leaf_errors'] = $errors;
+
+                return self::$globalErrorId;
             }
         }
+
+        // No coroutine context to bind to (boot, CLI, tests): keep it in-process
+        // so the error stays retrievable instead of vanishing.
+        if (count(self::$processErrors) >= self::PROCESS_ERROR_LIMIT) {
+            array_shift(self::$processErrors);
+        }
+        self::$processErrors[self::$globalErrorId] = $errorObject;
 
         return self::$globalErrorId;
     }
@@ -99,6 +129,16 @@ class Leaf
                 }
             }
         }
-        return null;
+
+        return self::$processErrors[$errorId] ?? null;
+    }
+
+    /**
+     * Drops the out-of-coroutine errors. Intended for tests, which would
+     * otherwise accumulate them across cases in one process.
+     */
+    public static function flushProcessErrors(): void
+    {
+        self::$processErrors = [];
     }
 }

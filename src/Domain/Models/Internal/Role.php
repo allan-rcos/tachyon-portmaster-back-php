@@ -2,13 +2,12 @@
 
 namespace Domain\Models\Internal;
 
-use Domain\Enums\Permissions;
 use Domain\Models\IRole;
 
 class Role implements IRole
 {
     public function __construct(
-        public int $id {
+        public string $id {
             get {
                 return $this->id;
             }
@@ -18,7 +17,7 @@ class Role implements IRole
                 return $this->name;
             }
         },
-        /** @var Permissions[] Array of permission IDs */
+        /** @var list<string> Permission slugs granted by this role */
         public array $permissions {
             get {
                 return $this->permissions;

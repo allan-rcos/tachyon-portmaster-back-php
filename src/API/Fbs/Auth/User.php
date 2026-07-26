@@ -6,7 +6,7 @@ namespace API\Fbs\Auth;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class User extends Table
 {
@@ -32,41 +32,38 @@ class User extends Table
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): ?string
     {
         $o = $this->__offset(4);
-        return $o != 0 ? $this->bb->getInt($o + $this->bb_pos) : 0;
+        return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    public function getName()
+    public function getName(): ?string
     {
         $o = $this->__offset(6);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    public function getEmail()
+    public function getEmail(): ?string
     {
         $o = $this->__offset(8);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startUser(FlatBufferBuilder $builder)
+    public static function startUser(FlatbufferBuilder $builder)
     {
         $builder->StartObject(3);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return User
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createUser(FlatBufferBuilder $builder, $id, $name, $email)
+    public static function createUser(FlatbufferBuilder $builder, $id, $name, $email)
     {
         $builder->startObject(3);
         self::addId($builder, $id);
@@ -77,40 +74,40 @@ class User extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @param int
-     * @return void
-     */
-    public static function addId(FlatBufferBuilder $builder, $id)
-    {
-        $builder->addIntX(0, $id, 0);
-    }
-
-    /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addName(FlatBufferBuilder $builder, $name)
+    public static function addId(FlatbufferBuilder $builder, $id)
+    {
+        $builder->addOffsetX(0, $id, 0);
+    }
+
+    /**
+     * @param FlatbufferBuilder $builder
+     * @param StringOffset
+     * @return void
+     */
+    public static function addName(FlatbufferBuilder $builder, $name)
     {
         $builder->addOffsetX(1, $name, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addEmail(FlatBufferBuilder $builder, $email)
+    public static function addEmail(FlatbufferBuilder $builder, $email)
     {
         $builder->addOffsetX(2, $email, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endUser(FlatBufferBuilder $builder)
+    public static function endUser(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         return $o;

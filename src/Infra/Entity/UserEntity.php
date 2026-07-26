@@ -2,12 +2,17 @@
 
 namespace Infra\Entity;
 
+use Domain\ID\Base62;
+use Domain\Models\IRole;
 use Domain\Models\IUser;
 
 class UserEntity implements IUser
 {
+    /**
+     * @param  list<IRole>  $roles
+     */
     public function __construct(
-        public int $id {
+        public string $id {
             get => $this->id;
         },
         public string $name {
@@ -36,21 +41,32 @@ class UserEntity implements IUser
         );
     }
 
+    /**
+     * @param  array<string, mixed>  $row
+     */
     public static function unserialize(array $row): self
     {
+        $id           = $row['id'] ?? 0;
+        $name         = $row['name'] ?? '';
+        $email        = $row['email'] ?? '';
+        $passwordHash = $row['password_hash'] ?? '';
+
         return new self(
-            id: (int) $row['id'],
-            name: $row['name'],
-            email: $row['email'],
-            passwordHash: $row['password_hash'],
+            id: Base62::encode(is_numeric($id) ? (int) $id : 0),
+            name: is_scalar($name) ? (string) $name : '',
+            email: is_scalar($email) ? (string) $email : '',
+            passwordHash: is_scalar($passwordHash) ? (string) $passwordHash : '',
             roles: [],
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function serialize(): array
     {
         return [
-            'id' => $this->id,
+            'id' => Base62::decode($this->id),
             'name' => $this->name,
             'email' => $this->email,
             'password_hash' => $this->passwordHash,

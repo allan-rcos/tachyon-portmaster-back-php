@@ -1,0 +1,10 @@
+.git
+.github
+.idea
+vendor
+var
+tests/integration
+node_modules
+*.tmp
+*.md
+.env

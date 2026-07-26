@@ -33,9 +33,9 @@ namespace Shared\Exceptions;
  *
  * @version 0.0.1
  *
- * @template T
+ * @template-covariant T
  */
-readonly class Result
+final readonly class Result
 {
     /**
      * @param  T  $value
@@ -52,8 +52,10 @@ readonly class Result
     /**
      * Instantiates returning valid content wrapper implementation instances globally.
      *
-     * @param  T  $value  Resolved associated inner content payload extracted definition structure mapped implementation context representation tracking details wrapper item mapped layout operations.
-     * @return Result<T> Generated new class state payload details execution wrapper implementation response context.
+     * @template TValue
+     *
+     * @param  TValue  $value  Resolved associated inner content payload extracted definition structure mapped implementation context representation tracking details wrapper item mapped layout operations.
+     * @return self<TValue> Generated new class state payload details execution wrapper implementation response context.
      * @since 0.0.1 File creation.
      *
      * @version 0.0.1
@@ -64,7 +66,7 @@ readonly class Result
      */
     public static function success(mixed $value): self
     {
-        /** @var self<T> $instance */
+        /** @var self<TValue> $instance */
         $instance = new self($value, -1, true);
         return $instance;
     }
@@ -73,7 +75,9 @@ readonly class Result
      * Sets related structured fail path identifying tracing context.
      *
      * @param  int  $errorId  Expected specific detailed pointer index wrapper implementation block.
-     * @return Result<null> Failure details operations context state reference details implementation class structure mapped path definitions representation response object instance equivalent map structure defined result layout pattern execution payload.
+     * @return Result<never> A failure carries no value, so it stands in for a
+     *                        success of any type — which is what lets a use case
+     *                        propagate one straight out of a differently-typed method.
      * @since 0.0.1 File creation.
      *
      * @version 0.0.1
@@ -84,7 +88,7 @@ readonly class Result
      */
     public static function failure(int $errorId): self
     {
-        /** @var self<null> $instance */
+        /** @var self<never> $instance */
         $instance = new self(null, $errorId, false);
         return $instance;
     }

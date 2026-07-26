@@ -6,7 +6,7 @@ namespace API\Fbs\Product;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class ProductCreateRequest extends Table
 {
@@ -32,14 +32,14 @@ class ProductCreateRequest extends Table
         return $this;
     }
 
-    public function getName()
+    public function getName(): ?string
     {
         $o = $this->__offset(4);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
     /**
-     * @return double
+     * @return float
      */
     public function getDensity()
     {
@@ -48,7 +48,7 @@ class ProductCreateRequest extends Table
     }
 
     /**
-     * @return byte
+     * @return int
      */
     public function getRiskClass()
     {
@@ -57,19 +57,19 @@ class ProductCreateRequest extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startProductCreateRequest(FlatBufferBuilder $builder)
+    public static function startProductCreateRequest(FlatbufferBuilder $builder)
     {
         $builder->StartObject(3);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return ProductCreateRequest
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createProductCreateRequest(FlatBufferBuilder $builder, $name, $density, $risk_class)
+    public static function createProductCreateRequest(FlatbufferBuilder $builder, $name, $density, $risk_class)
     {
         $builder->startObject(3);
         self::addName($builder, $name);
@@ -81,40 +81,40 @@ class ProductCreateRequest extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addName(FlatBufferBuilder $builder, $name)
+    public static function addName(FlatbufferBuilder $builder, $name)
     {
         $builder->addOffsetX(0, $name, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param double
      * @return void
      */
-    public static function addDensity(FlatBufferBuilder $builder, $density)
+    public static function addDensity(FlatbufferBuilder $builder, $density)
     {
         $builder->addDoubleX(1, $density, 0.0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param byte
      * @return void
      */
-    public static function addRiskClass(FlatBufferBuilder $builder, $riskClass)
+    public static function addRiskClass(FlatbufferBuilder $builder, $riskClass)
     {
         $builder->addByteX(2, $riskClass, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endProductCreateRequest(FlatBufferBuilder $builder)
+    public static function endProductCreateRequest(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         $builder->required($o, 4);  // name

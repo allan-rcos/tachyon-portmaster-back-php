@@ -1,0 +1,104 @@
+<?php
+
+declare(strict_types=1);
+
+namespace API\Http;
+
+use OpenSwoole\Http\Response as SwooleResponse;
+use Psr\Http\Message\ResponseInterface;
+
+/**
+ * Writes a PSR-7 response onto the OpenSwoole response.
+ *
+ * Replaces `OpenSwoole\Core\Psr\Response::emit()`, which sets **every** header
+ * with `$response->header($name, $value)`. That call overwrites, so a response
+ * carrying more than one value for the same header keeps only the last —
+ * silently dropping a cookie whenever login or logout sets both `auth_token`
+ * and `refresh_token`.
+ *
+ * `Set-Cookie` is therefore routed through `rawcookie()`, which accumulates.
+ * Every other header keeps the plain `header()` behaviour.
+ */
+final class ResponseEmitter
+{
+    public static function emit(SwooleResponse $response, ResponseInterface $psrResponse): void
+    {
+        $response->status($psrResponse->getStatusCode());
+
+        foreach ($psrResponse->getHeaders() as $name => $values) {
+            if (strcasecmp($name, HttpHeader::SetCookie->value) === 0) {
+                foreach ($values as $value) {
+                    self::emitCookie($response, $value);
+                }
+
+                continue;
+            }
+
+            foreach ($values as $value) {
+                $response->header($name, $value);
+            }
+        }
+
+        $body = $psrResponse->getBody();
+        $body->rewind();
+
+        $response->end($body->getContents());
+    }
+
+    /**
+     * Re-applies a `Set-Cookie` value through `rawcookie()`.
+     *
+     * The value is one this application built ({@see AuthCookie}), so the
+     * attribute set is known and small; anything unrecognised is ignored rather
+     * than guessed at.
+     */
+    private static function emitCookie(SwooleResponse $response, string $header): void
+    {
+        $parts = array_map('trim', explode(';', $header));
+        $pair = array_shift($parts);
+
+        if (!str_contains($pair, '=')) {
+            return;
+        }
+
+        [$name, $value] = explode('=', $pair, 2);
+
+        $expire = 0;
+        $path = '';
+        $domain = '';
+        $secure = false;
+        $httpOnly = false;
+        $sameSite = '';
+
+        foreach ($parts as $attribute) {
+            $key = strtolower((string) (str_contains($attribute, '=') ? strstr($attribute, '=', true) : $attribute));
+            $attributeValue = str_contains($attribute, '=') ? substr((string) strstr($attribute, '='), 1) : '';
+
+            switch ($key) {
+                case 'max-age':
+                    // rawcookie() wants an absolute timestamp. Max-Age=0 means
+                    // "delete now", which is expressed as a past expiry.
+                    $maxAge = (int) $attributeValue;
+                    $expire = $maxAge <= 0 ? time() - 3600 : time() + $maxAge;
+                    break;
+                case 'path':
+                    $path = $attributeValue;
+                    break;
+                case 'domain':
+                    $domain = $attributeValue;
+                    break;
+                case 'secure':
+                    $secure = true;
+                    break;
+                case 'httponly':
+                    $httpOnly = true;
+                    break;
+                case 'samesite':
+                    $sameSite = $attributeValue;
+                    break;
+            }
+        }
+
+        $response->rawcookie($name, $value, $expire, $path, $domain, $secure, $httpOnly, $sameSite);
+    }
+}

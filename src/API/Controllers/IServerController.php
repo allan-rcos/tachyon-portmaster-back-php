@@ -18,16 +18,20 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace API\Controllers;
 
-use OpenSwoole\Http\Request;
-use OpenSwoole\Http\Response;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Controller interface representing the server operations.
  *
  * This interface defines the main endpoints for general server configuration
- * and information queries.
+ * and information queries. Controllers follow the PSR-15/PSR-7 model: they
+ * receive the server request and return a response; path variables are read
+ * from the request attributes.
  *
  * @license {@link https://www.gnu.org/licenses/gpl-3.0.pt-br.html GPL-3}
  * @copyright 2026 Ricardo Állan Costa
@@ -45,10 +49,8 @@ interface IServerController
      * Provides basic definitions identifying the currently running project
      * status.
      *
-     * @param  Request  $request  The incoming HTTP request.
-     * @param  Response  $response  The outgoing HTTP response.
-     * @param  array<string, string>  $vars  Path variables extracted by FastRoute.
-     * @version 0.0.1
+     * @param  ServerRequestInterface  $request  The incoming HTTP request.
+     * @return ResponseInterface The outgoing HTTP response.
      *
      * @api
      *
@@ -57,10 +59,7 @@ interface IServerController
      *
      * @since 0.0.1 File creation.
      *
+     * @version 0.0.1
      */
-    public function getInfo(
-        Request $request,
-        Response $response,
-        array $vars = []
-    ): void;
+    public function getInfo(ServerRequestInterface $request): ResponseInterface;
 }

@@ -6,7 +6,7 @@ namespace API\Fbs\Auth;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class LoginRequest extends Table
 {
@@ -32,32 +32,32 @@ class LoginRequest extends Table
         return $this;
     }
 
-    public function getEmail()
+    public function getEmail(): ?string
     {
         $o = $this->__offset(4);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    public function getPassword()
+    public function getPassword(): ?string
     {
         $o = $this->__offset(6);
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startLoginRequest(FlatBufferBuilder $builder)
+    public static function startLoginRequest(FlatbufferBuilder $builder)
     {
         $builder->StartObject(2);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return LoginRequest
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createLoginRequest(FlatBufferBuilder $builder, $email, $password)
+    public static function createLoginRequest(FlatbufferBuilder $builder, $email, $password)
     {
         $builder->startObject(2);
         self::addEmail($builder, $email);
@@ -69,30 +69,30 @@ class LoginRequest extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addEmail(FlatBufferBuilder $builder, $email)
+    public static function addEmail(FlatbufferBuilder $builder, $email)
     {
         $builder->addOffsetX(0, $email, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param StringOffset
      * @return void
      */
-    public static function addPassword(FlatBufferBuilder $builder, $password)
+    public static function addPassword(FlatbufferBuilder $builder, $password)
     {
         $builder->addOffsetX(1, $password, 0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endLoginRequest(FlatBufferBuilder $builder)
+    public static function endLoginRequest(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         $builder->required($o, 4);  // email

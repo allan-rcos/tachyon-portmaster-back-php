@@ -6,7 +6,7 @@ namespace API\Fbs\Container;
 use \Google\FlatBuffers\Struct;
 use \Google\FlatBuffers\Table;
 use \Google\FlatBuffers\ByteBuffer;
-use \Google\FlatBuffers\FlatBufferBuilder;
+use \Google\FlatBuffers\FlatbufferBuilder;
 
 class ContainerUpdateRequest extends Table
 {
@@ -33,7 +33,7 @@ class ContainerUpdateRequest extends Table
     }
 
     /**
-     * @return double
+     * @return float
      */
     public function getMaxCapacity()
     {
@@ -42,19 +42,19 @@ class ContainerUpdateRequest extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return void
      */
-    public static function startContainerUpdateRequest(FlatBufferBuilder $builder)
+    public static function startContainerUpdateRequest(FlatbufferBuilder $builder)
     {
         $builder->StartObject(1);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
-     * @return ContainerUpdateRequest
+     * @param FlatbufferBuilder $builder
+     * @return int
      */
-    public static function createContainerUpdateRequest(FlatBufferBuilder $builder, $max_capacity)
+    public static function createContainerUpdateRequest(FlatbufferBuilder $builder, $max_capacity)
     {
         $builder->startObject(1);
         self::addMaxCapacity($builder, $max_capacity);
@@ -63,20 +63,20 @@ class ContainerUpdateRequest extends Table
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @param double
      * @return void
      */
-    public static function addMaxCapacity(FlatBufferBuilder $builder, $maxCapacity)
+    public static function addMaxCapacity(FlatbufferBuilder $builder, $maxCapacity)
     {
         $builder->addDoubleX(0, $maxCapacity, 0.0);
     }
 
     /**
-     * @param FlatBufferBuilder $builder
+     * @param FlatbufferBuilder $builder
      * @return int table offset
      */
-    public static function endContainerUpdateRequest(FlatBufferBuilder $builder)
+    public static function endContainerUpdateRequest(FlatbufferBuilder $builder)
     {
         $o = $builder->endObject();
         return $o;
