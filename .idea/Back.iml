@@ -3,6 +3,7 @@
   <component name="CheckStyle-IDEA-Module" serialisationVersion="2">
     <option name="activeLocationsIds" />
   </component>
+  <component name="Go" enabled="true" />
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
@@ -13,6 +14,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/Infra" isTestSource="false" packagePrefix="Infra\" />
       <sourceFolder url="file://$MODULE_DIR$/src/Shared" isTestSource="false" packagePrefix="Shared\" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="false" packagePrefix="Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/atlas/pdo" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/atlas/query" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/atlas/statement" />
@@ -101,6 +103,7 @@
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/var" />
       <excludeFolder url="file://$MODULE_DIR$/vendor" />
+      <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

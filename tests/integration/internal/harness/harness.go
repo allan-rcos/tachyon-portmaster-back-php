@@ -81,7 +81,7 @@ func SetupPool(ctx context.Context) (*Pool, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	sourceURL := "file://" + filepath.Join(repoRoot, "migrations")
+	sourceURL := "file://" + filepath.Join(repoRoot, "db", "migrations")
 
 	if err := buildAPIImage(ctx, repoRoot); err != nil {
 		return nil, nil, err

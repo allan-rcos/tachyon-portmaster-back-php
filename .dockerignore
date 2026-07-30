@@ -1,8 +1,11 @@
 .git
 .github
 .idea
+.claude
 vendor
 var
+build
+docs
 tests/integration
 node_modules
 *.tmp

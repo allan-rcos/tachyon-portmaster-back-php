@@ -49,18 +49,16 @@ func TestSessionStory(t *testing.T) {
 		assert.Equal(t, harness.AdminEmail, string(created.User(nil).Email()))
 		assert.NotEmpty(t, c.Cookie(t, refreshCookie))
 
-		// The door closes behind the first user, whoever asks next.
 		other := client.New(env.BaseURL)
-		resp := other.Post(t, "/setup", client.SetupBody("Second", "second@portmaster.local", "Portmaster2"))
-		assert.Equal(t, http.StatusConflict, resp.Status)
+		resp := other.Post(t, "/setup", factories.Setup("Second", "second@portmaster.local", "Portmaster2"))
+		assert.Equal(t, http.StatusConflict, resp.Status,
+			"the door closes behind the first user, whoever asks next")
 	})
 
 	t.Run("login refuses bad credentials and accepts the real ones", func(t *testing.T) {
 		wrongPassword := c.Post(t, "/auth/login", factories.Login(harness.AdminEmail, "Wrong-Pass99"))
 		assert.Equal(t, http.StatusUnauthorized, wrongPassword.Status)
 
-		// An unknown e-mail must answer exactly like a wrong password, or the
-		// endpoint becomes a way to enumerate accounts.
 		unknownEmail := c.Post(t, "/auth/login", factories.Login("nobody@portmaster.local", harness.AdminPassword))
 		assert.Equal(t, http.StatusUnauthorized, unknownEmail.Status,
 			"an unknown e-mail must be indistinguishable from a wrong password")
@@ -78,8 +76,7 @@ func TestSessionStory(t *testing.T) {
 			"no refresh cookie at all")
 
 		// Both tokens are signed with the same key, so only the `typ` claim
-		// separates them; without that check this would mint a session from a
-		// credential no marker covers.
+		// separates them.
 		access := c.Cookie(t, authCookie)
 		require.NotEmpty(t, access)
 		c.SetCookie(t, refreshCookie, access)
@@ -100,8 +97,8 @@ func TestSessionStory(t *testing.T) {
 		requireNoContent(t, c.Post(t, "/auth/refresh", nil))
 		assert.NotEqual(t, spent, c.Cookie(t, refreshCookie), "refresh must rotate the token")
 
-		// The spent token is still validly signed and nowhere near expiry: only
-		// the marker knows it has been used, which is the marker's whole job.
+		// Still validly signed and nowhere near expiry — only the marker knows it
+		// was spent, which is the marker's whole job.
 		c.SetCookie(t, refreshCookie, spent)
 		assert.Equal(t, http.StatusUnauthorized, c.Post(t, "/auth/refresh", nil).Status,
 			"a consumed refresh token must not work twice")

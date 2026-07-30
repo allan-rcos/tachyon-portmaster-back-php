@@ -316,6 +316,7 @@ nbdist/
 # .idea/modules
 # *.iml
 # *.ipr
+.idea
 
 # CMake
 cmake-build-*/
@@ -473,3 +474,5 @@ composer.phar
 
 ##### Generated
 var/
+
+.claude

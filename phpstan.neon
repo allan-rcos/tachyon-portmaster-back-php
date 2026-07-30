@@ -7,11 +7,11 @@ parameters:
 includes:
     # Baseline holding **only** findings inside flatc-generated tables. Those
     # files are rewritten on every `composer flatbuffers`, so an error there
-    # cannot be fixed in place — the fix belongs in bin/patch-flatbuffers.php,
+    # cannot be fixed in place — the fix belongs in scripts/patch-flatbuffers.php,
     # which already normalizes builder casing, create*() return docblocks,
     # child-table sentinels, scalar type names and string accessor types.
     #
     # Everything hand-written — including the *Proxy classes that extend the
     # generated tables — stays fully analysed at level 9. Regenerate with
-    # bin/generate-phpstan-baseline.php after changing the schemas.
+    # scripts/generate-phpstan-baseline.php after changing the schemas.
     - phpstan-generated-baseline.neon

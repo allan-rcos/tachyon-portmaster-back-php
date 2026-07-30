@@ -25,11 +25,11 @@ func TestYardStory(t *testing.T) {
 	_, c := adminSession(t)
 
 	var (
-		product   factories.Product
-		productID string
-		container factories.Container
+		product      factories.Product
+		productID    string
+		container    factories.Container
 		container2ID string
-		containerID string
+		containerID  string
 	)
 
 	t.Run("products are catalogued, and invalid ones refused", func(t *testing.T) {
@@ -76,10 +76,10 @@ func TestYardStory(t *testing.T) {
 	})
 
 	t.Run("an empty container cannot be sealed", func(t *testing.T) {
-		// Two rules guard this, and either is a legitimate answer: the status is
-		// not `loading`, and the container is under the 10% floor.
 		resp := c.Post(t, "/containers/"+containerID+"/seal", nil)
-		assert.Equal(t, http.StatusConflict, resp.Status)
+		assert.Equal(t, http.StatusConflict, resp.Status,
+			"two rules refuse this and either answer is legitimate: the status is "+
+				"not loading, and the container is under the 10% floor")
 	})
 
 	t.Run("loading enforces quantity and capacity", func(t *testing.T) {

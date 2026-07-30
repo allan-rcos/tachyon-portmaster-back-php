@@ -77,9 +77,9 @@ jobs:
 
       - name: Verify generated Go bindings are up to date
         run: |
-          bin/generate-flatbuffers-go.sh
+          scripts/generate-flatbuffers-go.sh
           git diff --exit-code tests/integration/internal/fbs \
-            || (echo "::error::Go FlatBuffers bindings are stale — run bin/generate-flatbuffers-go.sh" && exit 1)
+            || (echo "::error::Go FlatBuffers bindings are stale — run scripts/generate-flatbuffers-go.sh" && exit 1)
 
       - name: Run integration suite
-        run: bin/integration-test.sh
+        run: scripts/integration-test.sh

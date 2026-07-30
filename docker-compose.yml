@@ -31,7 +31,7 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - ./migrations:/migrations:ro
+      - ./db/migrations:/migrations:ro
     command:
       - "-path=/migrations"
       - "-database=mysql://root:root@tcp(db:3306)/portmaster?multiStatements=true"
@@ -44,7 +44,7 @@ services:
       migrate:
         condition: service_completed_successfully
     volumes:
-      - ./seeds:/seeds:ro
+      - ./db/seeds:/seeds:ro
     entrypoint:
       - "sh"
       - "-c"

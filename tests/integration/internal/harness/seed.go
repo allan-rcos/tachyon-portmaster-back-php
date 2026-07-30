@@ -9,8 +9,8 @@ package harness
 // constant that would have silently rotted the day the hashing parameters
 // changed.
 const (
-	AdminName     = "Integration Admin"
-	AdminEmail    = "admin@portmaster.local"
+	AdminName  = "Integration Admin"
+	AdminEmail = "admin@portmaster.local"
 	// Satisfies the domain password policy (8+ chars, lower, upper, digit) —
 	// the setup endpoint runs the same validation as any other user creation.
 	AdminPassword = "Portmaster1"

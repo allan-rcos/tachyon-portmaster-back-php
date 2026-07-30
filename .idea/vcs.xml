@@ -5,7 +5,7 @@
     <mapping directory="$PROJECT_DIR$/../../JavaScript/Tachyon/PortMaster" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../../JavaScript/Tachyon/PortMaster/packages/tachyon-design" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../../JavaScript/Tachyon/PortMaster/packages/vike-txiki-adapter" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../../JavaScript/Tachyon/PortMaster/swagger" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../../JavaScript/Tachyon/PortMaster/src/model/contract/swagger" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/swagger" vcs="Git" />
   </component>
 </project>

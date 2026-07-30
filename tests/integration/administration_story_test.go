@@ -40,9 +40,8 @@ func TestAdministrationStory(t *testing.T) {
 		list := decodeRoot(t, requireOK(t, c.Get(t, "/roles")).Body, fbs.GetRootAsRoleListResponse)
 		assert.GreaterOrEqual(t, list.Total(), int32(1))
 
-		// The update is a full replacement, not a merge. There is no
-		// GET /roles/{id} in the contract, so the result is read back off the
-		// listing.
+		// There is no GET /roles/{id} in the contract, so the result is read back
+		// off the listing.
 		requireOK(t, c.Put(t, "/roles/"+roleID+"/permissions",
 			factories.RolePermissions("product:read", "metrics:read")))
 
@@ -95,8 +94,7 @@ func TestAdministrationStory(t *testing.T) {
 	})
 
 	t.Run("the granted permissions are exactly what the user may do", func(t *testing.T) {
-		// The point of everything above: sign in as the user and watch the role
-		// decide. They hold product:read and metrics:read and nothing else.
+		// The role granted above holds product:read and metrics:read, nothing else.
 		asUser := client.New(env.BaseURL)
 		client.LoginAs(t, asUser, user.Email, "Reset-Pass123")
 

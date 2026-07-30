@@ -4,8 +4,7 @@ import (
 	"net/http"
 	"testing"
 
-	flatbuffers "github.com/google/flatbuffers/go"
-
+	"portmaster/tests/integration/internal/factories"
 	"portmaster/tests/integration/internal/fbs"
 )
 
@@ -18,17 +17,7 @@ import (
 func Setup(t *testing.T, c *Client, name, email, password string) *fbs.LoginResponse {
 	t.Helper()
 
-	b := flatbuffers.NewBuilder(0)
-	nameOff := b.CreateString(name)
-	emailOff := b.CreateString(email)
-	passOff := b.CreateString(password)
-	fbs.SetupRequestStart(b)
-	fbs.SetupRequestAddName(b, nameOff)
-	fbs.SetupRequestAddEmail(b, emailOff)
-	fbs.SetupRequestAddPassword(b, passOff)
-	b.Finish(fbs.SetupRequestEnd(b))
-
-	resp := c.Post(t, "/setup", b.FinishedBytes())
+	resp := c.Post(t, "/setup", factories.Setup(name, email, password))
 	if resp.Status != http.StatusCreated {
 		t.Fatalf("setup as %s: status %d", email, resp.Status)
 	}
@@ -41,35 +30,12 @@ func Setup(t *testing.T, c *Client, name, email, password string) *fbs.LoginResp
 func LoginAs(t *testing.T, c *Client, email, password string) *fbs.LoginResponse {
 	t.Helper()
 
-	b := flatbuffers.NewBuilder(0)
-	emailOff := b.CreateString(email)
-	passOff := b.CreateString(password)
-	fbs.LoginRequestStart(b)
-	fbs.LoginRequestAddEmail(b, emailOff)
-	fbs.LoginRequestAddPassword(b, passOff)
-	b.Finish(fbs.LoginRequestEnd(b))
-
-	resp := c.Post(t, "/auth/login", b.FinishedBytes())
+	resp := c.Post(t, "/auth/login", factories.Login(email, password))
 	if resp.Status != http.StatusOK {
 		t.Fatalf("login as %s: status %d", email, resp.Status)
 	}
 
 	return loginResponse(t, resp)
-}
-
-// SetupBody builds a POST /setup payload without sending it — for the case a
-// test needs to drive the response itself (asserting the 409, for instance).
-func SetupBody(name, email, password string) []byte {
-	b := flatbuffers.NewBuilder(0)
-	nameOff := b.CreateString(name)
-	emailOff := b.CreateString(email)
-	passOff := b.CreateString(password)
-	fbs.SetupRequestStart(b)
-	fbs.SetupRequestAddName(b, nameOff)
-	fbs.SetupRequestAddEmail(b, emailOff)
-	fbs.SetupRequestAddPassword(b, passOff)
-	b.Finish(fbs.SetupRequestEnd(b))
-	return b.FinishedBytes()
 }
 
 // loginResponse decodes a session body, failing rather than panicking when the
