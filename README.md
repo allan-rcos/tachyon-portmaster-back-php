@@ -6,6 +6,8 @@ Produtos são catalogados, contêineres são registrados, carga é embarcada e d
 
 O projeto é uma **base de ecossistema para APIs de alto desempenho** — arquitetura em cinco camadas com dependências de mão única, autorização declarada pelo próprio caso de uso, erros como valores em vez de exceções, e um formato de fio binário gerado a partir de schemas versionados.
 
+[![CI](https://img.shields.io/github/actions/workflow/status/allan-rcos/tachyon-portmaster-back-php/ci.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&label=CI)](https://github.com/allan-rcos/tachyon-portmaster-back-php/actions/workflows/ci.yml)
+
 ![PHP](https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white)
 ![OpenSwoole](https://img.shields.io/badge/OpenSwoole-1F6FEB?style=for-the-badge&logo=php&logoColor=white)
 ![FlatBuffers](https://img.shields.io/badge/FlatBuffers-4285F4?style=for-the-badge&logo=google&logoColor=white)
@@ -100,7 +102,7 @@ A sessão trafega em cookies `HttpOnly`: um JWT HS256 de curta duração e um *r
 Os schemas FlatBuffers vivem no submódulo `swagger/` — sem ele não há formato de fio para gerar.
 
 ```bash
-git clone --recurse-submodules <url-do-repositorio> portmaster
+git clone --recurse-submodules git@github.com:allan-rcos/tachyon-portmaster-back-php.git portmaster
 cd portmaster
 ```
 
