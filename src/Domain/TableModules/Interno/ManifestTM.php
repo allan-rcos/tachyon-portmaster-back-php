@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -19,6 +14,7 @@
 namespace Domain\TableModules\Interno;
 
 use Domain\Enums\ContainerStatus;
+use Domain\Enums\TelemetryEvent;
 use Domain\Models\IContainer;
 use Domain\Models\IManifestCargo;
 use Domain\Models\IManifestChange;
@@ -50,11 +46,6 @@ use Shared\Exceptions\Result;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -64,39 +55,8 @@ readonly final class ManifestTM implements IManifestTM
      * @var float Tolerance for every float comparison here. Weights accumulate
      *            through multiplication and subtraction, so "equal to capacity"
      *            and "down to zero" are never exact.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const float EPSILON = 0.0000001;
-
-    /**
-     * Telemetry event slug for a load.
-     *
-     * A local constant rather than a shared enum: telemetry events are system
-     * metadata ({@see \Domain\Models\ITelemetryEvent}), registered at boot by
-     * the application layer. A central enum would put the domain back in charge
-     * of enumerating them.
-     *
-     * @var string Matches what the application registers.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     */
-    private const string EVENT_LOAD = 'load';
-
-    /**
-     * Telemetry event slug for an unload. See {@see EVENT_LOAD}.
-     *
-     * @var string Matches what the application registers.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     */
-    private const string EVENT_UNLOAD = 'unload';
 
     /**
      * Loads a quantity of a product into the container.
@@ -116,11 +76,6 @@ readonly final class ManifestTM implements IManifestTM
      *                                 transit, or the load would overflow it.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function load(IContainer $container, IProduct $product, float $quantity, ?IManifestCargo $current): Result
     {
@@ -154,7 +109,7 @@ readonly final class ManifestTM implements IManifestTM
             productId: $product->id,
             cargo: $cargo,
             clearManifest: false,
-            event: self::EVENT_LOAD,
+            event: TelemetryEvent::Load,
         ));
     }
 
@@ -185,11 +140,6 @@ readonly final class ManifestTM implements IManifestTM
      *                                 holds less than was asked for.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function unload(IContainer $container, IProduct $product, float $quantity, ?IManifestCargo $current): Result
     {
@@ -217,7 +167,7 @@ readonly final class ManifestTM implements IManifestTM
                 productId: $product->id,
                 cargo: null,
                 clearManifest: true,
-                event: self::EVENT_UNLOAD,
+                event: TelemetryEvent::Unload,
             ));
         }
 
@@ -231,7 +181,7 @@ readonly final class ManifestTM implements IManifestTM
             productId: $product->id,
             cargo: $cargo,
             clearManifest: false,
-            event: self::EVENT_UNLOAD,
+            event: TelemetryEvent::Unload,
         ));
     }
 
@@ -244,11 +194,6 @@ readonly final class ManifestTM implements IManifestTM
      * @return Container A new instance; the argument is unchanged.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function withWeightAndStatus(IContainer $container, float $weight, ContainerStatus $status): Container
     {
@@ -273,11 +218,6 @@ readonly final class ManifestTM implements IManifestTM
      * @return Result<never> A failure carrying both.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function fail(string $message, int $code): Result
     {

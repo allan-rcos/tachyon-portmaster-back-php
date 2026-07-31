@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -20,30 +15,28 @@ declare(strict_types=1);
 
 namespace Infra\Query\Container;
 
+use Domain\Enums\TelemetryEvent;
+
 /**
  * One entry of a container's telemetry log.
  *
- * The event arrives as the stored slug rather than a resolved
- * {@see \Domain\Models\ITelemetryEvent}: the log row persists the slug, so
- * reading it back needs no trip through the registry.
+ * The event is resolved to {@see \Domain\Enums\TelemetryEvent} here, so nothing
+ * above this layer handles the stored string. A row whose stored value matches
+ * no case cannot be resolved and is dropped by
+ * {@see \Infra\Query\Interno\ListContainerSummariesDQL::logs()} — see there for
+ * why dropping is preferred to inventing a case.
  *
  * @see ContainerSummaryViewItem What carries a list of these.
  * @see \Infra\Repository\IManifestRepository::insertTelemetry() What writes the rows.
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 final readonly class TelemetryLogView
 {
     /**
      * @param  string  $id  Base62 encoding of the row's auto-increment id.
-     * @param  string  $event  The telemetry event slug
-     *                         (see {@see \Domain\Models\ITelemetryEvent}).
+     * @param  TelemetryEvent  $event  What the row records having happened.
      * @param  string|null  $description  Free text, or null when the entry was
      *                                    written without one.
      * @param  string|null  $timestamp  When the database stamped it, as the
@@ -51,15 +44,10 @@ final readonly class TelemetryLogView
      *                                  could not be read as a string.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         public string $id,
-        public string $event,
+        public TelemetryEvent $event,
         public ?string $description,
         public ?string $timestamp,
     ) {

@@ -2,7 +2,7 @@
 --
 -- Ids are application-generated Snowflakes (BIGINT UNSIGNED), Base62-encoded at
 -- the edge; only telemetry_logs auto-increments. Weights/capacities are DOUBLE
--- (PHP float). Enum-like columns (status, risk_class) are stored as their string
+-- (PHP float). Enum-like columns (status, risk_class, event) are stored as their string
 -- values. search_* columns hold the normalised LIKE-filter key.
 --
 -- Every statement is written to survive being applied twice. golang-migrate

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <phpdocumentor configVersion="3.0">
     <paths>
-        <output>build/docs</output>
+        <output>docs/phpdocumentor</output>
         <cache>build/docs-cache</cache>
     </paths>
     <version number="0.0.1">
@@ -64,6 +64,7 @@
                 <path>src/API/Fbs/Common/ContainerStatus.php</path>
                 <path>src/API/Fbs/Common/ProblemDetails.php</path>
                 <path>src/API/Fbs/Common/RiskClass.php</path>
+                <path>src/API/Fbs/Common/TelemetryEvent.php</path>
                 <path>src/API/Fbs/Container/CargoManifestItem.php</path>
                 <path>src/API/Fbs/Container/ContainerCreateRequest.php</path>
                 <path>src/API/Fbs/Container/ContainerListResponse.php</path>
@@ -75,6 +76,8 @@
                 <path>src/API/Fbs/Manifest/LoadItemRequest.php</path>
                 <path>src/API/Fbs/Manifest/ManifestResponse.php</path>
                 <path>src/API/Fbs/Manifest/UnloadItemRequest.php</path>
+                <path>src/API/Fbs/Metadata/MetadataItemResponse.php</path>
+                <path>src/API/Fbs/Metadata/PermissionListResponse.php</path>
                 <path>src/API/Fbs/Metrics/MetricsResponse.php</path>
                 <path>src/API/Fbs/Metrics/OccupancyDivision.php</path>
                 <path>src/API/Fbs/Product/ProductCreateRequest.php</path>

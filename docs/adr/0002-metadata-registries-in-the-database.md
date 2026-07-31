@@ -4,8 +4,8 @@
 
 ## Context
 
-Permissions, telemetry events and marker groups are families of code-declared
-entries, keyed by slug and registered at boot. They are read on the
+Permissions and marker groups are families of code-declared entries, keyed by
+slug and registered at boot. They are read on the
 authorization path of every request, so they need to be fast.
 
 The first implementation gave each registry its own `OpenSwoole\Table` — shared
@@ -26,9 +26,16 @@ have had.
 Store the registries in MariaDB, in `ENGINE=MEMORY` tables, and give markers the
 same machinery.
 
-`SqlMetadataRegistry` is the shared base; `PermissionRegistry`,
-`TelemetryEventRegistry` and `MarkerGroupRegistry` supply only `hydrate()`,
-`label()` and `table()`.
+`SqlMetadataRegistry` is the shared base; `PermissionRegistry` and
+`MarkerGroupRegistry` supply only `hydrate()`, `label()` and `table()`.
+
+Telemetry events were in this family at first and are not any more. The test for
+belonging here is whether the set is *declared* — whether an entry exists only
+because some use case said so, leaving it unknowable from the schema. A
+permission passes: it exists because a constructor declared it. A telemetry event
+does not — the container domain fixes what is worth recording, and a new one is a
+code change to `ManifestTM`, not a registration. It is a
+`Domain\Enums\TelemetryEvent` now, alongside `ContainerStatus` and `RiskClass`.
 
 Registration is idempotent by slug, and deliberately read-then-insert rather
 than an upsert: a slug *is* the whole entry, so a row that already exists is

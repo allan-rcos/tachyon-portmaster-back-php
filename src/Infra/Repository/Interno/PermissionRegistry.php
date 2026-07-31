@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -39,11 +34,6 @@ use Shared\Exceptions\Result;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @extends SqlMetadataRegistry<IPermission>
  *
@@ -60,11 +50,6 @@ final class PermissionRegistry extends SqlMetadataRegistry implements IPermissio
      *                             a 500 failure when the write fails.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function add(IPermission $permission): Result
     {
@@ -78,11 +63,6 @@ final class PermissionRegistry extends SqlMetadataRegistry implements IPermissio
      * @return ?IPermission Null when unknown, or the read failed.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function getBySlug(string $slug): ?IPermission
     {
@@ -96,11 +76,6 @@ final class PermissionRegistry extends SqlMetadataRegistry implements IPermissio
      * @return ?IPermission Null when unknown, or the read failed.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function getById(int $id): ?IPermission
     {
@@ -114,11 +89,6 @@ final class PermissionRegistry extends SqlMetadataRegistry implements IPermissio
      *                          registered anything.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function all(): Seq
     {
@@ -133,11 +103,6 @@ final class PermissionRegistry extends SqlMetadataRegistry implements IPermissio
      * @return IPermission The concrete permission.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected function hydrate(string $slug, int $id): IPermission
     {
@@ -150,11 +115,6 @@ final class PermissionRegistry extends SqlMetadataRegistry implements IPermissio
      * @return string `permission`.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected function label(): string
     {
@@ -167,11 +127,6 @@ final class PermissionRegistry extends SqlMetadataRegistry implements IPermissio
      * @return string `permissions`.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected function table(): string
     {

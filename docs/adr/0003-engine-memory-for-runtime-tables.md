@@ -4,9 +4,9 @@
 
 ## Context
 
-Four tables — `permissions`, `telemetry_events`, `marker_groups`, `markers` —
-are unlike the rest of the schema. Their contents are either rebuilt from the
-code on every boot (the metadata registries, see
+Three tables — `permissions`, `marker_groups`, `markers` — are unlike the rest
+of the schema. Their contents are either rebuilt from the code on every boot
+(the metadata registries, see
 [0002](0002-metadata-registries-in-the-database.md)) or bounded by a TTL (the
 markers). Nothing in them is authored by a user or recoverable only from disk.
 

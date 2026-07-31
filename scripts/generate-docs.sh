@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 #
-# Renders the PHPDoc blocks in src/ into browsable HTML under build/docs, using
-# the configuration in phpdoc.dist.xml.
+# Renders the PHPDoc blocks in src/ into browsable HTML under docs/phpdocumentor,
+# using the configuration in phpdoc.dist.xml.
+#
+# The output is committed rather than gitignored, because GitHub Pages serves
+# this repository's docs/ directory — so the rendered API reference is only
+# published if it is in the tree. The cache stays under build/, which is not.
 #
 # phpDocumentor is deliberately NOT a composer dependency: it pulls a large
 # tree of its own (its Twig, Symfony and phpDocumentor/* constraints) that
@@ -37,7 +41,7 @@ cd "$ROOT"
 # The cache survives between runs and makes an incremental render much faster,
 # but it also keeps stale entries for files that no longer exist. Callers who
 # want a clean render pass --force, which phpdoc understands.
-mkdir -p build/docs build/docs-cache
+mkdir -p docs/phpdocumentor build/docs-cache
 
 if [ -n "${PHPDOC:-}" ]; then
     exec "$PHPDOC" "${DEFAULT_FLAGS[@]}" "$@"
@@ -55,8 +59,8 @@ fi
 
 echo "phpdoc not found on PATH — falling back to $IMAGE"
 
-# --user keeps build/ owned by the caller instead of root, which otherwise makes
-# the next non-Docker run fail on the cache directory.
+# --user keeps the output and cache owned by the caller instead of root, which
+# otherwise makes the next non-Docker run fail on the cache directory.
 exec docker run --rm \
     --user "$(id -u):$(id -g)" \
     --volume "$ROOT:/data" \

@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -53,11 +48,6 @@ use Throwable;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -66,20 +56,12 @@ final readonly class SqlUserRepository implements IUserRepository
     /**
      * @var string The table the user statements address; the pivot is named
      *             inline by {@see syncRoles()}.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const string TABLE_NAME = 'users';
 
     /**
      * @var ILogger Channelled copy, so these lines are attributable to this
      *              repository rather than to the request at large.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ILogger $logger;
 
@@ -91,11 +73,6 @@ final readonly class SqlUserRepository implements IUserRepository
      *                                    held, since it changes per request.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         ILogger $logger,
@@ -122,11 +99,6 @@ final readonly class SqlUserRepository implements IUserRepository
      *                      not recognise.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function syncRoles(string $userId, array $roleIds): Result
     {
@@ -172,11 +144,6 @@ final readonly class SqlUserRepository implements IUserRepository
      *                       read threw.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function findById(string $id): Result
     {
@@ -192,11 +159,6 @@ final readonly class SqlUserRepository implements IUserRepository
      *                      database it could not read.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function hasAny(): Result
     {
@@ -242,11 +204,6 @@ final readonly class SqlUserRepository implements IUserRepository
      *                       select threw.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function findBy(int|string $value, string $column): Result
     {
@@ -298,11 +255,6 @@ final readonly class SqlUserRepository implements IUserRepository
      *                       read threw.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function findByEmail(string $email): Result
     {
@@ -317,11 +269,6 @@ final readonly class SqlUserRepository implements IUserRepository
      *                      Matching no row is only logged.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function delete(string $id): Result
     {
@@ -368,11 +315,6 @@ final readonly class SqlUserRepository implements IUserRepository
      *                      which includes an address the unique index rejects.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function insert(IUser $user): Result
     {
@@ -417,11 +359,6 @@ final readonly class SqlUserRepository implements IUserRepository
      *                      Matching no row is only logged.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function update(IUser $user): Result
     {

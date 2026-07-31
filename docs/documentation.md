@@ -5,7 +5,7 @@ Everything else — the why, the guides, the ADRs — lives here in `docs/` and 
 the per-directory READMEs.
 
 ```bash
-composer phpdoc          # renders to build/docs/latest
+composer phpdoc          # renders to docs/phpdocumentor
 ```
 
 `scripts/generate-docs.sh` prefers a `phpdoc` binary on `PATH` and falls back to
@@ -13,8 +13,10 @@ the `phpdoc/phpdoc` Docker image. phpDocumentor is deliberately **not** a
 composer dependency: its own Twig/Symfony constraints conflict with what the
 application and PHPStan pin, which is why upstream ships a PHAR and an image.
 
-Configuration is `phpdoc.dist.xml`. Output goes to `build/`, which is
-gitignored.
+Configuration is `phpdoc.dist.xml`. Output goes to `docs/phpdocumentor`, which
+is **committed**: GitHub Pages serves this repository's `docs/` directory, so the
+rendered reference is only published if it is in the tree. Only the render cache
+stays under the gitignored `build/`.
 
 ## What gets documented
 
@@ -52,13 +54,8 @@ identical in every file; only the title and `@category` change.
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -90,11 +87,6 @@ something a reader could not infer. Cross-reference rather than repeat:
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 ```
 
@@ -109,11 +101,6 @@ something a reader could not infer. Cross-reference rather than repeat:
  * @return Result<IProduct> A 422 failure when a rule is broken.
  *
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @api
  */
@@ -144,6 +131,10 @@ rule despite spelling the directory in English.
 visible — drop the flag to render the contract-only view.
 
 ## Rules
+
+**No `@since`, `@version` or `@author`.** Git already records who touched a line
+and in which release it landed, and a hand-maintained copy of that only goes
+stale. `@license` and `@copyright` stay — they say something git does not.
 
 **Never delete a PHPStan generic.** `@template`, `@extends`, `@return Seq<T>`,
 `@return Result<TItem>`, `@var list<...>` carry typing that level 9 depends on.

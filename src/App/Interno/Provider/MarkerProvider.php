@@ -5,13 +5,8 @@
  *
  * @category Application
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -50,11 +45,6 @@ use App\Services\ISetMarkerUseCase;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -68,11 +58,6 @@ final class MarkerProvider extends FeatureProvider
      * {@see FeatureProvider::registrar()}.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function registerMarkerGroupUseCase(): IRegisterMarkerGroupUseCase
     {
@@ -86,11 +71,6 @@ final class MarkerProvider extends FeatureProvider
      * Builds the {@see ISetMarkerUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function setMarkerUseCase(): ISetMarkerUseCase
     {
@@ -104,11 +84,6 @@ final class MarkerProvider extends FeatureProvider
      * Builds the {@see IGetMarkerUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function getMarkerUseCase(): IGetMarkerUseCase
     {

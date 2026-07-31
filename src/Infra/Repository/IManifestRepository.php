@@ -5,19 +5,15 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
 
 namespace Infra\Repository;
 
+use Domain\Enums\TelemetryEvent;
 use Domain\Models\IManifestCargo;
 use Shared\Exceptions\Result;
 
@@ -40,11 +36,6 @@ use Shared\Exceptions\Result;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 interface IManifestRepository
 {
@@ -61,11 +52,6 @@ interface IManifestRepository
      *                                     broke", which is the 500.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -87,11 +73,6 @@ interface IManifestRepository
      *                      exists — the foreign keys reject it.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -106,11 +87,6 @@ interface IManifestRepository
      *                      Matching no line is *not* a failure.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -127,11 +103,6 @@ interface IManifestRepository
      *                      already-empty manifest is *not* a failure.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -146,19 +117,14 @@ interface IManifestRepository
      * request.
      *
      * @param  string  $containerId  Base62 id of the container.
-     * @param  string  $event  Slug of a registered telemetry event.
-     * @param  string|null  $description  Free text, or null when the slug says
+     * @param  TelemetryEvent  $event  What the entry records having happened.
+     * @param  string|null  $description  Free text, or null when the event says
      *                                    enough on its own.
      * @return Result<null> Void on success; a 500 failure on a write error.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
-    public function insertTelemetry(string $containerId, string $event, ?string $description): Result;
+    public function insertTelemetry(string $containerId, TelemetryEvent $event, ?string $description): Result;
 }

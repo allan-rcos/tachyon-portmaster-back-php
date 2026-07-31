@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -50,11 +45,6 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -67,11 +57,6 @@ final readonly class ManifestController implements IManifestController
      * @param  IUnloadItemUseCase  $unloadItem  Backs {@see unloadItem()}.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private ILoadItemUseCase $loadItem,
@@ -91,11 +76,6 @@ final readonly class ManifestController implements IManifestController
      *                           container will not take the cargo.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function loadItem(ServerRequestInterface $request): ResponseInterface
     {
@@ -131,11 +111,6 @@ final readonly class ManifestController implements IManifestController
      *                           container will not give the cargo up.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function unloadItem(ServerRequestInterface $request): ResponseInterface
     {
@@ -170,11 +145,6 @@ final readonly class ManifestController implements IManifestController
      * @return ManifestResponseProxy Ready to serialize.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function response(string $message, IContainer $container): ManifestResponseProxy
     {

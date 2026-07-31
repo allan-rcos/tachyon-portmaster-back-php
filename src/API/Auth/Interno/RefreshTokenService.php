@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -61,11 +56,6 @@ use Shared\Exceptions\Result;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -75,19 +65,11 @@ final readonly class RefreshTokenService implements IRefreshTokenService
      * The marker group every refresh token is flagged in.
      *
      * @var string
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const string GROUP = 'refresh-token';
 
     /**
      * @var string The registered group's id, as the registrar returned it.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private string $group;
 
@@ -106,11 +88,6 @@ final readonly class RefreshTokenService implements IRefreshTokenService
      *                                                  here.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private ITokenService $tokens,
@@ -134,11 +111,6 @@ final readonly class RefreshTokenService implements IRefreshTokenService
      * @return Result<string> The token, or the marker write's own failure.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function issue(IUser $user): Result
     {
@@ -173,11 +145,6 @@ final readonly class RefreshTokenService implements IRefreshTokenService
      *         underlying failure when a marker write fails.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function rotate(string $token): Result
     {
@@ -237,11 +204,6 @@ final readonly class RefreshTokenService implements IRefreshTokenService
      * @return Result<null> Failure only when the marker could not be written.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function revoke(string $token): Result
     {
@@ -256,11 +218,6 @@ final readonly class RefreshTokenService implements IRefreshTokenService
      * @return Result<null> Failure only when the marker could not be written.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function consume(string $token): Result
     {
@@ -282,11 +239,6 @@ final readonly class RefreshTokenService implements IRefreshTokenService
      *                        rolled back; or the boundary's failure.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function inTransaction(callable $operation): Result
     {
@@ -317,11 +269,6 @@ final readonly class RefreshTokenService implements IRefreshTokenService
      * @return Result<never> A 401 that names no specific cause.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private static function invalid(): Result
     {

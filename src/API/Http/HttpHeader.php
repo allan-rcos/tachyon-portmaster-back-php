@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -31,49 +26,28 @@ namespace API\Http;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 enum HttpHeader: string
 {
     /**
      * What the client wants back; drives the response {@see ContentKind}.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case Accept = 'Accept';
 
     /**
      * What the payload is. Read off the request to pick a decoder, written on
      * the response to declare the encoding.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case ContentType = 'Content-Type';
 
     /**
      * The per-request correlation id, echoed back on every response.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case RequestId = 'X-Request-Id';
 
     /**
      * Carries the auth cookies. Appended rather than set, since a login writes
      * two of them.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case SetCookie = 'Set-Cookie';
 }

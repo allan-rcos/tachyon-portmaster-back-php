@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -51,11 +46,6 @@ use Shared\Exceptions\Result;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -65,10 +55,6 @@ final readonly class UnitOfWorkIterator implements IUnitOfWork
      * @var Seq<IUnitOfWork> The participants, in registration order — which is
      *                       the order they are opened and committed in, and the
      *                       reverse of the order they are rolled back in.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private Seq $participants;
 
@@ -79,11 +65,6 @@ final readonly class UnitOfWorkIterator implements IUnitOfWork
      *                                        succeeds without doing anything.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(IUnitOfWork ...$participants)
     {
@@ -106,11 +87,6 @@ final readonly class UnitOfWorkIterator implements IUnitOfWork
      *                      first failure.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function begin(): Result
     {
@@ -149,11 +125,6 @@ final readonly class UnitOfWorkIterator implements IUnitOfWork
      * @return Result<null> Void when all committed; otherwise the first failure.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function commit(): Result
     {
@@ -170,11 +141,6 @@ final readonly class UnitOfWorkIterator implements IUnitOfWork
      *                      failure.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function rollback(): Result
     {
@@ -198,11 +164,6 @@ final readonly class UnitOfWorkIterator implements IUnitOfWork
      * @return Result<null> Void when none failed; otherwise the first failure.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function runAll(Seq $participants, bool $rollback = false): Result
     {

@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -47,11 +42,6 @@ use Infra\Query\User\UserListView;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @implements IDQL<UserListView>
  *
@@ -62,10 +52,6 @@ final readonly class ListUsersDQL implements IDQL
     /**
      * @var int Page size when the caller named none, or named one that was not
      *          positive.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int DEFAULT_LIMIT = 20;
 
@@ -76,11 +62,6 @@ final readonly class ListUsersDQL implements IDQL
      *                           {@see DEFAULT_LIMIT}.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private ?int $page = null,
@@ -99,11 +80,6 @@ final readonly class ListUsersDQL implements IDQL
      * @return SqlQuery The statement, with no bindings.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function toSql(): SqlQuery
     {
@@ -164,11 +140,6 @@ final readonly class ListUsersDQL implements IDQL
      * @return UserListView The page; empty when nothing matched.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function hydrate(array $rows): UserListView
     {
@@ -219,11 +190,6 @@ final readonly class ListUsersDQL implements IDQL
      *             otherwise.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function effectiveLimit(): int
     {

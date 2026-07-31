@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -23,6 +18,7 @@ namespace Infra\Repository\Interno;
 use Atlas\Query\Delete;
 use Atlas\Query\Insert;
 use Atlas\Query\Select;
+use Domain\Enums\TelemetryEvent;
 use Domain\ID\Base62;
 use Domain\Models\IManifestCargo;
 use Infra\Database\IPdoTransaction;
@@ -55,11 +51,6 @@ use Throwable;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -67,29 +58,17 @@ final readonly class SqlManifestRepository implements IManifestRepository
 {
     /**
      * @var string The cargo lines: one row per container-and-product pair.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const string CARGO_TABLE = 'container_items';
 
     /**
      * @var string The append-only history beside them.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const string TELEMETRY_TABLE = 'telemetry_logs';
 
     /**
      * @var ILogger Channelled copy, so these lines are attributable to this
      *              repository rather than to the request at large.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ILogger $logger;
 
@@ -101,11 +80,6 @@ final readonly class SqlManifestRepository implements IManifestRepository
      *                                    held, since it changes per request.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         ILogger $logger,
@@ -124,11 +98,6 @@ final readonly class SqlManifestRepository implements IManifestRepository
      *                                     failure when it threw.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function findCargo(string $containerId, string $productId): Result
     {
@@ -176,11 +145,6 @@ final readonly class SqlManifestRepository implements IManifestRepository
      *                      foreign keys no longer recognise.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function upsertCargo(IManifestCargo $cargo): Result
     {
@@ -220,11 +184,6 @@ final readonly class SqlManifestRepository implements IManifestRepository
      *                      Matching no line is *not* a failure.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function deleteCargo(string $containerId, string $productId): Result
     {
@@ -258,11 +217,6 @@ final readonly class SqlManifestRepository implements IManifestRepository
      *                      An already-empty manifest is *not* a failure.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function clearManifest(string $containerId): Result
     {
@@ -291,20 +245,18 @@ final readonly class SqlManifestRepository implements IManifestRepository
      * computed, so entries written by different workers order against one clock.
      * The id is the table's auto-increment, so neither is bound as a parameter.
      *
+     * The event is stored as its own string value, not as an ordinal: the column
+     * outlives any particular build, and a row read back years later has to say
+     * what happened without the enum's declaration order being at hand.
+     *
      * @param  string  $containerId  Base62 id of the container.
-     * @param  string  $event  Slug of a registered telemetry event; stored as
-     *                         given, not resolved to a registry index.
+     * @param  TelemetryEvent  $event  What the entry records having happened.
      * @param  string|null  $description  Free text, or null.
      * @return Result<null> Void on success; a 500 failure when the insert threw.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
-    public function insertTelemetry(string $containerId, string $event, ?string $description): Result
+    public function insertTelemetry(string $containerId, TelemetryEvent $event, ?string $description): Result
     {
         $result = $this->session->getTransaction();
         if (!$result->isSuccess()) return Result::failure($result->getErrorId());
@@ -316,7 +268,7 @@ final readonly class SqlManifestRepository implements IManifestRepository
                 ->into(self::TELEMETRY_TABLE)
                 ->columns([
                     'container_id' => Base62::decode($containerId),
-                    'event' => $event,
+                    'event' => $event->value,
                     'description' => $description,
                 ])
                 ->set('timestamp', 'NOW()')
@@ -345,11 +297,6 @@ final readonly class SqlManifestRepository implements IManifestRepository
      *                      callers can hand it straight back.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function fail(string $action, array $details, Throwable $e): Result
     {

@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -40,11 +35,6 @@ use Shared\Exceptions\Result;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -54,10 +44,6 @@ readonly final class ProductTM implements IProductTM
      * @var int Matches the `VARCHAR(255)` the name column is declared as; a
      *          longer value would be truncated by the database rather than
      *          rejected.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int MAX_NAME_LENGTH = 255;
 
@@ -68,11 +54,6 @@ readonly final class ProductTM implements IProductTM
      *                                             flavour.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private IDatabaseIdGenerator $idGenerator,
@@ -88,11 +69,6 @@ readonly final class ProductTM implements IProductTM
      * @return Result<IProduct> A 422 failure listing every field that broke a rule.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function create(string $name, float $density, RiskClass $riskClass): Result
     {
@@ -119,11 +95,6 @@ readonly final class ProductTM implements IProductTM
      * @return Result<IProduct> A 422 failure listing every field that broke a rule.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function update(string $id, string $name, float $density, RiskClass $riskClass): Result
     {
@@ -155,11 +126,6 @@ readonly final class ProductTM implements IProductTM
      * @return Map<string, string> Field name to message; empty when valid.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function validate(string $name, float $density): Map
     {

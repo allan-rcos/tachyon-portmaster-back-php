@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -30,20 +25,11 @@ namespace Domain\Models;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 interface IUser
 {
     /**
      * @var string Application-generated Snowflake, Base62-encoded at the edge.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public string $id {
         get;
@@ -51,10 +37,6 @@ interface IUser
 
     /**
      * @var string Display name.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public string $name {
         get;
@@ -63,10 +45,6 @@ interface IUser
     /**
      * @var string The sign-in identity. Unique across all users; the database
      *             enforces it as well as the domain.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public string $email {
         get;
@@ -78,10 +56,6 @@ interface IUser
      * system ever holds it.
      *
      * @var string Argon2id hash, never the password.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public string $passwordHash {
         get;
@@ -90,10 +64,6 @@ interface IUser
     /**
      * @var list<IRole> Roles held, in assignment order. Their permission slugs
      *                  are what the authorization guard checks against.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public array $roles {
         get;

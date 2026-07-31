@@ -10,11 +10,11 @@ seed data live in [`db/`](../db); the operational reference is
 `containers`, `container_items`, `telemetry_logs`. Business data, transactional,
 survives a restart.
 
-**Runtime (`ENGINE=MEMORY`)** — `permissions`, `telemetry_events`,
-`marker_groups`, `markers`. Everything here is either rebuilt from the code on
-every boot or bounded by a TTL, so durability buys nothing and the round-trip
-cost is what matters — these are read on the authorization path of every
-request. The consequences are real and deliberate; see
+**Runtime (`ENGINE=MEMORY`)** — `permissions`, `marker_groups`, `markers`.
+Everything here is either rebuilt from the code on every boot or bounded by a
+TTL, so durability buys nothing and the round-trip cost is what matters — these
+are read on the authorization path of every request. The consequences are real
+and deliberate; see
 [ADR 0003](adr/0003-engine-memory-for-runtime-tables.md).
 
 The one that catches people: **MEMORY is not transactional**. A `ROLLBACK` will

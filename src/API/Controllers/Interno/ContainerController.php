@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -68,11 +63,6 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -93,11 +83,6 @@ final readonly class ContainerController implements IContainerController
      *                                                        {@see dispatch()}.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private IListContainersUseCase $listContainers,
@@ -123,11 +108,6 @@ final readonly class ContainerController implements IContainerController
      *                           document.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function list(ServerRequestInterface $request): ResponseInterface
     {
@@ -177,11 +157,6 @@ final readonly class ContainerController implements IContainerController
      *                           problem document.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function summary(ServerRequestInterface $request): ResponseInterface
     {
@@ -225,11 +200,6 @@ final readonly class ContainerController implements IContainerController
      *                           problem document.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function create(ServerRequestInterface $request): ResponseInterface
     {
@@ -263,11 +233,6 @@ final readonly class ContainerController implements IContainerController
      *                           document — 404 when nothing matches the id.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function get(ServerRequestInterface $request): ResponseInterface
     {
@@ -299,11 +264,6 @@ final readonly class ContainerController implements IContainerController
      *                           document — 404 when nothing matches the id.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function update(ServerRequestInterface $request): ResponseInterface
     {
@@ -336,11 +296,6 @@ final readonly class ContainerController implements IContainerController
      * @return ResponseInterface An empty 204, or a problem document.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function delete(ServerRequestInterface $request): ResponseInterface
     {
@@ -367,11 +322,6 @@ final readonly class ContainerController implements IContainerController
      *                           sealed.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function seal(ServerRequestInterface $request): ResponseInterface
     {
@@ -397,11 +347,6 @@ final readonly class ContainerController implements IContainerController
      *                           the container is not sealed, or already gone.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function dispatch(ServerRequestInterface $request): ResponseInterface
     {
@@ -426,11 +371,6 @@ final readonly class ContainerController implements IContainerController
      * @return ContainerResponseProxy Ready to serialize.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function containerResponse(ContainerViewItem $item): ContainerResponseProxy
     {
@@ -453,11 +393,6 @@ final readonly class ContainerController implements IContainerController
      * @return ContainerResponseProxy Ready to serialize.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function fromModel(IContainer $container): ContainerResponseProxy
     {
@@ -477,11 +412,6 @@ final readonly class ContainerController implements IContainerController
      * @return ContainerSummaryResponseProxy Ready to serialize.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function summaryResponse(ContainerSummaryViewItem $item): ContainerSummaryResponseProxy
     {

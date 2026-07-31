@@ -4,5 +4,4 @@ DROP EVENT IF EXISTS purge_expired_markers;
 
 DROP TABLE IF EXISTS markers;
 DROP TABLE IF EXISTS marker_groups;
-DROP TABLE IF EXISTS telemetry_events;
 DROP TABLE IF EXISTS permissions;

@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -33,20 +28,11 @@ use Domain\Enums\ContainerStatus;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 interface IContainer
 {
     /**
      * @var string Application-generated Snowflake, Base62-encoded at the edge.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public string $id {
         get;
@@ -55,10 +41,6 @@ interface IContainer
     /**
      * @var string Yard-facing identifier (e.g. `CT-0001`). Unique across the
      *             whole yard — the database enforces it as well as the domain.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public string $code {
         get;
@@ -72,10 +54,6 @@ interface IContainer
      * outside the manifest use cases may write it.
      *
      * @var float Kilograms; never negative, never above {@see $maxCapacity}.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public float $currentWeight {
         get;
@@ -84,10 +62,6 @@ interface IContainer
     /**
      * @var float Kilograms the container can hold. Loading past it is refused
      *            with a 409.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public float $maxCapacity {
         get;
@@ -95,10 +69,6 @@ interface IContainer
 
     /**
      * @var ContainerStatus Where the container is in its lifecycle.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public ContainerStatus $status {
         get;

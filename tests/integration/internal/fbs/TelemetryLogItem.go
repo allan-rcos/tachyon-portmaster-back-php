@@ -49,12 +49,16 @@ func (rcv *TelemetryLogItem) Id() []byte {
 	return nil
 }
 
-func (rcv *TelemetryLogItem) Event() []byte {
+func (rcv *TelemetryLogItem) Event() TelemetryEvent {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
 	if o != 0 {
-		return rcv._tab.ByteVector(o + rcv._tab.Pos)
+		return TelemetryEvent(rcv._tab.GetByte(o + rcv._tab.Pos))
 	}
-	return nil
+	return 0
+}
+
+func (rcv *TelemetryLogItem) MutateEvent(n TelemetryEvent) bool {
+	return rcv._tab.MutateByteSlot(6, byte(n))
 }
 
 func (rcv *TelemetryLogItem) Description() []byte {
@@ -79,8 +83,8 @@ func TelemetryLogItemStart(builder *flatbuffers.Builder) {
 func TelemetryLogItemAddId(builder *flatbuffers.Builder, id flatbuffers.UOffsetT) {
 	builder.PrependUOffsetTSlot(0, flatbuffers.UOffsetT(id), 0)
 }
-func TelemetryLogItemAddEvent(builder *flatbuffers.Builder, event flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(1, flatbuffers.UOffsetT(event), 0)
+func TelemetryLogItemAddEvent(builder *flatbuffers.Builder, event TelemetryEvent) {
+	builder.PrependByteSlot(1, byte(event), 0)
 }
 func TelemetryLogItemAddDescription(builder *flatbuffers.Builder, description flatbuffers.UOffsetT) {
 	builder.PrependUOffsetTSlot(2, flatbuffers.UOffsetT(description), 0)

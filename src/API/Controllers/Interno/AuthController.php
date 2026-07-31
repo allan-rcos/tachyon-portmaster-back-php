@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -64,11 +59,6 @@ use Shared\Exceptions\Result;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -76,10 +66,6 @@ final readonly class AuthController implements IAuthController
 {
     /**
      * @var ILogger This controller's own channel.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ILogger $logger;
 
@@ -93,11 +79,6 @@ final readonly class AuthController implements IAuthController
      * @param  ILogger  $logger  Narrowed to this controller's channel.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private readonly ILoginUseCase $loginUseCase,
@@ -119,11 +100,6 @@ final readonly class AuthController implements IAuthController
      *                           user exists.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function setup(ServerRequestInterface $request): ResponseInterface
     {
@@ -159,11 +135,6 @@ final readonly class AuthController implements IAuthController
      *                           without saying which half was wrong.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function login(ServerRequestInterface $request): ResponseInterface
     {
@@ -205,11 +176,6 @@ final readonly class AuthController implements IAuthController
      *                           document.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function issueSession(IUser $user, int $status): ResponseInterface
     {
@@ -244,11 +210,6 @@ final readonly class AuthController implements IAuthController
      *                           401 with both cleared.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function refresh(ServerRequestInterface $request): ResponseInterface
     {
@@ -299,11 +260,6 @@ final readonly class AuthController implements IAuthController
      * @return ResponseInterface An empty 204 with both cookies cleared.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function logout(ServerRequestInterface $request): ResponseInterface
     {
@@ -332,11 +288,6 @@ final readonly class AuthController implements IAuthController
      * @return Result<never> A 401.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private static function missingRefreshToken(): Result
     {

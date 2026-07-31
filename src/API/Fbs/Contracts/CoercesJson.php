@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -30,7 +25,6 @@ namespace API\Fbs\Contracts;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  */
 trait CoercesJson
 {
@@ -38,11 +32,6 @@ trait CoercesJson
      * @param  array<string, mixed>  $data
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected static function jsonNullableString(array $data, string $key): ?string
     {
@@ -55,11 +44,6 @@ trait CoercesJson
      * @param  array<string, mixed>  $data
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected static function jsonString(array $data, string $key): string
     {
@@ -70,11 +54,6 @@ trait CoercesJson
      * @param  array<string, mixed>  $data
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected static function jsonInt(array $data, string $key): int
     {
@@ -87,11 +66,6 @@ trait CoercesJson
      * @param  array<string, mixed>  $data
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected static function jsonFloat(array $data, string $key): float
     {
@@ -104,11 +78,6 @@ trait CoercesJson
      * @param  array<string, mixed>  $data
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected static function jsonBool(array $data, string $key): bool
     {
@@ -123,11 +92,6 @@ trait CoercesJson
      * @return array<string, mixed>|null
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected static function jsonObject(array $data, string $key): ?array
     {
@@ -152,11 +116,6 @@ trait CoercesJson
      * @return list<array<string, mixed>>
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected static function jsonRows(array $data, string $key): array
     {
@@ -183,11 +142,6 @@ trait CoercesJson
      * @return list<string>
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected static function jsonStringList(array $data, string $key): array
     {

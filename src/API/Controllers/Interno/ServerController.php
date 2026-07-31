@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -47,11 +42,6 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -61,10 +51,6 @@ final readonly class ServerController implements IServerController
      * The published project name.
      *
      * @var string
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const string NAME = 'tachyon/portmaster';
 
@@ -73,10 +59,6 @@ final readonly class ServerController implements IServerController
      * hand at release.
      *
      * @var string
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const string VERSION = '0.0.1';
 
@@ -84,11 +66,6 @@ final readonly class ServerController implements IServerController
      * @param  ApiConfig  $config  Supplies the reported environment.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private ApiConfig $config,
@@ -105,11 +82,6 @@ final readonly class ServerController implements IServerController
      * @return ResponseInterface A `ProjectInfoProxy`.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function getInfo(ServerRequestInterface $request): ResponseInterface
     {

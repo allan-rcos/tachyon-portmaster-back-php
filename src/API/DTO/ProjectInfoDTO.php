@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -25,13 +20,8 @@ namespace API\DTO;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @see JsonSerializable
- *
- * @since 0.0.1 File creation.
- *
- * @version 0.0.1
  */
 readonly class ProjectInfoDTO implements \JsonSerializable
 {
@@ -46,12 +36,6 @@ readonly class ProjectInfoDTO implements \JsonSerializable
      * @param  string  $runtime  Information about the PHP runtime.
      * @param  float  $memory_usage_mb  Overall memory usage of the process in MB.
      * @copyright 2026 Tachyon
-     *
-     * @since 0.0.1 File creation.
-     *
-     * @version 0.0.1
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
      */
     public function __construct(
         public string $name,
@@ -67,12 +51,6 @@ readonly class ProjectInfoDTO implements \JsonSerializable
      *
      * @return array<string, mixed> The serialized array notation.
      * @copyright 2026 Tachyon
-     *
-     * @since 0.0.1 File creation.
-     *
-     * @version 0.0.1
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
      */
     public function jsonSerialize(): array
     {
