@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -54,11 +49,6 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -74,11 +64,6 @@ final readonly class RoleAdminController implements IRoleAdminController
      * @param  IGetRoleUseCase  $getRole  Re-reads a role after either write.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private IListRolesUseCase $listRoles,
@@ -96,11 +81,6 @@ final readonly class RoleAdminController implements IRoleAdminController
      *                           document.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function list(ServerRequestInterface $request): ResponseInterface
     {
@@ -144,11 +124,6 @@ final readonly class RoleAdminController implements IRoleAdminController
      *                           document.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function create(ServerRequestInterface $request): ResponseInterface
     {
@@ -184,11 +159,6 @@ final readonly class RoleAdminController implements IRoleAdminController
      *                           404 when nothing matches the id.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function syncPermissions(ServerRequestInterface $request): ResponseInterface
     {
@@ -223,11 +193,6 @@ final readonly class RoleAdminController implements IRoleAdminController
      * @return ResponseInterface A `RoleResponseProxy`, or a problem document.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function respondWithRole(UserContext $context, string $id, int $status): ResponseInterface
     {
@@ -249,11 +214,6 @@ final readonly class RoleAdminController implements IRoleAdminController
      * @return RoleResponseProxy Ready to serialize.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function response(RoleViewItem $item): RoleResponseProxy
     {

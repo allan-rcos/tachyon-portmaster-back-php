@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -37,11 +32,6 @@ use Psr\Http\Message\StreamInterface;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 final class MetricsResponseProxy extends MetricsResponse implements IFbsProxy
 {
@@ -57,11 +47,6 @@ final class MetricsResponseProxy extends MetricsResponse implements IFbsProxy
      * @param  ?OccupancyDivisionProxy  $occupancyDivision  The container count broken down by status.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         public int $activeContainers = 0,
@@ -79,11 +64,6 @@ final class MetricsResponseProxy extends MetricsResponse implements IFbsProxy
      * @return int This table's offset within it.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -107,11 +87,6 @@ final class MetricsResponseProxy extends MetricsResponse implements IFbsProxy
      * @return string A finished, size-prefixed buffer.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -133,11 +108,6 @@ final class MetricsResponseProxy extends MetricsResponse implements IFbsProxy
      * @return static The hydrated proxy.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -163,11 +133,6 @@ final class MetricsResponseProxy extends MetricsResponse implements IFbsProxy
      * @return static The hydrated proxy.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -183,11 +148,6 @@ final class MetricsResponseProxy extends MetricsResponse implements IFbsProxy
      * @return static The hydrated proxy.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -210,11 +170,6 @@ final class MetricsResponseProxy extends MetricsResponse implements IFbsProxy
      * @return array<string, mixed> Ready for `json_encode()`.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -237,11 +192,6 @@ final class MetricsResponseProxy extends MetricsResponse implements IFbsProxy
      *                parse.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -264,11 +214,6 @@ final class MetricsResponseProxy extends MetricsResponse implements IFbsProxy
      * @return StreamInterface The response body.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */

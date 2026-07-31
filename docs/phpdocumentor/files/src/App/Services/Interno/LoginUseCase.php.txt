@@ -5,13 +5,8 @@
  *
  * @category Application
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -54,11 +49,6 @@ use Shared\Exceptions\Result;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -73,11 +63,6 @@ final readonly class LoginUseCase implements ILoginUseCase
      * @param  IAuthTM  $authTM  Verifies the password against the stored hash.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private IUnitOfWork $unitOfWork,
@@ -91,11 +76,6 @@ final readonly class LoginUseCase implements ILoginUseCase
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function execute(LoginCommand $command): Result
     {
@@ -156,11 +136,6 @@ final readonly class LoginUseCase implements ILoginUseCase
      * @return Result<never> Always a 401 failure.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private static function invalidCredentials(): Result
     {

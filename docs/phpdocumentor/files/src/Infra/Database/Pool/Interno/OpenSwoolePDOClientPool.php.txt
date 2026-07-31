@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -55,11 +50,6 @@ use Infra\Logging\ILogger;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -68,20 +58,12 @@ final class OpenSwoolePDOClientPool implements IPDOPool
     /**
      * @var ClientPool The pool that actually owns the clients and their
      *                 housekeeping.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ClientPool $pool;
 
     /**
      * @var ILogger Channelled copy, so lease problems are attributable to the
      *              pool rather than to whoever was borrowing.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ILogger $logger;
 
@@ -94,10 +76,6 @@ final class OpenSwoolePDOClientPool implements IPDOPool
      *
      * @var Map<int, PooledPDOClient> Keyed by `spl_object_id()` of the raw
      *                                handle.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private Map $activeLeases;
 
@@ -116,11 +94,6 @@ final class OpenSwoolePDOClientPool implements IPDOPool
      *                           connections alive.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         PDOConfig $config,
@@ -144,11 +117,6 @@ final class OpenSwoolePDOClientPool implements IPDOPool
      *                     503 failure when the wait timed out.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function get(): Result
     {
@@ -182,11 +150,6 @@ final class OpenSwoolePDOClientPool implements IPDOPool
      *                      an outstanding lease.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function put(PDO $pdo): Result
     {

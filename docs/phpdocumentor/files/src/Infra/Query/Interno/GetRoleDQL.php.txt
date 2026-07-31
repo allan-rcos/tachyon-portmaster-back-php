@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -41,11 +36,6 @@ use Infra\Query\SqlQuery;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @implements IDQL<RoleViewItem|null>
  *
@@ -57,11 +47,6 @@ final readonly class GetRoleDQL implements IDQL
      * @param  string  $id  Base62 id, decoded when the statement is compiled.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private string $id,
@@ -76,11 +61,6 @@ final readonly class GetRoleDQL implements IDQL
      *                  sub-select carries no user-supplied value.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function toSql(): SqlQuery
     {
@@ -113,11 +93,6 @@ final readonly class GetRoleDQL implements IDQL
      * @return ?RoleViewItem The role, or null when the id matched nothing.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function hydrate(array $rows): ?RoleViewItem
     {

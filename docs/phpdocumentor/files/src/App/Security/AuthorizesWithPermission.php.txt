@@ -5,13 +5,8 @@
  *
  * @category Application
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -49,11 +44,6 @@ use Shared\Exceptions\Result;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 trait AuthorizesWithPermission
 {
@@ -62,10 +52,6 @@ trait AuthorizesWithPermission
      *             retains. `readonly` so that a `readonly` use case may use this
      *             trait at all — PHP rejects a mutable trait property in a
      *             readonly class.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private readonly string $permission;
 
@@ -92,11 +78,6 @@ trait AuthorizesWithPermission
      * @return string The registered slug, to assign to {@see $permission}.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function declarePermission(
         IRegisterPermissionUseCase $registrar,
@@ -125,11 +106,6 @@ trait AuthorizesWithPermission
      * @return Result<null> Void when they may proceed; a 403 failure otherwise.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function authorize(UserContext $context): Result
     {

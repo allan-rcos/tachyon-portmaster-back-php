@@ -5,13 +5,8 @@
  *
  * @category Application
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -50,11 +45,6 @@ use App\Services\IUpdateAccountUseCase;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -64,11 +54,6 @@ final class AccountProvider extends FeatureProvider
      * Builds the {@see IGetAccountUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function getAccountUseCase(): IGetAccountUseCase
     {
@@ -79,11 +64,6 @@ final class AccountProvider extends FeatureProvider
      * Builds the {@see IUpdateAccountUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function updateAccountUseCase(): IUpdateAccountUseCase
     {
@@ -98,11 +78,6 @@ final class AccountProvider extends FeatureProvider
      * Builds the {@see IChangePasswordUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function changePasswordUseCase(): IChangePasswordUseCase
     {

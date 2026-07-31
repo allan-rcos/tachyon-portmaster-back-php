@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -40,11 +35,6 @@ use Shared\Exceptions\Result;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -52,10 +42,6 @@ readonly final class RoleTM implements IRoleTM
 {
     /**
      * @var int Matches the `VARCHAR(255)` the name column is declared as.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int MAX_NAME_LENGTH = 255;
 
@@ -64,11 +50,6 @@ readonly final class RoleTM implements IRoleTM
      *                                             becomes a primary key.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private IDatabaseIdGenerator $idGenerator,
@@ -83,11 +64,6 @@ readonly final class RoleTM implements IRoleTM
      * @return Result<IRole> A 422 failure when the name breaks a rule.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function create(
         string $name,
@@ -126,11 +102,6 @@ readonly final class RoleTM implements IRoleTM
      * @return Result<IRole> Always a success.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function updatePermissions(IRole $role, array $permissions): Result
     {
@@ -148,11 +119,6 @@ readonly final class RoleTM implements IRoleTM
      * @return Map<string, string> Field name to message; empty when valid.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function validate(string $name): Map
     {

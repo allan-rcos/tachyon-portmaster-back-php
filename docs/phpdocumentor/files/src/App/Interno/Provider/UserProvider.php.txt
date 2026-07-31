@@ -5,13 +5,8 @@
  *
  * @category Application
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -55,11 +50,6 @@ use App\Services\IUpdateUserUseCase;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -69,11 +59,6 @@ final class UserProvider extends FeatureProvider
      * Builds the {@see IListUsersUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function listUsersUseCase(): IListUsersUseCase
     {
@@ -84,11 +69,6 @@ final class UserProvider extends FeatureProvider
      * Builds the {@see IGetUserUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function getUserUseCase(): IGetUserUseCase
     {
@@ -99,11 +79,6 @@ final class UserProvider extends FeatureProvider
      * Builds the {@see ICreateUserUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function createUserUseCase(): ICreateUserUseCase
     {
@@ -119,11 +94,6 @@ final class UserProvider extends FeatureProvider
      * Builds the {@see IUpdateUserUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function updateUserUseCase(): IUpdateUserUseCase
     {
@@ -139,11 +109,6 @@ final class UserProvider extends FeatureProvider
      * Builds the {@see IDeleteUserUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function deleteUserUseCase(): IDeleteUserUseCase
     {
@@ -158,11 +123,6 @@ final class UserProvider extends FeatureProvider
      * Builds the {@see IResetUserPasswordUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function resetUserPasswordUseCase(): IResetUserPasswordUseCase
     {
@@ -178,11 +138,6 @@ final class UserProvider extends FeatureProvider
      * Builds the {@see IUpdateUserRolesUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function updateUserRolesUseCase(): IUpdateUserRolesUseCase
     {

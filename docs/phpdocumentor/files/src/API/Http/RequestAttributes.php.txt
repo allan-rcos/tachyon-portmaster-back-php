@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -40,48 +35,27 @@ use OpenSwoole\Coroutine;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 enum RequestAttributes: string
 {
     /**
      * Correlation id for this request, as a string.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case RequestId = 'request_id';
 
     /**
      * {@see ContentKind} the request body is encoded in.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case RequestContentKind = 'request_content_kind';
 
     /**
      * {@see ContentKind} the response should be encoded in. Independent of the
      * request's: a caller may POST JSON and ask for binary back.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case ResponseContentKind = 'response_content_kind';
 
     /**
      * The caller's {@see \App\Context\UserContext}, once authentication has run.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case AuthenticatedUser = 'authenticated_user';
 
@@ -92,11 +66,6 @@ enum RequestAttributes: string
      *               coroutine.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -121,11 +90,6 @@ enum RequestAttributes: string
      * @param  mixed  $value  What to store under this key.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */

@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -27,20 +22,11 @@ namespace Domain\Models;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 interface IRole
 {
     /**
      * @var string Application-generated Snowflake, Base62-encoded at the edge.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public string $id {
         get;
@@ -48,10 +34,6 @@ interface IRole
 
     /**
      * @var string Display name (e.g. `Administrator`).
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public string $name {
         get;
@@ -68,10 +50,6 @@ interface IRole
      * omitted slug is a revoked permission.
      *
      * @var list<string> Slugs in `domain:action` form.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public array $permissions {
         get;

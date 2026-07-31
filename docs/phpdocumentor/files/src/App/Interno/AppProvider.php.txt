@@ -5,13 +5,8 @@
  *
  * @category Application
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -26,6 +21,7 @@ use App\Interno\Provider\AuthProvider;
 use App\Interno\Provider\ContainerProvider;
 use App\Interno\Provider\ManifestProvider;
 use App\Interno\Provider\MarkerProvider;
+use App\Interno\Provider\MetadataProvider;
 use App\Interno\Provider\MetricsProvider;
 use App\Interno\Provider\ProductProvider;
 use App\Interno\Provider\RoleProvider;
@@ -41,24 +37,24 @@ use App\Services\IDeleteUserUseCase;
 use App\Services\IDispatchContainerUseCase;
 use App\Services\IGetAccountUseCase;
 use App\Services\IGetContainerUseCase;
+use App\Services\IGetMarkerUseCase;
 use App\Services\IGetMetricsUseCase;
 use App\Services\IGetProductUseCase;
 use App\Services\IGetRoleUseCase;
-use App\Services\IGetMarkerUseCase;
-use App\Services\IValidateSessionUseCase;
 use App\Services\IGetUserUseCase;
 use App\Services\IListContainerSummariesUseCase;
 use App\Services\IListContainersUseCase;
+use App\Services\IListPermissionsUseCase;
 use App\Services\IListProductsUseCase;
 use App\Services\IListRolesUseCase;
 use App\Services\IListUsersUseCase;
 use App\Services\ILoadItemUseCase;
 use App\Services\ILoginUseCase;
 use App\Services\IRegisterMarkerGroupUseCase;
-use App\Services\ISetMarkerUseCase;
-use App\Services\ISetupUseCase;
 use App\Services\IResetUserPasswordUseCase;
 use App\Services\ISealContainerUseCase;
+use App\Services\ISetMarkerUseCase;
+use App\Services\ISetupUseCase;
 use App\Services\IUnloadItemUseCase;
 use App\Services\IUpdateAccountUseCase;
 use App\Services\IUpdateContainerUseCase;
@@ -66,44 +62,35 @@ use App\Services\IUpdateProductUseCase;
 use App\Services\IUpdateRolePermissionsUseCase;
 use App\Services\IUpdateUserRolesUseCase;
 use App\Services\IUpdateUserUseCase;
+use App\Services\IValidateSessionUseCase;
 use Domain\ID\IRandomIdGenerator;
 use Domain\ID\ISequentialIdGenerator;
 use Domain\IDomainProvider;
-use Infra\IInfraProvider;
 use Infra\Database\IUnitOfWork;
+use Infra\IInfraProvider;
 use Infra\Logging\ILogger;
 
 /**
- * The application layer's single façade — **re-export only**.
+ * The application layer's façade: ten feature providers behind one surface.
  *
- * It used to build all thirty-odd use cases itself, which made one class the
- * place every feature had to touch. Construction now lives in the per-feature
- * providers under {@see \App\Interno\Provider}; this class just delegates, so
- * adding a use case means editing its feature's provider, not this file.
- */
-/**
- * The application layer's façade: nine feature providers behind one surface.
- *
- * Builds nothing itself. Every factory here is a one-line delegation to the
- * feature provider that owns it, which is what lets {@see IAppProvider} stay a
- * single flat contract for the API while the wiring stays readable — see
- * {@see \App\Interno\Provider\FeatureProvider} for why it was split.
+ * Builds nothing itself. It used to build all thirty-odd use cases, which made
+ * one class the place every feature had to touch; construction now lives in the
+ * per-feature providers under {@see \App\Interno\Provider} and every factory
+ * here is a one-line delegation to the one that owns it. That is what lets
+ * {@see IAppProvider} stay a single flat contract for the API while the wiring
+ * stays readable — see {@see \App\Interno\Provider\FeatureProvider} for why it
+ * was split.
  *
  * The feature providers *are* eagerly constructed, in the constructor, unlike
  * the use cases they build. They are cheap holders of two references, and having
  * them present removes a null check from forty methods.
  *
  * @see IAppProvider The contract this implements.
- * @see \App\Interno\Provider\FeatureProvider The base of the nine slices.
+ * @see \App\Interno\Provider\FeatureProvider The base of the ten slices.
  * @see \App\AppRegister What builds one.
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -111,87 +98,56 @@ final readonly class AppProvider implements IAppProvider
 {
     /**
      * @var AuthProvider Login, session validation and the deployment bootstrap.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private AuthProvider $auth;
 
     /**
      * @var AccountProvider The caller acting on their own account; unguarded.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private AccountProvider $account;
 
     /**
      * @var UserProvider Administration of other people's accounts; guarded.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private UserProvider $users;
 
     /**
      * @var RoleProvider Roles and the permissions they grant.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private RoleProvider $roles;
 
     /**
      * @var ProductProvider The product catalogue.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ProductProvider $products;
 
     /**
      * @var ContainerProvider Containers and their status transitions.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ContainerProvider $containers;
 
     /**
      * @var ManifestProvider What containers carry.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ManifestProvider $manifests;
 
     /**
      * @var MarkerProvider Expiring single-use flags, and their group registrar.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private MarkerProvider $markers;
 
     /**
      * @var MetricsProvider The yard-wide snapshot.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private MetricsProvider $metrics;
 
     /**
-     * Constructs the nine feature providers over the same two lower layers.
+     * @var MetadataProvider The read side of the permission registry.
+     */
+    private MetadataProvider $metadata;
+
+    /**
+     * Constructs the ten feature providers over the same two lower layers.
      *
      * Handing every slice the *same* {@see IInfraProvider} is what makes them
      * share one connection pool, one transaction session and one permission
@@ -203,11 +159,6 @@ final readonly class AppProvider implements IAppProvider
      *                                 the registry.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private IDomainProvider $domain,
@@ -222,6 +173,7 @@ final readonly class AppProvider implements IAppProvider
         $this->manifests = new ManifestProvider($domain, $infra);
         $this->markers = new MarkerProvider($domain, $infra);
         $this->metrics = new MetricsProvider($domain, $infra);
+        $this->metadata = new MetadataProvider($domain, $infra);
     }
 
     // --- Re-exported infra/domain services -----------------------------------
@@ -230,11 +182,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function logger(): ILogger
     {
@@ -245,11 +192,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function unitOfWork(): IUnitOfWork
     {
@@ -260,11 +202,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function sequentialIdGenerator(): ISequentialIdGenerator
     {
@@ -275,11 +212,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function randomIdGenerator(): IRandomIdGenerator
     {
@@ -293,11 +225,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function loginUseCase(): ILoginUseCase
     {
@@ -308,11 +235,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function setupUseCase(): ISetupUseCase
     {
@@ -323,11 +245,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function validateSessionUseCase(): IValidateSessionUseCase
     {
@@ -340,11 +257,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function registerMarkerGroupUseCase(): IRegisterMarkerGroupUseCase
     {
@@ -355,11 +267,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function setMarkerUseCase(): ISetMarkerUseCase
     {
@@ -370,11 +277,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function getMarkerUseCase(): IGetMarkerUseCase
     {
@@ -387,11 +289,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function getAccountUseCase(): IGetAccountUseCase
     {
@@ -402,11 +299,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function updateAccountUseCase(): IUpdateAccountUseCase
     {
@@ -417,11 +309,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function changePasswordUseCase(): IChangePasswordUseCase
     {
@@ -434,11 +321,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function listUsersUseCase(): IListUsersUseCase
     {
@@ -449,11 +331,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function getUserUseCase(): IGetUserUseCase
     {
@@ -464,11 +341,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function createUserUseCase(): ICreateUserUseCase
     {
@@ -479,11 +351,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function updateUserUseCase(): IUpdateUserUseCase
     {
@@ -494,11 +361,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function deleteUserUseCase(): IDeleteUserUseCase
     {
@@ -509,11 +371,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function resetUserPasswordUseCase(): IResetUserPasswordUseCase
     {
@@ -524,11 +381,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function updateUserRolesUseCase(): IUpdateUserRolesUseCase
     {
@@ -541,11 +393,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function listRolesUseCase(): IListRolesUseCase
     {
@@ -556,11 +403,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function getRoleUseCase(): IGetRoleUseCase
     {
@@ -571,11 +413,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function createRoleUseCase(): ICreateRoleUseCase
     {
@@ -586,15 +423,22 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function updateRolePermissionsUseCase(): IUpdateRolePermissionsUseCase
     {
         return $this->roles->updateRolePermissionsUseCase();
+    }
+
+    // --- System metadata -----------------------------------------------------
+
+    /**
+     * @inheritDoc
+     *
+     * @copyright 2026 Tachyon
+     */
+    public function listPermissionsUseCase(): IListPermissionsUseCase
+    {
+        return $this->metadata->listPermissionsUseCase();
     }
 
     // --- Products ------------------------------------------------------------
@@ -603,11 +447,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function listProductsUseCase(): IListProductsUseCase
     {
@@ -618,11 +457,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function getProductUseCase(): IGetProductUseCase
     {
@@ -633,11 +467,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function createProductUseCase(): ICreateProductUseCase
     {
@@ -648,11 +477,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function updateProductUseCase(): IUpdateProductUseCase
     {
@@ -663,11 +487,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function deleteProductUseCase(): IDeleteProductUseCase
     {
@@ -680,11 +499,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function listContainersUseCase(): IListContainersUseCase
     {
@@ -695,11 +509,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function listContainerSummariesUseCase(): IListContainerSummariesUseCase
     {
@@ -710,11 +519,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function getContainerUseCase(): IGetContainerUseCase
     {
@@ -725,11 +529,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function createContainerUseCase(): ICreateContainerUseCase
     {
@@ -740,11 +539,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function updateContainerUseCase(): IUpdateContainerUseCase
     {
@@ -755,11 +549,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function deleteContainerUseCase(): IDeleteContainerUseCase
     {
@@ -770,11 +559,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function sealContainerUseCase(): ISealContainerUseCase
     {
@@ -785,11 +569,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function dispatchContainerUseCase(): IDispatchContainerUseCase
     {
@@ -802,11 +581,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function loadItemUseCase(): ILoadItemUseCase
     {
@@ -817,11 +591,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function unloadItemUseCase(): IUnloadItemUseCase
     {
@@ -834,11 +603,6 @@ final readonly class AppProvider implements IAppProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function getMetricsUseCase(): IGetMetricsUseCase
     {

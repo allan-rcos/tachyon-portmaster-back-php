@@ -5,13 +5,8 @@
  *
  * @category Application
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -44,11 +39,6 @@ use Shared\Exceptions\Leaf;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -62,11 +52,6 @@ final readonly class RegisterMarkerGroupUseCase implements IRegisterMarkerGroupU
      * @param  IMarkerGroupRepository  $groups  The runtime registry.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private IMarkerGroupTM $markerGroupTM,
@@ -78,11 +63,6 @@ final readonly class RegisterMarkerGroupUseCase implements IRegisterMarkerGroupU
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function execute(RegisterMarkerGroupCommand $command): string
     {
@@ -121,11 +101,6 @@ final readonly class RegisterMarkerGroupUseCase implements IRegisterMarkerGroupU
      *                nothing.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function reason(int $errorId, string $slug): string
     {

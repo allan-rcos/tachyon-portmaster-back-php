@@ -5,13 +5,8 @@
  *
  * @category Application
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -39,17 +34,12 @@ use Shared\Exceptions\Result;
  * with four rollback paths across two classes is how one of them ends up subtly
  * different.
  *
- * @see \Domain\Models\IManifestChange What the table module computes and this writes.
+ * @see IManifestChange What the table module computes and this writes.
  * @see LoadItemUseCase One of the two callers.
  * @see UnloadItemUseCase The other.
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -79,11 +69,6 @@ final readonly class ManifestPersistence
      *                            the boundary already rolled back.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public static function commit(
         IUnitOfWork $unitOfWork,

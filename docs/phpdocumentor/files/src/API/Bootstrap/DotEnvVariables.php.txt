@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -36,167 +31,94 @@ namespace API\Bootstrap;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 enum DotEnvVariables: string
 {
     /**
      * Address the HTTP server binds to.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_HOST = 'APP_HOST';
 
     /**
      * Port the HTTP server listens on.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_PORT = 'APP_PORT';
 
     /**
      * How many OpenSwoole worker processes to fork.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_WORKER_NUM = 'APP_WORKER_NUM';
 
     /**
      * Milliseconds the snowflake timestamps count from.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case SNOWFLAKE_EPOCH = 'SNOWFLAKE_EPOCH';
 
     /**
      * This node's cluster id, the part of a snowflake that keeps two servers
      * from minting the same identifier.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case SNOWFLAKE_MACHINE_ID = 'SNOWFLAKE_MACHINE_ID';
 
     /**
      * Which {@see \API\Config\ServerConfigEnvironmentEnum} variant to boot as.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case ENVIRONMENT = 'ENVIRONMENT';
 
     /**
      * Verbosity floor, one of {@see \Infra\Config\ServerConfigLogLevel}.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case LOG_LEVEL = 'LOG_LEVEL';
 
     /**
      * Database host.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_DB_HOST = 'APP_DB_HOST';
 
     /**
      * Database port.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_DB_PORT = 'APP_DB_PORT';
 
     /**
      * Schema to connect to.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_DB_NAME = 'APP_DB_NAME';
 
     /**
      * Connecting user.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_DB_USER = 'APP_DB_USER';
 
     /**
      * Their password.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_DB_PASSWORD = 'APP_DB_PASSWORD';
 
     /**
      * Connection charset.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_DB_CHARSET = 'APP_DB_CHARSET';
 
     /**
      * How many connections the pool may open, per worker.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_DB_POOL_SIZE = 'APP_DB_POOL_SIZE';
 
     /**
      * Seconds a borrower waits for a free connection before the lease fails.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_DB_POOL_TIMEOUT = 'APP_DB_POOL_TIMEOUT';
 
     /**
      * Intended ceiling on how long one lease is held. Read into
      * {@see \Infra\Config\DatabaseConfig} but not currently enforced.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_DB_MAX_LEASE = 'APP_DB_MAX_LEASE';
 
     /**
      * Intended ceiling on how long an unused connection sits in the pool. Also
      * unread at present.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_DB_MAX_IDLE = 'APP_DB_MAX_IDLE';
 
@@ -204,64 +126,36 @@ enum DotEnvVariables: string
      * Signing key for the session tokens. The only variable the boot insists
      * on: {@see \API\Bootstrap\Chain\JwtChain} refuses anything shorter than 32
      * bytes.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_JWT_SECRET = 'APP_JWT_SECRET';
 
     /**
      * Seconds an access token stays valid.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_JWT_TTL = 'APP_JWT_TTL';
 
     /**
      * Value of the `iss` claim, checked on verify.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_JWT_ISSUER = 'APP_JWT_ISSUER';
 
     /**
      * Cookie the access token travels in.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_JWT_COOKIE_NAME = 'APP_JWT_COOKIE_NAME';
 
     /**
      * Whether both auth cookies carry `Secure`, confining them to HTTPS.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_JWT_COOKIE_SECURE = 'APP_JWT_COOKIE_SECURE';
 
     /**
      * Cookie the refresh token travels in.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_REFRESH_COOKIE_NAME = 'APP_REFRESH_COOKIE_NAME';
 
     /**
      * Seconds a refresh token stays valid.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case APP_REFRESH_TTL = 'APP_REFRESH_TTL';
 }

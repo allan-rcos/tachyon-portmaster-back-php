@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -30,20 +25,11 @@ namespace Domain\Models;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 interface IManifestCargo
 {
     /**
      * @var string Id of the container holding the cargo.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public string $containerId {
         get;
@@ -51,10 +37,6 @@ interface IManifestCargo
 
     /**
      * @var string Id of the product loaded.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public string $productId {
         get;
@@ -63,10 +45,6 @@ interface IManifestCargo
     /**
      * @var float Units of the product now in the container. Always positive —
      *            a line reaching zero is removed rather than stored.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public float $quantity {
         get;
@@ -75,10 +53,6 @@ interface IManifestCargo
     /**
      * @var float What {@see $quantity} weighs, from the product's density. This
      *            is what counts against the container's capacity.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public float $weight {
         get;

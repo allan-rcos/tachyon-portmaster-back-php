@@ -218,46 +218,60 @@
             <div class="phpdocumentor-column -nine phpdocumentor-content">
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/domain.html">Domain</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/domain-models.html">Models</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/app.html">App</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/app-queries.html">Queries</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/app-queries-role.html">Role</a></li>
     </ul>
 
-    <article class="phpdocumentor-element -interface">
+    <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    ITelemetryEvent
-                <div class="phpdocumentor-element__package">
-            in
+    ListPermissionsQuery
+
+    
+            <div class="phpdocumentor-element__package">
+            in package
             <ul class="phpdocumentor-breadcrumbs">
-                                    <li><a href="packages/Portmaster.html">Portmaster</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Portmaster.html">Portmaster</a></li>
                             </ul>
         </div>
+    
+    
     </h2>
 
-        <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Domain/Models/ITelemetryEvent.php"><a href="files/src-domain-models-itelemetryevent.html"><abbr title="src/Domain/Models/ITelemetryEvent.php">ITelemetryEvent.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+<div class="phpdocumentor-label-line">
+    <div class="phpdocumentor-label phpdocumentor-label--success"><span>Read only</span><span>Yes</span></div>
 
-            <a href="classes/Domain-Models-ITelemetryEvent.html#source-view.47" class="phpdocumentor-element-found-in__source" data-line="47" data-modal="source-view" data-src="files/src/Domain/Models/ITelemetryEvent.php.txt"></a>
+
+    <div class="phpdocumentor-label phpdocumentor-label--success"><span>Final</span><span>Yes</span></div>
+
+
+</div>
+
+        <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/App/Queries/Role/ListPermissionsQuery.php"><a href="files/src-app-queries-role-listpermissionsquery.html"><abbr title="src/App/Queries/Role/ListPermissionsQuery.php">ListPermissionsQuery.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">39</span>
+
+            <a href="classes/App-Queries-Role-ListPermissionsQuery.html#source-view.39" class="phpdocumentor-element-found-in__source" data-line="39" data-modal="source-view" data-src="files/src/App/Queries/Role/ListPermissionsQuery.php.txt"></a>
     </aside>
 
-            <p class="phpdocumentor-summary">A container telemetry event type — **system metadata**, same family as
-{@see IPermission} and {@see IMarkerGroup}.</p>
+            <p class="phpdocumentor-summary">Lists the registered permission slugs, optionally narrowed by a search term.</p>
 
 
-    <section class="phpdocumentor-description"><p>Telemetry is the audit trail, and an audit trail grows with the system: every
-new operation worth recording adds an event type. It is queryable and fully
-rebuildable from code on restart, so it satisfies the metadata test and stops
-being an enum.</p>
-<p>Contrast with <a href="classes/Domain-Enums-ContainerStatus.html"><abbr title="\Domain\Enums\ContainerStatus">ContainerStatus</abbr></a> and
-<a href="classes/Domain-Enums-RiskClass.html"><abbr title="\Domain\Enums\RiskClass">RiskClass</abbr></a>: those are closed sets fixed by the business,
-so they remain enums.</p>
+    <section class="phpdocumentor-description"><p>No cursor and no limit, unlike its neighbour <a href="classes/App-Queries-Role-ListRolesQuery.html"><abbr title="\App\Queries\Role\ListRolesQuery">ListRolesQuery</abbr></a>: the
+catalogue is filled at WorkerStart by the use cases that declare their own
+permissions, so it is bounded by how much code exists rather than by how much
+data was entered. Paging a list that short would cost a round-trip to save
+nothing.</p>
+<p>Sits with the role queries because that is what the catalogue is <em>for</em>: the
+slugs it returns are exactly what
+<a href="classes/App-Commands-Role-UpdateRolePermissionsCommand.html"><abbr title="\App\Commands\Role\UpdateRolePermissionsCommand">UpdateRolePermissionsCommand</abbr></a> may hand back.</p>
 </section>
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Domain-Models-ITelemetryEvent.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/App-Queries-Role-ListPermissionsQuery.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -265,14 +279,14 @@ so they remain enums.</p>
                 <span class="phpdocumentor-tag__name">see</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Domain-Models-IPermission.html"><abbr title="\Domain\Models\IPermission">IPermission</abbr></a></span>
-                                                                    <section class="phpdocumentor-description"><p>Why this family carries no label or description.</p>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/App-Services-IListPermissionsUseCase.html"><abbr title="\App\Services\IListPermissionsUseCase">IListPermissionsUseCase</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>What consumes it.</p>
 </section>
 
                                     </dd>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Infra-Repository-ITelemetryEventRepository.html"><abbr title="\Infra\Repository\ITelemetryEventRepository">ITelemetryEventRepository</abbr></a></span>
-                                                                    <section class="phpdocumentor-description"><p>Where these are stored.</p>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/App-Queries-Role-ListRolesQuery.html"><abbr title="\App\Queries\Role\ListRolesQuery">ListRolesQuery</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>The neighbour whose permissions these are.</p>
 </section>
 
                                     </dd>
@@ -292,35 +306,13 @@ so they remain enums.</p>
 </section>
 
                                     </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">author</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>Ricardo Állan Costa <a href="mailto:ricardoallancosta@hotmail.com">ricardoallancosta@hotmail.com</a></p>
-</section>
-
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">since</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                                        
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">version</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                                        
-                                    </dd>
                         </dl>
 
     
     
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Domain-Models-ITelemetryEvent.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/App-Queries-Role-ListPermissionsQuery.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -334,42 +326,37 @@ so they remain enums.</p>
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/Domain-Models-ITelemetryEvent.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/App-Queries-Role-ListPermissionsQuery.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Domain-Models-ITelemetryEvent.html#property_id">$id</a>
+    <a class="" href="classes/App-Queries-Role-ListPermissionsQuery.html#property_context">$context</a>
     <span>
-                        &nbsp;: int            </span>
+                        &nbsp;: <a href="classes/App-Context-UserContext.html"><abbr title="\App\Context\UserContext">UserContext</abbr></a>            </span>
 </dt>
-<dd>Registry index, assigned on registration. A lookup handle only, never
-persisted — and, like {@see IPermission::$id}, only stable while the
-`MEMORY` table holding the registry lives.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a class="" href="classes/Domain-Models-ITelemetryEvent.html#property_slug">$slug</a>
+    <a class="" href="classes/App-Queries-Role-ListPermissionsQuery.html#property_search">$search</a>
     <span>
-                        &nbsp;: string            </span>
+                        &nbsp;: string|null            </span>
 </dt>
 
     </dl>
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Domain-Models-ITelemetryEvent.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/App-Queries-Role-ListPermissionsQuery.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Domain-Models-ITelemetryEvent.html#method_withId">withId()</a>
+    <a class="" href="classes/App-Queries-Role-ListPermissionsQuery.html#method___construct">__construct()</a>
     <span>
-                                &nbsp;: self    </span>
+                                &nbsp;: mixed    </span>
 </dt>
-<dd>The same event carrying the registry index.</dd>
 
     </dl>
-
 
 
 
@@ -379,7 +366,7 @@ persisted — and, like {@see IPermission::$id}, only stable while the
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Domain-Models-ITelemetryEvent.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/App-Queries-Role-ListPermissionsQuery.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -387,80 +374,37 @@ persisted — and, like {@see IPermission::$id}, only stable while the
             phpdocumentor-element
             -property
             -public
-                                                -read-only            -virtual        "
+                                                                    "
 >
-    <h4 class="phpdocumentor-element__name" id="property_id">
-        $id
-        <a href="classes/Domain-Models-ITelemetryEvent.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_context">
+        $context
+        <a href="classes/App-Queries-Role-ListPermissionsQuery.html#property_context" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>            <small class="phpdocumentor-element__modifier">virtual</small>        </span>
+                                            </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Domain/Models/ITelemetryEvent.php"><a href="files/src-domain-models-itelemetryevent.html"><abbr title="src/Domain/Models/ITelemetryEvent.php">ITelemetryEvent.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/App/Queries/Role/ListPermissionsQuery.php"><a href="files/src-app-queries-role-listpermissionsquery.html"><abbr title="src/App/Queries/Role/ListPermissionsQuery.php">ListPermissionsQuery.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">50</span>
 
-            <a href="classes/Domain-Models-ITelemetryEvent.html#source-view.72" class="phpdocumentor-element-found-in__source" data-line="72" data-modal="source-view" data-src="files/src/Domain/Models/ITelemetryEvent.php.txt"></a>
+            <a href="classes/App-Queries-Role-ListPermissionsQuery.html#source-view.50" class="phpdocumentor-element-found-in__source" data-line="50" data-modal="source-view" data-src="files/src/App/Queries/Role/ListPermissionsQuery.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">Registry index, assigned on registration. A lookup handle only, never
-persisted — and, like {@see IPermission::$id}, only stable while the
-`MEMORY` table holding the registry lives.</p>
-
+    
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">$id</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/App-Context-UserContext.html"><abbr title="\App\Context\UserContext">UserContext</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$context</span>
     </code>
 
     
-        <section class="phpdocumentor-description"><p>Registry index; zero means built but not yet registered.</p>
-</section>
-
     
-    <h5 class="phpdocumentor-tag-list__heading" id="property_id_tags">
-        Tags
-        <a href="classes/Domain-Models-ITelemetryEvent.html#property_id_tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                    <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">author</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>Ricardo Állan Costa <a href="mailto:ricardoallancosta@hotmail.com">ricardoallancosta@hotmail.com</a></p>
-</section>
-
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">since</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                                        
-                                    </dd>
-                        </dl>
+    
 
         
-            <h5>Hooks</h5>
-            <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__type">int</span>
-        <span class="phpdocumentor-signature__name">get</span>
-</code>
-
-
-
-
-
-
-    
-    
-
-
-    
+        
 
 </article>
                     <article
@@ -468,78 +412,37 @@ persisted — and, like {@see IPermission::$id}, only stable while the
             phpdocumentor-element
             -property
             -public
-                                                -read-only            -virtual        "
+                                                                    "
 >
-    <h4 class="phpdocumentor-element__name" id="property_slug">
-        $slug
-        <a href="classes/Domain-Models-ITelemetryEvent.html#property_slug" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_search">
+        $search
+        <a href="classes/App-Queries-Role-ListPermissionsQuery.html#property_search" class="headerlink"><i class="fas fa-link"></i></a>
 
         <span class="phpdocumentor-element__modifiers">
-                        <small class="phpdocumentor-element__modifier">read-only</small>            <small class="phpdocumentor-element__modifier">virtual</small>        </span>
+                                            </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Domain/Models/ITelemetryEvent.php"><a href="files/src-domain-models-itelemetryevent.html"><abbr title="src/Domain/Models/ITelemetryEvent.php">ITelemetryEvent.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/App/Queries/Role/ListPermissionsQuery.php"><a href="files/src-app-queries-role-listpermissionsquery.html"><abbr title="src/App/Queries/Role/ListPermissionsQuery.php">ListPermissionsQuery.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
-            <a href="classes/Domain-Models-ITelemetryEvent.html#source-view.57" class="phpdocumentor-element-found-in__source" data-line="57" data-modal="source-view" data-src="files/src/Domain/Models/ITelemetryEvent.php.txt"></a>
+            <a href="classes/App-Queries-Role-ListPermissionsQuery.html#source-view.51" class="phpdocumentor-element-found-in__source" data-line="51" data-modal="source-view" data-src="files/src/App/Queries/Role/ListPermissionsQuery.php.txt"></a>
     </aside>
 
     
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$slug</span>
-    </code>
+            <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$search</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
 
     
-        <section class="phpdocumentor-description"><p>The stable identifier persisted in the telemetry log
-(e.g. <code class="prettyprint">load</code>).</p>
-</section>
-
     
-    <h5 class="phpdocumentor-tag-list__heading" id="property_slug_tags">
-        Tags
-        <a href="classes/Domain-Models-ITelemetryEvent.html#property_slug_tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                    <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">author</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>Ricardo Állan Costa <a href="mailto:ricardoallancosta@hotmail.com">ricardoallancosta@hotmail.com</a></p>
-</section>
-
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">since</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                                        
-                                    </dd>
-                        </dl>
+    
 
         
-            <h5>Hooks</h5>
-            <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__type">string</span>
-        <span class="phpdocumentor-signature__name">get</span>
-</code>
-
-
-
-
-
-
-    
-    
-
-
-    
+        
 
 </article>
             </section>
@@ -547,7 +450,7 @@ persisted — and, like {@see IPermission::$id}, only stable while the
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Domain-Models-ITelemetryEvent.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/App-Queries-Role-ListPermissionsQuery.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -556,51 +459,56 @@ persisted — and, like {@see IPermission::$id}, only stable while the
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_withId">
-        withId()
-        <a href="classes/Domain-Models-ITelemetryEvent.html#method_withId" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method___construct">
+        __construct()
+        <a href="classes/App-Queries-Role-ListPermissionsQuery.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Domain/Models/ITelemetryEvent.php"><a href="files/src-domain-models-itelemetryevent.html"><abbr title="src/Domain/Models/ITelemetryEvent.php">ITelemetryEvent.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/App/Queries/Role/ListPermissionsQuery.php"><a href="files/src-app-queries-role-listpermissionsquery.html"><abbr title="src/App/Queries/Role/ListPermissionsQuery.php">ListPermissionsQuery.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
-            <a href="classes/Domain-Models-ITelemetryEvent.html#source-view.94" class="phpdocumentor-element-found-in__source" data-line="94" data-modal="source-view" data-src="files/src/Domain/Models/ITelemetryEvent.php.txt"></a>
+            <a href="classes/App-Queries-Role-ListPermissionsQuery.html#source-view.49" class="phpdocumentor-element-found-in__source" data-line="49" data-modal="source-view" data-src="files/src/App/Queries/Role/ListPermissionsQuery.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">The same event carrying the registry index.</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">withId</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/App-Context-UserContext.html"><abbr title="\App\Context\UserContext">UserContext</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$context</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$search</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
-            <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
-
         </div>
     
-        <section class="phpdocumentor-description"><p>Used by the repository at registration time, since the id is not knowable
-when the domain builds the event.</p>
-</section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$id</span>
-                : <span class="phpdocumentor-argument-list__argument__type">int</span>
+                <span class="phpdocumentor-argument-list__argument__name">$context</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/App-Context-UserContext.html"><abbr title="\App\Context\UserContext">UserContext</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The index the registry assigned.</p>
+                    <section class="phpdocumentor-description"><p>The caller.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$search</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string|null</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Free text matched against the slug,
+unnormalised; null returns the whole
+catalogue.</p>
 </section>
 
             </dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="method_withId_tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method___construct_tags">
         Tags
-        <a href="classes/Domain-Models-ITelemetryEvent.html#method_withId_tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/App-Queries-Role-ListPermissionsQuery.html#method___construct_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -612,41 +520,11 @@ when the domain builds the event.</p>
 </section>
 
                                     </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">author</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>Ricardo Állan Costa <a href="mailto:ricardoallancosta@hotmail.com">ricardoallancosta@hotmail.com</a></p>
-</section>
-
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">since</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                                        
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">version</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                                        
-                                    </dd>
                         </dl>
 
         
     
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">self</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>A copy carrying it; the receiver is unchanged.</p>
-</section>
-
-            </section>
-
+    
 </article>
             </section>
 
@@ -654,7 +532,7 @@ when the domain builds the event.</p>
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Domain/Models/ITelemetryEvent.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/App/Queries/Role/ListPermissionsQuery.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -755,25 +633,25 @@ when the domain builds the event.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                            <li><a href="classes/Domain-Models-ITelemetryEvent.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/Domain-Models-ITelemetryEvent.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/App-Queries-Role-ListPermissionsQuery.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/App-Queries-Role-ListPermissionsQuery.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
+            
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Domain-Models-ITelemetryEvent.html#property_id">$id</a></li>
-                                                    <li class=""><a href="classes/Domain-Models-ITelemetryEvent.html#property_slug">$slug</a></li>
+                                                    <li class=""><a href="classes/App-Queries-Role-ListPermissionsQuery.html#property_context">$context</a></li>
+                                                    <li class=""><a href="classes/App-Queries-Role-ListPermissionsQuery.html#property_search">$search</a></li>
                                             </ul>
                 </li>
             
-                            <li class="phpdocumentor-on-this-page-section__title">Methods</li>
-                <li>
-                    <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Domain-Models-ITelemetryEvent.html#method_withId">withId()</a></li>
-                                            </ul>
-                </li>
-            
+                        <li class="phpdocumentor-on-this-page-section__title">Methods</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                            <li class=""><a href="classes/App-Queries-Role-ListPermissionsQuery.html#method___construct">__construct()</a></li>
+                                    </ul>
+            </li>
                     </ul>
     </section>
 
@@ -791,7 +669,7 @@ when the domain builds the event.</p>
     </section>
 </section>
         </div>
-        <a href="classes/Domain-Models-ITelemetryEvent.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/App-Queries-Role-ListPermissionsQuery.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -46,11 +41,6 @@ use Shared\Exceptions\Result;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -58,19 +48,11 @@ readonly final class UserTM implements IUserTM
 {
     /**
      * @var int Matches the `VARCHAR(255)` the name column is declared as.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int MAX_NAME_LENGTH = 255;
 
     /**
      * @var int Matches the `VARCHAR(255)` the email column is declared as.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int MAX_EMAIL_LENGTH = 255;
 
@@ -81,11 +63,6 @@ readonly final class UserTM implements IUserTM
      *                                         verifies against.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private IDatabaseIdGenerator $idGenerator,
@@ -108,11 +85,6 @@ readonly final class UserTM implements IUserTM
      * @return Result<IUser> A 422 failure listing every field that broke a rule.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function create(
         string $name,
@@ -148,11 +120,6 @@ readonly final class UserTM implements IUserTM
      * @return Result<IUser> A 422 failure listing every field that broke a rule.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function update(IUser $user, string $name, string $email): Result
     {
@@ -178,11 +145,6 @@ readonly final class UserTM implements IUserTM
      * @return Result<IUser> A 422 failure on a weak password.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function changePassword(IUser $user, string $newPassword): Result
     {
@@ -197,11 +159,6 @@ readonly final class UserTM implements IUserTM
      * @return Result<IUser> A 422 failure on a weak password.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function resetPassword(IUser $user, string $newPassword): Result
     {
@@ -219,11 +176,6 @@ readonly final class UserTM implements IUserTM
      * @return Result<IUser> A 422 failure on a weak password.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function withPassword(IUser $user, string $newPassword): Result
     {
@@ -252,11 +204,6 @@ readonly final class UserTM implements IUserTM
      * @return Map<string, string> Field name to message; empty when valid.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function validateProfile(string $name, string $email): Map
     {
@@ -293,11 +240,6 @@ readonly final class UserTM implements IUserTM
      * @return void
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function validatePassword(string $password, Map $errors): void
     {

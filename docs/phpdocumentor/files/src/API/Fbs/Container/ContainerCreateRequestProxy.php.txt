@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -37,11 +32,6 @@ use Psr\Http\Message\StreamInterface;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 final class ContainerCreateRequestProxy extends ContainerCreateRequest implements IFbsProxy
 {
@@ -54,11 +44,6 @@ final class ContainerCreateRequestProxy extends ContainerCreateRequest implement
      * @param  float  $maxCapacity  Capacity ceiling, in kilograms.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         public ?string $code = null,
@@ -73,11 +58,6 @@ final class ContainerCreateRequestProxy extends ContainerCreateRequest implement
      * @return int This table's offset within it.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -94,11 +74,6 @@ final class ContainerCreateRequestProxy extends ContainerCreateRequest implement
      * @return string A finished, size-prefixed buffer.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -120,11 +95,6 @@ final class ContainerCreateRequestProxy extends ContainerCreateRequest implement
      * @return static The hydrated proxy.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -143,11 +113,6 @@ final class ContainerCreateRequestProxy extends ContainerCreateRequest implement
      * @return static The hydrated proxy.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -163,11 +128,6 @@ final class ContainerCreateRequestProxy extends ContainerCreateRequest implement
      * @return static The hydrated proxy.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -185,11 +145,6 @@ final class ContainerCreateRequestProxy extends ContainerCreateRequest implement
      * @return array<string, mixed> Ready for `json_encode()`.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -209,11 +164,6 @@ final class ContainerCreateRequestProxy extends ContainerCreateRequest implement
      *                parse.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -236,11 +186,6 @@ final class ContainerCreateRequestProxy extends ContainerCreateRequest implement
      * @return StreamInterface The response body.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */

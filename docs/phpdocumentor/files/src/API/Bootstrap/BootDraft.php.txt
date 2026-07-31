@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -40,56 +35,31 @@ use RuntimeException;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 final class BootDraft
 {
     /**
      * @var ApiConfig|null HTTP server settings, filled by `ApiChain`.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public ?ApiConfig $api = null;
 
     /**
      * @var DomainConfig|null Identifier generation settings, filled by `DomainChain`.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public ?DomainConfig $domain = null;
 
     /**
      * @var DatabaseConfig|null Connection and pool settings, filled by `DatabaseChain`.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public ?DatabaseConfig $database = null;
 
     /**
      * @var JwtConfig|null Session token and cookie settings, filled by `JwtChain`.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public ?JwtConfig $jwt = null;
 
     /**
      * @var LogConfig|null Logging destination and level, filled by `LogChain`.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public ?LogConfig $log = null;
 
@@ -102,11 +72,6 @@ final class BootDraft
      *                          wiring mistake in the chain, not a bad `.env`.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -128,11 +93,6 @@ final class BootDraft
      * @return RuntimeException Naming the group and where to look for the gap.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private static function missing(string $group): RuntimeException
     {

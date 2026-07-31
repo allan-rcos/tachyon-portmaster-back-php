@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -43,11 +38,6 @@ use Infra\Query\SqlQuery;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @implements IDQL<AccountView|null>
  *
@@ -60,11 +50,6 @@ final readonly class GetAccountDQL implements IDQL
      *                          compiled.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private string $userId,
@@ -81,11 +66,6 @@ final readonly class GetAccountDQL implements IDQL
      * @return SqlQuery The statement and its single binding.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function toSql(): SqlQuery
     {
@@ -126,11 +106,6 @@ final readonly class GetAccountDQL implements IDQL
      * @return ?AccountView The profile, or null when the id matched no user.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function hydrate(array $rows): ?AccountView
     {

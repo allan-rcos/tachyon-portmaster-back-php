@@ -5,13 +5,8 @@
  *
  * @category Application
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -44,11 +39,6 @@ use App\Services\IUpdateRolePermissionsUseCase;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -58,11 +48,6 @@ final class RoleProvider extends FeatureProvider
      * Builds the {@see IListRolesUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function listRolesUseCase(): IListRolesUseCase
     {
@@ -73,11 +58,6 @@ final class RoleProvider extends FeatureProvider
      * Builds the {@see IGetRoleUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function getRoleUseCase(): IGetRoleUseCase
     {
@@ -88,11 +68,6 @@ final class RoleProvider extends FeatureProvider
      * Builds the {@see ICreateRoleUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function createRoleUseCase(): ICreateRoleUseCase
     {
@@ -108,11 +83,6 @@ final class RoleProvider extends FeatureProvider
      * Builds the {@see IUpdateRolePermissionsUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function updateRolePermissionsUseCase(): IUpdateRolePermissionsUseCase
     {

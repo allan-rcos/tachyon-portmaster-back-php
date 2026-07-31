@@ -5,13 +5,8 @@
  *
  * @category Application
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -50,11 +45,6 @@ use App\Services\IUpdateContainerUseCase;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -64,11 +54,6 @@ final class ContainerProvider extends FeatureProvider
      * Builds the {@see IListContainersUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function listContainersUseCase(): IListContainersUseCase
     {
@@ -79,11 +64,6 @@ final class ContainerProvider extends FeatureProvider
      * Builds the {@see IListContainerSummariesUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function listContainerSummariesUseCase(): IListContainerSummariesUseCase
     {
@@ -94,11 +74,6 @@ final class ContainerProvider extends FeatureProvider
      * Builds the {@see IGetContainerUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function getContainerUseCase(): IGetContainerUseCase
     {
@@ -109,11 +84,6 @@ final class ContainerProvider extends FeatureProvider
      * Builds the {@see ICreateContainerUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function createContainerUseCase(): ICreateContainerUseCase
     {
@@ -129,11 +99,6 @@ final class ContainerProvider extends FeatureProvider
      * Builds the {@see IUpdateContainerUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function updateContainerUseCase(): IUpdateContainerUseCase
     {
@@ -149,11 +114,6 @@ final class ContainerProvider extends FeatureProvider
      * Builds the {@see ISealContainerUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function sealContainerUseCase(): ISealContainerUseCase
     {
@@ -169,11 +129,6 @@ final class ContainerProvider extends FeatureProvider
      * Builds the {@see IDispatchContainerUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function dispatchContainerUseCase(): IDispatchContainerUseCase
     {
@@ -189,11 +144,6 @@ final class ContainerProvider extends FeatureProvider
      * Builds the {@see IDeleteContainerUseCase} implementation.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function deleteContainerUseCase(): IDeleteContainerUseCase
     {

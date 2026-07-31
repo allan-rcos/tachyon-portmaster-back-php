@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -34,7 +29,7 @@ use Throwable;
 
 /**
  * Shared machinery for the **system metadata** registries
- * ({@see PermissionRegistry}, {@see TelemetryEventRegistry}), stored in a
+ * ({@see PermissionRegistry}, {@see MarkerGroupRegistry}), stored in a
  * `ENGINE=MEMORY` table.
  *
  * It used to be an {@see \OpenSwoole\Table} per registry, which was wrong for a
@@ -61,7 +56,6 @@ use Throwable;
  *
  * @see PermissionRegistry A subclass, over `permissions`.
  * @see MarkerGroupRegistry A subclass, over `marker_groups`.
- * @see TelemetryEventRegistry A subclass, over `telemetry_events`.
  * @see docs/adr/0002-metadata-registries-in-the-database.md Why this lives in the database.
  * @see docs/adr/0003-engine-memory-for-runtime-tables.md Why that table is RAM.
  *
@@ -70,11 +64,6 @@ use Throwable;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @template TItem of object
  *
@@ -85,10 +74,6 @@ abstract class SqlMetadataRegistry
     /**
      * @var ILogger Channelled from {@see label()}, so each family's lines are
      *              attributable to it.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     protected readonly ILogger $logger;
 
@@ -104,11 +89,6 @@ abstract class SqlMetadataRegistry
      *                           subclass is fully constructed.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private readonly IPDOPool $pool,
@@ -125,17 +105,12 @@ abstract class SqlMetadataRegistry
      * @return TItem The subclass's own metadata type.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     abstract protected function hydrate(string $slug, int $id): object;
 
     /**
-     * Names the metadata family in error messages ("permission", "telemetry
-     * event").
+     * Names the metadata family in error messages ("permission", "marker
+     * group").
      *
      * Also forms the log channel, so it is read during construction.
      *
@@ -143,11 +118,6 @@ abstract class SqlMetadataRegistry
      *                an `s`.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     abstract protected function label(): string;
 
@@ -158,11 +128,6 @@ abstract class SqlMetadataRegistry
      *                subclass chose and never anything caller-supplied.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     abstract protected function table(): string;
 
@@ -186,11 +151,6 @@ abstract class SqlMetadataRegistry
      *                       reporting success while the re-read finds nothing.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected function register(string $slug): Result
     {
@@ -250,11 +210,6 @@ abstract class SqlMetadataRegistry
      *                    are not distinguished.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected function find(string $slug): ?object
     {
@@ -268,11 +223,6 @@ abstract class SqlMetadataRegistry
      * @return TItem|null Null when the index is unknown, or the read failed.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected function findById(int $id): ?object
     {
@@ -287,11 +237,6 @@ abstract class SqlMetadataRegistry
      *                    logged.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected function listAll(): Seq
     {
@@ -333,11 +278,6 @@ abstract class SqlMetadataRegistry
      * @return bool True when the catalogue holds it.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function has(string $slug): bool
     {
@@ -361,11 +301,6 @@ abstract class SqlMetadataRegistry
      * @return TItem|null Null when nothing matched or the select threw.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function fetchOne(string $condition, int|string $value): ?object
     {
@@ -410,11 +345,6 @@ abstract class SqlMetadataRegistry
      * @return TItem The subclass's own metadata type.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function hydrateRow(array $row): object
     {
@@ -437,11 +367,6 @@ abstract class SqlMetadataRegistry
      * @return Result<never> Always a 500 failure.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function fail(string $action, string $slug, Throwable $e): Result
     {

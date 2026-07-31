@@ -250,17 +250,19 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Query/Container/TelemetryLogView.php"><a href="files/src-infra-query-container-telemetrylogview.html"><abbr title="src/Infra/Query/Container/TelemetryLogView.php">TelemetryLogView.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">35</span>
 
-            <a href="classes/Infra-Query-Container-TelemetryLogView.html#source-view.41" class="phpdocumentor-element-found-in__source" data-line="41" data-modal="source-view" data-src="files/src/Infra/Query/Container/TelemetryLogView.php.txt"></a>
+            <a href="classes/Infra-Query-Container-TelemetryLogView.html#source-view.35" class="phpdocumentor-element-found-in__source" data-line="35" data-modal="source-view" data-src="files/src/Infra/Query/Container/TelemetryLogView.php.txt"></a>
     </aside>
 
             <p class="phpdocumentor-summary">One entry of a container&#039;s telemetry log.</p>
 
 
-    <section class="phpdocumentor-description"><p>The event arrives as the stored slug rather than a resolved
-<a href="classes/Domain-Models-ITelemetryEvent.html"><abbr title="\Domain\Models\ITelemetryEvent">ITelemetryEvent</abbr></a>: the log row persists the slug, so
-reading it back needs no trip through the registry.</p>
+    <section class="phpdocumentor-description"><p>The event is resolved to <a href="classes/Domain-Enums-TelemetryEvent.html"><abbr title="\Domain\Enums\TelemetryEvent">TelemetryEvent</abbr></a> here, so nothing
+above this layer handles the stored string. A row whose stored value matches
+no case cannot be resolved and is dropped by
+<abbr title="\Infra\Query\Interno\ListContainerSummariesDQL::logs()">ListContainerSummariesDQL::logs()</abbr> — see there for
+why dropping is preferred to inventing a case.</p>
 </section>
 
 
@@ -301,28 +303,6 @@ reading it back needs no trip through the registry.</p>
 </section>
 
                                     </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">author</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>Ricardo Állan Costa <a href="mailto:ricardoallancosta@hotmail.com">ricardoallancosta@hotmail.com</a></p>
-</section>
-
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">since</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                                        
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">version</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                                        
-                                    </dd>
                         </dl>
 
     
@@ -356,7 +336,7 @@ reading it back needs no trip through the registry.</p>
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Infra-Query-Container-TelemetryLogView.html#property_event">$event</a>
     <span>
-                        &nbsp;: string            </span>
+                        &nbsp;: <a href="classes/Domain-Enums-TelemetryEvent.html"><abbr title="\Domain\Enums\TelemetryEvent">TelemetryEvent</abbr></a>            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
@@ -415,9 +395,9 @@ reading it back needs no trip through the registry.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Query/Container/TelemetryLogView.php"><a href="files/src-infra-query-container-telemetrylogview.html"><abbr title="src/Infra/Query/Container/TelemetryLogView.php">TelemetryLogView.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
-            <a href="classes/Infra-Query-Container-TelemetryLogView.html#source-view.63" class="phpdocumentor-element-found-in__source" data-line="63" data-modal="source-view" data-src="files/src/Infra/Query/Container/TelemetryLogView.php.txt"></a>
+            <a href="classes/Infra-Query-Container-TelemetryLogView.html#source-view.51" class="phpdocumentor-element-found-in__source" data-line="51" data-modal="source-view" data-src="files/src/Infra/Query/Container/TelemetryLogView.php.txt"></a>
     </aside>
 
     
@@ -453,16 +433,16 @@ reading it back needs no trip through the registry.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Query/Container/TelemetryLogView.php"><a href="files/src-infra-query-container-telemetrylogview.html"><abbr title="src/Infra/Query/Container/TelemetryLogView.php">TelemetryLogView.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">50</span>
 
-            <a href="classes/Infra-Query-Container-TelemetryLogView.html#source-view.62" class="phpdocumentor-element-found-in__source" data-line="62" data-modal="source-view" data-src="files/src/Infra/Query/Container/TelemetryLogView.php.txt"></a>
+            <a href="classes/Infra-Query-Container-TelemetryLogView.html#source-view.50" class="phpdocumentor-element-found-in__source" data-line="50" data-modal="source-view" data-src="files/src/Infra/Query/Container/TelemetryLogView.php.txt"></a>
     </aside>
 
     
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
         <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__type">string</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Domain-Enums-TelemetryEvent.html"><abbr title="\Domain\Enums\TelemetryEvent">TelemetryEvent</abbr></a></span>
     <span class="phpdocumentor-signature__name">$event</span>
     </code>
 
@@ -491,9 +471,9 @@ reading it back needs no trip through the registry.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Query/Container/TelemetryLogView.php"><a href="files/src-infra-query-container-telemetrylogview.html"><abbr title="src/Infra/Query/Container/TelemetryLogView.php">TelemetryLogView.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
-            <a href="classes/Infra-Query-Container-TelemetryLogView.html#source-view.61" class="phpdocumentor-element-found-in__source" data-line="61" data-modal="source-view" data-src="files/src/Infra/Query/Container/TelemetryLogView.php.txt"></a>
+            <a href="classes/Infra-Query-Container-TelemetryLogView.html#source-view.49" class="phpdocumentor-element-found-in__source" data-line="49" data-modal="source-view" data-src="files/src/Infra/Query/Container/TelemetryLogView.php.txt"></a>
     </aside>
 
     
@@ -529,9 +509,9 @@ reading it back needs no trip through the registry.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Query/Container/TelemetryLogView.php"><a href="files/src-infra-query-container-telemetrylogview.html"><abbr title="src/Infra/Query/Container/TelemetryLogView.php">TelemetryLogView.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">64</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
-            <a href="classes/Infra-Query-Container-TelemetryLogView.html#source-view.64" class="phpdocumentor-element-found-in__source" data-line="64" data-modal="source-view" data-src="files/src/Infra/Query/Container/TelemetryLogView.php.txt"></a>
+            <a href="classes/Infra-Query-Container-TelemetryLogView.html#source-view.52" class="phpdocumentor-element-found-in__source" data-line="52" data-modal="source-view" data-src="files/src/Infra/Query/Container/TelemetryLogView.php.txt"></a>
     </aside>
 
     
@@ -572,15 +552,15 @@ reading it back needs no trip through the registry.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Query/Container/TelemetryLogView.php"><a href="files/src-infra-query-container-telemetrylogview.html"><abbr title="src/Infra/Query/Container/TelemetryLogView.php">TelemetryLogView.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">60</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
-            <a href="classes/Infra-Query-Container-TelemetryLogView.html#source-view.60" class="phpdocumentor-element-found-in__source" data-line="60" data-modal="source-view" data-src="files/src/Infra/Query/Container/TelemetryLogView.php.txt"></a>
+            <a href="classes/Infra-Query-Container-TelemetryLogView.html#source-view.48" class="phpdocumentor-element-found-in__source" data-line="48" data-modal="source-view" data-src="files/src/Infra/Query/Container/TelemetryLogView.php.txt"></a>
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$event</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$description</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$timestamp</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Domain-Enums-TelemetryEvent.html"><abbr title="\Domain\Enums\TelemetryEvent">TelemetryEvent</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$event</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$description</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$timestamp</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -599,11 +579,10 @@ reading it back needs no trip through the registry.</p>
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$event</span>
-                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Domain-Enums-TelemetryEvent.html"><abbr title="\Domain\Enums\TelemetryEvent">TelemetryEvent</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The telemetry event slug
-(see <a href="classes/Domain-Models-ITelemetryEvent.html"><abbr title="\Domain\Models\ITelemetryEvent">ITelemetryEvent</abbr></a>).</p>
+                    <section class="phpdocumentor-description"><p>What the row records having happened.</p>
 </section>
 
             </dd>
@@ -644,28 +623,6 @@ could not be read as a string.</p>
                                                                                                             <section class="phpdocumentor-description"><p>2026 Tachyon</p>
 </section>
 
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">author</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>Ricardo Állan Costa <a href="mailto:ricardoallancosta@hotmail.com">ricardoallancosta@hotmail.com</a></p>
-</section>
-
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">since</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                                        
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">version</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                                        
                                     </dd>
                         </dl>
 

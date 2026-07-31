@@ -5,13 +5,8 @@
  *
  * @category Application
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -50,11 +45,6 @@ use Infra\IInfraProvider;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -67,10 +57,6 @@ abstract class FeatureProvider
      *                                  needs sharing is the registry it writes
      *                                  to, which the infra layer already
      *                                  memoizes per worker.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IRegisterPermissionUseCase $registerPermission = null;
 
@@ -83,11 +69,6 @@ abstract class FeatureProvider
      *                                 the permission registry.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         protected readonly IDomainProvider $domain,
@@ -104,11 +85,6 @@ abstract class FeatureProvider
      *                                    registry.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected function registrar(): IRegisterPermissionUseCase
     {

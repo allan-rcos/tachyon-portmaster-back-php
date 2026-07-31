@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -43,11 +38,6 @@ use Shared\Exceptions\Result;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @extends SqlMetadataRegistry<IMarkerGroup>
  *
@@ -64,11 +54,6 @@ final class MarkerGroupRegistry extends SqlMetadataRegistry implements IMarkerGr
      *                              500 failure when the write fails.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function add(IMarkerGroup $group): Result
     {
@@ -82,11 +67,6 @@ final class MarkerGroupRegistry extends SqlMetadataRegistry implements IMarkerGr
      * @return ?IMarkerGroup Null when unknown, or the read failed.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function getBySlug(string $slug): ?IMarkerGroup
     {
@@ -101,11 +81,6 @@ final class MarkerGroupRegistry extends SqlMetadataRegistry implements IMarkerGr
      * @return ?IMarkerGroup Null when unknown, or the read failed.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function getById(int $id): ?IMarkerGroup
     {
@@ -119,11 +94,6 @@ final class MarkerGroupRegistry extends SqlMetadataRegistry implements IMarkerGr
      *                           registered anything.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function all(): Seq
     {
@@ -138,11 +108,6 @@ final class MarkerGroupRegistry extends SqlMetadataRegistry implements IMarkerGr
      * @return IMarkerGroup The concrete group.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected function hydrate(string $slug, int $id): IMarkerGroup
     {
@@ -155,11 +120,6 @@ final class MarkerGroupRegistry extends SqlMetadataRegistry implements IMarkerGr
      * @return string `marker group`.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected function label(): string
     {
@@ -172,11 +132,6 @@ final class MarkerGroupRegistry extends SqlMetadataRegistry implements IMarkerGr
      * @return string `marker_groups`.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected function table(): string
     {

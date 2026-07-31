@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -40,7 +35,6 @@ use Infra\Repository\IMarkerRepository;
 use Infra\Repository\IPermissionRepository;
 use Infra\Repository\IProductRepository;
 use Infra\Repository\IRoleRepository;
-use Infra\Repository\ITelemetryEventRepository;
 use Infra\Repository\IUserRepository;
 use Infra\Repository\Interno\SqlContainerRepository;
 use Infra\Repository\Interno\MarkerGroupRegistry;
@@ -50,7 +44,6 @@ use Infra\Repository\Interno\PermissionRegistry;
 use Infra\Repository\Interno\SqlProductRepository;
 use Infra\Repository\Interno\SqlRoleRepository;
 use Infra\Repository\Interno\SqlUserRepository;
-use Infra\Repository\Interno\TelemetryEventRegistry;
 
 /**
  * Hand-wired infrastructure provider. The pool, transaction session, logger,
@@ -71,11 +64,6 @@ use Infra\Repository\Interno\TelemetryEventRegistry;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -83,129 +71,68 @@ final class InfraProvider implements IInfraProvider
 {
     /**
      * @var ?ILogger Memoized root logger; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?ILogger $logger = null;
 
     /**
      * @var ?IPDOPool Memoized connection pool; null until first use, which is
      *                when the first connection is opened.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IPDOPool $pool = null;
 
     /**
      * @var ?IUnitOfWork Memoized composite boundary; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IUnitOfWork $unitOfWork = null;
 
     /**
      * @var ?PdoTransactionSession Memoized session backing both halves of the
      *                             split; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?PdoTransactionSession $pdoTransactionSession = null;
 
     /**
      * @var ?IUserRepository Memoized repository; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IUserRepository $userRepository = null;
 
     /**
      * @var ?IRoleRepository Memoized repository; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IRoleRepository $roleRepository = null;
 
     /**
      * @var ?IProductRepository Memoized repository; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IProductRepository $productRepository = null;
 
     /**
      * @var ?IContainerRepository Memoized repository; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IContainerRepository $containerRepository = null;
 
     /**
      * @var ?IManifestRepository Memoized repository; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IManifestRepository $manifestRepository = null;
 
     /**
      * @var ?IPermissionRepository Memoized registry; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IPermissionRepository $permissionRepository = null;
 
     /**
      * @var ?IMarkerGroupRepository Memoized registry; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IMarkerGroupRepository $markerGroupRepository = null;
 
     /**
      * @var ?IMarkerRepository Memoized repository; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IMarkerRepository $markerRepository = null;
 
     /**
-     * @var ?ITelemetryEventRepository Memoized registry; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     */
-    private ?ITelemetryEventRepository $telemetryEventRepository = null;
-
-    /**
      * @var ?IQueryRepository Memoized read-side runner; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IQueryRepository $queryRepository = null;
 
@@ -217,11 +144,6 @@ final class InfraProvider implements IInfraProvider
      * @param  LogConfig  $log  The level to log at.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private readonly DatabaseConfig $database,
@@ -233,11 +155,6 @@ final class InfraProvider implements IInfraProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function logger(): ILogger
     {
@@ -253,11 +170,6 @@ final class InfraProvider implements IInfraProvider
      * @return IPDOPool Memoized, so every consumer shares one pool.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function pool(): IPDOPool
     {
@@ -285,11 +197,6 @@ final class InfraProvider implements IInfraProvider
      *                     are given the connection half of.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function unitOfWork(): IUnitOfWork
     {
@@ -311,11 +218,6 @@ final class InfraProvider implements IInfraProvider
      *                               there is nothing to abstract from.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function pdoTransaction(): PdoTransactionSession
     {
@@ -326,11 +228,6 @@ final class InfraProvider implements IInfraProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function userRepository(): IUserRepository
     {
@@ -341,11 +238,6 @@ final class InfraProvider implements IInfraProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function roleRepository(): IRoleRepository
     {
@@ -356,11 +248,6 @@ final class InfraProvider implements IInfraProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function productRepository(): IProductRepository
     {
@@ -371,11 +258,6 @@ final class InfraProvider implements IInfraProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function containerRepository(): IContainerRepository
     {
@@ -386,11 +268,6 @@ final class InfraProvider implements IInfraProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function manifestRepository(): IManifestRepository
     {
@@ -406,11 +283,6 @@ final class InfraProvider implements IInfraProvider
      * @return IPermissionRepository Memoized; takes the pool, not the session.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function permissionRepository(): IPermissionRepository
     {
@@ -421,11 +293,6 @@ final class InfraProvider implements IInfraProvider
      * @inheritDoc
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function markerGroupRepository(): IMarkerGroupRepository
     {
@@ -443,11 +310,6 @@ final class InfraProvider implements IInfraProvider
      *                           registry.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function markerRepository(): IMarkerRepository
     {
@@ -459,32 +321,12 @@ final class InfraProvider implements IInfraProvider
     }
 
     /**
-     * @inheritDoc
-     *
-     * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
-     */
-    public function telemetryEventRepository(): ITelemetryEventRepository
-    {
-        return $this->telemetryEventRepository ??= new TelemetryEventRegistry($this->pool(), $this->logger());
-    }
-
-    /**
      * The read-side runner, which leases from the pool rather than joining a
      * transaction — read endpoints open no boundary at all.
      *
      * @return IQueryRepository Memoized; takes the pool, not the session.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function queryRepository(): IQueryRepository
     {

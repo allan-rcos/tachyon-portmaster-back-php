@@ -13,7 +13,6 @@ declare(strict_types=1);
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  */
 
 require_once __DIR__.'/../../vendor/autoload.php';

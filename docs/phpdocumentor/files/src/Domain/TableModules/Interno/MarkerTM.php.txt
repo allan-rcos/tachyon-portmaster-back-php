@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -43,11 +38,6 @@ use Shared\Exceptions\Result;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -56,10 +46,6 @@ final readonly class MarkerTM implements IMarkerTM
     /**
      * @var string Same shape {@see MarkerGroupTM} validates, so an unknown group
      *             fails here first rather than at the repository.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const string GROUP_PATTERN = '/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/';
 
@@ -68,11 +54,6 @@ final readonly class MarkerTM implements IMarkerTM
      *                                recomputes.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private IIndexHasher $hasher,
@@ -89,11 +70,6 @@ final readonly class MarkerTM implements IMarkerTM
      *                         the value is empty.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function create(string $group, string $plain, bool $flag): Result
     {
@@ -122,11 +98,6 @@ final readonly class MarkerTM implements IMarkerTM
      * @return Map<string, string> Field name to message; empty when valid.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function validate(string $group, string $plain): Map
     {

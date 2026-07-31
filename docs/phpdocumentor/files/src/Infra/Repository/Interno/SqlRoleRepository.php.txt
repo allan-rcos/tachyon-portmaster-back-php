@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -54,11 +49,6 @@ use Throwable;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -66,20 +56,12 @@ final readonly class SqlRoleRepository implements IRoleRepository
 {
     /**
      * @var string The table every statement here addresses.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const string TABLE_NAME = 'roles';
 
     /**
      * @var ILogger Channelled copy, so these lines are attributable to this
      *              repository rather than to the request at large.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ILogger $logger;
 
@@ -91,11 +73,6 @@ final readonly class SqlRoleRepository implements IRoleRepository
      *                                    held, since it changes per request.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         ILogger $logger,
@@ -116,11 +93,6 @@ final readonly class SqlRoleRepository implements IRoleRepository
      *                       undecodable id lands.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function findById(string $id): Result
     {
@@ -177,11 +149,6 @@ final readonly class SqlRoleRepository implements IRoleRepository
      *                         failure when the select threw.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function findByUserId(string $userId): Result
     {
@@ -232,11 +199,6 @@ final readonly class SqlRoleRepository implements IRoleRepository
      *                      Matching no row is only logged.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function delete(string $id): Result
     {
@@ -281,11 +243,6 @@ final readonly class SqlRoleRepository implements IRoleRepository
      * @return Result<null> Void on success; a 500 failure when the insert threw.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function insert(IRole $role): Result
     {
@@ -328,11 +285,6 @@ final readonly class SqlRoleRepository implements IRoleRepository
      *                      Matching no row is only logged.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function update(IRole $role): Result
     {
