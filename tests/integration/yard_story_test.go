@@ -1,6 +1,7 @@
 package integration
 
 import (
+	"math"
 	"net/http"
 	"testing"
 
@@ -10,6 +11,13 @@ import (
 	"portmaster/tests/integration/internal/factories"
 	"portmaster/tests/integration/internal/fbs"
 )
+
+// sealFillRatio mirrors ContainerTM::MIN_SEAL_FILL_RATIO — the share of a
+// container's capacity that has to be filled before it may be sealed. Kept here
+// so the story can size a load against the rule instead of guessing at it; if
+// the domain moves the floor, this fails loudly rather than silently testing
+// nothing.
+const sealFillRatio = 0.10
 
 // TestYardStory follows one container from an empty yard through loading,
 // sealing and dispatch, checking at each step both what is allowed and what the
@@ -109,7 +117,25 @@ func TestYardStory(t *testing.T) {
 
 	t.Run("a container seals only once it is full enough, then dispatches once", func(t *testing.T) {
 		// Below the 10% floor the seal is refused; topping it up allows it.
-		requireOK(t, c.Post(t, "/manifests/load-item", factories.LoadItem(containerID, productID, 200)))
+		//
+		// The top-up is computed from what the server actually holds instead of
+		// being a fixed quantity. The floor is a fraction of the container's
+		// capacity but a load is measured in units of a product whose density
+		// the factory randomises, so no constant clears the floor for every
+		// draw — a light enough product left the container short and the seal
+		// answered 409, failing roughly one run in eight over an arithmetic
+		// accident rather than over the rule being tested.
+		state := decodeRoot(t, requireOK(t, c.Get(t, "/containers/"+containerID)).Body, fbs.GetRootAsContainerResponse)
+		stored := decodeRoot(t, requireOK(t, c.Get(t, "/products/"+productID)).Body, fbs.GetRootAsProductResponse)
+
+		missing := sealFillRatio*state.MaxCapacity() - state.CurrentWeight()
+		require.Positive(t, missing, "the container must still be under the floor before it is topped up")
+		require.Positive(t, stored.Density(), "a product without density makes the top-up unanswerable")
+
+		// One unit over, so that rounding cannot land a hair under a floor the
+		// domain compares with a strict less-than.
+		topUp := math.Ceil(missing/stored.Density()) + 1
+		requireOK(t, c.Post(t, "/manifests/load-item", factories.LoadItem(containerID, productID, topUp)))
 
 		requireNoContent(t, c.Post(t, "/containers/"+containerID+"/seal", nil))
 		sealed := decodeRoot(t, requireOK(t, c.Get(t, "/containers/"+containerID)).Body, fbs.GetRootAsContainerResponse)

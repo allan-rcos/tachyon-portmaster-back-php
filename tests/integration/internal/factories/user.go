@@ -9,6 +9,35 @@ import (
 	"portmaster/tests/integration/internal/fbs"
 )
 
+// Password returns a password that satisfies the domain policy by construction:
+// at least eight characters, with a lower-case letter, an upper-case letter and
+// a digit.
+//
+// gofakeit.Password draws every character from the union of the classes it was
+// asked for and guarantees none of them individually, so roughly 3% of
+// twelve-character draws come back missing one — and the UserTM answers those
+// with a 422. Every story that creates a user went through here, which is what
+// made them fail a few runs in a hundred for a reason that had nothing to do
+// with what they were testing. Drawing the three required characters explicitly
+// and shuffling them into the rest keeps the password unpredictable without
+// leaving the policy to chance.
+func Password() string {
+	chars := []byte(gofakeit.Password(true, true, true, false, false, 9))
+	chars = append(chars,
+		byte('a'+gofakeit.Number(0, 25)),
+		byte('A'+gofakeit.Number(0, 25)),
+		byte('0'+gofakeit.Number(0, 9)),
+	)
+
+	// Fisher-Yates, so the guaranteed three are not always the last three.
+	for i := len(chars) - 1; i > 0; i-- {
+		j := gofakeit.Number(0, i)
+		chars[i], chars[j] = chars[j], chars[i]
+	}
+
+	return string(chars)
+}
+
 // User is a generated user-create payload plus its values.
 type User struct {
 	Name     string
@@ -22,7 +51,7 @@ type User struct {
 func NewUser(roleIDs ...string) User {
 	name := gofakeit.Name()
 	email := gofakeit.Email()
-	password := gofakeit.Password(true, true, true, false, false, 12)
+	password := Password()
 
 	b := flatbuffers.NewBuilder(0)
 	nameOff := b.CreateString(name)
