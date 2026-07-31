@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -37,11 +32,6 @@ use Psr\Http\Message\StreamInterface;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 final class ContainerSummaryResponseProxy extends ContainerSummaryResponse implements IFbsProxy
 {
@@ -52,11 +42,6 @@ final class ContainerSummaryResponseProxy extends ContainerSummaryResponse imple
      * @param  list<TelemetryLogItemProxy>  $recentLogs
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         public ?ContainerResponseProxy $container = null,
@@ -72,11 +57,6 @@ final class ContainerSummaryResponseProxy extends ContainerSummaryResponse imple
      * @return int This table's offset within it.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -97,11 +77,6 @@ final class ContainerSummaryResponseProxy extends ContainerSummaryResponse imple
      * @return string A finished, size-prefixed buffer.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -123,11 +98,6 @@ final class ContainerSummaryResponseProxy extends ContainerSummaryResponse imple
      * @return static The hydrated proxy.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -159,11 +129,6 @@ final class ContainerSummaryResponseProxy extends ContainerSummaryResponse imple
      * @return static The hydrated proxy.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -179,11 +144,6 @@ final class ContainerSummaryResponseProxy extends ContainerSummaryResponse imple
      * @return static The hydrated proxy.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -204,11 +164,6 @@ final class ContainerSummaryResponseProxy extends ContainerSummaryResponse imple
      * @return array<string, mixed> Ready for `json_encode()`.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -229,11 +184,6 @@ final class ContainerSummaryResponseProxy extends ContainerSummaryResponse imple
      *                parse.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -256,11 +206,6 @@ final class ContainerSummaryResponseProxy extends ContainerSummaryResponse imple
      * @return StreamInterface The response body.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */

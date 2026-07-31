@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -21,6 +16,7 @@ declare(strict_types=1);
 namespace Infra\Query\Interno;
 
 use Atlas\Statement\Select;
+use Domain\Enums\TelemetryEvent;
 use Domain\ID\Base62;
 use Infra\Query\Container\CargoItemView;
 use Infra\Query\Container\ContainerRowMapper;
@@ -49,11 +45,6 @@ use Ds\Seq;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @implements IDQL<ContainerSummaryListView>
  *
@@ -64,20 +55,12 @@ final readonly class ListContainerSummariesDQL implements IDQL
     /**
      * @var int Page size when the caller named none, or named one that was not
      *          positive.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int DEFAULT_LIMIT = 20;
 
     /**
      * @var int How many telemetry entries each container carries back. A cap,
      *          not a page: there is no way to ask for the ones beyond it here.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int RECENT_LOGS = 10;
 
@@ -90,11 +73,6 @@ final readonly class ListContainerSummariesDQL implements IDQL
      *                           {@see DEFAULT_LIMIT}.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private ?string $id = null,
@@ -113,11 +91,6 @@ final readonly class ListContainerSummariesDQL implements IDQL
      * @return SqlQuery The statement and its bindings.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function toSql(): SqlQuery
     {
@@ -205,11 +178,6 @@ final readonly class ListContainerSummariesDQL implements IDQL
      *                                  zero total, when nothing matched.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function hydrate(array $rows): ContainerSummaryListView
     {
@@ -247,11 +215,6 @@ final readonly class ListContainerSummariesDQL implements IDQL
      *                             column could not be decoded.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function manifest(mixed $json): array
     {
@@ -277,20 +240,26 @@ final readonly class ListContainerSummariesDQL implements IDQL
      *                                order the aggregation produced them.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function logs(mixed $json): array
     {
         $logs = [];
         foreach ($this->decode($json) as $entry) {
             $eventSlug = is_scalar($entry['event'] ?? null) ? (string) $entry['event'] : '';
+            $event     = TelemetryEvent::tryFrom($eventSlug);
+
+            // A stored value matching no case is dropped rather than coerced.
+            // The wire field is an enum, so there is no value a client could be
+            // handed that means "something happened but not one of these", and
+            // picking a case would report an event that never occurred. The row
+            // itself stays in telemetry_logs either way.
+            if ($event === null) {
+                continue;
+            }
+
             $logs[] = new TelemetryLogView(
                 id: Base62::encode(is_numeric($entry['id'] ?? null) ? (int) $entry['id'] : 0),
-                event: $eventSlug,
+                event: $event,
                 description: is_scalar($entry['description'] ?? null) ? (string) $entry['description'] : null,
                 timestamp: is_scalar($entry['timestamp'] ?? null) ? (string) $entry['timestamp'] : null,
             );
@@ -311,11 +280,6 @@ final readonly class ListContainerSummariesDQL implements IDQL
      * @return list<array<string, mixed>> The entries, non-array members dropped.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function decode(mixed $json): array
     {
@@ -345,11 +309,6 @@ final readonly class ListContainerSummariesDQL implements IDQL
      *             otherwise.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function effectiveLimit(): int
     {
@@ -363,11 +322,6 @@ final readonly class ListContainerSummariesDQL implements IDQL
      *                                    cursor was minted with.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function filters(): array
     {

@@ -30,13 +30,6 @@ CREATE TABLE IF NOT EXISTS permissions (
     UNIQUE KEY uq_permissions_slug (slug)
 ) ENGINE=MEMORY DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS telemetry_events (
-    id    INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    slug  VARCHAR(64)  NOT NULL,
-    PRIMARY KEY (id),
-    UNIQUE KEY uq_telemetry_events_slug (slug)
-) ENGINE=MEMORY DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 CREATE TABLE IF NOT EXISTS marker_groups (
     id    INT UNSIGNED NOT NULL AUTO_INCREMENT,
     slug  VARCHAR(64)  NOT NULL,

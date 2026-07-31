@@ -5,13 +5,8 @@
  *
  * @category Application
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -42,11 +37,6 @@ namespace App\Context;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 final readonly class UserContext
 {
@@ -59,11 +49,6 @@ final readonly class UserContext
      *                                    refused by every guarded use case.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         public string $id,
@@ -84,11 +69,6 @@ final readonly class UserContext
      * @return bool True when at least one role grants it.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -114,11 +94,6 @@ final readonly class UserContext
      * @return list<string> In the order first encountered across the roles.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */

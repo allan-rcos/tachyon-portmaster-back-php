@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -33,11 +28,6 @@ use Shared\Exceptions\Result;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 interface IRoleTM
 {
@@ -51,11 +41,6 @@ interface IRoleTM
      * @return Result<IRole> A 422 failure when the name breaks a rule.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -77,11 +62,6 @@ interface IRoleTM
      *                       nothing here that can break a rule.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */

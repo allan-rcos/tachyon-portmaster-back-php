@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Domain\Enums\ContainerStatus;
+use Domain\Enums\TelemetryEvent;
 use Domain\Enums\RiskClass;
 use Domain\Models\IManifestChange;
 use Domain\Models\Internal\Container;
@@ -42,7 +43,7 @@ describe('ManifestTM load', function () {
         expect($change->container->status)->toBe(ContainerStatus::Loading)
             ->and($change->container->currentWeight)->toBe(30.0)
             ->and($change->clearManifest)->toBeFalse()
-            ->and($change->event)->toBe('load')
+            ->and($change->event)->toBe(TelemetryEvent::Load)
             ->and($change->cargo?->quantity)->toBe(30.0)
             ->and($change->cargo?->weight)->toBe(30.0);
     });
@@ -113,7 +114,7 @@ describe('ManifestTM unload', function () {
             ->and($change->container->currentWeight)->toBe(0.0)
             ->and($change->clearManifest)->toBeTrue()
             ->and($change->cargo)->toBeNull()
-            ->and($change->event)->toBe('unload');
+            ->and($change->event)->toBe(TelemetryEvent::Unload);
     });
 
     it('drops a fully-unloaded product line while the container stays loading', function () {

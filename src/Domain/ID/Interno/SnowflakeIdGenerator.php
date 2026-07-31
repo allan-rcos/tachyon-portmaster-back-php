@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -48,11 +43,6 @@ use Shared\Exceptions\LeafContext;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -60,19 +50,11 @@ final class SnowflakeIdGenerator implements IDatabaseIdGenerator
 {
     /**
      * @var int Bits reserved for the cluster id.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int CLUSTER_ID_BITS = 5;
 
     /**
      * @var int Bits reserved for the server id — the worker number.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int SERVER_ID_BITS = 5;
 
@@ -80,85 +62,49 @@ final class SnowflakeIdGenerator implements IDatabaseIdGenerator
      * @var int Bits reserved for the per-millisecond counter. Twelve caps a
      *          single generator at 4096 ids per millisecond, past which
      *          {@see waitNextMillis()} stalls until the clock advances.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int SEQUENCE_BITS = 12;
 
     /**
      * @var int Highest valid cluster id (31).
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int MAX_CLUSTER_ID = -1 ^ (-1 << self::CLUSTER_ID_BITS); // 31
 
     /**
      * @var int Highest valid server id (31) — so at most 32 workers.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int MAX_SERVER_ID = -1 ^ (-1 << self::SERVER_ID_BITS); // 31
 
     /**
      * @var int Wraps the sequence counter back to zero (4095).
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int SEQUENCE_MASK = -1 ^ (-1 << self::SEQUENCE_BITS); // 4095
 
     /**
      * @var int Left shift placing the server id above the sequence.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int SERVER_ID_SHIFT = self::SEQUENCE_BITS;
 
     /**
      * @var int Left shift placing the cluster id above the server id.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int CLUSTER_ID_SHIFT = self::SEQUENCE_BITS + self::SERVER_ID_BITS;
 
     /**
      * @var int Left shift placing the timestamp in the high bits, which is what
      *          makes the id sort by time.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int TIMESTAMP_LEFT_SHIFT = self::SEQUENCE_BITS + self::SERVER_ID_BITS + self::CLUSTER_ID_BITS;
 
     /**
      * @var int Ids minted so far within {@see $lastTimestamp}. Reset whenever
      *          the clock advances.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private int $sequence = 0;
 
     /**
      * @var int Millisecond the last id was minted in; -1 before the first.
      *          Compared against the clock to detect it going backwards.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private int $lastTimestamp = -1;
 
@@ -174,11 +120,6 @@ final class SnowflakeIdGenerator implements IDatabaseIdGenerator
      *                      ids exist breaks their ordering.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function __construct(
         private readonly int $clusterId,
@@ -201,11 +142,6 @@ final class SnowflakeIdGenerator implements IDatabaseIdGenerator
      *                          that was out of range.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public static function create(
         int $clusterId,
@@ -244,11 +180,6 @@ final class SnowflakeIdGenerator implements IDatabaseIdGenerator
      * @throws RuntimeException When the system clock has moved backwards.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function generate(): string
     {
@@ -287,11 +218,6 @@ final class SnowflakeIdGenerator implements IDatabaseIdGenerator
      * @return int Milliseconds since the Unix epoch.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function currentTimestamp(): int
     {
@@ -310,11 +236,6 @@ final class SnowflakeIdGenerator implements IDatabaseIdGenerator
      * @return int The first millisecond after it.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function waitNextMillis(int $lastTimestamp): int
     {

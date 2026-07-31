@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -38,11 +33,6 @@ use Shared\Exceptions\Result;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -53,19 +43,11 @@ final readonly class MarkerGroupTM implements IMarkerGroupTM
      * no `domain:action` half: a group names a kind of flag, not an operation.
      *
      * @var string PCRE anchored at both ends.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const string SLUG_PATTERN = '/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/';
 
     /**
      * @var int Matches the `slug` column of the `marker_groups` registry table.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int MAX_SLUG_LENGTH = 64;
 
@@ -79,11 +61,6 @@ final readonly class MarkerGroupTM implements IMarkerGroupTM
      * @return Result<IMarkerGroup> A 422 failure when the slug is malformed.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function create(string $slug): Result
     {
@@ -107,11 +84,6 @@ final readonly class MarkerGroupTM implements IMarkerGroupTM
      * @return Map<string, string> Field name to message; empty when valid.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function validate(string $slug): Map
     {

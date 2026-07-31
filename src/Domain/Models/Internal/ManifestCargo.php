@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -31,11 +26,6 @@ use Domain\Models\IManifestCargo;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -48,11 +38,6 @@ final readonly class ManifestCargo implements IManifestCargo
      * @param  float  $weight  What that quantity weighs, from the product's density.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         public string $containerId,

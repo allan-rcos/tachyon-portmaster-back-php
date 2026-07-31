@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -39,11 +34,6 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 final readonly class AuthCookie
 {
@@ -51,11 +41,6 @@ final readonly class AuthCookie
      * @param  JwtConfig  $config  Cookie names, lifetimes and security flags.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private JwtConfig $config,
@@ -69,11 +54,6 @@ final readonly class AuthCookie
      * @return string|null The token, or null when the cookie is absent or empty.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -89,11 +69,6 @@ final readonly class AuthCookie
      * @return string|null The token, or null when the cookie is absent or empty.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -109,11 +84,6 @@ final readonly class AuthCookie
      * @return string The header value, ready to append.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -129,11 +99,6 @@ final readonly class AuthCookie
      * @return string The header value, ready to append.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -148,11 +113,6 @@ final readonly class AuthCookie
      * @return string The header value, ready to append.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -167,11 +127,6 @@ final readonly class AuthCookie
      * @return string The header value, ready to append.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -188,11 +143,6 @@ final readonly class AuthCookie
      * @return string|null Its value, or null.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function cookie(ServerRequestInterface $request, string $name): ?string
     {
@@ -214,11 +164,6 @@ final readonly class AuthCookie
      * @return string The header value.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function build(string $name, string $value, int $maxAge): string
     {

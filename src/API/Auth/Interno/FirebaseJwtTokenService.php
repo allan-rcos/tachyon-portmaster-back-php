@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -56,11 +51,6 @@ use Throwable;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -70,10 +60,6 @@ final readonly class FirebaseJwtTokenService implements ITokenService
      * The claim holding the base64'd FlatBuffer principal.
      *
      * @var string
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const string CLAIM_PRINCIPAL = 'ctx';
 
@@ -81,10 +67,6 @@ final readonly class FirebaseJwtTokenService implements ITokenService
      * Discriminates the two token kinds; see {@see ITokenService}.
      *
      * @var string
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const string CLAIM_TYPE = 'typ';
 
@@ -92,10 +74,6 @@ final readonly class FirebaseJwtTokenService implements ITokenService
      * Value of {@see self::CLAIM_TYPE} on an access token.
      *
      * @var string
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const string TYPE_ACCESS = 'access';
 
@@ -103,10 +81,6 @@ final readonly class FirebaseJwtTokenService implements ITokenService
      * Value of {@see self::CLAIM_TYPE} on a refresh token.
      *
      * @var string
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const string TYPE_REFRESH = 'refresh';
 
@@ -115,11 +89,6 @@ final readonly class FirebaseJwtTokenService implements ITokenService
      * @param  IRandomIdGenerator  $ids  Source of the `jti` claim.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private JwtConfig $config,
@@ -134,11 +103,6 @@ final readonly class FirebaseJwtTokenService implements ITokenService
      * @return string The signed token.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function issue(IUser $user): string
     {
@@ -152,11 +116,6 @@ final readonly class FirebaseJwtTokenService implements ITokenService
      * @return string The signed token.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function issueRefresh(IUser $user): string
     {
@@ -170,11 +129,6 @@ final readonly class FirebaseJwtTokenService implements ITokenService
      * @return Result<UserContext> A 401 for any reason it is unusable.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function verify(string $token): Result
     {
@@ -188,11 +142,6 @@ final readonly class FirebaseJwtTokenService implements ITokenService
      * @return Result<UserContext> A 401 for any reason it is unusable.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function verifyRefresh(string $token): Result
     {
@@ -212,11 +161,6 @@ final readonly class FirebaseJwtTokenService implements ITokenService
      * @return string The signed token.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function sign(IUser $user, string $type, int $ttlSeconds): string
     {
@@ -269,11 +213,6 @@ final readonly class FirebaseJwtTokenService implements ITokenService
      * @return Result<UserContext> The rebuilt context, or a 401.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function decode(string $token, string $expectedType): Result
     {
@@ -331,11 +270,6 @@ final readonly class FirebaseJwtTokenService implements ITokenService
      * @return Result<never> A 401 that names no specific cause.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private static function invalid(): Result
     {

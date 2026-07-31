@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -36,7 +31,7 @@ namespace Domain\Models;
  * {@see docs/adr/0003-engine-memory-for-runtime-tables.md} for why there is no
  * label or description.
  *
- * {@see ITelemetryEvent} and {@see IMarkerGroup} are the same family. A closed,
+ * {@see IMarkerGroup} is the same family. A closed,
  * business-defined set like {@see \Domain\Enums\ContainerStatus} stays an enum.
  *
  * @see \Infra\Repository\IPermissionRepository Where these are stored.
@@ -45,11 +40,6 @@ namespace Domain\Models;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 interface IPermission
 {
@@ -58,10 +48,6 @@ interface IPermission
      * value that travels on the wire and is persisted against a role.
      *
      * @var string Lower-kebab resource, a colon, lower-kebab action.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public string $slug {
         get;
@@ -77,10 +63,6 @@ interface IPermission
      * nothing may depend on a particular value.
      *
      * @var int Registry index; zero means built but not yet registered.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public int $id {
         get;
@@ -96,11 +78,6 @@ interface IPermission
      * @return self A copy carrying it; the receiver is unchanged.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */

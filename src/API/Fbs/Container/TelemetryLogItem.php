@@ -38,10 +38,13 @@ class TelemetryLogItem extends Table
         return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
     }
 
-    public function getEvent(): ?string
+    /**
+     * @return int
+     */
+    public function getEvent()
     {
         $o = $this->__offset(6);
-        return $o != 0 ? $this->__string($o + $this->bb_pos) : null;
+        return $o != 0 ? $this->bb->getByte($o + $this->bb_pos) : \API\Fbs\Common\TelemetryEvent::Load;
     }
 
     public function getDescription(): ?string
@@ -92,12 +95,12 @@ class TelemetryLogItem extends Table
 
     /**
      * @param FlatbufferBuilder $builder
-     * @param StringOffset
+     * @param byte
      * @return void
      */
     public static function addEvent(FlatbufferBuilder $builder, $event)
     {
-        $builder->addOffsetX(1, $event, 0);
+        $builder->addByteX(1, $event, 0);
     }
 
     /**

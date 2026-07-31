@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -51,11 +46,6 @@ use Infra\Text\SearchKey;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @implements IDQL<ContainerListView>
  *
@@ -66,10 +56,6 @@ final readonly class ListContainersDQL implements IDQL
     /**
      * @var int Page size when the caller named none, or named one that was not
      *          positive.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int DEFAULT_LIMIT = 20;
 
@@ -87,11 +73,6 @@ final readonly class ListContainersDQL implements IDQL
      *                                 individually.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private ?string $cursor = null,
@@ -114,11 +95,6 @@ final readonly class ListContainersDQL implements IDQL
      * @return SqlQuery The statement and its bindings.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function toSql(): SqlQuery
     {
@@ -180,11 +156,6 @@ final readonly class ListContainersDQL implements IDQL
      *                           total, when nothing matched.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function hydrate(array $rows): ContainerListView
     {
@@ -216,11 +187,6 @@ final readonly class ListContainersDQL implements IDQL
      *             otherwise.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function effectiveLimit(): int
     {
@@ -233,11 +199,6 @@ final readonly class ListContainersDQL implements IDQL
      * @return ?string The normalised term, or null for no filter.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function normalizedSearch(): ?string
     {
@@ -256,11 +217,6 @@ final readonly class ListContainersDQL implements IDQL
      *                 invalid filter widens the result rather than emptying it.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function normalizedStatus(): ?string
     {
@@ -280,11 +236,6 @@ final readonly class ListContainersDQL implements IDQL
      * @return list<string> The recognised slugs, in the order given.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function normalizedStatusIn(): array
     {
@@ -316,11 +267,6 @@ final readonly class ListContainersDQL implements IDQL
      *                                    so the whole map stays scalar.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function filters(): array
     {

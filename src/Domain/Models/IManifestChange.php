@@ -5,18 +5,15 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
 
 namespace Domain\Models;
+
+use Domain\Enums\TelemetryEvent;
 
 /**
  * The full outcome of a manifest load or unload, computed by the manifest table
@@ -33,21 +30,12 @@ namespace Domain\Models;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 interface IManifestChange
 {
     /**
      * @var IContainer The container's new state — updated weight, and the
      *                 status transition if the move caused one.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public IContainer $container {
         get;
@@ -55,10 +43,6 @@ interface IManifestChange
 
     /**
      * @var string Id of the product that moved.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public string $productId {
         get;
@@ -67,10 +51,6 @@ interface IManifestChange
     /**
      * @var ?IManifestCargo The product's resulting cargo line, or null to remove
      *                      it — meaning that product was fully unloaded.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public ?IManifestCargo $cargo {
         get;
@@ -79,23 +59,15 @@ interface IManifestChange
     /**
      * @var bool True when the container emptied entirely and the whole manifest
      *           should be dropped, rather than one line removed.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public bool $clearManifest {
         get;
     }
 
     /**
-     * @var string Slug of the {@see ITelemetryEvent} to record for this move.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
+     * @var TelemetryEvent What to record in the telemetry log for this move.
      */
-    public string $event {
+    public TelemetryEvent $event {
         get;
     }
 }

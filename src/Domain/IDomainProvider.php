@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -32,7 +27,6 @@ use Domain\TableModules\IMarkerTM;
 use Domain\TableModules\IPermissionTM;
 use Domain\TableModules\IProductTM;
 use Domain\TableModules\IRoleTM;
-use Domain\TableModules\ITelemetryEventTM;
 use Domain\TableModules\IUserTM;
 
 /**
@@ -57,11 +51,6 @@ use Domain\TableModules\IUserTM;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 interface IDomainProvider
 {
@@ -71,11 +60,6 @@ interface IDomainProvider
      * @return IDatabaseIdGenerator The per-worker generator.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -87,11 +71,6 @@ interface IDomainProvider
      * @return ISequentialIdGenerator The per-worker generator.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -103,11 +82,6 @@ interface IDomainProvider
      * @return IRandomIdGenerator The per-worker generator.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -122,11 +96,6 @@ interface IDomainProvider
      * @return IIndexHasher The per-worker hasher.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -138,11 +107,6 @@ interface IDomainProvider
      * @return IUserTM The memoized table module.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -154,11 +118,6 @@ interface IDomainProvider
      * @return IRoleTM The memoized table module.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -170,11 +129,6 @@ interface IDomainProvider
      * @return IAuthTM The memoized table module.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -186,11 +140,6 @@ interface IDomainProvider
      * @return IProductTM The memoized table module.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -202,11 +151,6 @@ interface IDomainProvider
      * @return IContainerTM The memoized table module.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -218,11 +162,6 @@ interface IDomainProvider
      * @return IManifestTM The memoized table module.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -234,11 +173,6 @@ interface IDomainProvider
      * @return IPermissionTM The memoized table module.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -250,11 +184,6 @@ interface IDomainProvider
      * @return IMarkerGroupTM The memoized table module.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -266,29 +195,8 @@ interface IDomainProvider
      * @return IMarkerTM The memoized table module.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
     public function markerTM(): IMarkerTM;
-
-    /**
-     * Rules for telemetry event slugs.
-     *
-     * @return ITelemetryEventTM The memoized table module.
-     *
-     * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
-     *
-     * @api
-     */
-    public function telemetryEventTM(): ITelemetryEventTM;
 }

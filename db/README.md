@@ -17,8 +17,8 @@ harness (`tests/integration/internal/harness/migrate.go`).
 ```
 000001_initial_schema.up.sql      roles, users, user_roles, products,
 000001_initial_schema.down.sql    containers, container_items, telemetry_logs
-000002_metadata_and_markers.up.sql    permissions, telemetry_events,
-000002_metadata_and_markers.down.sql  marker_groups, markers  (ENGINE=MEMORY)
+000002_metadata_and_markers.up.sql    permissions, marker_groups,
+000002_metadata_and_markers.down.sql  markers  (ENGINE=MEMORY)
 ```
 
 ### Adding one
@@ -56,8 +56,8 @@ scripts/integration-test.sh               # harness does its own
 
 ## The MEMORY tables
 
-`permissions`, `telemetry_events`, `marker_groups` and `markers` are
-`ENGINE=MEMORY`. Four consequences that matter when writing code against them:
+`permissions`, `marker_groups` and `markers` are `ENGINE=MEMORY`. Four
+consequences that matter when writing code against them:
 
 - A MariaDB restart **empties** them; the definitions survive. Metadata
   re-registers itself at the next `WorkerStart`.

@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -47,11 +42,6 @@ use Shared\Exceptions\Result;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -59,10 +49,6 @@ readonly final class ContainerTM implements IContainerTM
 {
     /**
      * @var int Matches the `VARCHAR(255)` the code column is declared as.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int MAX_CODE_LENGTH = 255;
 
@@ -70,10 +56,6 @@ readonly final class ContainerTM implements IContainerTM
      * @var float Fraction of capacity a container must hold before it can be
      *            sealed. Stops a nearly-empty container being dispatched as
      *            though it were a load.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const float MIN_SEAL_FILL_RATIO = 0.10;
 
@@ -83,11 +65,6 @@ readonly final class ContainerTM implements IContainerTM
      *                                             key.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private IDatabaseIdGenerator $idGenerator,
@@ -103,11 +80,6 @@ readonly final class ContainerTM implements IContainerTM
      * @return Result<IContainer> A 422 failure listing every field that broke a rule.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function create(string $code, float $maxCapacity): Result
     {
@@ -137,11 +109,6 @@ readonly final class ContainerTM implements IContainerTM
      * @return Result<IContainer> A 422 failure when the capacity is invalid.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function update(IContainer $container, float $maxCapacity): Result
     {
@@ -171,11 +138,6 @@ readonly final class ContainerTM implements IContainerTM
      *                            {@see MIN_SEAL_FILL_RATIO} of capacity.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function seal(IContainer $container): Result
     {
@@ -201,11 +163,6 @@ readonly final class ContainerTM implements IContainerTM
      * @return Result<IContainer> A 409 failure when the container is not `Sealed`.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function dispatch(IContainer $container): Result
     {
@@ -224,11 +181,6 @@ readonly final class ContainerTM implements IContainerTM
      * @return Container A new instance; the argument is unchanged.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function withStatus(IContainer $container, ContainerStatus $status): Container
     {
@@ -248,11 +200,6 @@ readonly final class ContainerTM implements IContainerTM
      * @return Result<never> A 409 failure carrying it.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function conflict(string $message): Result
     {
@@ -271,11 +218,6 @@ readonly final class ContainerTM implements IContainerTM
      *                             are snake_case, matching the wire contract.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function validate(string $code, float $maxCapacity): Map
     {

@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -38,11 +33,6 @@ use Psr\Http\Message\StreamInterface;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 final class RolePermissionsUpdateRequestProxy extends RolePermissionsUpdateRequest implements IFbsProxy
 {
@@ -52,11 +42,6 @@ final class RolePermissionsUpdateRequestProxy extends RolePermissionsUpdateReque
      * @param  list<string>  $permissions  Permission slugs to set (full replacement).
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         public array $permissions = [],
@@ -70,11 +55,6 @@ final class RolePermissionsUpdateRequestProxy extends RolePermissionsUpdateReque
      * @return int This table's offset within it.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -95,11 +75,6 @@ final class RolePermissionsUpdateRequestProxy extends RolePermissionsUpdateReque
      * @return string A finished, size-prefixed buffer.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -121,11 +96,6 @@ final class RolePermissionsUpdateRequestProxy extends RolePermissionsUpdateReque
      * @return static The hydrated proxy.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -146,11 +116,6 @@ final class RolePermissionsUpdateRequestProxy extends RolePermissionsUpdateReque
      * @return static The hydrated proxy.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -168,11 +133,6 @@ final class RolePermissionsUpdateRequestProxy extends RolePermissionsUpdateReque
      * @return static The hydrated proxy.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -187,11 +147,6 @@ final class RolePermissionsUpdateRequestProxy extends RolePermissionsUpdateReque
      * @return array<string, mixed> Ready for `json_encode()`.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -208,11 +163,6 @@ final class RolePermissionsUpdateRequestProxy extends RolePermissionsUpdateReque
      *                parse.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -235,11 +185,6 @@ final class RolePermissionsUpdateRequestProxy extends RolePermissionsUpdateReque
      * @return StreamInterface The response body.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */

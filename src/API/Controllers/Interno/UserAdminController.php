@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -64,11 +59,6 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -89,11 +79,6 @@ final readonly class UserAdminController implements IUserAdminController
      *                                                    {@see updateRoles()}.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private IListUsersUseCase $listUsers,
@@ -118,11 +103,6 @@ final readonly class UserAdminController implements IUserAdminController
      *                           document.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function list(ServerRequestInterface $request): ResponseInterface
     {
@@ -161,11 +141,6 @@ final readonly class UserAdminController implements IUserAdminController
      *                           problem document.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function create(ServerRequestInterface $request): ResponseInterface
     {
@@ -201,11 +176,6 @@ final readonly class UserAdminController implements IUserAdminController
      *                           document — 404 when nothing matches the id.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function get(ServerRequestInterface $request): ResponseInterface
     {
@@ -227,11 +197,6 @@ final readonly class UserAdminController implements IUserAdminController
      *                           document — 404 when nothing matches the id.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function update(ServerRequestInterface $request): ResponseInterface
     {
@@ -265,11 +230,6 @@ final readonly class UserAdminController implements IUserAdminController
      * @return ResponseInterface An empty 204, or a problem document.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function delete(ServerRequestInterface $request): ResponseInterface
     {
@@ -297,11 +257,6 @@ final readonly class UserAdminController implements IUserAdminController
      * @return ResponseInterface An empty 204, or a problem document.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function resetPassword(ServerRequestInterface $request): ResponseInterface
     {
@@ -334,11 +289,6 @@ final readonly class UserAdminController implements IUserAdminController
      *                           document — 404 when nothing matches the id.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function updateRoles(ServerRequestInterface $request): ResponseInterface
     {
@@ -377,11 +327,6 @@ final readonly class UserAdminController implements IUserAdminController
      *                           document.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function respondWithUser(UserContext $context, string $id, int $status): ResponseInterface
     {
@@ -403,11 +348,6 @@ final readonly class UserAdminController implements IUserAdminController
      * @return UserAdminResponseProxy Ready to serialize.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function response(AccountView $view): UserAdminResponseProxy
     {
@@ -441,11 +381,6 @@ final readonly class UserAdminController implements IUserAdminController
      * @return list<string> The non-empty string ids found in the body.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function roleIdsFromBody(ServerRequestInterface $request): array
     {

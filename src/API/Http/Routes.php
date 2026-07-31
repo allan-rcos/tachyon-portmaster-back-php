@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -24,6 +19,7 @@ use API\Controllers\IAccountController;
 use API\Controllers\IAuthController;
 use API\Controllers\IContainerController;
 use API\Controllers\IManifestController;
+use API\Controllers\IMetadataController;
 use API\Controllers\IMetricsController;
 use API\Controllers\IProductController;
 use API\Controllers\IRoleAdminController;
@@ -49,11 +45,6 @@ use function FastRoute\simpleDispatcher;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 final class Routes
 {
@@ -61,10 +52,6 @@ final class Routes
      * The path-id placeholder, base62 rather than numeric.
      *
      * @var string
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const string ID = '{id:[A-Za-z0-9]+}';
 
@@ -78,11 +65,6 @@ final class Routes
      * @return Dispatcher Ready to match a method and path.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -140,6 +122,11 @@ final class Routes
             $r->addRoute('DELETE', '/users/'.self::ID, [IUserAdminController::class, 'delete']);
             $r->addRoute('PUT', '/users/'.self::ID.'/password', [IUserAdminController::class, 'resetPassword']);
             $r->addRoute('PUT', '/users/'.self::ID.'/roles', [IUserAdminController::class, 'updateRoles']);
+
+            // --- System metadata ------------------------------------------------
+            // The catalogue is filled from code at WorkerStart, so this is the
+            // whole of the resource: no ids, no writes.
+            $r->addRoute('GET', '/metadata/permissions', [IMetadataController::class, 'listPermissions']);
 
             // --- Metrics --------------------------------------------------------
             $r->addRoute('GET', '/metrics', [IMetricsController::class, 'get']);

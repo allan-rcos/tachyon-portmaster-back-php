@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -37,11 +32,6 @@ use RuntimeException;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 final class JwtChain extends DotEnvChain
 {
@@ -53,10 +43,6 @@ final class JwtChain extends DotEnvChain
      * 7.0 (CVE-2025-45769) by refusing such a key outright.
      *
      * @var int
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int MINIMUM_SECRET_BYTES = 32;
 
@@ -75,11 +61,6 @@ final class JwtChain extends DotEnvChain
      *                          {@see self::MINIMUM_SECRET_BYTES}.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     protected function process(EnvSource $env, BootDraft $draft): void
     {

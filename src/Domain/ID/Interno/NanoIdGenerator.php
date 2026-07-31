@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -40,11 +35,6 @@ use Hidehalo\Nanoid\Client;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -54,10 +44,6 @@ final readonly class NanoIdGenerator implements IRandomIdGenerator
      * @var int Characters per id. Shortening this raises the collision
      *          probability quadratically — 21 is the library default and the
      *          point at which it matches UUIDv4.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int SIZE = 21;
 
@@ -67,11 +53,6 @@ final readonly class NanoIdGenerator implements IRandomIdGenerator
      *                          so a test can pin the output.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private Client $client = new Client(),
@@ -87,11 +68,6 @@ final readonly class NanoIdGenerator implements IRandomIdGenerator
      * @return string {@see SIZE} URL-safe characters.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function generate(): string
     {

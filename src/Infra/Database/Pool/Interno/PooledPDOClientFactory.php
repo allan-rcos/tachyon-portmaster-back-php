@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -34,11 +29,6 @@ use OpenSwoole\Core\Coroutine\Client\ClientFactoryInterface;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -56,11 +46,6 @@ final class PooledPDOClientFactory implements ClientFactoryInterface
      * @return PooledPDOClient A client whose raw handle can be lent out.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public static function make(ClientConfigInterface $config): PooledPDOClient
     {

@@ -5,13 +5,8 @@
  *
  * @category Application
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -31,21 +26,24 @@ use App\Services\IDeleteUserUseCase;
 use App\Services\IDispatchContainerUseCase;
 use App\Services\IGetAccountUseCase;
 use App\Services\IGetContainerUseCase;
+use App\Services\IGetMarkerUseCase;
 use App\Services\IGetMetricsUseCase;
 use App\Services\IGetProductUseCase;
 use App\Services\IGetRoleUseCase;
+use App\Services\IGetUserUseCase;
 use App\Services\IListContainerSummariesUseCase;
 use App\Services\IListContainersUseCase;
+use App\Services\IListPermissionsUseCase;
 use App\Services\IListProductsUseCase;
 use App\Services\IListRolesUseCase;
 use App\Services\IListUsersUseCase;
 use App\Services\ILoadItemUseCase;
 use App\Services\ILoginUseCase;
 use App\Services\IRegisterMarkerGroupUseCase;
-use App\Services\ISetMarkerUseCase;
-use App\Services\ISetupUseCase;
 use App\Services\IResetUserPasswordUseCase;
 use App\Services\ISealContainerUseCase;
+use App\Services\ISetMarkerUseCase;
+use App\Services\ISetupUseCase;
 use App\Services\IUnloadItemUseCase;
 use App\Services\IUpdateAccountUseCase;
 use App\Services\IUpdateContainerUseCase;
@@ -53,9 +51,7 @@ use App\Services\IUpdateProductUseCase;
 use App\Services\IUpdateRolePermissionsUseCase;
 use App\Services\IUpdateUserRolesUseCase;
 use App\Services\IUpdateUserUseCase;
-use App\Services\IGetMarkerUseCase;
 use App\Services\IValidateSessionUseCase;
-use App\Services\IGetUserUseCase;
 use Domain\ID\IRandomIdGenerator;
 use Domain\ID\ISequentialIdGenerator;
 use Infra\Database\IUnitOfWork;
@@ -79,11 +75,6 @@ use Infra\Logging\ILogger;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 interface IAppProvider
 {
@@ -92,11 +83,6 @@ interface IAppProvider
      * The {@see ILogger} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -113,11 +99,6 @@ interface IAppProvider
      * @return IUnitOfWork The boundary half only — never the connection.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -131,11 +112,6 @@ interface IAppProvider
      *                                time.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -150,11 +126,6 @@ interface IAppProvider
      * @return IRandomIdGenerator Produces NanoIDs.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -165,11 +136,6 @@ interface IAppProvider
      * The {@see ILoginUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -182,11 +148,6 @@ interface IAppProvider
      * The {@see IValidateSessionUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -201,11 +162,6 @@ interface IAppProvider
      * The {@see ISetMarkerUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -215,11 +171,6 @@ interface IAppProvider
      * The {@see IGetMarkerUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -230,11 +181,6 @@ interface IAppProvider
      * The {@see IGetAccountUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -244,11 +190,6 @@ interface IAppProvider
      * The {@see IUpdateAccountUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -258,11 +199,6 @@ interface IAppProvider
      * The {@see IChangePasswordUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -273,11 +209,6 @@ interface IAppProvider
      * The {@see IListUsersUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -287,11 +218,6 @@ interface IAppProvider
      * The {@see IGetUserUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -301,11 +227,6 @@ interface IAppProvider
      * The {@see ICreateUserUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -315,11 +236,6 @@ interface IAppProvider
      * The {@see IUpdateUserUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -329,11 +245,6 @@ interface IAppProvider
      * The {@see IDeleteUserUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -343,11 +254,6 @@ interface IAppProvider
      * The {@see IResetUserPasswordUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -357,11 +263,6 @@ interface IAppProvider
      * The {@see IUpdateUserRolesUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -372,11 +273,6 @@ interface IAppProvider
      * The {@see IListRolesUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -386,11 +282,6 @@ interface IAppProvider
      * The {@see ICreateRoleUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -400,11 +291,6 @@ interface IAppProvider
      * The {@see IGetRoleUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -414,26 +300,26 @@ interface IAppProvider
      * The {@see IUpdateRolePermissionsUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
     public function updateRolePermissionsUseCase(): IUpdateRolePermissionsUseCase;
+
+    // --- System metadata ----------------------------------------------------
+    /**
+     * The {@see IListPermissionsUseCase} for this worker.
+     *
+     * @copyright 2026 Tachyon
+     *
+     * @api
+     */
+    public function listPermissionsUseCase(): IListPermissionsUseCase;
 
     // --- Products -----------------------------------------------------------
     /**
      * The {@see IListProductsUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -443,11 +329,6 @@ interface IAppProvider
      * The {@see ICreateProductUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -457,11 +338,6 @@ interface IAppProvider
      * The {@see IGetProductUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -471,11 +347,6 @@ interface IAppProvider
      * The {@see IUpdateProductUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -485,11 +356,6 @@ interface IAppProvider
      * The {@see IDeleteProductUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -500,11 +366,6 @@ interface IAppProvider
      * The {@see IListContainersUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -514,11 +375,6 @@ interface IAppProvider
      * The {@see ICreateContainerUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -528,11 +384,6 @@ interface IAppProvider
      * The {@see IListContainerSummariesUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -542,11 +393,6 @@ interface IAppProvider
      * The {@see IGetContainerUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -556,11 +402,6 @@ interface IAppProvider
      * The {@see IUpdateContainerUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -570,11 +411,6 @@ interface IAppProvider
      * The {@see IDeleteContainerUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -584,11 +420,6 @@ interface IAppProvider
      * The {@see ISealContainerUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -598,11 +429,6 @@ interface IAppProvider
      * The {@see IDispatchContainerUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -613,11 +439,6 @@ interface IAppProvider
      * The {@see ILoadItemUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -627,11 +448,6 @@ interface IAppProvider
      * The {@see IUnloadItemUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -642,11 +458,6 @@ interface IAppProvider
      * The {@see IGetMetricsUseCase} for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */

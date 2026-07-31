@@ -133,6 +133,32 @@ func TestYardStory(t *testing.T) {
 	t.Run("the yard reports what it holds", func(t *testing.T) {
 		requireOK(t, c.Get(t, "/containers/summary"))
 
+		// Narrowed by id, because the summary of every container in a yard that
+		// other stories are also filling says nothing about this one's history.
+		summary := decodeRoot(t,
+			requireOK(t, c.Get(t, "/containers/summary?id="+containerID)).Body,
+			fbs.GetRootAsContainerSummaryListResponse)
+		require.Equal(t, 1, summary.DataLength(), "an id narrows the page to that one container")
+
+		var item fbs.ContainerSummaryResponse
+		require.True(t, summary.Data(&item, 0))
+		require.GreaterOrEqual(t, item.RecentLogsLength(), 3,
+			"two loads and one unload each leave a telemetry entry behind")
+
+		// The event is an enum on the wire, so the log reads back as the same
+		// vocabulary the schema publishes rather than as free text.
+		seen := map[fbs.TelemetryEvent]bool{}
+		for i := 0; i < item.RecentLogsLength(); i++ {
+			var log fbs.TelemetryLogItem
+			require.True(t, item.RecentLogs(&log, i))
+			require.Contains(t,
+				[]fbs.TelemetryEvent{fbs.TelemetryEventLoad, fbs.TelemetryEventUnload},
+				log.Event(), "every entry must carry a declared event")
+			seen[log.Event()] = true
+		}
+		assert.True(t, seen[fbs.TelemetryEventLoad] && seen[fbs.TelemetryEventUnload],
+			"the log must record both what went in and what came out")
+
 		metrics := decodeRoot(t, requireOK(t, c.Get(t, "/metrics")).Body, fbs.GetRootAsMetricsResponse)
 		assert.GreaterOrEqual(t, metrics.TotalContainers(), int32(1))
 		assert.GreaterOrEqual(t, metrics.RegisteredProducts(), int32(1))

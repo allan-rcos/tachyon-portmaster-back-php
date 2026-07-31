@@ -79,6 +79,7 @@ O desenho completo, com os porquês, está em [`docs/architecture.md`](docs/arch
 | **Manifestos** | `POST /manifests/load-item` · `POST /manifests/unload-item` |
 | **Usuários (admin)** | `GET` `POST` `/users` · `GET` `PUT` `DELETE` `/users/{id}` · `PUT /users/{id}/password` · `PUT /users/{id}/roles` |
 | **Papéis (admin)** | `GET` `POST` `/roles` · `PUT /roles/{id}/permissions` |
+| **Metadados do sistema** | `GET /metadata/permissions` — catálogo preenchido em código no *WorkerStart*; sem paginação, filtrável por `?search=` |
 | **Métricas** | `GET /metrics` |
 
 A sessão trafega em cookies `HttpOnly`: um JWT HS256 de curta duração e um *refresh token* opaco (NanoID) revogável por *marker*.
@@ -192,7 +193,7 @@ Ciclo de vida de um contêiner: crie-o, embarque itens com `POST /manifests/load
 | `scripts/integration-test.sh` | suíte de integração em Go (precisa de Docker) |
 | `composer flatbuffers` | regera e normaliza as classes PHP a partir dos `.fbs` |
 | `scripts/generate-flatbuffers-go.sh` | regera os bindings Go da suíte de testes |
-| `composer phpdoc` | renderiza a documentação de API em `build/docs` |
+| `composer phpdoc` | renderiza a documentação de API em `docs/phpdocumentor` (versionada; GitHub Pages) |
 
 **A linha divisória entre as suítes:** se um comportamento é observável por uma requisição e uma resposta, é integração; se é uma regra ou um desvio, é unitário. Os testes unitários batem direto nos *table modules* — é onde as regras existem — e nos casos de uso, verificando *commit* no caminho felizes, *rollback* em qualquer falha e o guarda de `403`. A suíte de integração é escrita como **histórias** (sessão, administração, pátio) que sobem MariaDB em tmpfs e um pool de APIs reais via testcontainers-go.
 

@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -65,11 +60,6 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -85,11 +75,6 @@ final readonly class ProductController implements IProductController
      * @param  IDeleteProductUseCase  $deleteProduct  Backs {@see delete()}.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private IListProductsUseCase $listProducts,
@@ -113,11 +98,6 @@ final readonly class ProductController implements IProductController
      *                           document.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function list(ServerRequestInterface $request): ResponseInterface
     {
@@ -165,11 +145,6 @@ final readonly class ProductController implements IProductController
      *                           document.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function create(ServerRequestInterface $request): ResponseInterface
     {
@@ -207,11 +182,6 @@ final readonly class ProductController implements IProductController
      *                           — 404 when nothing matches the id.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function get(ServerRequestInterface $request): ResponseInterface
     {
@@ -240,11 +210,6 @@ final readonly class ProductController implements IProductController
      *                           — 404 when nothing matches the id.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function update(ServerRequestInterface $request): ResponseInterface
     {
@@ -279,11 +244,6 @@ final readonly class ProductController implements IProductController
      * @return ResponseInterface An empty 204, or a problem document.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function delete(ServerRequestInterface $request): ResponseInterface
     {
@@ -314,11 +274,6 @@ final readonly class ProductController implements IProductController
      * @return ProductResponseProxy Ready to serialize.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function response(string $id, string $name, float $density, RiskClass $riskClass): ProductResponseProxy
     {

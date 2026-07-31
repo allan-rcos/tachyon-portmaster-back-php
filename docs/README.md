@@ -42,7 +42,7 @@ curl localhost:8000/info
 composer phpstan             # static analysis, level 9
 composer pest                # unit tests
 scripts/integration-test.sh  # integration suite (needs Docker)
-composer phpdoc              # render API documentation to build/docs
+composer phpdoc              # render API documentation to docs/phpdocumentor
 ```
 
 ## Skills

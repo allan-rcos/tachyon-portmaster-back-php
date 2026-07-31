@@ -30,6 +30,41 @@ func TestAdministrationStory(t *testing.T) {
 		user   factories.User
 	)
 
+	t.Run("the permission catalogue is what a role can be built from", func(t *testing.T) {
+		list := decodeRoot(t, requireOK(t, c.Get(t, "/metadata/permissions")).Body, fbs.GetRootAsPermissionListResponse)
+
+		slugs := permissionSlugs(t, list)
+		require.NotEmpty(t, slugs, "every guarded use case declares its permission at WorkerStart")
+
+		// The catalogue stopped being an enum a client could read off the
+		// schema, so this is the only place the grantable set exists. Asserting
+		// on slugs the rest of this story goes on to grant is what ties the
+		// listing to the guard that consumes it.
+		assert.Contains(t, slugs, "permission:list", "the listing's own permission is in the catalogue it lists")
+		assert.Contains(t, slugs, "role:list")
+		assert.Contains(t, slugs, "product:read")
+		assert.Contains(t, slugs, "metrics:read")
+
+		for _, slug := range slugs {
+			assert.Contains(t, slug, ":", "a slug is <resource>:<action>: %q", slug)
+		}
+
+		filtered := decodeRoot(t, requireOK(t, c.Get(t, "/metadata/permissions?search=product")).Body, fbs.GetRootAsPermissionListResponse)
+		require.Positive(t, filtered.DataLength())
+		assert.Less(t, filtered.DataLength(), list.DataLength(), "a search term must actually narrow the catalogue")
+		for _, slug := range permissionSlugs(t, filtered) {
+			assert.Contains(t, slug, "product", "every row must match the term: %q", slug)
+		}
+
+		// Free text is normalised the same way everywhere, so case is not
+		// something the caller has to get right.
+		upper := decodeRoot(t, requireOK(t, c.Get(t, "/metadata/permissions?search=PRODUCT")).Body, fbs.GetRootAsPermissionListResponse)
+		assert.Equal(t, filtered.DataLength(), upper.DataLength())
+
+		none := decodeRoot(t, requireOK(t, c.Get(t, "/metadata/permissions?search=nothing-declares-this")).Body, fbs.GetRootAsPermissionListResponse)
+		assert.Zero(t, none.DataLength(), "no match is an empty array, not a 404")
+	})
+
 	t.Run("roles are created and their permissions replaced wholesale", func(t *testing.T) {
 		role := factories.NewRole("product:read")
 		created := decodeRoot(t, requireOK(t, c.Post(t, "/roles", role.Bytes)).Body, fbs.GetRootAsRoleResponse)
@@ -99,12 +134,21 @@ func TestAdministrationStory(t *testing.T) {
 		client.LoginAs(t, asUser, user.Email, "Reset-Pass123")
 
 		requireOK(t, asUser.Get(t, "/products"))
+
+		// metrics:read was read off the catalogue at the top of this story, so
+		// this is also what proves the slug the listing published is the same
+		// string the guard compares against.
 		requireOK(t, asUser.Get(t, "/metrics"))
 
 		assert.Equal(t, http.StatusForbidden, asUser.Post(t, "/products", factories.NewProduct().Bytes).Status,
 			"product:create was never granted")
 		assert.Equal(t, http.StatusForbidden, asUser.Get(t, "/users").Status,
 			"user:list was never granted")
+
+		// The catalogue is metadata, not public: reading what may be granted is
+		// itself a grant.
+		assert.Equal(t, http.StatusForbidden, asUser.Get(t, "/metadata/permissions").Status,
+			"permission:list was never granted")
 	})
 
 	t.Run("deleting a user ends their access", func(t *testing.T) {
@@ -116,4 +160,18 @@ func TestAdministrationStory(t *testing.T) {
 			client.New(env.BaseURL).Post(t, "/auth/login", factories.Login(user.Email, "Reset-Pass123")).Status,
 			"a deleted user must not be able to sign in again")
 	})
+}
+
+// permissionSlugs flattens a permission catalogue listing into the slugs it
+// carries.
+func permissionSlugs(t *testing.T, list *fbs.PermissionListResponse) []string {
+	t.Helper()
+
+	slugs := make([]string, 0, list.DataLength())
+	for i := 0; i < list.DataLength(); i++ {
+		var item fbs.MetadataItemResponse
+		require.True(t, list.Data(&item, i))
+		slugs = append(slugs, string(item.Slug()))
+	}
+	return slugs
 }

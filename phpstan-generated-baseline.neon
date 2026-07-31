@@ -509,6 +509,14 @@ parameters:
 			count: 1
 			path: src/API/Fbs/Common/RiskClass.php
 		-
+			message: '#^Method API\\Fbs\\Common\\TelemetryEvent\:\:Name\(\) has no return type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/TelemetryEvent.php
+		-
+			message: '#^Method API\\Fbs\\Common\\TelemetryEvent\:\:Name\(\) has parameter \$e with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/TelemetryEvent.php
+		-
 			message: '#^Method API\\Fbs\\Container\\CargoManifestItem\:\:addProductId\(\) has parameter \$productId with no type specified\.$#'
 			count: 1
 			path: src/API/Fbs/Container/CargoManifestItem.php
@@ -765,6 +773,10 @@ parameters:
 			count: 1
 			path: src/API/Fbs/Container/TelemetryLogItem.php
 		-
+			message: '#^Method API\\Fbs\\Container\\TelemetryLogItem\:\:getEvent\(\) should return int but returns mixed\.$#'
+			count: 1
+			path: src/API/Fbs/Container/TelemetryLogItem.php
+		-
 			message: '#^Method API\\Fbs\\Manifest\\LoadItemRequest\:\:addContainerId\(\) has parameter \$containerId with no type specified\.$#'
 			count: 1
 			path: src/API/Fbs/Manifest/LoadItemRequest.php
@@ -832,6 +844,42 @@ parameters:
 			message: '#^Method API\\Fbs\\Manifest\\UnloadItemRequest\:\:createUnloadItemRequest\(\) has parameter \$quantity with no type specified\.$#'
 			count: 1
 			path: src/API/Fbs/Manifest/UnloadItemRequest.php
+		-
+			message: '#^Method API\\Fbs\\Metadata\\MetadataItemResponse\:\:addId\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metadata/MetadataItemResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metadata\\MetadataItemResponse\:\:addSlug\(\) has parameter \$slug with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metadata/MetadataItemResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metadata\\MetadataItemResponse\:\:createMetadataItemResponse\(\) has parameter \$id with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metadata/MetadataItemResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metadata\\MetadataItemResponse\:\:createMetadataItemResponse\(\) has parameter \$slug with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metadata/MetadataItemResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metadata\\PermissionListResponse\:\:addData\(\) has parameter \$data with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metadata/PermissionListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metadata\\PermissionListResponse\:\:createDataVector\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			count: 1
+			path: src/API/Fbs/Metadata/PermissionListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metadata\\PermissionListResponse\:\:createPermissionListResponse\(\) has parameter \$data with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metadata/PermissionListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metadata\\PermissionListResponse\:\:getData\(\) has no return type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metadata/PermissionListResponse.php
+		-
+			message: '#^Method API\\Fbs\\Metadata\\PermissionListResponse\:\:getData\(\) has parameter \$j with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Metadata/PermissionListResponse.php
 		-
 			message: '#^Method API\\Fbs\\Metrics\\MetricsResponse\:\:addActiveContainers\(\) has parameter \$activeContainers with no type specified\.$#'
 			count: 1
@@ -1238,7 +1286,7 @@ parameters:
 			path: src/API/Fbs/Container/ContainerSummaryListResponse.php
 		-
 			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
-			count: 4
+			count: 3
 			path: src/API/Fbs/Container/TelemetryLogItem.php
 		-
 			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
@@ -1252,6 +1300,10 @@ parameters:
 			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
 			count: 2
 			path: src/API/Fbs/Manifest/UnloadItemRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Metadata/MetadataItemResponse.php
 		-
 			message: '#^PHPDoc tag @param has invalid value \(StringOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
 			count: 1
@@ -1335,6 +1387,10 @@ parameters:
 		-
 			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
 			count: 1
+			path: src/API/Fbs/Metadata/PermissionListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
 			path: src/API/Fbs/Metrics/MetricsResponse.php
 		-
 			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
@@ -1395,6 +1451,10 @@ parameters:
 		-
 			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
 			count: 1
+			path: src/API/Fbs/Metadata/PermissionListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
+			count: 1
 			path: src/API/Fbs/Product/ProductListResponse.php
 		-
 			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
@@ -1408,6 +1468,10 @@ parameters:
 			message: '#^PHPDoc tag @param has invalid value \(byte\)\: Unexpected token "\\n     \* ", expected variable at offset 63 on line 3$#'
 			count: 1
 			path: src/API/Fbs/Container/ContainerResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(byte\)\: Unexpected token "\\n     \* ", expected variable at offset 63 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Container/TelemetryLogItem.php
 		-
 			message: '#^PHPDoc tag @param has invalid value \(byte\)\: Unexpected token "\\n     \* ", expected variable at offset 63 on line 3$#'
 			count: 1
@@ -1506,6 +1570,10 @@ parameters:
 			path: src/API/Fbs/Container/ContainerSummaryListResponse.php
 		-
 			message: '#^PHPDoc tag @param has invalid value \(int\)\: Unexpected token "\\n     \* ", expected variable at offset 62 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Metadata/MetadataItemResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(int\)\: Unexpected token "\\n     \* ", expected variable at offset 62 on line 3$#'
 			count: 3
 			path: src/API/Fbs/Metrics/MetricsResponse.php
 		-
@@ -1549,6 +1617,10 @@ parameters:
 			count: 1
 			path: src/API/Fbs/Container/ContainerSummaryResponse.php
 		-
+			message: '#^Parameter \#1 \$_i of method API\\Fbs\\Metadata\\MetadataItemResponse\:\:init\(\) expects int, mixed given\.$#'
+			count: 1
+			path: src/API/Fbs/Metadata/PermissionListResponse.php
+		-
 			message: '#^Parameter \#1 \$_i of method API\\Fbs\\Metrics\\OccupancyDivision\:\:init\(\) expects int, mixed given\.$#'
 			count: 1
 			path: src/API/Fbs/Metrics/MetricsResponse.php
@@ -1568,3 +1640,7 @@ parameters:
 			message: '#^Property API\\Fbs\\Common\\RiskClass\:\:\$names has no type specified\.$#'
 			count: 1
 			path: src/API/Fbs/Common/RiskClass.php
+		-
+			message: '#^Property API\\Fbs\\Common\\TelemetryEvent\:\:\$names has no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Common/TelemetryEvent.php

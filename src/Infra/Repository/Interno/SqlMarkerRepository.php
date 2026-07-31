@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -65,11 +60,6 @@ use Throwable;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -77,20 +67,12 @@ final readonly class SqlMarkerRepository implements IMarkerRepository
 {
     /**
      * @var string The `ENGINE=MEMORY` table both operations address.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const string TABLE = 'markers';
 
     /**
      * @var ILogger Channelled copy, so these lines are attributable to this
      *              repository rather than to the request at large.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ILogger $logger;
 
@@ -105,11 +87,6 @@ final readonly class SqlMarkerRepository implements IMarkerRepository
      *                                          into the index the row stores.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         ILogger $logger,
@@ -138,11 +115,6 @@ final readonly class SqlMarkerRepository implements IMarkerRepository
      *                      registered, a 500 when a statement threw.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function set(IMarker $marker, int $ttlSeconds): Result
     {
@@ -212,11 +184,6 @@ final readonly class SqlMarkerRepository implements IMarkerRepository
      *                           registered, a 500 when the select threw.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function get(string $group, string $key): Result
     {
@@ -266,11 +233,6 @@ final readonly class SqlMarkerRepository implements IMarkerRepository
      * @return Result<never> Always a 404 failure.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function unknownGroup(string $group): Result
     {
@@ -294,11 +256,6 @@ final readonly class SqlMarkerRepository implements IMarkerRepository
      * @return Result<never> Always a 500 failure.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function fail(string $action, string $group, Throwable $e): Result
     {

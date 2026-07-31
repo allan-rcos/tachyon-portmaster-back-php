@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -40,7 +35,6 @@ use Domain\TableModules\IRoleTM;
 use Domain\TableModules\IMarkerGroupTM;
 use Domain\TableModules\IMarkerTM;
 use Domain\TableModules\IPermissionTM;
-use Domain\TableModules\ITelemetryEventTM;
 use Domain\TableModules\IUserTM;
 use Domain\TableModules\Interno\AuthTM;
 use Domain\TableModules\Interno\ContainerTM;
@@ -50,7 +44,6 @@ use Domain\TableModules\Interno\RoleTM;
 use Domain\TableModules\Interno\MarkerGroupTM;
 use Domain\TableModules\Interno\MarkerTM;
 use Domain\TableModules\Interno\PermissionTM;
-use Domain\TableModules\Interno\TelemetryEventTM;
 use Domain\TableModules\Interno\UserTM;
 use RuntimeException;
 use Shared\Exceptions\LeafContext;
@@ -70,11 +63,6 @@ use Shared\Exceptions\LeafContext;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -82,137 +70,72 @@ final class DomainProvider implements IDomainProvider
 {
     /**
      * @var ?IDatabaseIdGenerator Memoized Snowflake generator; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IDatabaseIdGenerator $databaseIdGenerator = null;
 
     /**
      * @var ?ISequentialIdGenerator Memoized ULID generator; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?ISequentialIdGenerator $sequentialIdGenerator = null;
 
     /**
      * @var ?IRandomIdGenerator Memoized NanoID generator; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IRandomIdGenerator $randomIdGenerator = null;
 
     /**
      * @var ?IUserTM Memoized table module; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IUserTM $userTM = null;
 
     /**
      * @var ?IRoleTM Memoized table module; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IRoleTM $roleTM = null;
 
     /**
      * @var ?IAuthTM Memoized table module; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IAuthTM $authTM = null;
 
     /**
      * @var ?IProductTM Memoized table module; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IProductTM $productTM = null;
 
     /**
      * @var ?IContainerTM Memoized table module; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IContainerTM $containerTM = null;
 
     /**
      * @var ?IManifestTM Memoized table module; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IManifestTM $manifestTM = null;
 
     /**
      * @var ?IPermissionTM Memoized table module; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IPermissionTM $permissionTM = null;
 
     /**
      * @var ?IMarkerGroupTM Memoized table module; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IMarkerGroupTM $markerGroupTM = null;
 
     /**
      * @var ?IMarkerTM Memoized table module; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IMarkerTM $markerTM = null;
 
     /**
-     * @var ?ITelemetryEventTM Memoized table module; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     */
-    private ?ITelemetryEventTM $telemetryEventTM = null;
-
-    /**
      * @var ?ISecureHasher Memoized argon2id hasher; null until first use. Never
      *                     leaves the layer.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?ISecureHasher $secureHasher = null;
 
     /**
      * @var ?IIndexHasher Memoized xxHash hasher; null until first use.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IIndexHasher $indexHasher = null;
 
@@ -222,11 +145,6 @@ final class DomainProvider implements IDomainProvider
      *                         machine id.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private readonly DomainConfig $config,
@@ -244,11 +162,6 @@ final class DomainProvider implements IDomainProvider
      * @return ISecureHasher The memoized argon2id hasher.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function secureHasher(): ISecureHasher
     {
@@ -265,11 +178,6 @@ final class DomainProvider implements IDomainProvider
      * @return IIndexHasher The memoized xxHash hasher.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function indexHasher(): IIndexHasher
     {
@@ -288,11 +196,6 @@ final class DomainProvider implements IDomainProvider
      * @throws RuntimeException When the cluster or server id is out of range.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function databaseIdGenerator(): IDatabaseIdGenerator
     {
@@ -317,11 +220,6 @@ final class DomainProvider implements IDomainProvider
      * @return ISequentialIdGenerator The memoized generator.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function sequentialIdGenerator(): ISequentialIdGenerator
     {
@@ -334,11 +232,6 @@ final class DomainProvider implements IDomainProvider
      * @return IRandomIdGenerator The memoized generator.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function randomIdGenerator(): IRandomIdGenerator
     {
@@ -352,11 +245,6 @@ final class DomainProvider implements IDomainProvider
      * @return IUserTM The memoized table module.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function userTM(): IUserTM
     {
@@ -369,11 +257,6 @@ final class DomainProvider implements IDomainProvider
      * @return IRoleTM The memoized table module.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function roleTM(): IRoleTM
     {
@@ -387,11 +270,6 @@ final class DomainProvider implements IDomainProvider
      * @return IAuthTM The memoized table module.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function authTM(): IAuthTM
     {
@@ -404,11 +282,6 @@ final class DomainProvider implements IDomainProvider
      * @return IProductTM The memoized table module.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function productTM(): IProductTM
     {
@@ -421,11 +294,6 @@ final class DomainProvider implements IDomainProvider
      * @return IContainerTM The memoized table module.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function containerTM(): IContainerTM
     {
@@ -441,11 +309,6 @@ final class DomainProvider implements IDomainProvider
      * @return IManifestTM The memoized table module.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function manifestTM(): IManifestTM
     {
@@ -461,11 +324,6 @@ final class DomainProvider implements IDomainProvider
      * @return IPermissionTM The memoized table module.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function permissionTM(): IPermissionTM
     {
@@ -479,11 +337,6 @@ final class DomainProvider implements IDomainProvider
      * @return IMarkerGroupTM The memoized table module.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function markerGroupTM(): IMarkerGroupTM
     {
@@ -497,32 +350,9 @@ final class DomainProvider implements IDomainProvider
      * @return IMarkerTM The memoized table module.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function markerTM(): IMarkerTM
     {
         return $this->markerTM ??= new MarkerTM($this->indexHasher());
-    }
-
-    /**
-     * The telemetry-event table module. Takes nothing, for the same reason as
-     * {@see permissionTM()}.
-     *
-     * @return ITelemetryEventTM The memoized table module.
-     *
-     * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
-     */
-    public function telemetryEventTM(): ITelemetryEventTM
-    {
-        return $this->telemetryEventTM ??= new TelemetryEventTM();
     }
 }
