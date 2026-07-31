@@ -1,8 +1,14 @@
 name: CI
 
+# Only what is landing on main. The Go job builds an image and restarts a
+# container per test, so running it on every push to every branch spent most of
+# its budget on work-in-progress that nobody was waiting on. A branch still gets
+# checked before it merges, through the pull_request trigger.
 on:
   push:
+    branches: [main]
   pull_request:
+    branches: [main]
 
 jobs:
   static:
@@ -17,7 +23,13 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: "8.4"
-          extensions: ds, pdo_mysql, mbstring, iconv, openswoole
+          # openswoole is pinned because setup-php's own default for it is
+          # 25.2.0, while composer.lock holds openswoole/core 26.2.0, which
+          # requires ext-openswoole >= 26.2.0 — so `composer install` refused the
+          # lock file outright and every PHP job died before running anything.
+          # The Dockerfile installs the same extension unpinned, i.e. the latest
+          # PECL release, which is what 26.2.0 is; bump both together.
+          extensions: ds, pdo_mysql, mbstring, iconv, openswoole-26.2.0
           tools: composer:v2
           coverage: none
 
@@ -39,7 +51,13 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: "8.4"
-          extensions: ds, pdo_mysql, mbstring, iconv, openswoole
+          # openswoole is pinned because setup-php's own default for it is
+          # 25.2.0, while composer.lock holds openswoole/core 26.2.0, which
+          # requires ext-openswoole >= 26.2.0 — so `composer install` refused the
+          # lock file outright and every PHP job died before running anything.
+          # The Dockerfile installs the same extension unpinned, i.e. the latest
+          # PECL release, which is what 26.2.0 is; bump both together.
+          extensions: ds, pdo_mysql, mbstring, iconv, openswoole-26.2.0
           tools: composer:v2
           coverage: none
 
