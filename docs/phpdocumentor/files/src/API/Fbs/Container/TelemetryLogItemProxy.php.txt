@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -21,6 +16,7 @@ declare(strict_types=1);
 namespace API\Fbs\Container;
 
 use API\Fbs\Contracts\CoercesJson;
+use Domain\Enums\TelemetryEvent;
 use API\Fbs\Contracts\IFbsProxy;
 use API\Http\ContentKind;
 use API\Http\RequestAttributes;
@@ -37,11 +33,6 @@ use Psr\Http\Message\StreamInterface;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 final class TelemetryLogItemProxy extends TelemetryLogItem implements IFbsProxy
 {
@@ -51,21 +42,16 @@ final class TelemetryLogItemProxy extends TelemetryLogItem implements IFbsProxy
      * Every field defaults, so `new static()` is a valid empty message.
      *
      * @param  ?string  $id  Base62 identifier.
-     * @param  ?string  $event  Which telemetry event this is.
+     * @param  TelemetryEvent  $event  Which telemetry event this is.
      * @param  ?string  $description  The event in prose.
      * @param  ?string  $timestamp  When it happened.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         public ?string $id = null,
-        /** Telemetry event slug; the registry is the runtime catalogue. */
-        public ?string $event = null,
+        /** What the row records having happened. */
+        public TelemetryEvent $event = TelemetryEvent::Load,
         public ?string $description = null,
         public ?string $timestamp = null,
     ) {
@@ -78,22 +64,16 @@ final class TelemetryLogItemProxy extends TelemetryLogItem implements IFbsProxy
      * @return int This table's offset within it.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
     public function buildInto(FlatbufferBuilder $builder): int
     {
         $id = $this->id !== null ? $builder->createString($this->id) : 0;
-        $event       = $this->event !== null ? $builder->createString($this->event) : 0;
         $description = $this->description !== null ? $builder->createString($this->description) : 0;
         $timestamp   = $this->timestamp !== null ? $builder->createString($this->timestamp) : 0;
 
-        return TelemetryLogItem::createTelemetryLogItem($builder, $id, $event, $description, $timestamp);
+        return TelemetryLogItem::createTelemetryLogItem($builder, $id, $this->event->toInt(), $description, $timestamp);
     }
 
     /**
@@ -102,11 +82,6 @@ final class TelemetryLogItemProxy extends TelemetryLogItem implements IFbsProxy
      * @return string A finished, size-prefixed buffer.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -128,11 +103,6 @@ final class TelemetryLogItemProxy extends TelemetryLogItem implements IFbsProxy
      * @return static The hydrated proxy.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -140,7 +110,7 @@ final class TelemetryLogItemProxy extends TelemetryLogItem implements IFbsProxy
     {
         return new static(
             id: $table->getId(),
-            event: $table->getEvent(),
+            event: TelemetryEvent::fromInt((int) $table->getEvent()),
             description: $table->getDescription(),
             timestamp: $table->getTimestamp(),
         );
@@ -153,11 +123,6 @@ final class TelemetryLogItemProxy extends TelemetryLogItem implements IFbsProxy
      * @return static The hydrated proxy.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -173,11 +138,6 @@ final class TelemetryLogItemProxy extends TelemetryLogItem implements IFbsProxy
      * @return static The hydrated proxy.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -185,7 +145,7 @@ final class TelemetryLogItemProxy extends TelemetryLogItem implements IFbsProxy
     {
         return new static(
             id: self::jsonNullableString($data, 'id'),
-            event: self::jsonNullableString($data, 'event'),
+            event: TelemetryEvent::tryFrom(self::jsonString($data, 'event')) ?? TelemetryEvent::Load,
             description: self::jsonNullableString($data, 'description'),
             timestamp: self::jsonNullableString($data, 'timestamp'),
         );
@@ -197,11 +157,6 @@ final class TelemetryLogItemProxy extends TelemetryLogItem implements IFbsProxy
      * @return array<string, mixed> Ready for `json_encode()`.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -209,7 +164,7 @@ final class TelemetryLogItemProxy extends TelemetryLogItem implements IFbsProxy
     {
         return [
             'id'          => $this->id,
-            'event'       => $this->event,
+            'event'       => $this->event->value,
             'description' => $this->description,
             'timestamp'   => $this->timestamp,
         ];
@@ -223,11 +178,6 @@ final class TelemetryLogItemProxy extends TelemetryLogItem implements IFbsProxy
      *                parse.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -250,11 +200,6 @@ final class TelemetryLogItemProxy extends TelemetryLogItem implements IFbsProxy
      * @return StreamInterface The response body.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */

@@ -5,13 +5,8 @@
  *
  * @category Shared
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -38,11 +33,6 @@ use OpenSwoole\Coroutine\Context;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 class Leaf
 {
@@ -50,10 +40,6 @@ class Leaf
      * @var int Monotonic counter handing out ids. Per worker, and never reused
      *          within one — ids are meaningful only inside the process that
      *          issued them.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private static int $globalErrorId = 0;
 
@@ -68,10 +54,6 @@ class Leaf
      * This keeps those recoverable.
      *
      * @var array<int, LeafContext> Error id to context.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private static array $processErrors = [];
 
@@ -81,10 +63,6 @@ class Leaf
      * pathological caller cannot grow it without limit in a long-lived worker.
      *
      * @var int Oldest entries are dropped once this many are held.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int PROCESS_ERROR_LIMIT = 256;
 
@@ -95,11 +73,6 @@ class Leaf
      * @return int The id {@see getError()} will resolve.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -143,11 +116,6 @@ class Leaf
      *                          coroutine has already been freed.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -177,11 +145,6 @@ class Leaf
      * @return void
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */

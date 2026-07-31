@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -58,11 +53,6 @@ use Throwable;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -72,20 +62,12 @@ final readonly class PdoTransactionSession implements IUnitOfWork, IPdoTransacti
      * @var string Where the open boundary is parked in the coroutine's context.
      *             Its presence *is* the "a transaction is open" flag — there is
      *             no separate state.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const string CONTEXT_KEY = 'pdo_transaction_context';
 
     /**
      * @var ILogger Channelled copy, so boundary problems are attributable here
      *              rather than to whichever repository noticed them.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ILogger $logger;
 
@@ -99,11 +81,6 @@ final readonly class PdoTransactionSession implements IUnitOfWork, IPdoTransacti
      *                           instance is not kept.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private IPDOPool $dbPool,
@@ -129,11 +106,6 @@ final readonly class PdoTransactionSession implements IUnitOfWork, IPdoTransacti
      *                      coroutine, or when no connection could be leased.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function begin(): Result
     {
@@ -187,11 +159,6 @@ final readonly class PdoTransactionSession implements IUnitOfWork, IPdoTransacti
      *                      succeeded; a 500 failure when the rollback threw.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function executeRollbackAndRelease(?Context $context): Result
     {
@@ -235,11 +202,6 @@ final readonly class PdoTransactionSession implements IUnitOfWork, IPdoTransacti
      * @return Result<null> Void unless the rollback itself threw.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function rollback(): Result
     {
@@ -264,11 +226,6 @@ final readonly class PdoTransactionSession implements IUnitOfWork, IPdoTransacti
      *                      in which case nothing was made durable.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function commit(): Result
     {
@@ -324,11 +281,6 @@ final readonly class PdoTransactionSession implements IUnitOfWork, IPdoTransacti
      *                     when no boundary is open.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function getTransaction(): Result
     {

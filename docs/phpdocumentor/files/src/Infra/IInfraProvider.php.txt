@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -31,7 +26,6 @@ use Infra\Repository\IMarkerRepository;
 use Infra\Repository\IPermissionRepository;
 use Infra\Repository\IProductRepository;
 use Infra\Repository\IRoleRepository;
-use Infra\Repository\ITelemetryEventRepository;
 use Infra\Repository\IUserRepository;
 
 /**
@@ -53,11 +47,6 @@ use Infra\Repository\IUserRepository;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 interface IInfraProvider
 {
@@ -67,11 +56,6 @@ interface IInfraProvider
      * @return ILogger Callers rebrand it with {@see ILogger::withChannel()}.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -85,11 +69,6 @@ interface IInfraProvider
      *                  boundary to enlist in.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -101,11 +80,6 @@ interface IInfraProvider
      * @return IUnitOfWork The boundary half only — never the connection half.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -117,11 +91,6 @@ interface IInfraProvider
      * @return IUserRepository Enlisted in the caller's boundary.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -133,11 +102,6 @@ interface IInfraProvider
      * @return IRoleRepository Enlisted in the caller's boundary.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -149,11 +113,6 @@ interface IInfraProvider
      * @return IProductRepository Enlisted in the caller's boundary.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -165,11 +124,6 @@ interface IInfraProvider
      * @return IContainerRepository Enlisted in the caller's boundary.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -181,11 +135,6 @@ interface IInfraProvider
      * @return IManifestRepository Enlisted in the caller's boundary.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -198,11 +147,6 @@ interface IInfraProvider
      *                               takes no part in the caller's boundary.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -215,11 +159,6 @@ interface IInfraProvider
      *                                caller's boundary.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -233,32 +172,10 @@ interface IInfraProvider
      *                           marker write.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
     public function markerRepository(): IMarkerRepository;
-
-    /**
-     * The runtime catalogue of declared telemetry event types.
-     *
-     * @return ITelemetryEventRepository A registry; it takes no part in the
-     *                                   caller's boundary.
-     *
-     * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
-     *
-     * @api
-     */
-    public function telemetryEventRepository(): ITelemetryEventRepository;
 
     /**
      * The read side: runs a query and returns its view.
@@ -267,11 +184,6 @@ interface IInfraProvider
      *                          transaction.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */

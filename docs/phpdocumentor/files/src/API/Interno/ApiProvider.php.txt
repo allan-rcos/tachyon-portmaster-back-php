@@ -5,13 +5,8 @@
  *
  * @category API
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -30,11 +25,13 @@ use API\Controllers\IAccountController;
 use API\Controllers\IAuthController;
 use API\Controllers\IContainerController;
 use API\Controllers\IManifestController;
+use API\Controllers\IMetadataController;
 use API\Controllers\IMetricsController;
 use API\Controllers\Interno\AccountController;
 use API\Controllers\Interno\AuthController;
 use API\Controllers\Interno\ContainerController;
 use API\Controllers\Interno\ManifestController;
+use API\Controllers\Interno\MetadataController;
 use API\Controllers\Interno\MetricsController;
 use API\Controllers\Interno\ProductController;
 use API\Controllers\Interno\RoleAdminController;
@@ -71,11 +68,6 @@ use Psr\Http\Server\RequestHandlerInterface;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -83,28 +75,16 @@ final class ApiProvider implements IApiProvider
 {
     /**
      * @var AuthCookie|null Memoized; see {@see authCookie()}.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?AuthCookie $authCookie = null;
 
     /**
      * @var ITokenService|null Memoized; see {@see tokenService()}.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?ITokenService $tokenService = null;
 
     /**
      * @var IRefreshTokenService|null Memoized; see {@see refreshTokenService()}.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ?IRefreshTokenService $refreshTokenService = null;
 
@@ -114,11 +94,6 @@ final class ApiProvider implements IApiProvider
      * @param  JwtConfig  $jwt  Session token and cookie settings.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private readonly IAppProvider $app,
@@ -139,11 +114,6 @@ final class ApiProvider implements IApiProvider
      * @return RequestHandlerInterface The assembled handler.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function router(): RequestHandlerInterface
     {
@@ -204,6 +174,9 @@ final class ApiProvider implements IApiProvider
             IMetricsController::class => new MetricsController(
                 $this->app->getMetricsUseCase(),
             ),
+            IMetadataController::class => new MetadataController(
+                $this->app->listPermissionsUseCase(),
+            ),
         ];
 
         return new StackHandler(
@@ -226,11 +199,6 @@ final class ApiProvider implements IApiProvider
      * @return AuthCookie The single instance for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function authCookie(): AuthCookie
     {
@@ -243,11 +211,6 @@ final class ApiProvider implements IApiProvider
      * @return ITokenService The single instance for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function tokenService(): ITokenService
     {
@@ -264,11 +227,6 @@ final class ApiProvider implements IApiProvider
      * @return IRefreshTokenService The single instance for this worker.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function refreshTokenService(): IRefreshTokenService
     {

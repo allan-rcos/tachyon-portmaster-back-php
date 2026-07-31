@@ -218,43 +218,68 @@
             <div class="phpdocumentor-column -nine phpdocumentor-content">
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/domain.html">Domain</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/domain-enums.html">Enums</a></li>
     </ul>
 
-    <article class="phpdocumentor-element -file">
-        <h2 class="phpdocumentor-content__title">TelemetryEventRegistry.php</h2>
+    <article class="phpdocumentor-element -class">
+        <h2 class="phpdocumentor-content__title">
+    TelemetryEvent
 
-            <p class="phpdocumentor-summary">Telemetry Event Registry.</p>
+            <span class="phpdocumentor-element__extends">
+        : string
+    </span>
+    
+            <div class="phpdocumentor-element__package">
+            in package
+            <ul class="phpdocumentor-breadcrumbs">
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Portmaster.html">Portmaster</a></li>
+                            </ul>
+        </div>
+    
+    
+    </h2>
+
+        <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Domain/Enums/TelemetryEvent.php"><a href="files/src-domain-enums-telemetryevent.html"><abbr title="src/Domain/Enums/TelemetryEvent.php">TelemetryEvent.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">42</span>
+
+            <a href="classes/Domain-Enums-TelemetryEvent.html#source-view.42" class="phpdocumentor-element-found-in__source" data-line="42" data-modal="source-view" data-src="files/src/Domain/Enums/TelemetryEvent.php.txt"></a>
+    </aside>
+
+            <p class="phpdocumentor-summary">What a telemetry log entry records happening to a container.</p>
 
         
-        
+            <section class="phpdocumentor-description"><p>A closed set fixed by the business, like <a href="classes/Domain-Enums-ContainerStatus.html"><abbr title="\Domain\Enums\ContainerStatus">ContainerStatus</abbr></a> and
+<a href="classes/Domain-Enums-RiskClass.html"><abbr title="\Domain\Enums\RiskClass">RiskClass</abbr></a> — the container domain decides what is worth recording, and
+a new case is a code change, not a configuration one. That is what separates
+it from <a href="classes/Domain-Models-IPermission.html"><abbr title="\Domain\Models\IPermission">IPermission</abbr></a>, which really is a runtime registry:
+a permission exists because a use case declared it, and the set is not
+knowable from the schema.</p>
+<p>The string value is the application/JSON representation and what
+<code class="prettyprint">telemetry_logs.event</code> stores; <abbr title="\Domain\Enums\toInt()">toInt()</abbr> and <abbr title="\Domain\Enums\fromInt()">fromInt()</abbr> convert to
+the FlatBuffer <code class="prettyprint">uint8</code> wire value at the proxy boundary. <strong>Declaration order
+must match</strong> the <code class="prettyprint">TelemetryEvent</code> enum in
+<code class="prettyprint">swagger/flatbuffers/schemas/common.fbs</code>, because the conversion is by
+ordinal.</p>
+</section>
+
         
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="files/src-infra-repository-interno-telemetryeventregistry.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Domain-Enums-TelemetryEvent.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                     <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">category</span>
+                <span class="phpdocumentor-tag__name">see</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>Infrastructure</p>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Domain-TableModules-IManifestTM.html"><abbr title="\Domain\TableModules\IManifestTM">IManifestTM</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>What decides which case a change carries.</p>
 </section>
 
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">since</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                                        
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">version</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                                        
                                     </dd>
                                 <dt class="phpdocumentor-tag-list__entry">
                 <span class="phpdocumentor-tag__name">license</span>
@@ -272,27 +297,13 @@
 </section>
 
                                     </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">author</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>Ricardo Állan Costa <a href="mailto:ricardoallancosta@hotmail.com">ricardoallancosta@hotmail.com</a></p>
-</section>
-
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">filesource</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        
-                                    </dd>
                         </dl>
 
 
         
 <h3 id="toc">
     Table of Contents
-    <a href="files/src-infra-repository-interno-telemetryeventregistry.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Domain-Enums-TelemetryEvent.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -303,19 +314,277 @@
 
 
 
+<h4 id="toc-cases">
+    Cases
+    <a href="classes/Domain-Enums-TelemetryEvent.html#toc-cases" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -case -">
+    <a class="" href="classes/Domain-Enums-TelemetryEvent.html#enumcase_Load">Load</a>
+    <span>
+                &nbsp;= &#039;load&#039;                    </span>
+</dt>
+<dd>Cargo was added to the container.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -case -">
+    <a class="" href="classes/Domain-Enums-TelemetryEvent.html#enumcase_Unload">Unload</a>
+    <span>
+                &nbsp;= &#039;unload&#039;                    </span>
+</dt>
+<dd>Cargo was removed from the container.</dd>
+
+    </dl>
+
+
+<h4 id="toc-methods">
+    Methods
+    <a href="classes/Domain-Enums-TelemetryEvent.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Domain-Enums-TelemetryEvent.html#method_fromInt">fromInt()</a>
+    <span>
+                                &nbsp;: self    </span>
+</dt>
+<dd>The case at a FlatBuffer ordinal.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Domain-Enums-TelemetryEvent.html#method_toInt">toInt()</a>
+    <span>
+                                &nbsp;: int    </span>
+</dt>
+<dd>The FlatBuffer ordinal for this case.</dd>
+
+    </dl>
 
 
 
+            <section class="phpdocumentor-cases">
+        <h3 class="phpdocumentor-elements__header" id="cases">
+            Cases
+            <a href="classes/Domain-Enums-TelemetryEvent.html#cases" class="headerlink"><i class="fas fa-link"></i></a>
 
+        </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -enum-case
+        "
+>
+    <h4 class="phpdocumentor-element__name" id="enumcase_Load">
+        Load
+        <a href="classes/Domain-Enums-TelemetryEvent.html#enumcase_Load" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Domain/Enums/TelemetryEvent.php"><a href="files/src-domain-enums-telemetryevent.html"><abbr title="src/Domain/Enums/TelemetryEvent.php">TelemetryEvent.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">47</span>
+
+            <a href="classes/Domain-Enums-TelemetryEvent.html#source-view.47" class="phpdocumentor-element-found-in__source" data-line="47" data-modal="source-view" data-src="files/src/Domain/Enums/TelemetryEvent.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">Cargo was added to the container.</p>
+
+    
+    
+    
+    
 
         
+    </article>
+                    <article
+        class="
+            phpdocumentor-element
+            -enum-case
+        "
+>
+    <h4 class="phpdocumentor-element__name" id="enumcase_Unload">
+        Unload
+        <a href="classes/Domain-Enums-TelemetryEvent.html#enumcase_Unload" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Domain/Enums/TelemetryEvent.php"><a href="files/src-domain-enums-telemetryevent.html"><abbr title="src/Domain/Enums/TelemetryEvent.php">TelemetryEvent.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">52</span>
+
+            <a href="classes/Domain-Enums-TelemetryEvent.html#source-view.52" class="phpdocumentor-element-found-in__source" data-line="52" data-modal="source-view" data-src="files/src/Domain/Enums/TelemetryEvent.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">Cargo was removed from the container.</p>
+
+    
+    
+    
+    
 
         
+    </article>
+            </section>
+
+            <section class="phpdocumentor-methods">
+        <h3 class="phpdocumentor-elements__header" id="methods">
+            Methods
+            <a href="classes/Domain-Enums-TelemetryEvent.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h3>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_fromInt">
+        fromInt()
+        <a href="classes/Domain-Enums-TelemetryEvent.html#method_fromInt" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Domain/Enums/TelemetryEvent.php"><a href="files/src-domain-enums-telemetryevent.html"><abbr title="src/Domain/Enums/TelemetryEvent.php">TelemetryEvent.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">90</span>
+
+            <a href="classes/Domain-Enums-TelemetryEvent.html#source-view.90" class="phpdocumentor-element-found-in__source" data-line="90" data-modal="source-view" data-src="files/src/Domain/Enums/TelemetryEvent.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">The case at a FlatBuffer ordinal.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">fromInt</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+
+    <div class="phpdocumentor-label-line">
+            <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
+
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Throws rather than returning a fallback, on the same terms as
+<a href="classes/Domain-Enums-RiskClass.html#method_fromInt"><abbr title="\Domain\Enums\RiskClass::fromInt()">RiskClass::fromInt()</abbr></a>: an unknown ordinal means the schema and this
+enum have diverged, which is a deployment fault.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$value</span>
+                : <span class="phpdocumentor-argument-list__argument__type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Zero-based ordinal read off the wire.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_fromInt_tags">
+        Tags
+        <a href="classes/Domain-Enums-TelemetryEvent.html#method_fromInt_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\ValueError">ValueError</abbr></span>
+                                                                                        <section class="phpdocumentor-description"><p>When the ordinal is outside the declared range.</p>
+</section>
+
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">copyright</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                            <section class="phpdocumentor-description"><p>2026 Tachyon</p>
+</section>
+
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">self</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The matching case.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_toInt">
+        toInt()
+        <a href="classes/Domain-Enums-TelemetryEvent.html#method_toInt" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Domain/Enums/TelemetryEvent.php"><a href="files/src-domain-enums-telemetryevent.html"><abbr title="src/Domain/Enums/TelemetryEvent.php">TelemetryEvent.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">63</span>
+
+            <a href="classes/Domain-Enums-TelemetryEvent.html#source-view.63" class="phpdocumentor-element-found-in__source" data-line="63" data-modal="source-view" data-src="files/src/Domain/Enums/TelemetryEvent.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">The FlatBuffer ordinal for this case.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">toInt</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+
+    <div class="phpdocumentor-label-line">
+            <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
+
+        </div>
+    
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_toInt_tags">
+        Tags
+        <a href="classes/Domain-Enums-TelemetryEvent.html#method_toInt_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">copyright</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                            <section class="phpdocumentor-description"><p>2026 Tachyon</p>
+</section>
+
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">int</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Zero-based position in declaration order.</p>
+</section>
+
+            </section>
+
+</article>
+            </section>
+
         <div class="phpdocumentor-modal" id="source-view">
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Infra/Repository/Interno/TelemetryEventRegistry.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Domain/Enums/TelemetryEvent.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -416,10 +685,25 @@
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                                                                                                                                                </ul>
+                                            <li><a href="classes/Domain-Enums-TelemetryEvent.html#toc-cases">Cases</a></li>
+                                                                <li><a href="classes/Domain-Enums-TelemetryEvent.html#toc-methods">Methods</a></li>
+                                    </ul>
             </li>
-
+                            <li class="phpdocumentor-on-this-page-section__title">Cases</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Domain-Enums-TelemetryEvent.html#enumcase_Load">Load</a></li>
+                                                    <li class=""><a href="classes/Domain-Enums-TelemetryEvent.html#enumcase_Unload">Unload</a></li>
+                                            </ul>
+                </li>
             
+                            <li class="phpdocumentor-on-this-page-section__title">Methods</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Domain-Enums-TelemetryEvent.html#method_fromInt">fromInt()</a></li>
+                                                    <li class=""><a href="classes/Domain-Enums-TelemetryEvent.html#method_toInt">toInt()</a></li>
+                                            </ul>
+                </li>
                     </ul>
     </section>
 
@@ -437,7 +721,7 @@
     </section>
 </section>
         </div>
-        <a href="files/src-infra-repository-interno-telemetryeventregistry.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Domain-Enums-TelemetryEvent.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

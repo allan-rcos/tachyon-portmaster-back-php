@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -46,11 +41,6 @@ use Infra\Text\SearchKey;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @implements IDQL<RoleListView>
  *
@@ -61,10 +51,6 @@ final readonly class ListRolesDQL implements IDQL
     /**
      * @var int Page size when the caller named none, or named one that was not
      *          positive.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const int DEFAULT_LIMIT = 20;
 
@@ -77,11 +63,6 @@ final readonly class ListRolesDQL implements IDQL
      *                               or blank means no filter.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         private ?string $cursor = null,
@@ -97,11 +78,6 @@ final readonly class ListRolesDQL implements IDQL
      * @return SqlQuery The statement and its bindings.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function toSql(): SqlQuery
     {
@@ -152,11 +128,6 @@ final readonly class ListRolesDQL implements IDQL
      *                      when nothing matched.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function hydrate(array $rows): RoleListView
     {
@@ -188,11 +159,6 @@ final readonly class ListRolesDQL implements IDQL
      *             otherwise.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function effectiveLimit(): int
     {
@@ -205,11 +171,6 @@ final readonly class ListRolesDQL implements IDQL
      * @return ?string The normalised term, or null for no filter.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function normalizedSearch(): ?string
     {
@@ -227,11 +188,6 @@ final readonly class ListRolesDQL implements IDQL
      *                                    cursor was minted with.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     private function filters(): array
     {

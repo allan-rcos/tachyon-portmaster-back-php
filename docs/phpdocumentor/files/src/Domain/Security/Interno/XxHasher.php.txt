@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -38,11 +33,6 @@ use Domain\Security\IIndexHasher;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -51,10 +41,6 @@ final readonly class XxHasher implements IIndexHasher
     /**
      * @var string Ships with PHP 8.1+ in the bundled hash extension, so this
      *             needs no PECL dependency.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const string ALGORITHM = 'xxh64';
 
@@ -66,11 +52,6 @@ final readonly class XxHasher implements IIndexHasher
      *                which is what makes the row findable again.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function hash(string $plain): string
     {
@@ -85,11 +66,6 @@ final readonly class XxHasher implements IIndexHasher
      * @return bool True when they match.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function verify(string $plain, string $hash): bool
     {

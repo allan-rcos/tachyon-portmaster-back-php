@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -37,101 +32,56 @@ use ValueError;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 enum RiskClass: string
 {
     /**
      * Class 1 — explosives.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case Class1Explosives = 'class-1-explosives';
 
     /**
      * Class 2 — gases, compressed or liquefied.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case Class2Gases = 'class-2-gases';
 
     /**
      * Class 3 — flammable liquids.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case Class3FlammableLiquids = 'class-3-flammable-liquids';
 
     /**
      * Class 4 — flammable solids and substances liable to spontaneous combustion.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case Class4FlammableSolids = 'class-4-flammable-solids';
 
     /**
      * Class 5 — oxidizing substances and organic peroxides.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case Class5OxidizingSubstances = 'class-5-oxidizing-substances';
 
     /**
      * Class 6 — toxic and infectious substances.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case Class6ToxicSubstances = 'class-6-toxic-substances';
 
     /**
      * Class 7 — radioactive materials.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case Class7RadioactiveMaterials = 'class-7-radioactive-materials';
 
     /**
      * Class 8 — corrosive substances.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case Class8CorrosiveSubstances = 'class-8-corrosive-substances';
 
     /**
      * Class 9 — miscellaneous dangerous goods.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case Class9Miscellaneous = 'class-9-miscellaneous';
 
     /**
      * Not dangerous goods — the default for an ordinary product.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     case None = 'none';
 
@@ -141,11 +91,6 @@ enum RiskClass: string
      * @return int Zero-based position in declaration order.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */
@@ -173,11 +118,6 @@ enum RiskClass: string
      * @throws ValueError When the ordinal is outside the declared range.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */

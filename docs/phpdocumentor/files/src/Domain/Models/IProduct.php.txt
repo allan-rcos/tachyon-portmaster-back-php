@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -32,20 +27,11 @@ use Domain\Enums\RiskClass;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 interface IProduct
 {
     /**
      * @var string Application-generated Snowflake, Base62-encoded at the edge.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public string $id {
         get;
@@ -53,10 +39,6 @@ interface IProduct
 
     /**
      * @var string Commercial name. Never blank — the table module refuses it.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public string $name {
         get;
@@ -65,10 +47,6 @@ interface IProduct
     /**
      * @var float Kilograms per litre. What turns a loaded quantity into the
      *            weight counted against a container's capacity.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public float $density {
         get;
@@ -77,10 +55,6 @@ interface IProduct
     /**
      * @var RiskClass UN dangerous-goods classification, or `None`. Reported in
      *                the yard metrics; nothing restricts loading by it today.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public RiskClass $riskClass {
         get;

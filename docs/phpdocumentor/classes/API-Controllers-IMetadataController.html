@@ -218,43 +218,60 @@
             <div class="phpdocumentor-column -nine phpdocumentor-content">
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/api.html">API</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/api-controllers.html">Controllers</a></li>
     </ul>
 
-    <article class="phpdocumentor-element -file">
-        <h2 class="phpdocumentor-content__title">ITelemetryEventRepository.php</h2>
+    <article class="phpdocumentor-element -interface">
+        <h2 class="phpdocumentor-content__title">
+    IMetadataController
+                <div class="phpdocumentor-element__package">
+            in
+            <ul class="phpdocumentor-breadcrumbs">
+                                    <li><a href="packages/Portmaster.html">Portmaster</a></li>
+                            </ul>
+        </div>
+    </h2>
 
-            <p class="phpdocumentor-summary">Telemetry Event Repository Contract.</p>
+        <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Controllers/IMetadataController.php"><a href="files/src-api-controllers-imetadatacontroller.html"><abbr title="src/API/Controllers/IMetadataController.php">IMetadataController.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
-        
-        
-        
+            <a href="classes/API-Controllers-IMetadataController.html#source-view.36" class="phpdocumentor-element-found-in__source" data-line="36" data-modal="source-view" data-src="files/src/API/Controllers/IMetadataController.php.txt"></a>
+    </aside>
+
+            <p class="phpdocumentor-summary">System metadata catalogues (`/metadata`).</p>
+
+
+    <section class="phpdocumentor-description"><p>Read-only, by construction: the catalogue is filled from code at WorkerStart,
+so there is nothing here a client could create or delete. It exists for
+discovery — a permission is grantable because some use case declared it, so
+the set is not knowable from the schema the way <a href="classes/Domain-Enums-RiskClass.html"><abbr title="\Domain\Enums\RiskClass">RiskClass</abbr></a>
+or <a href="classes/Domain-Enums-TelemetryEvent.html"><abbr title="\Domain\Enums\TelemetryEvent">TelemetryEvent</abbr></a> are.</p>
+</section>
+
+
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="files/src-infra-repository-itelemetryeventrepository.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/API-Controllers-IMetadataController.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
                     <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">category</span>
+                <span class="phpdocumentor-tag__name">see</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>Infrastructure</p>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/API-Controllers-IRoleAdminController.html"><abbr title="\API\Controllers\IRoleAdminController">IRoleAdminController</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>Where the permission slugs listed here are granted.</p>
 </section>
 
                                     </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">since</span>
-            </dt>
                             <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                                        
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">version</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">0.0.1</span>
-                                                                                                        
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/API-Controllers-IProductController.html"><abbr title="\API\Controllers\IProductController">IProductController</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>The contract shape these follow.</p>
+</section>
+
                                     </dd>
                                 <dt class="phpdocumentor-tag-list__entry">
                 <span class="phpdocumentor-tag__name">license</span>
@@ -272,58 +289,135 @@
 </section>
 
                                     </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">author</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>Ricardo Állan Costa <a href="mailto:ricardoallancosta@hotmail.com">ricardoallancosta@hotmail.com</a></p>
-</section>
-
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">filesource</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        
-                                    </dd>
                         </dl>
 
-
-        
+    
+    
 <h3 id="toc">
     Table of Contents
-    <a href="files/src-infra-repository-itelemetryeventrepository.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/API-Controllers-IMetadataController.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
 
 
-    <h4 id="toc-interfaces">
-        Interfaces
-        <a href="files/src-infra-repository-itelemetryeventrepository.html#toc-interfaces" class="headerlink"><i class="fas fa-link"></i></a>
+
+
+
+
+
+
+
+<h4 id="toc-methods">
+    Methods
+    <a href="classes/API-Controllers-IMetadataController.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/API-Controllers-IMetadataController.html#method_listPermissions">listPermissions()</a>
+    <span>
+                                &nbsp;: <abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr>    </span>
+</dt>
+<dd>`GET /metadata/permissions` — the whole permission catalogue.</dd>
+
+    </dl>
+
+
+
+
+        
+
+        
+
+            <section class="phpdocumentor-methods">
+        <h3 class="phpdocumentor-elements__header" id="methods">
+            Methods
+            <a href="classes/API-Controllers-IMetadataController.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h3>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_listPermissions">
+        listPermissions()
+        <a href="classes/API-Controllers-IMetadataController.html#method_listPermissions" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
-    <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Infra-Repository-ITelemetryEventRepository.html"><abbr title="\Infra\Repository\ITelemetryEventRepository">ITelemetryEventRepository</abbr></a></dt><dd>The telemetry-event registry: the runtime catalogue of every event type the
-application layer declared.</dd>    </dl>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Controllers/IMetadataController.php"><a href="files/src-api-controllers-imetadatacontroller.html"><abbr title="src/API/Controllers/IMetadataController.php">IMetadataController.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">50</span>
 
+            <a href="classes/API-Controllers-IMetadataController.html#source-view.50" class="phpdocumentor-element-found-in__source" data-line="50" data-modal="source-view" data-src="files/src/API/Controllers/IMetadataController.php.txt"></a>
+    </aside>
 
+        <p class="phpdocumentor-summary">`GET /metadata/permissions` — the whole permission catalogue.</p>
 
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">listPermissions</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><abbr title="\Psr\Http\Message\ServerRequestInterface">ServerRequestInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span></code>
 
+    <div class="phpdocumentor-label-line">
+            <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
 
+        </div>
+    
+        <section class="phpdocumentor-description"><p>Unpaged: <code class="prettyprint">?search=</code> narrows it, but there is no cursor and no limit.</p>
+</section>
 
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$request</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><abbr title="\Psr\Http\Message\ServerRequestInterface">ServerRequestInterface</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The incoming HTTP request.</p>
+</section>
 
+            </dd>
+            </dl>
 
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_listPermissions_tags">
+        Tags
+        <a href="classes/API-Controllers-IMetadataController.html#method_listPermissions_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">copyright</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                            <section class="phpdocumentor-description"><p>2026 Tachyon</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The outgoing HTTP response.</p>
+</section>
 
-        
+            </section>
+
+</article>
+            </section>
+
         <div class="phpdocumentor-modal" id="source-view">
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Infra/Repository/ITelemetryEventRepository.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/API/Controllers/IMetadataController.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -416,7 +510,7 @@ application layer declared.</dd>    </dl>
     </article>
                                 </section>
                 <section class="phpdocumentor-on-this-page__sidebar">
-                            
+                                
     <section class="phpdocumentor-on-this-page__content">
         <strong class="phpdocumentor-on-this-page__title">On this page</strong>
 
@@ -424,10 +518,16 @@ application layer declared.</dd>    </dl>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                                                    <li><a href="files/src-infra-repository-itelemetryeventrepository.html#toc-interfaces">Interfaces</a></li>
-                                                                                                                                        </ul>
+                                                                                <li><a href="classes/API-Controllers-IMetadataController.html#toc-methods">Methods</a></li>
+                                    </ul>
             </li>
-
+            
+                            <li class="phpdocumentor-on-this-page-section__title">Methods</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/API-Controllers-IMetadataController.html#method_listPermissions">listPermissions()</a></li>
+                                            </ul>
+                </li>
             
                     </ul>
     </section>
@@ -446,7 +546,7 @@ application layer declared.</dd>    </dl>
     </section>
 </section>
         </div>
-        <a href="files/src-infra-repository-itelemetryeventrepository.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/API-Controllers-IMetadataController.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

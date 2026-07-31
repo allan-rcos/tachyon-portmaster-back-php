@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -20,6 +15,7 @@ declare(strict_types=1);
 
 namespace Domain\Models\Internal;
 
+use Domain\Enums\TelemetryEvent;
 use Domain\Models\IContainer;
 use Domain\Models\IManifestCargo;
 use Domain\Models\IManifestChange;
@@ -34,11 +30,6 @@ use Domain\Models\IManifestChange;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -51,22 +42,17 @@ final readonly class ManifestChange implements IManifestChange
      * @param  ?IManifestCargo  $cargo  Resulting cargo line, or null to remove it.
      * @param  bool  $clearManifest  True when the container emptied entirely and
      *                               the whole manifest should be dropped.
-     * @param  string  $event  Telemetry event slug to record.
+     * @param  TelemetryEvent  $event  What to record in the telemetry log.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         public IContainer $container,
         public string $productId,
         public ?IManifestCargo $cargo,
         public bool $clearManifest,
-        /** Telemetry event slug; see {@see \Domain\Models\ITelemetryEvent}. */
-        public string $event,
+        /** What the telemetry log records for this move. */
+        public TelemetryEvent $event,
     ) {
     }
 }

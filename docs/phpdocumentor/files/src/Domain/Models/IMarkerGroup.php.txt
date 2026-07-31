@@ -5,13 +5,8 @@
  *
  * @category Domain
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -22,7 +17,7 @@ namespace Domain\Models;
 
 /**
  * A namespace for {@see IMarker} flags — **system metadata**, same family as
- * {@see IPermission} and {@see ITelemetryEvent}.
+ * {@see IPermission}.
  *
  * The group is what keeps markers from colliding. Two features hashing
  * unrelated values could produce the same digest, and without a group they
@@ -37,11 +32,6 @@ namespace Domain\Models;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  */
 interface IMarkerGroup
 {
@@ -50,10 +40,6 @@ interface IMarkerGroup
      * after the *kind of flag*, never after the value being flagged.
      *
      * @var string Lower-kebab token.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public string $slug {
         get;
@@ -66,10 +52,6 @@ interface IMarkerGroup
      * emptied together when MariaDB restarts.
      *
      * @var int Registry index; zero means built but not yet registered.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     public int $id {
         get;
@@ -85,11 +67,6 @@ interface IMarkerGroup
      * @return self A copy carrying it; the receiver is unchanged.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      *
      * @api
      */

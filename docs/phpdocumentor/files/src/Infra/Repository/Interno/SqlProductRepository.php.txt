@@ -5,13 +5,8 @@
  *
  * @category Infrastructure
  *
- * @since 0.0.1
- *
- * @version 0.0.1
- *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
  *
  * @filesource
  */
@@ -55,11 +50,6 @@ use Throwable;
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
- * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
- *
- * @since 0.0.1
- *
- * @version 0.0.1
  *
  * @internal
  */
@@ -67,20 +57,12 @@ final readonly class SqlProductRepository implements IProductRepository
 {
     /**
      * @var string The table every statement here addresses.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private const string TABLE_NAME = 'products';
 
     /**
      * @var ILogger Channelled copy, so these lines are attributable to this
      *              repository rather than to the request at large.
-     *
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
      */
     private ILogger $logger;
 
@@ -92,11 +74,6 @@ final readonly class SqlProductRepository implements IProductRepository
      *                                    held, since it changes per request.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function __construct(
         ILogger $logger,
@@ -114,11 +91,6 @@ final readonly class SqlProductRepository implements IProductRepository
      *                          undecodable id lands.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function findById(string $id): Result
     {
@@ -164,11 +136,6 @@ final readonly class SqlProductRepository implements IProductRepository
      *                      which includes a constraint the database rejected.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function insert(IProduct $product): Result
     {
@@ -209,11 +176,6 @@ final readonly class SqlProductRepository implements IProductRepository
      *                      inspected.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function update(IProduct $product): Result
     {
@@ -254,11 +216,6 @@ final readonly class SqlProductRepository implements IProductRepository
      *                      Matching no row is *not* a failure.
      *
      * @copyright 2026 Tachyon
-     * @author Ricardo Állan Costa <ricardoallancosta@hotmail.com>
-     *
-     * @since 0.0.1
-     *
-     * @version 0.0.1
      */
     public function delete(string $id): Result
     {

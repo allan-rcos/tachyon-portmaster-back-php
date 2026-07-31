@@ -606,6 +606,16 @@ Search.appendIndex(
             "summary": "\u0060POST\u0020\/manifests\/unload\u002Ditem\u0060\u0020\u2014\u0020removes\u0020cargo\u0020from\u0020a\u0020container.",
             "url": "classes/API-Controllers-IManifestController.html#method_unloadItem"
         },                {
+            "fqsen": "\\API\\Controllers\\IMetadataController",
+            "name": "IMetadataController",
+            "summary": "System\u0020metadata\u0020catalogues\u0020\u0028\u0060\/metadata\u0060\u0029.",
+            "url": "classes/API-Controllers-IMetadataController.html"
+        },                {
+            "fqsen": "\\API\\Controllers\\IMetadataController\u003A\u003AlistPermissions\u0028\u0029",
+            "name": "listPermissions",
+            "summary": "\u0060GET\u0020\/metadata\/permissions\u0060\u0020\u2014\u0020the\u0020whole\u0020permission\u0020catalogue.",
+            "url": "classes/API-Controllers-IMetadataController.html#method_listPermissions"
+        },                {
             "fqsen": "\\API\\Controllers\\IMetricsController",
             "name": "IMetricsController",
             "summary": "Operational\u0020metrics\u0020endpoint\u0020\u0028\u0060\/metrics\u0060\u0029.",
@@ -2373,7 +2383,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\API\\Fbs\\Container\\TelemetryLogItemProxy\u003A\u003A\u0024event",
             "name": "event",
-            "summary": "Telemetry\u0020event\u0020slug\u003B\u0020the\u0020registry\u0020is\u0020the\u0020runtime\u0020catalogue.",
+            "summary": "What\u0020the\u0020row\u0020records\u0020having\u0020happened.",
             "url": "classes/API-Fbs-Container-TelemetryLogItemProxy.html#property_event"
         },                {
             "fqsen": "\\API\\Fbs\\Container\\TelemetryLogItemProxy\u003A\u003A\u0024description",
@@ -2665,6 +2675,121 @@ Search.appendIndex(
             "name": "quantity",
             "summary": "",
             "url": "classes/API-Fbs-Manifest-UnloadItemRequestProxy.html#property_quantity"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\MetadataItemResponseProxy",
+            "name": "MetadataItemResponseProxy",
+            "summary": "JSON\/binary\u002Daware\u0020proxy\u0020around\u0020the\u0020generated\u0020\u007B\u0040see\u0020MetadataItemResponse\u007D\ntable\u0020\u2014\u0020one\u0020row\u0020of\u0020the\u0020permission\u0020catalogue.",
+            "url": "classes/API-Fbs-Metadata-MetadataItemResponseProxy.html"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\MetadataItemResponseProxy\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/API-Fbs-Metadata-MetadataItemResponseProxy.html#method___construct"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\MetadataItemResponseProxy\u003A\u003AbuildInto\u0028\u0029",
+            "name": "buildInto",
+            "summary": "Appends\u0020this\u0020message\u0020to\u0020the\u0020builder\u0020and\u0020returns\u0020its\u0020table\u0020offset.\u0020All\nnested\u0020offsets\u0020\u0028strings,\u0020vectors,\u0020child\u0020tables\u0029\u0020must\u0020be\u0020created\u0020first.",
+            "url": "classes/API-Fbs-Metadata-MetadataItemResponseProxy.html#method_buildInto"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\MetadataItemResponseProxy\u003A\u003AtoBinary\u0028\u0029",
+            "name": "toBinary",
+            "summary": "The\u0020FlatBuffer\u0020binary\u0020representation\u0020of\u0020this\u0020message.",
+            "url": "classes/API-Fbs-Metadata-MetadataItemResponseProxy.html#method_toBinary"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\MetadataItemResponseProxy\u003A\u003AfromTable\u0028\u0029",
+            "name": "fromTable",
+            "summary": "Copies\u0020a\u0020generated\u0020table\u0027s\u0020fields\u0020into\u0020a\u0020proxy.",
+            "url": "classes/API-Fbs-Metadata-MetadataItemResponseProxy.html#method_fromTable"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\MetadataItemResponseProxy\u003A\u003AfromBinary\u0028\u0029",
+            "name": "fromBinary",
+            "summary": "Hydrates\u0020a\u0020new\u0020instance\u0020from\u0020a\u0020FlatBuffer\u0020binary\u0020blob.",
+            "url": "classes/API-Fbs-Metadata-MetadataItemResponseProxy.html#method_fromBinary"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\MetadataItemResponseProxy\u003A\u003AjsonUnserialize\u0028\u0029",
+            "name": "jsonUnserialize",
+            "summary": "Hydrates\u0020a\u0020new\u0020instance\u0020from\u0020a\u0020decoded\u0020JSON\/associative\u0020structure.",
+            "url": "classes/API-Fbs-Metadata-MetadataItemResponseProxy.html#method_jsonUnserialize"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\MetadataItemResponseProxy\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "The\u0020message\u0020as\u0020an\u0020associative\u0020structure,\u0020keyed\u0020by\u0020its\u0020\u002A\u002Aschema\u002A\u002A\u0020field\nnames\u0020in\u0020snake_case\u0020\u2014\u0020not\u0020by\u0020the\u0020PHP\u0020property\u0020names.",
+            "url": "classes/API-Fbs-Metadata-MetadataItemResponseProxy.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\MetadataItemResponseProxy\u003A\u003AfromStream\u0028\u0029",
+            "name": "fromStream",
+            "summary": "Builds\u0020the\u0020proxy\u0020from\u0020a\u0020request\u0020body,\u0020decoding\u0020it\u0020as\u0020the\u0020request\n\u007B\u0040see\u0020\\API\\Http\\ContentKind\u007D\u0020recorded\u0020in\u0020the\u0020coroutine\u0020context.",
+            "url": "classes/API-Fbs-Metadata-MetadataItemResponseProxy.html#method_fromStream"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\MetadataItemResponseProxy\u003A\u003AtoStream\u0028\u0029",
+            "name": "toStream",
+            "summary": "Serializes\u0020the\u0020proxy\u0020to\u0020a\u0020response\u0020body\u0020stream,\u0020encoding\u0020it\u0020as\u0020the\nresponse\u0020\u007B\u0040see\u0020\\API\\Http\\ContentKind\u007D\u0020recorded\u0020in\u0020the\u0020coroutine\u0020context.",
+            "url": "classes/API-Fbs-Metadata-MetadataItemResponseProxy.html#method_toStream"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\MetadataItemResponseProxy\u003A\u003A\u0024id",
+            "name": "id",
+            "summary": "",
+            "url": "classes/API-Fbs-Metadata-MetadataItemResponseProxy.html#property_id"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\MetadataItemResponseProxy\u003A\u003A\u0024slug",
+            "name": "slug",
+            "summary": "",
+            "url": "classes/API-Fbs-Metadata-MetadataItemResponseProxy.html#property_slug"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\PermissionListResponseProxy",
+            "name": "PermissionListResponseProxy",
+            "summary": "JSON\/binary\u002Daware\u0020proxy\u0020around\u0020the\u0020generated\u0020\u007B\u0040see\u0020PermissionListResponse\u007D\ntable.",
+            "url": "classes/API-Fbs-Metadata-PermissionListResponseProxy.html"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\PermissionListResponseProxy\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/API-Fbs-Metadata-PermissionListResponseProxy.html#method___construct"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\PermissionListResponseProxy\u003A\u003AbuildInto\u0028\u0029",
+            "name": "buildInto",
+            "summary": "Appends\u0020this\u0020message\u0020to\u0020the\u0020builder\u0020and\u0020returns\u0020its\u0020table\u0020offset.\u0020All\nnested\u0020offsets\u0020\u0028strings,\u0020vectors,\u0020child\u0020tables\u0029\u0020must\u0020be\u0020created\u0020first.",
+            "url": "classes/API-Fbs-Metadata-PermissionListResponseProxy.html#method_buildInto"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\PermissionListResponseProxy\u003A\u003AtoBinary\u0028\u0029",
+            "name": "toBinary",
+            "summary": "The\u0020FlatBuffer\u0020binary\u0020representation\u0020of\u0020this\u0020message.",
+            "url": "classes/API-Fbs-Metadata-PermissionListResponseProxy.html#method_toBinary"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\PermissionListResponseProxy\u003A\u003AfromTable\u0028\u0029",
+            "name": "fromTable",
+            "summary": "Copies\u0020a\u0020generated\u0020table\u0027s\u0020fields\u0020into\u0020a\u0020proxy.",
+            "url": "classes/API-Fbs-Metadata-PermissionListResponseProxy.html#method_fromTable"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\PermissionListResponseProxy\u003A\u003AfromBinary\u0028\u0029",
+            "name": "fromBinary",
+            "summary": "Hydrates\u0020a\u0020new\u0020instance\u0020from\u0020a\u0020FlatBuffer\u0020binary\u0020blob.",
+            "url": "classes/API-Fbs-Metadata-PermissionListResponseProxy.html#method_fromBinary"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\PermissionListResponseProxy\u003A\u003AjsonUnserialize\u0028\u0029",
+            "name": "jsonUnserialize",
+            "summary": "Hydrates\u0020a\u0020new\u0020instance\u0020from\u0020a\u0020decoded\u0020JSON\/associative\u0020structure.",
+            "url": "classes/API-Fbs-Metadata-PermissionListResponseProxy.html#method_jsonUnserialize"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\PermissionListResponseProxy\u003A\u003AjsonSerialize\u0028\u0029",
+            "name": "jsonSerialize",
+            "summary": "The\u0020message\u0020as\u0020an\u0020associative\u0020structure,\u0020keyed\u0020by\u0020its\u0020\u002A\u002Aschema\u002A\u002A\u0020field\nnames\u0020in\u0020snake_case\u0020\u2014\u0020not\u0020by\u0020the\u0020PHP\u0020property\u0020names.",
+            "url": "classes/API-Fbs-Metadata-PermissionListResponseProxy.html#method_jsonSerialize"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\PermissionListResponseProxy\u003A\u003AfromStream\u0028\u0029",
+            "name": "fromStream",
+            "summary": "Builds\u0020the\u0020proxy\u0020from\u0020a\u0020request\u0020body,\u0020decoding\u0020it\u0020as\u0020the\u0020request\n\u007B\u0040see\u0020\\API\\Http\\ContentKind\u007D\u0020recorded\u0020in\u0020the\u0020coroutine\u0020context.",
+            "url": "classes/API-Fbs-Metadata-PermissionListResponseProxy.html#method_fromStream"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\PermissionListResponseProxy\u003A\u003AtoStream\u0028\u0029",
+            "name": "toStream",
+            "summary": "Serializes\u0020the\u0020proxy\u0020to\u0020a\u0020response\u0020body\u0020stream,\u0020encoding\u0020it\u0020as\u0020the\nresponse\u0020\u007B\u0040see\u0020\\API\\Http\\ContentKind\u007D\u0020recorded\u0020in\u0020the\u0020coroutine\u0020context.",
+            "url": "classes/API-Fbs-Metadata-PermissionListResponseProxy.html#method_toStream"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata\\PermissionListResponseProxy\u003A\u003A\u0024data",
+            "name": "data",
+            "summary": "",
+            "url": "classes/API-Fbs-Metadata-PermissionListResponseProxy.html#property_data"
         },                {
             "fqsen": "\\API\\Fbs\\Metrics\\MetricsResponseProxy",
             "name": "MetricsResponseProxy",
@@ -4421,6 +4546,11 @@ Search.appendIndex(
             "summary": "The\u0020\u007B\u0040see\u0020IUpdateRolePermissionsUseCase\u007D\u0020for\u0020this\u0020worker.",
             "url": "classes/App-IAppProvider.html#method_updateRolePermissionsUseCase"
         },                {
+            "fqsen": "\\App\\IAppProvider\u003A\u003AlistPermissionsUseCase\u0028\u0029",
+            "name": "listPermissionsUseCase",
+            "summary": "The\u0020\u007B\u0040see\u0020IListPermissionsUseCase\u007D\u0020for\u0020this\u0020worker.",
+            "url": "classes/App-IAppProvider.html#method_listPermissionsUseCase"
+        },                {
             "fqsen": "\\App\\IAppProvider\u003A\u003AlistProductsUseCase\u0028\u0029",
             "name": "listProductsUseCase",
             "summary": "The\u0020\u007B\u0040see\u0020IListProductsUseCase\u007D\u0020for\u0020this\u0020worker.",
@@ -4711,6 +4841,26 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Queries-Role-GetRoleQuery.html#property_id"
         },                {
+            "fqsen": "\\App\\Queries\\Role\\ListPermissionsQuery",
+            "name": "ListPermissionsQuery",
+            "summary": "Lists\u0020the\u0020registered\u0020permission\u0020slugs,\u0020optionally\u0020narrowed\u0020by\u0020a\u0020search\u0020term.",
+            "url": "classes/App-Queries-Role-ListPermissionsQuery.html"
+        },                {
+            "fqsen": "\\App\\Queries\\Role\\ListPermissionsQuery\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Queries-Role-ListPermissionsQuery.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Queries\\Role\\ListPermissionsQuery\u003A\u003A\u0024context",
+            "name": "context",
+            "summary": "",
+            "url": "classes/App-Queries-Role-ListPermissionsQuery.html#property_context"
+        },                {
+            "fqsen": "\\App\\Queries\\Role\\ListPermissionsQuery\u003A\u003A\u0024search",
+            "name": "search",
+            "summary": "",
+            "url": "classes/App-Queries-Role-ListPermissionsQuery.html#property_search"
+        },                {
             "fqsen": "\\App\\Queries\\Role\\ListRolesQuery",
             "name": "ListRolesQuery",
             "summary": "Lists\u0020roles,\u0020each\u0020with\u0020its\u0020live\u0020user\u0020count.",
@@ -4985,6 +5135,16 @@ Search.appendIndex(
             "name": "execute",
             "summary": "Reads\u0020the\u0020page\u0020the\u0020query\u0020asks\u0020for.",
             "url": "classes/App-Services-IListContainersUseCase.html#method_execute"
+        },                {
+            "fqsen": "\\App\\Services\\IListPermissionsUseCase",
+            "name": "IListPermissionsUseCase",
+            "summary": "Lists\u0020the\u0020permission\u0020catalogue\u0020\u2014\u0020every\u0020slug\u0020a\u0020use\u0020case\u0020declared\u0020at\nWorkerStart.",
+            "url": "classes/App-Services-IListPermissionsUseCase.html"
+        },                {
+            "fqsen": "\\App\\Services\\IListPermissionsUseCase\u003A\u003Aexecute\u0028\u0029",
+            "name": "execute",
+            "summary": "Reads\u0020the\u0020catalogue,\u0020filtered\u0020when\u0020the\u0020query\u0020carries\u0020a\u0020search\u0020term.",
+            "url": "classes/App-Services-IListPermissionsUseCase.html#method_execute"
         },                {
             "fqsen": "\\App\\Services\\IListProductsUseCase",
             "name": "IListProductsUseCase",
@@ -5306,6 +5466,31 @@ Search.appendIndex(
             "summary": "Not\u0020dangerous\u0020goods\u0020\u2014\u0020the\u0020default\u0020for\u0020an\u0020ordinary\u0020product.",
             "url": "classes/Domain-Enums-RiskClass.html#enumcase_None"
         },                {
+            "fqsen": "\\Domain\\Enums\\TelemetryEvent",
+            "name": "TelemetryEvent",
+            "summary": "What\u0020a\u0020telemetry\u0020log\u0020entry\u0020records\u0020happening\u0020to\u0020a\u0020container.",
+            "url": "classes/Domain-Enums-TelemetryEvent.html"
+        },                {
+            "fqsen": "\\Domain\\Enums\\TelemetryEvent\u003A\u003AtoInt\u0028\u0029",
+            "name": "toInt",
+            "summary": "The\u0020FlatBuffer\u0020ordinal\u0020for\u0020this\u0020case.",
+            "url": "classes/Domain-Enums-TelemetryEvent.html#method_toInt"
+        },                {
+            "fqsen": "\\Domain\\Enums\\TelemetryEvent\u003A\u003AfromInt\u0028\u0029",
+            "name": "fromInt",
+            "summary": "The\u0020case\u0020at\u0020a\u0020FlatBuffer\u0020ordinal.",
+            "url": "classes/Domain-Enums-TelemetryEvent.html#method_fromInt"
+        },                {
+            "fqsen": "\\Domain\\Enums\\TelemetryEvent\u003A\u003ALoad",
+            "name": "Load",
+            "summary": "Cargo\u0020was\u0020added\u0020to\u0020the\u0020container.",
+            "url": "classes/Domain-Enums-TelemetryEvent.html#enumcase_Load"
+        },                {
+            "fqsen": "\\Domain\\Enums\\TelemetryEvent\u003A\u003AUnload",
+            "name": "Unload",
+            "summary": "Cargo\u0020was\u0020removed\u0020from\u0020the\u0020container.",
+            "url": "classes/Domain-Enums-TelemetryEvent.html#enumcase_Unload"
+        },                {
             "fqsen": "\\Domain\\ID\\Base62",
             "name": "Base62",
             "summary": "Base62\u0020codec\u0020for\u0020identifiers.",
@@ -5421,11 +5606,6 @@ Search.appendIndex(
             "summary": "Hashes\u0020a\u0020value\u0020into\u0020the\u0020marker\u0020that\u0020stands\u0020in\u0020for\u0020it.",
             "url": "classes/Domain-IDomainProvider.html#method_markerTM"
         },                {
-            "fqsen": "\\Domain\\IDomainProvider\u003A\u003AtelemetryEventTM\u0028\u0029",
-            "name": "telemetryEventTM",
-            "summary": "Rules\u0020for\u0020telemetry\u0020event\u0020slugs.",
-            "url": "classes/Domain-IDomainProvider.html#method_telemetryEventTM"
-        },                {
             "fqsen": "\\Domain\\Models\\IContainer",
             "name": "IContainer",
             "summary": "A\u0020vessel\u0020cargo\u0020is\u0020loaded\u0020into,\u0020sealed\u0020and\u0020dispatched.",
@@ -5448,7 +5628,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Domain\\Models\\IMarkerGroup",
             "name": "IMarkerGroup",
-            "summary": "A\u0020namespace\u0020for\u0020\u007B\u0040see\u0020IMarker\u007D\u0020flags\u0020\u2014\u0020\u002A\u002Asystem\u0020metadata\u002A\u002A,\u0020same\u0020family\u0020as\n\u007B\u0040see\u0020IPermission\u007D\u0020and\u0020\u007B\u0040see\u0020ITelemetryEvent\u007D.",
+            "summary": "A\u0020namespace\u0020for\u0020\u007B\u0040see\u0020IMarker\u007D\u0020flags\u0020\u2014\u0020\u002A\u002Asystem\u0020metadata\u002A\u002A,\u0020same\u0020family\u0020as\n\u007B\u0040see\u0020IPermission\u007D.",
             "url": "classes/Domain-Models-IMarkerGroup.html"
         },                {
             "fqsen": "\\Domain\\Models\\IMarkerGroup\u003A\u003AwithId\u0028\u0029",
@@ -5475,16 +5655,6 @@ Search.appendIndex(
             "name": "IRole",
             "summary": "A\u0020named\u0020bundle\u0020of\u0020permissions,\u0020granted\u0020to\u0020users.",
             "url": "classes/Domain-Models-IRole.html"
-        },                {
-            "fqsen": "\\Domain\\Models\\ITelemetryEvent",
-            "name": "ITelemetryEvent",
-            "summary": "A\u0020container\u0020telemetry\u0020event\u0020type\u0020\u2014\u0020\u002A\u002Asystem\u0020metadata\u002A\u002A,\u0020same\u0020family\u0020as\n\u007B\u0040see\u0020IPermission\u007D\u0020and\u0020\u007B\u0040see\u0020IMarkerGroup\u007D.",
-            "url": "classes/Domain-Models-ITelemetryEvent.html"
-        },                {
-            "fqsen": "\\Domain\\Models\\ITelemetryEvent\u003A\u003AwithId\u0028\u0029",
-            "name": "withId",
-            "summary": "The\u0020same\u0020event\u0020carrying\u0020the\u0020registry\u0020index.",
-            "url": "classes/Domain-Models-ITelemetryEvent.html#method_withId"
         },                {
             "fqsen": "\\Domain\\Models\\IUser",
             "name": "IUser",
@@ -5625,16 +5795,6 @@ Search.appendIndex(
             "name": "updatePermissions",
             "summary": "Produces\u0020the\u0020role\u0020with\u0020its\u0020permission\u0020set\u0020\u002A\u002Areplaced\u002A\u002A\u0020by\u0020the\u0020given\u0020one.",
             "url": "classes/Domain-TableModules-IRoleTM.html#method_updatePermissions"
-        },                {
-            "fqsen": "\\Domain\\TableModules\\ITelemetryEventTM",
-            "name": "ITelemetryEventTM",
-            "summary": "The\u0020rules\u0020a\u0020telemetry\u002Devent\u0020slug\u0020must\u0020satisfy.",
-            "url": "classes/Domain-TableModules-ITelemetryEventTM.html"
-        },                {
-            "fqsen": "\\Domain\\TableModules\\ITelemetryEventTM\u003A\u003Acreate\u0028\u0029",
-            "name": "create",
-            "summary": "Builds\u0020a\u0020telemetry\u0020event\u0020type\u0020after\u0020validating\u0020it.",
-            "url": "classes/Domain-TableModules-ITelemetryEventTM.html#method_create"
         },                {
             "fqsen": "\\Domain\\TableModules\\IUserTM",
             "name": "IUserTM",
@@ -6095,11 +6255,6 @@ Search.appendIndex(
             "name": "markerRepository",
             "summary": "Storage\u0020for\u0020the\u0020expiring\u0020flags\u0020themselves.",
             "url": "classes/Infra-IInfraProvider.html#method_markerRepository"
-        },                {
-            "fqsen": "\\Infra\\IInfraProvider\u003A\u003AtelemetryEventRepository\u0028\u0029",
-            "name": "telemetryEventRepository",
-            "summary": "The\u0020runtime\u0020catalogue\u0020of\u0020declared\u0020telemetry\u0020event\u0020types.",
-            "url": "classes/Infra-IInfraProvider.html#method_telemetryEventRepository"
         },                {
             "fqsen": "\\Infra\\IInfraProvider\u003A\u003AqueryRepository\u0028\u0029",
             "name": "queryRepository",
@@ -6891,36 +7046,6 @@ Search.appendIndex(
             "summary": "Removes\u0020a\u0020role.",
             "url": "classes/Infra-Repository-IRoleRepository.html#method_delete"
         },                {
-            "fqsen": "\\Infra\\Repository\\ITelemetryEventRepository",
-            "name": "ITelemetryEventRepository",
-            "summary": "The\u0020telemetry\u002Devent\u0020registry\u003A\u0020the\u0020runtime\u0020catalogue\u0020of\u0020every\u0020event\u0020type\u0020the\napplication\u0020layer\u0020declared.",
-            "url": "classes/Infra-Repository-ITelemetryEventRepository.html"
-        },                {
-            "fqsen": "\\Infra\\Repository\\ITelemetryEventRepository\u003A\u003Aadd\u0028\u0029",
-            "name": "add",
-            "summary": "Registers\u0020an\u0020event\u0020type\u0020and\u0020returns\u0020it\u0020carrying\u0020its\u0020assigned\u0020registry\nindex.",
-            "url": "classes/Infra-Repository-ITelemetryEventRepository.html#method_add"
-        },                {
-            "fqsen": "\\Infra\\Repository\\ITelemetryEventRepository\u003A\u003AgetBySlug\u0028\u0029",
-            "name": "getBySlug",
-            "summary": "The\u0020registered\u0020event\u0020type\u0020for\u0020a\u0020slug.",
-            "url": "classes/Infra-Repository-ITelemetryEventRepository.html#method_getBySlug"
-        },                {
-            "fqsen": "\\Infra\\Repository\\ITelemetryEventRepository\u003A\u003AgetById\u0028\u0029",
-            "name": "getById",
-            "summary": "The\u0020registered\u0020event\u0020type\u0020for\u0020a\u0020registry\u0020index.",
-            "url": "classes/Infra-Repository-ITelemetryEventRepository.html#method_getById"
-        },                {
-            "fqsen": "\\Infra\\Repository\\ITelemetryEventRepository\u003A\u003Aall\u0028\u0029",
-            "name": "all",
-            "summary": "Every\u0020registered\u0020event\u0020type,\u0020in\u0020registration\u0020order.",
-            "url": "classes/Infra-Repository-ITelemetryEventRepository.html#method_all"
-        },                {
-            "fqsen": "\\Infra\\Repository\\ITelemetryEventRepository\u003A\u003Ahas\u0028\u0029",
-            "name": "has",
-            "summary": "Whether\u0020a\u0020slug\u0020has\u0020been\u0020registered.",
-            "url": "classes/Infra-Repository-ITelemetryEventRepository.html#method_has"
-        },                {
             "fqsen": "\\Infra\\Repository\\IUserRepository",
             "name": "IUserRepository",
             "summary": "Persistence\u0020for\u0020users\u0020\u2014\u0020the\u0020write\u0020side.",
@@ -7165,6 +7290,11 @@ Search.appendIndex(
             "name": "Manifest",
             "summary": "",
             "url": "namespaces/api-fbs-manifest.html"
+        },                {
+            "fqsen": "\\API\\Fbs\\Metadata",
+            "name": "Metadata",
+            "summary": "",
+            "url": "namespaces/api-fbs-metadata.html"
         },                {
             "fqsen": "\\API\\Fbs\\Metrics",
             "name": "Metrics",
