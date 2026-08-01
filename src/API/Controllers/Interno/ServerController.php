@@ -60,7 +60,7 @@ final readonly class ServerController implements IServerController
      *
      * @var string
      */
-    private const string VERSION = '0.0.1';
+    private const string VERSION = '1.0.0';
 
     /**
      * @param  ApiConfig  $config  Supplies the reported environment.
