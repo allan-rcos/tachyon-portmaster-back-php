@@ -55,6 +55,16 @@ readonly class DatabaseConfig
      * @param  float  $maxIdleTime  Intended ceiling on how long an unused
      *                              connection sits in the pool. Also unread at
      *                              present.
+     * @param  DatabaseSslMode  $sslMode  How the connection is protected. The
+     *                                    default leaves it in the clear, which
+     *                                    is what every release before this
+     *                                    field did.
+     * @param  string  $sslCa  Path to the CA bundle the server certificate is
+     *                         validated against. Only read under
+     *                         {@see DatabaseSslMode::VERIFY_CA}.
+     * @param  bool  $sslVerifyCn  Whether the certificate's common name has to
+     *                             match the host connected to. Also only read
+     *                             under {@see DatabaseSslMode::VERIFY_CA}.
      *
      * @copyright 2026 Tachyon
      */
@@ -69,6 +79,9 @@ readonly class DatabaseConfig
         public float $poolTimeout = 5.0,
         public float $maxLeaseTime = 30.0,
         public float $maxIdleTime = 60.0,
+        public DatabaseSslMode $sslMode = DatabaseSslMode::DISABLED,
+        public string $sslCa = '',
+        public bool $sslVerifyCn = true,
     ) {
     }
 }

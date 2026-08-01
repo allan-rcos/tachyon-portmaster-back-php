@@ -123,6 +123,24 @@ enum DotEnvVariables: string
     case APP_DB_MAX_IDLE = 'APP_DB_MAX_IDLE';
 
     /**
+     * How the database connection is protected, one of
+     * {@see \Infra\Config\DatabaseSslMode}. Unset means no TLS.
+     */
+    case APP_DB_SSL_MODE = 'APP_DB_SSL_MODE';
+
+    /**
+     * Path to the CA bundle the server certificate is validated against. Only
+     * read when the mode is `verify_ca`.
+     */
+    case APP_DB_SSL_CA = 'APP_DB_SSL_CA';
+
+    /**
+     * Whether the certificate's common name has to match the host connected
+     * to. Also only read when the mode is `verify_ca`.
+     */
+    case APP_DB_SSL_VERIFY_CN = 'APP_DB_SSL_VERIFY_CN';
+
+    /**
      * Signing key for the session tokens. The only variable the boot insists
      * on: {@see \API\Bootstrap\Chain\JwtChain} refuses anything shorter than 32
      * bytes.

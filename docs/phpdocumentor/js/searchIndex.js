@@ -113,7 +113,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\API\\Bootstrap\\Chain\\DatabaseChain\u003A\u003Aprocess\u0028\u0029",
             "name": "process",
-            "summary": "Fills\u0020the\u0020draft\u0027s\u0020\u0060database\u0060\u0020slot\u0020from\u0020the\u0020ten\u0020\u0060APP_DB_\u002A\u0060\u0020variables.",
+            "summary": "Fills\u0020the\u0020draft\u0027s\u0020\u0060database\u0060\u0020slot\u0020from\u0020the\u0020thirteen\u0020\u0060APP_DB_\u002A\u0060\u0020variables.",
             "url": "classes/API-Bootstrap-Chain-DatabaseChain.html#method_process"
         },                {
             "fqsen": "\\API\\Bootstrap\\Chain\\DomainChain",
@@ -280,6 +280,21 @@ Search.appendIndex(
             "name": "APP_DB_MAX_IDLE",
             "summary": "Intended\u0020ceiling\u0020on\u0020how\u0020long\u0020an\u0020unused\u0020connection\u0020sits\u0020in\u0020the\u0020pool.\u0020Also\nunread\u0020at\u0020present.",
             "url": "classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_DB_MAX_IDLE"
+        },                {
+            "fqsen": "\\API\\Bootstrap\\DotEnvVariables\u003A\u003AAPP_DB_SSL_MODE",
+            "name": "APP_DB_SSL_MODE",
+            "summary": "How\u0020the\u0020database\u0020connection\u0020is\u0020protected,\u0020one\u0020of\n\u007B\u0040see\u0020\\Infra\\Config\\DatabaseSslMode\u007D.\u0020Unset\u0020means\u0020no\u0020TLS.",
+            "url": "classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_DB_SSL_MODE"
+        },                {
+            "fqsen": "\\API\\Bootstrap\\DotEnvVariables\u003A\u003AAPP_DB_SSL_CA",
+            "name": "APP_DB_SSL_CA",
+            "summary": "Path\u0020to\u0020the\u0020CA\u0020bundle\u0020the\u0020server\u0020certificate\u0020is\u0020validated\u0020against.\u0020Only\nread\u0020when\u0020the\u0020mode\u0020is\u0020\u0060verify_ca\u0060.",
+            "url": "classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_DB_SSL_CA"
+        },                {
+            "fqsen": "\\API\\Bootstrap\\DotEnvVariables\u003A\u003AAPP_DB_SSL_VERIFY_CN",
+            "name": "APP_DB_SSL_VERIFY_CN",
+            "summary": "Whether\u0020the\u0020certificate\u0027s\u0020common\u0020name\u0020has\u0020to\u0020match\u0020the\u0020host\u0020connected\nto.\u0020Also\u0020only\u0020read\u0020when\u0020the\u0020mode\u0020is\u0020\u0060verify_ca\u0060.",
+            "url": "classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_DB_SSL_VERIFY_CN"
         },                {
             "fqsen": "\\API\\Bootstrap\\DotEnvVariables\u003A\u003AAPP_JWT_SECRET",
             "name": "APP_JWT_SECRET",
@@ -5880,6 +5895,41 @@ Search.appendIndex(
             "name": "maxIdleTime",
             "summary": "",
             "url": "classes/Infra-Config-DatabaseConfig.html#property_maxIdleTime"
+        },                {
+            "fqsen": "\\Infra\\Config\\DatabaseConfig\u003A\u003A\u0024sslMode",
+            "name": "sslMode",
+            "summary": "",
+            "url": "classes/Infra-Config-DatabaseConfig.html#property_sslMode"
+        },                {
+            "fqsen": "\\Infra\\Config\\DatabaseConfig\u003A\u003A\u0024sslCa",
+            "name": "sslCa",
+            "summary": "",
+            "url": "classes/Infra-Config-DatabaseConfig.html#property_sslCa"
+        },                {
+            "fqsen": "\\Infra\\Config\\DatabaseConfig\u003A\u003A\u0024sslVerifyCn",
+            "name": "sslVerifyCn",
+            "summary": "",
+            "url": "classes/Infra-Config-DatabaseConfig.html#property_sslVerifyCn"
+        },                {
+            "fqsen": "\\Infra\\Config\\DatabaseSslMode",
+            "name": "DatabaseSslMode",
+            "summary": "How\u0020the\u0020connection\u0020to\u0020the\u0020database\u0020is\u0020protected.",
+            "url": "classes/Infra-Config-DatabaseSslMode.html"
+        },                {
+            "fqsen": "\\Infra\\Config\\DatabaseSslMode\u003A\u003ADISABLED",
+            "name": "DISABLED",
+            "summary": "No\u0020TLS\u0020\u2014\u0020the\u0020connection\u0020is\u0020in\u0020the\u0020clear.\u0020The\u0020default,\u0020and\u0020the\nbehaviour\u0020of\u0020every\u0020release\u0020before\u0020this\u0020setting\u0020existed.",
+            "url": "classes/Infra-Config-DatabaseSslMode.html#enumcase_DISABLED"
+        },                {
+            "fqsen": "\\Infra\\Config\\DatabaseSslMode\u003A\u003AREQUIRED",
+            "name": "REQUIRED",
+            "summary": "Encrypt,\u0020but\u0020accept\u0020whatever\u0020certificate\u0020the\u0020server\u0020presents.\u0020Defeats\na\u0020passive\u0020listener,\u0020not\u0020an\u0020active\u0020one.",
+            "url": "classes/Infra-Config-DatabaseSslMode.html#enumcase_REQUIRED"
+        },                {
+            "fqsen": "\\Infra\\Config\\DatabaseSslMode\u003A\u003AVERIFY_CA",
+            "name": "VERIFY_CA",
+            "summary": "Encrypt\u0020and\u0020validate\u0020the\u0020server\u0020certificate\u0020against\u0020the\u0020configured\u0020CA\nbundle.\u0020What\u0020a\u0020managed\u0020provider\u0020expects.",
+            "url": "classes/Infra-Config-DatabaseSslMode.html#enumcase_VERIFY_CA"
         },                {
             "fqsen": "\\Infra\\Config\\LogConfig",
             "name": "LogConfig",

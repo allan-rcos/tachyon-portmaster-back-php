@@ -22,8 +22,36 @@ test pool, each pointed at its own database.
 | `APP_HOST`, `APP_PORT` | listen address |
 | `APP_WORKER_NUM` | worker processes (4 in dev) |
 | `APP_DB_HOST`, `APP_DB_PORT`, `APP_DB_NAME`, `APP_DB_USER`, `APP_DB_PASSWORD` | database |
+| `APP_DB_SSL_MODE` | `disabled` (default), `required` or `verify_ca` |
+| `APP_DB_SSL_CA`, `APP_DB_SSL_VERIFY_CN` | CA bundle and name check — only read under `verify_ca` |
 | `APP_JWT_SECRET` | HS256 signing key — **32 bytes minimum**, shorter is refused |
 | `APP_JWT_COOKIE_SECURE` | `false` for local HTTP |
+
+`APP_DB_SSL_MODE` defaults to `disabled`, which is the right answer for a
+database on `127.0.0.1` or a private subnet and the wrong one for every managed
+provider, since they refuse plaintext outright. `required` encrypts without
+validating the certificate, so it defeats a passive listener and not an active
+one; `verify_ca` additionally requires `APP_DB_SSL_CA`.
+
+Verified against MariaDB 11 started with `--require-secure-transport=ON` and a
+self-signed certificate, driving the real pool under the coroutine hook:
+
+| Mode | Result |
+|---|---|
+| `disabled` | rejected — *"Connections using insecure transport are prohibited"* |
+| `required` | connects, `Ssl_cipher=TLS_AES_256_GCM_SHA384` |
+| `verify_ca`, `APP_DB_SSL_VERIFY_CN=false` | connects, same cipher |
+| `verify_ca`, `APP_DB_SSL_VERIFY_CN=true` | rejected — the certificate does not chain to the CA |
+
+The last two rows are what prove the attributes reach the driver at all, which
+was the open question: OpenSwoole's coroutine `PDOConfig` honours
+`PDO::MYSQL_ATTR_SSL_*`, and a wrong CA fails loudly rather than downgrading.
+
+One trap is recorded in `PDOConfigFactory::sslOptions()` and worth repeating:
+`MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false` **alone does not start a
+handshake**. It only decides what happens to a certificate once one arrives, so
+`required` also sets `MYSQL_ATTR_SSL_CIPHER`. Without it the connection goes out
+in plaintext, which against a server that permits plaintext is silent.
 
 The Dockerfile writes `variables_order=EGPCS` into a php.ini fragment, because
 the boot config reads `$_ENV` and without that setting Docker's `-e` values

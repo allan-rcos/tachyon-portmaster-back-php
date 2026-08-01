@@ -134,11 +134,15 @@ A configuração é **inteiramente por variáveis de ambiente** — a mesma imag
 | `APP_HOST`, `APP_PORT` | endereço de escuta |
 | `APP_WORKER_NUM` | processos worker (4 em dev) |
 | `APP_DB_HOST`, `APP_DB_PORT`, `APP_DB_NAME`, `APP_DB_USER`, `APP_DB_PASSWORD` | banco |
+| `APP_DB_SSL_MODE` | `disabled` (padrão), `required` ou `verify_ca` |
+| `APP_DB_SSL_CA`, `APP_DB_SSL_VERIFY_CN` | bundle da CA e checagem do nome — só lidos em `verify_ca` |
 | `APP_JWT_SECRET` | chave de assinatura HS256 — **mínimo de 32 bytes**, o boot recusa menos |
 | `APP_JWT_TTL`, `APP_REFRESH_TTL` | validade do token e do refresh |
 | `APP_JWT_COOKIE_SECURE` | `false` em HTTP local, `true` atrás de HTTPS |
 
 > **Em produção**, troque `APP_JWT_SECRET` por um valor aleatório forte e ligue `APP_JWT_COOKIE_SECURE`.
+
+> **Sobre `APP_DB_SSL_MODE`.** O padrão `disabled` é a resposta certa para um banco em `127.0.0.1` ou numa subnet privada — e a errada para qualquer banco gerenciado, que recusa conexão em claro. `required` criptografa sem validar o certificado: resolve escuta passiva, não ataque ativo. `verify_ca` exige `APP_DB_SSL_CA` e valida a cadeia — medido contra um MariaDB 11 com `--require-secure-transport=ON`, ele recusa um certificado que não fecha com a CA configurada em vez de cair para texto claro. Detalhes e a tabela do teste em [`docs/infrastructure.md`](docs/infrastructure.md).
 
 ```bash
 php src/API/main.php

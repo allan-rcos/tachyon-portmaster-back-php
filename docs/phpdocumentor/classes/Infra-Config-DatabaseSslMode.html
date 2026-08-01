@@ -154,7 +154,7 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
-                <a href="namespaces/infra-config.html" class="-active">Config</a>
+                <a href="namespaces/infra-config.html" class="">Config</a>
                 
             </li>
                     <li>
@@ -219,51 +219,247 @@
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/infra.html">Infra</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/infra-config.html">Config</a></li>
     </ul>
 
-    <article class="phpdocumentor-element -namespace">
-        <h2 class="phpdocumentor-content__title">Config</h2>
+    <article class="phpdocumentor-element -class">
+        <h2 class="phpdocumentor-content__title">
+    DatabaseSslMode
+
+            <span class="phpdocumentor-element__extends">
+        : string
+    </span>
+    
+            <div class="phpdocumentor-element__package">
+            in package
+            <ul class="phpdocumentor-breadcrumbs">
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Portmaster.html">Portmaster</a></li>
+                            </ul>
+        </div>
+    
+    
+    </h2>
+
+        <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Config/DatabaseSslMode.php"><a href="files/src-infra-config-databasesslmode.html"><abbr title="src/Infra/Config/DatabaseSslMode.php">DatabaseSslMode.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">39</span>
+
+            <a href="classes/Infra-Config-DatabaseSslMode.html#source-view.39" class="phpdocumentor-element-found-in__source" data-line="39" data-modal="source-view" data-src="files/src/Infra/Config/DatabaseSslMode.php.txt"></a>
+    </aside>
+
+            <p class="phpdocumentor-summary">How the connection to the database is protected.</p>
+
+        
+            <section class="phpdocumentor-description"><p>Three cases rather than a boolean, because &quot;the traffic is encrypted&quot; and
+&quot;the server is who it claims to be&quot; are different guarantees, bought
+separately: encryption alone stops a passive listener, and only the
+certificate check stops an active one.</p>
+<p>Ordered from least to most strict, as declared. The default is
+<abbr title="\Infra\Config\self::DISABLED">self::DISABLED</abbr>, which is the right answer for a database on
+<code class="prettyprint">127.0.0.1</code> or on a private subnet — and the wrong one for every managed
+provider, since they refuse a connection in the clear outright.</p>
+</section>
+
+        
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Infra-Config-DatabaseSslMode.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">see</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Infra-Config-DatabaseConfig.html"><abbr title="\Infra\Config\DatabaseConfig">DatabaseConfig</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>What carries the chosen mode.</p>
+</section>
+
+                                    </dd>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Infra\Database\Pool\Interno\PDOConfigFactory">PDOConfigFactory</abbr></span>
+                                                                    <section class="phpdocumentor-description"><p>What turns it into PDO
+attributes.</p>
+</section>
+
+                                    </dd>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Infra-Config-ServerConfigLogLevel.html"><abbr title="\Infra\Config\ServerConfigLogLevel">ServerConfigLogLevel</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>The same pattern, for logging.</p>
+</section>
+
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">license</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                            <section class="phpdocumentor-description"><p><a href="https://opensource.org/licenses/MIT">MIT</a></p>
+</section>
+
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">copyright</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                            <section class="phpdocumentor-description"><p>2026 Tachyon</p>
+</section>
+
+                                    </dd>
+                        </dl>
+
 
         
 <h3 id="toc">
     Table of Contents
-    <a href="namespaces/infra-config.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Infra-Config-DatabaseSslMode.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
 
 
 
-    <h4 id="toc-classes">
-        Classes
-        <a href="namespaces/infra-config.html#toc-classes" class="headerlink"><i class="fas fa-link"></i></a>
+
+
+
+
+<h4 id="toc-cases">
+    Cases
+    <a href="classes/Infra-Config-DatabaseSslMode.html#toc-cases" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -case -">
+    <a class="" href="classes/Infra-Config-DatabaseSslMode.html#enumcase_DISABLED">DISABLED</a>
+    <span>
+                &nbsp;= &#039;disabled&#039;                    </span>
+</dt>
+<dd>No TLS — the connection is in the clear. The default, and the
+behaviour of every release before this setting existed.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -case -">
+    <a class="" href="classes/Infra-Config-DatabaseSslMode.html#enumcase_REQUIRED">REQUIRED</a>
+    <span>
+                &nbsp;= &#039;required&#039;                    </span>
+</dt>
+<dd>Encrypt, but accept whatever certificate the server presents. Defeats
+a passive listener, not an active one.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -case -">
+    <a class="" href="classes/Infra-Config-DatabaseSslMode.html#enumcase_VERIFY_CA">VERIFY_CA</a>
+    <span>
+                &nbsp;= &#039;verify_ca&#039;                    </span>
+</dt>
+<dd>Encrypt and validate the server certificate against the configured CA
+bundle. What a managed provider expects.</dd>
+
+    </dl>
+
+
+
+
+
+            <section class="phpdocumentor-cases">
+        <h3 class="phpdocumentor-elements__header" id="cases">
+            Cases
+            <a href="classes/Infra-Config-DatabaseSslMode.html#cases" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -enum-case
+        "
+>
+    <h4 class="phpdocumentor-element__name" id="enumcase_DISABLED">
+        DISABLED
+        <a href="classes/Infra-Config-DatabaseSslMode.html#enumcase_DISABLED" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
-    <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Infra-Config-DatabaseConfig.html"><abbr title="\Infra\Config\DatabaseConfig">DatabaseConfig</abbr></a></dt><dd>Database connection and pool settings.</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Infra-Config-LogConfig.html"><abbr title="\Infra\Config\LogConfig">LogConfig</abbr></a></dt><dd>Logging configuration value object.</dd>    </dl>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Config/DatabaseSslMode.php"><a href="files/src-infra-config-databasesslmode.html"><abbr title="src/Infra/Config/DatabaseSslMode.php">DatabaseSslMode.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
+            <a href="classes/Infra-Config-DatabaseSslMode.html#source-view.45" class="phpdocumentor-element-found-in__source" data-line="45" data-modal="source-view" data-src="files/src/Infra/Config/DatabaseSslMode.php.txt"></a>
+    </aside>
 
-    <h4 id="toc-enums">
-        Enums
-        <a href="namespaces/infra-config.html#toc-enums" class="headerlink"><i class="fas fa-link"></i></a>
+        <p class="phpdocumentor-summary">No TLS — the connection is in the clear. The default, and the
+behaviour of every release before this setting existed.</p>
 
-    </h4>
-    <dl class="phpdocumentor-table-of-contents">
-            <dt class="phpdocumentor-table-of-contents__entry -enum"><a href="classes/Infra-Config-DatabaseSslMode.html"><abbr title="\Infra\Config\DatabaseSslMode">DatabaseSslMode</abbr></a></dt><dd>How the connection to the database is protected.</dd>        <dt class="phpdocumentor-table-of-contents__entry -enum"><a href="classes/Infra-Config-ServerConfigLogLevel.html"><abbr title="\Infra\Config\ServerConfigLogLevel">ServerConfigLogLevel</abbr></a></dt><dd>The log levels the application can be configured to.</dd></dl>
-
-
-
-
-
+    
+    
+    
+    
 
         
+    </article>
+                    <article
+        class="
+            phpdocumentor-element
+            -enum-case
+        "
+>
+    <h4 class="phpdocumentor-element__name" id="enumcase_REQUIRED">
+        REQUIRED
+        <a href="classes/Infra-Config-DatabaseSslMode.html#enumcase_REQUIRED" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Config/DatabaseSslMode.php"><a href="files/src-infra-config-databasesslmode.html"><abbr title="src/Infra/Config/DatabaseSslMode.php">DatabaseSslMode.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">51</span>
+
+            <a href="classes/Infra-Config-DatabaseSslMode.html#source-view.51" class="phpdocumentor-element-found-in__source" data-line="51" data-modal="source-view" data-src="files/src/Infra/Config/DatabaseSslMode.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">Encrypt, but accept whatever certificate the server presents. Defeats
+a passive listener, not an active one.</p>
+
+    
+    
+    
+    
+
+        
+    </article>
+                    <article
+        class="
+            phpdocumentor-element
+            -enum-case
+        "
+>
+    <h4 class="phpdocumentor-element__name" id="enumcase_VERIFY_CA">
+        VERIFY_CA
+        <a href="classes/Infra-Config-DatabaseSslMode.html#enumcase_VERIFY_CA" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Config/DatabaseSslMode.php"><a href="files/src-infra-config-databasesslmode.html"><abbr title="src/Infra/Config/DatabaseSslMode.php">DatabaseSslMode.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">57</span>
+
+            <a href="classes/Infra-Config-DatabaseSslMode.html#source-view.57" class="phpdocumentor-element-found-in__source" data-line="57" data-modal="source-view" data-src="files/src/Infra/Config/DatabaseSslMode.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">Encrypt and validate the server certificate against the configured CA
+bundle. What a managed provider expects.</p>
+
+    
+    
+    
+    
+
+        
+    </article>
+            </section>
 
         
         <div class="phpdocumentor-modal" id="source-view">
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Infra/Config/DatabaseSslMode.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -364,11 +560,17 @@
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                                                                    <li><a href="namespaces/infra-config.html#toc-classes">Classes</a></li>
-                                                                                <li><a href="namespaces/infra-config.html#toc-enums">Enums</a></li>
-                                                                            </ul>
+                                            <li><a href="classes/Infra-Config-DatabaseSslMode.html#toc-cases">Cases</a></li>
+                                                        </ul>
             </li>
-
+                            <li class="phpdocumentor-on-this-page-section__title">Cases</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Infra-Config-DatabaseSslMode.html#enumcase_DISABLED">DISABLED</a></li>
+                                                    <li class=""><a href="classes/Infra-Config-DatabaseSslMode.html#enumcase_REQUIRED">REQUIRED</a></li>
+                                                    <li class=""><a href="classes/Infra-Config-DatabaseSslMode.html#enumcase_VERIFY_CA">VERIFY_CA</a></li>
+                                            </ul>
+                </li>
             
                     </ul>
     </section>
@@ -387,7 +589,7 @@
     </section>
 </section>
         </div>
-        <a href="namespaces/infra-config.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Infra-Config-DatabaseSslMode.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

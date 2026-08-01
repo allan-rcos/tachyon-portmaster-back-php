@@ -19,6 +19,7 @@ use API\Bootstrap\BootDraft;
 use API\Bootstrap\DotEnvVariables;
 use API\Bootstrap\EnvSource;
 use Infra\Config\DatabaseConfig;
+use Infra\Config\DatabaseSslMode;
 
 /**
  * Reads the connection and pool variables into a {@see DatabaseConfig}.
@@ -31,7 +32,7 @@ use Infra\Config\DatabaseConfig;
 final class DatabaseChain extends DotEnvChain
 {
     /**
-     * Fills the draft's `database` slot from the ten `APP_DB_*` variables.
+     * Fills the draft's `database` slot from the thirteen `APP_DB_*` variables.
      *
      * @param  EnvSource  $env  Reader over the loaded environment.
      * @param  BootDraft  $draft  Accumulator to write the database group into.
@@ -53,6 +54,13 @@ final class DatabaseChain extends DotEnvChain
             poolTimeout: $env->float(DotEnvVariables::APP_DB_POOL_TIMEOUT, $defaults->poolTimeout),
             maxLeaseTime: $env->float(DotEnvVariables::APP_DB_MAX_LEASE, $defaults->maxLeaseTime),
             maxIdleTime: $env->float(DotEnvVariables::APP_DB_MAX_IDLE, $defaults->maxIdleTime),
+            sslMode: $env->enum(
+                DotEnvVariables::APP_DB_SSL_MODE,
+                DatabaseSslMode::class,
+                $defaults->sslMode,
+            ),
+            sslCa: $env->string(DotEnvVariables::APP_DB_SSL_CA, $defaults->sslCa),
+            sslVerifyCn: $env->bool(DotEnvVariables::APP_DB_SSL_VERIFY_CN, $defaults->sslVerifyCn),
         );
     }
 }
