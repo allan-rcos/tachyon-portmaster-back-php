@@ -11,6 +11,7 @@ paths from their own location, so they work from anywhere.
 | [`generate-phpstan-baseline.php`](generate-phpstan-baseline.php) | generated code changed and PHPStan now complains about it | — |
 | [`integration-test.sh`](integration-test.sh) | running the Go suite | Docker, Go 1.25 |
 | [`generate-docs.sh`](generate-docs.sh) | rendering the API documentation | `phpdoc` **or** Docker |
+| [`build-dist.sh`](build-dist.sh) | building the production artifact | `composer`, `php`, `zstd`, `tar` |
 
 ## FlatBuffers
 
@@ -88,6 +89,43 @@ not end up owned by root. Override with `PHPDOC` or `PHPDOC_IMAGE`.
 phpDocumentor is not a composer dependency on purpose — its Twig and Symfony
 constraints conflict with what the application and PHPStan pin, which is why
 upstream ships a PHAR and an image.
+
+## Release
+
+```bash
+scripts/build-dist.sh              # version from `git describe`
+scripts/build-dist.sh 1.0.0        # or given explicitly
+```
+
+Two tarballs land in `dist/`, each with a `.sha256`:
+
+| Artifact | Holds | Applied by |
+|---|---|---|
+| `portmaster-api-<version>-linux-x86_64.tar.zst` | `src/` + `vendor/`, minified | the server |
+| `portmaster-migrations-<version>.tar.zst` | `db/migrations` and `db/seeds` | a developer, against the database |
+
+They are separate on purpose. The box running the API is the one least entitled
+to change the schema, so the migrations never travel with it.
+
+Measured at 1.0.0: `src/` 1.3 MB → 491 KB, `vendor/` 14.2 MB → 5.4 MB across 772
+minified files, for a 982 KB API tarball and a 5.5 KB migrations tarball.
+
+**Nothing is built in the working copy.** Composer runs with `--working-dir`
+against a staging tree that already holds `src/`, `composer.json` and
+`composer.lock`, so `--no-dev` never reaches the developer's `vendor/` — the
+obvious version of this script deletes PHPStan, Pest and Mockery from whoever
+runs it. `ext-openswoole` is skipped with `--ignore-platform-req` because it is
+a runtime requirement and the build machine does not run the API.
+
+**Why `php -w` is safe here.** It strips comments and whitespace while
+preserving semantics, which only holds while nothing is driven by annotation.
+That is true today — no `getDocComment`, no `ReflectionClass` in `src/`, and the
+only `__DIR__` is the autoload `require` in `src/API/main.php`. The script
+re-checks it on every build and fails if it stops being true, rather than
+letting the API boot in production with an attribute that quietly vanished.
+
+Publishing is [`.github/workflows/release.yml`](../.github/workflows/release.yml):
+a tag `v*` builds and publishes, a push to `main` builds and stops.
 
 ## Adding a script
 

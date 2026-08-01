@@ -1,7 +1,8 @@
 # `.github/`
 
-Continuous integration. One workflow, [`workflows/ci.yml`](workflows/ci.yml),
-on every push and pull request.
+Two workflows: [`workflows/ci.yml`](workflows/ci.yml) checks what lands on main,
+and [`workflows/release.yml`](workflows/release.yml) builds the production
+artifact.
 
 ## Jobs
 
@@ -41,6 +42,37 @@ and the tests. If it fires, run the script locally and commit the result.
 `flatc` is pinned to `25.12.19`. Bump it in lockstep with the `google/flatbuffers`
 constraint in `composer.json`, or the two sides generate from different
 compilers.
+
+## Release
+
+`workflows/release.yml`, one job, in an `alpine:3.22` container so the build
+matches the musl of the target. It runs `scripts/build-dist.sh` and nothing else
+— anything CI does here, a developer can do with the same command.
+
+**Two triggers, one job.** A tag `v*` builds *and* publishes; a push to `main`
+builds and stops. The second trigger is the point: without it the artifact would
+only ever be assembled on release day, which is the worst day to find out that
+assembling it is broken.
+
+**`permissions: contents: write`.** `softprops/action-gh-release@v2` authenticates
+with the automatic `GITHUB_TOKEN`, so **no repository secret is involved** — but
+that token is read-only by default and the publish step 403s without this line.
+A secret only enters the picture if the release is ever published to a different
+repository than the one running the workflow.
+
+**No `submodules: recursive`**, unlike all three CI jobs. This workflow generates
+nothing from the schemas; `src/API/Fbs/` is committed. It does need
+`fetch-depth: 0`, so `git describe` can name an untagged build.
+
+Three things about the Alpine image are load-bearing and each reads as an
+unrelated fault when missing: its `composer` package is wired to php83 (hence the
+official `composer.phar` under php84), `php84` ships no `openssl` extension
+(hence `php84-openssl`, without which every HTTPS download from inside PHP dies
+with *"Unable to find the socket transport ssl"*), and `bash` is not installed at
+all (the scripts here are bash, and busybox `sh` has no `set -o pipefail`).
+
+To cut a release: bump `version` in `composer.json` and `VERSION` in
+`ServerController`, then tag. There is no secret to configure first.
 
 ## Submodules
 

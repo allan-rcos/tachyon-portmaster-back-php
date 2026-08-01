@@ -475,4 +475,9 @@ composer.phar
 ##### Generated
 var/
 
+# Release artifacts from scripts/build-dist.sh. Also matched by the Emacs
+# section far above, which is an accident of a template rather than a decision —
+# stated here so deleting that section does not start committing tarballs.
+dist/
+
 .claude
