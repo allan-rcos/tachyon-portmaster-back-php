@@ -93,7 +93,7 @@ upstream ships a PHAR and an image.
 ## Release
 
 ```bash
-scripts/build-dist.sh              # version from `git describe`
+scripts/build-dist.sh              # version from `version` in composer.json
 scripts/build-dist.sh 1.0.0        # or given explicitly
 ```
 
@@ -124,8 +124,12 @@ only `__DIR__` is the autoload `require` in `src/API/main.php`. The script
 re-checks it on every build and fails if it stops being true, rather than
 letting the API boot in production with an attribute that quietly vanished.
 
-Publishing is [`.github/workflows/release.yml`](../.github/workflows/release.yml):
-a tag `v*` builds and publishes, a push to `main` builds and stops.
+Publishing is [`.github/workflows/release.yml`](../.github/workflows/release.yml),
+and it hangs off the same field: every push to `main` builds, and the build is
+published only when no `v<version>` tag exists yet. Bumping `version` in
+`composer.json` is what cuts a release; leaving it alone is what keeps an
+existing one untouched. The script itself decides nothing about that — it builds
+whatever version it is given, or the one it reads.
 
 ## Adding a script
 

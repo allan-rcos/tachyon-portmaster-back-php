@@ -49,10 +49,19 @@ compilers.
 matches the musl of the target. It runs `scripts/build-dist.sh` and nothing else
 — anything CI does here, a developer can do with the same command.
 
-**Two triggers, one job.** A tag `v*` builds *and* publishes; a push to `main`
-builds and stops. The second trigger is the point: without it the artifact would
-only ever be assembled on release day, which is the worst day to find out that
-assembling it is broken.
+**The version decides, not the trigger.** Every push to `main` builds — the
+build has to be exercised on ordinary days, because release day is the worst one
+to find out that assembling it is broken. Whether that build is *published* is
+decided by `version` in `composer.json`: a version with no `v<version>` tag yet
+cuts the release and creates the tag on that commit; a version already released
+stops after proving the build still works. Pushing a tag by hand still publishes
+that tag.
+
+The test is **"no such tag exists"**, not "`composer.json` changed in this push".
+On the ordinary path the two agree, and the first keeps being right across a
+re-run, a batch of commits landing at once, or a rewritten history — and it is
+what guarantees an existing release is never replaced. `concurrency` covers the
+remaining hole, two pushes landing together and both finding the tag missing.
 
 **`permissions: contents: write`.** `softprops/action-gh-release@v2` authenticates
 with the automatic `GITHUB_TOKEN`, so **no repository secret is involved** — but
@@ -61,8 +70,10 @@ A secret only enters the picture if the release is ever published to a different
 repository than the one running the workflow.
 
 **No `submodules: recursive`**, unlike all three CI jobs. This workflow generates
-nothing from the schemas; `src/API/Fbs/` is committed. It does need
-`fetch-depth: 0`, so `git describe` can name an untagged build.
+nothing from the schemas; `src/API/Fbs/` is committed. The shallow default
+checkout is also enough: nothing reads history, and whether a tag exists is
+asked of the remote with `git ls-remote` rather than of the local clone, so the
+answer is what is actually published.
 
 Three things about the Alpine image are load-bearing and each reads as an
 unrelated fault when missing: its `composer` package is wired to php83 (hence the
@@ -72,7 +83,8 @@ with *"Unable to find the socket transport ssl"*), and `bash` is not installed a
 all (the scripts here are bash, and busybox `sh` has no `set -o pipefail`).
 
 To cut a release: bump `version` in `composer.json` and `VERSION` in
-`ServerController`, then tag. There is no secret to configure first.
+`ServerController`, and push to `main`. The tag and the release are made for
+you; there is no secret to configure first.
 
 ## Submodules
 

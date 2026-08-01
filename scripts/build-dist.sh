@@ -34,7 +34,9 @@
 #
 # Usage: scripts/build-dist.sh [version]
 #
-# Without an argument the version is derived from `git describe`.
+# Without an argument the version is read from `version` in composer.json, which
+# is where it is declared — the same field the running API reports. Passing one
+# overrides it, which is what building from a tag does.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -49,7 +51,8 @@ cd "$ROOT"
 
 VERSION="${1:-}"
 if [ -z "$VERSION" ]; then
-    VERSION="$(git describe --tags --always --dirty 2>/dev/null || echo dev)"
+    VERSION="$(php -r 'echo json_decode(file_get_contents("composer.json"), true)["version"] ?? "";')"
+    [ -n "$VERSION" ] || { echo "composer.json declares no version" >&2; exit 1; }
 fi
 VERSION="${VERSION#v}"
 

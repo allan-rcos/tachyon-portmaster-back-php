@@ -1,13 +1,27 @@
 name: Release
 
-# Two triggers, one job, on purpose. A tag publishes; a push to main runs the
-# very same build as a *check* and stops before publishing. Without that second
-# trigger the artifact would only ever be assembled on the day of a release,
-# which is the worst day to discover that assembling it is broken.
+# One job, and what it does depends on the version rather than on ceremony.
+#
+# Every push to main builds the artifact — the build has to be exercised on
+# ordinary days, because release day is the worst one to discover that
+# assembling it is broken. Whether that build is also *published* is decided by
+# `version` in composer.json: if no tag `v<version>` exists yet, this run cuts
+# the release and creates the tag; if one exists, the build stops after proving
+# it still works. Pushing a tag by hand keeps working and publishes that tag.
+#
+# The condition is "the tag does not exist yet", not "composer.json changed in
+# this push". They agree on the normal path, and the first one keeps being right
+# when a run is retried, when several commits land at once, or when history is
+# rewritten — and it is what makes a release never overwrite an existing one.
 on:
   push:
     tags: ["v*"]
     branches: [main]
+
+# Two pushes landing together must not both decide the tag is missing and race
+# to create it.
+concurrency:
+  group: release-${{ github.ref }}
 
 jobs:
   artifact:
@@ -47,20 +61,55 @@ jobs:
 
       # No `submodules: recursive` here, unlike every job in ci.yml: this
       # workflow generates nothing from the schemas — src/API/Fbs/ is committed.
-      # fetch-depth: 0 is what `git describe` needs to name an untagged build.
+      # The default shallow checkout is enough: nothing here reads history, and
+      # the tag question is asked of the remote below.
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Trust the workspace
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
-      - name: Build
-        run: scripts/build-dist.sh "${GITHUB_REF_NAME#v}"
+      # The version is declared in composer.json and read from there by
+      # scripts/build-dist.sh; this only asks the same field the same way, to
+      # find out whether that version has been released already. `git ls-remote`
+      # rather than a local tag list, so the answer is what is actually
+      # published and not what this checkout happens to have fetched.
+      - name: Decide the version and whether it is new
+        id: version
+        run: |
+          if [ "$GITHUB_REF_TYPE" = tag ]; then
+            version="${GITHUB_REF_NAME#v}"
+            publish=true
+            echo "building tag $GITHUB_REF_NAME"
+          else
+            version="$(php -r 'echo json_decode(file_get_contents("composer.json"), true)["version"] ?? "";')"
+            [ -n "$version" ] || { echo "composer.json declares no version" >&2; exit 1; }
+            if git ls-remote --exit-code --tags origin "refs/tags/v${version}" >/dev/null 2>&1; then
+              publish=false
+              echo "v${version} is already released — building as a check, publishing nothing"
+            else
+              publish=true
+              echo "v${version} has no tag yet — this build publishes it"
+            fi
+          fi
+          {
+            echo "version=${version}"
+            echo "tag=v${version}"
+            echo "publish=${publish}"
+          } >> "$GITHUB_OUTPUT"
 
-      - if: startsWith(github.ref, 'refs/tags/v')
+      - name: Build
+        run: scripts/build-dist.sh "${{ steps.version.outputs.version }}"
+
+      # tag_name creates the tag on this commit when it does not exist, so
+      # cutting a release is a change to composer.json and nothing else. The
+      # step is skipped outright when the version is already out, which is what
+      # keeps a published release from ever being overwritten.
+      - if: steps.version.outputs.publish == 'true'
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: ${{ steps.version.outputs.tag }}
+          generate_release_notes: true
           files: |
             dist/*.tar.zst
             dist/*.tar.zst.sha256
