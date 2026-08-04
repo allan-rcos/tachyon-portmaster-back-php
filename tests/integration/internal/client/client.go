@@ -15,9 +15,20 @@ import (
 
 const contentType = "application/x-flatbuffers"
 
+// The two halves of what sits between the base URL and a path, mirroring the
+// back end: apiPrefix is where the whole API is mounted (empty — it is the root
+// of the process), apiVersion is the contract version. Applied here, once, so
+// the paths in the tests and factories read exactly as they do in swagger.json,
+// which lists them relative to a server base that already ends in /v1.
+const (
+	apiPrefix  = ""
+	apiVersion = "/v1"
+)
+
 // Client drives one API environment over the FlatBuffers wire.
 type Client struct {
 	baseURL string
+	prefix  string
 	http    *http.Client
 }
 
@@ -27,12 +38,27 @@ type Response struct {
 	Body   []byte
 }
 
-// New returns a client for the given base URL with its own cookie jar.
+// New returns a client for the given base URL with its own cookie jar. It asks
+// for the current contract version explicitly, which is what a real client
+// should do.
 func New(baseURL string) *Client {
 	jar, _ := cookiejar.New(nil)
 	return &Client{
 		baseURL: baseURL,
+		prefix:  apiPrefix + apiVersion,
 		http:    &http.Client{Jar: jar, Timeout: 20 * time.Second},
+	}
+}
+
+// Unversioned returns a view of the same session that drops the version from the
+// path, for exercising the router's root alias. It shares the http client, and
+// therefore the cookie jar: a session logged in through one is logged in through
+// the other.
+func (c *Client) Unversioned() *Client {
+	return &Client{
+		baseURL: c.baseURL,
+		prefix:  apiPrefix,
+		http:    c.http,
 	}
 }
 
@@ -44,7 +70,7 @@ func (c *Client) do(t *testing.T, method, path string, body []byte) Response {
 		reader = bytes.NewReader(body)
 	}
 
-	req, err := http.NewRequest(method, c.baseURL+path, reader)
+	req, err := http.NewRequest(method, c.baseURL+c.prefix+path, reader)
 	if err != nil {
 		t.Fatalf("build request %s %s: %v", method, path, err)
 	}

@@ -48,7 +48,7 @@ use API\Http\Middleware\LoggingMiddleware;
 use API\Http\Middleware\RecovererMiddleware;
 use API\Http\Middleware\RequestIdMiddleware;
 use API\Http\Middleware\RouteDispatchMiddleware;
-use API\Http\Routes;
+use API\Http\Router\RouterHub;
 use API\IApiProvider;
 use App\IAppProvider;
 use OpenSwoole\Core\Psr\Middleware\StackHandler;
@@ -185,7 +185,7 @@ final class ApiProvider implements IApiProvider
             new LoggingMiddleware($logger),
             new FlatBufferNegotiationMiddleware($logger),
             new AuthenticationMiddleware($this->tokenService(), $this->authCookie(), $logger),
-            new RouteDispatchMiddleware(Routes::dispatcher(), $controllers),
+            new RouteDispatchMiddleware(RouterHub::dispatcher(), $controllers),
         );
     }
 

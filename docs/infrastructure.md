@@ -90,7 +90,7 @@ docker compose logs -f app
 Bootstrapping a fresh stack:
 
 ```bash
-curl -X POST localhost:8000/setup -H 'Content-Type: application/json' \
+curl -X POST localhost:8000/v1/setup -H 'Content-Type: application/json' \
      -d '{"name":"Admin","email":"admin@portmaster.local","password":"Portmaster1"}'
 ```
 

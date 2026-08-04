@@ -68,6 +68,10 @@ O desenho completo, com os porquês, está em [`docs/architecture.md`](docs/arch
 
 ## 🌐 Endpoints
 
+Toda a tabela é servida sob **`/v1`** — o prefixo é a versão do contrato e não aparece nas células abaixo pelo mesmo motivo que não aparece nos `paths` do `swagger.json`: ali ele está no `servers`, aqui está nesta frase. `GET /info` atende, na prática, em `/v1/info`.
+
+As mesmas rotas também atendem **sem prefixo**, e cada uma resolve para a versão mais recente que a publica — decisão por rota, não por tabela: uma rota que a v2 tenha deixado cair continua respondendo pela v1. É conveniência de depuração, não contrato: o destino da raiz muda no dia em que sai uma versão nova, então cliente de verdade fixa a versão, que é o que o front faz e o que o `servers` do swagger manda fazer.
+
 | Domínio | Rotas |
 |---|---|
 | **Servidor** | `GET /info` |
@@ -157,7 +161,7 @@ php src/API/main.php
 Não existe usuário semeado — o primeiro administrador nasce de uma chamada explícita, que se recusa com `409` a partir da segunda. O papel criado aí recebe **todas** as permissões registradas pelos casos de uso.
 
 ```bash
-curl -X POST localhost:8000/setup -H 'Content-Type: application/json' \
+curl -X POST localhost:8000/v1/setup -H 'Content-Type: application/json' \
      -d '{"name":"Admin","email":"admin@portmaster.local","password":"Portmaster1"}'
 ```
 
@@ -166,7 +170,7 @@ curl -X POST localhost:8000/setup -H 'Content-Type: application/json' \
 O login devolve os cookies de sessão; guarde-os num *cookie jar*.
 
 ```bash
-curl -c jar.txt -X POST localhost:8000/auth/login \
+curl -c jar.txt -X POST localhost:8000/v1/auth/login \
      -H 'Content-Type: application/json' \
      -d '{"email":"admin@portmaster.local","password":"Portmaster1"}'
 ```
@@ -175,12 +179,12 @@ curl -c jar.txt -X POST localhost:8000/auth/login \
 
 ```bash
 # JSON, por negociação de conteúdo
-curl -b jar.txt localhost:8000/products -H 'Accept: application/json'
+curl -b jar.txt localhost:8000/v1/products -H 'Accept: application/json'
 
 # FlatBuffers binário — o formato nativo
-curl -b jar.txt localhost:8000/products -H 'Accept: application/octet-stream' --output products.fb
+curl -b jar.txt localhost:8000/v1/products -H 'Accept: application/octet-stream' --output products.fb
 
-curl localhost:8000/info
+curl localhost:8000/v1/info
 docker compose logs -f app
 ```
 

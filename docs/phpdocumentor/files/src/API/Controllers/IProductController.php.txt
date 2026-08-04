@@ -32,7 +32,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * contract's — see {@see \App\Services\IListProductsUseCase} and its siblings.
  *
  * @see \API\Controllers\Interno\ProductController The implementation.
- * @see \API\Http\Routes Where these methods are bound to paths.
+ * @see \API\Http\Router\IVersionedRouter Where these methods are bound to paths.
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon

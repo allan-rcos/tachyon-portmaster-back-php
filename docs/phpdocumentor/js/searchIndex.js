@@ -3726,20 +3726,105 @@ Search.appendIndex(
             "summary": "Re\u002Dapplies\u0020a\u0020\u0060Set\u002DCookie\u0060\u0020value\u0020through\u0020\u0060rawcookie\u0028\u0029\u0060.",
             "url": "classes/API-Http-ResponseEmitter.html#method_emitCookie"
         },                {
-            "fqsen": "\\API\\Http\\Routes",
-            "name": "Routes",
-            "summary": "The\u0020REST\u0020route\u0020table.\u0020Routes\u0020map\u0020to\u0020a\u0020\u0060\u005BControllerInterface\u003A\u003Aclass,\u0020\u0027method\u0027\u005D\u0060\npair\u003B\u0020\u007B\u0040see\u0020\\API\\Http\\Middleware\\RouteDispatchMiddleware\u007D\u0020resolves\u0020the\ncontroller\u0020from\u0020the\u0020\u007B\u0040see\u0020\\API\\Interno\\ApiProvider\u007D\u0020registry.\u0020Path\u0020ids\u0020are\n\u002A\u002Abase62\u002A\u002A\u0020strings\u0020\u0028\u0060\u005BA\u002DZa\u002Dz0\u002D9\u005D\u002B\u0060\u0029,\u0020not\u0020numeric\u0020\u2014\u0020ids\u0020travel\u0020opaque\u0020end\u0020to\u0020end.",
-            "url": "classes/API-Http-Routes.html"
+            "fqsen": "\\API\\Http\\Router\\Interno\\V1Router",
+            "name": "V1Router",
+            "summary": "The\u0020first\u0020published\u0020version\u0020of\u0020the\u0020REST\u0020contract,\u0020mounted\u0020under\u0020\u0060\/v1\u0060.",
+            "url": "classes/API-Http-Router-Interno-V1Router.html"
         },                {
-            "fqsen": "\\API\\Http\\Routes\u003A\u003Adispatcher\u0028\u0029",
-            "name": "dispatcher",
-            "summary": "Builds\u0020the\u0020dispatcher\u0020over\u0020the\u0020whole\u0020route\u0020table.",
-            "url": "classes/API-Http-Routes.html#method_dispatcher"
+            "fqsen": "\\API\\Http\\Router\\Interno\\V1Router\u003A\u003AgetVersion\u0028\u0029",
+            "name": "getVersion",
+            "summary": "This\u0020version\u0027s\u0020number,\u0020as\u0020a\u0020literal.",
+            "url": "classes/API-Http-Router-Interno-V1Router.html#method_getVersion"
         },                {
-            "fqsen": "\\API\\Http\\Routes\u003A\u003AID",
+            "fqsen": "\\API\\Http\\Router\\Interno\\V1Router\u003A\u003Aroutes\u0028\u0029",
+            "name": "routes",
+            "summary": "Every\u0020route\u0020this\u0020version\u0020publishes.",
+            "url": "classes/API-Http-Router-Interno-V1Router.html#method_routes"
+        },                {
+            "fqsen": "\\API\\Http\\Router\\Interno\\V1Router\u003A\u003AID",
             "name": "ID",
             "summary": "The\u0020path\u002Did\u0020placeholder,\u0020base62\u0020rather\u0020than\u0020numeric.",
-            "url": "classes/API-Http-Routes.html#constant_ID"
+            "url": "classes/API-Http-Router-Interno-V1Router.html#constant_ID"
+        },                {
+            "fqsen": "\\API\\Http\\Router\\IVersionedRouter",
+            "name": "IVersionedRouter",
+            "summary": "One\u0020published\u0020version\u0020of\u0020the\u0020REST\u0020contract\u003A\u0020its\u0020number,\u0020and\u0020every\u0020route\u0020it\nserves.",
+            "url": "classes/API-Http-Router-IVersionedRouter.html"
+        },                {
+            "fqsen": "\\API\\Http\\Router\\IVersionedRouter\u003A\u003AgetVersion\u0028\u0029",
+            "name": "getVersion",
+            "summary": "This\u0020version\u0027s\u0020number,\u0020as\u0020a\u0020literal.",
+            "url": "classes/API-Http-Router-IVersionedRouter.html#method_getVersion"
+        },                {
+            "fqsen": "\\API\\Http\\Router\\IVersionedRouter\u003A\u003Aroutes\u0028\u0029",
+            "name": "routes",
+            "summary": "Every\u0020route\u0020this\u0020version\u0020publishes.",
+            "url": "classes/API-Http-Router-IVersionedRouter.html#method_routes"
+        },                {
+            "fqsen": "\\API\\Http\\Router\\Route",
+            "name": "Route",
+            "summary": "One\u0020line\u0020of\u0020a\u0020route\u0020table\u003A\u0020a\u0020method,\u0020a\u0020path,\u0020and\u0020the\u0020controller\u0020entry\u0020point\nthe\u0020pair\u0020resolves\u0020to.",
+            "url": "classes/API-Http-Router-Route.html"
+        },                {
+            "fqsen": "\\API\\Http\\Router\\Route\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/API-Http-Router-Route.html#method___construct"
+        },                {
+            "fqsen": "\\API\\Http\\Router\\Route\u003A\u003Ahash\u0028\u0029",
+            "name": "hash",
+            "summary": "The\u0020identity\u0020of\u0020this\u0020route,\u0020handler\u0020excluded.",
+            "url": "classes/API-Http-Router-Route.html#method_hash"
+        },                {
+            "fqsen": "\\API\\Http\\Router\\Route\u003A\u003Aequals\u0028\u0029",
+            "name": "equals",
+            "summary": "Whether\u0020another\u0020value\u0020addresses\u0020the\u0020same\u0020method\u0020and\u0020path.",
+            "url": "classes/API-Http-Router-Route.html#method_equals"
+        },                {
+            "fqsen": "\\API\\Http\\Router\\Route\u003A\u003A\u0024method",
+            "name": "method",
+            "summary": "",
+            "url": "classes/API-Http-Router-Route.html#property_method"
+        },                {
+            "fqsen": "\\API\\Http\\Router\\Route\u003A\u003A\u0024path",
+            "name": "path",
+            "summary": "",
+            "url": "classes/API-Http-Router-Route.html#property_path"
+        },                {
+            "fqsen": "\\API\\Http\\Router\\Route\u003A\u003A\u0024handler",
+            "name": "handler",
+            "summary": "",
+            "url": "classes/API-Http-Router-Route.html#property_handler"
+        },                {
+            "fqsen": "\\API\\Http\\Router\\RouterHub",
+            "name": "RouterHub",
+            "summary": "Joins\u0020every\u0020published\u0020\u007B\u0040see\u0020IVersionedRouter\u007D\u0020into\u0020one\u0020dispatcher.",
+            "url": "classes/API-Http-Router-RouterHub.html"
+        },                {
+            "fqsen": "\\API\\Http\\Router\\RouterHub\u003A\u003Arouters\u0028\u0029",
+            "name": "routers",
+            "summary": "Every\u0020version\u0020this\u0020build\u0020publishes.",
+            "url": "classes/API-Http-Router-RouterHub.html#method_routers"
+        },                {
+            "fqsen": "\\API\\Http\\Router\\RouterHub\u003A\u003Adispatcher\u0028\u0029",
+            "name": "dispatcher",
+            "summary": "Builds\u0020the\u0020dispatcher\u0020over\u0020every\u0020published\u0020version.",
+            "url": "classes/API-Http-Router-RouterHub.html#method_dispatcher"
+        },                {
+            "fqsen": "\\API\\Http\\Router\\RouterHub\u003A\u003AnewestPerRoute\u0028\u0029",
+            "name": "newestPerRoute",
+            "summary": "The\u0020unversioned\u0020table\u003A\u0020every\u0020route,\u0020on\u0020its\u0020newest\u0020publisher.",
+            "url": "classes/API-Http-Router-RouterHub.html#method_newestPerRoute"
+        },                {
+            "fqsen": "\\API\\Http\\Router\\RouterHub\u003A\u003Arank\u0028\u0029",
+            "name": "rank",
+            "summary": "Indexes\u0020the\u0020routers\u0020by\u0020version\u0020number,\u0020refusing\u0020a\u0020repeated\u0020one.",
+            "url": "classes/API-Http-Router-RouterHub.html#method_rank"
+        },                {
+            "fqsen": "\\API\\Http\\Router\\RouterHub\u003A\u003APREFIX",
+            "name": "PREFIX",
+            "summary": "Where\u0020the\u0020whole\u0020API\u0020hangs,\u0020versions\u0020included.",
+            "url": "classes/API-Http-Router-RouterHub.html#constant_PREFIX"
         },                {
             "fqsen": "\\API\\Http\\Session",
             "name": "Session",
@@ -7375,6 +7460,16 @@ Search.appendIndex(
             "name": "Middleware",
             "summary": "",
             "url": "namespaces/api-http-middleware.html"
+        },                {
+            "fqsen": "\\API\\Http\\Router\\Interno",
+            "name": "Interno",
+            "summary": "",
+            "url": "namespaces/api-http-router-interno.html"
+        },                {
+            "fqsen": "\\API\\Http\\Router",
+            "name": "Router",
+            "summary": "",
+            "url": "namespaces/api-http-router.html"
         },                {
             "fqsen": "\\App",
             "name": "App",

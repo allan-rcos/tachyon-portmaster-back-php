@@ -320,17 +320,23 @@ public function create(ServerRequestInterface $request): ResponseInterface
 }
 ```
 
-**Routes** — `src/API/Http/Routes.php`. Ids are Base62, so use `self::ID`, never
-`\d+`:
+**Routes** — the table of the current contract version, today
+`src/API/Http/Router/Interno/V1Router.php`. Ids are Base62, so use `self::ID`,
+never `\d+`:
 
 ```php
-$r->addRoute('GET',  '/shipments', [IShipmentController::class, 'list']);
-$r->addRoute('POST', '/shipments', [IShipmentController::class, 'create']);
-$r->addRoute('GET',  '/shipments/'.self::ID, [IShipmentController::class, 'get']);
+new Route('GET',  '/shipments', [IShipmentController::class, 'list']),
+new Route('POST', '/shipments', [IShipmentController::class, 'create']),
+new Route('GET',  '/shipments/'.self::ID, [IShipmentController::class, 'get']),
 ```
 
-A literal segment must be registered **before** the `{id}` pattern that would
-also match it — `/containers/summary` before `/containers/{id}`.
+A literal segment must come **before** the `{id}` pattern that would also match
+it — `/containers/summary` before `/containers/{id}`. The set preserves insertion
+order, so the position in the list is the position in the dispatcher.
+
+Nothing else to wire: `RouterHub` mounts every `IVersionedRouter` under its own
+`/v<n>` and serves the same routes unversioned, each resolving to the newest
+version that publishes it. A new endpoint is one line in the table it belongs to.
 
 **Wiring** — add the controller to the registry in
 `src/API/Interno/ApiProvider.php`.

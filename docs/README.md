@@ -32,10 +32,10 @@ reasoning across directories.
 ```bash
 docker compose up -d
 
-curl -X POST localhost:8000/setup -H 'Content-Type: application/json' \
+curl -X POST localhost:8000/v1/setup -H 'Content-Type: application/json' \
      -d '{"name":"Admin","email":"admin@portmaster.local","password":"Portmaster1"}'
 
-curl localhost:8000/info
+curl localhost:8000/v1/info
 ```
 
 ```bash

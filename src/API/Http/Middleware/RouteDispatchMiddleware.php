@@ -34,7 +34,7 @@ use Psr\Http\Server\RequestHandlerInterface;
  * `$handler`: it always produces the final response (a dispatched controller
  * result, or a 404/405 problem response).
  *
- * @see \API\Http\Routes The table being matched against.
+ * @see \API\Http\Router\RouterHub The tables being matched against.
  * @uses Dispatcher Matches method and path.
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
@@ -43,7 +43,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 final class RouteDispatchMiddleware implements MiddlewareInterface
 {
     /**
-     * @param  Dispatcher  $dispatcher  Built from {@see \API\Http\Routes}.
+     * @param  Dispatcher  $dispatcher  Built from {@see \API\Http\Router\RouterHub}.
      * @param  array<class-string, object>  $controllers  Controller interface => instance.
      *
      * @copyright 2026 Tachyon

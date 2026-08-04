@@ -38,7 +38,7 @@ where there is no request to fail.
 
 | I am adding… | It goes in |
 |---|---|
-| an endpoint | `API/Http/Routes.php` + a controller in `API/Controllers/` |
+| an endpoint | the current version's table in `API/Http/Router/Interno/` + a controller in `API/Controllers/` |
 | something that runs per request before the controller | `API/Http/Middleware/` |
 | a request or response body | a `*Proxy` in `API/Fbs/<Feature>/` |
 | an action a user performs | `App/Commands/` + `App/Services/` |

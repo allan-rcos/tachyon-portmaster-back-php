@@ -220,11 +220,12 @@
                                         <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/api.html">API</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/api-http.html">Http</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/api-http-router.html">Router</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    Routes
+    RouterHub
 
     
             <div class="phpdocumentor-element__package">
@@ -245,28 +246,38 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Routes.php"><a href="files/src-api-http-routes.html"><abbr title="src/API/Http/Routes.php">Routes.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Router/RouterHub.php"><a href="files/src-api-http-router-routerhub.html"><abbr title="src/API/Http/Router/RouterHub.php">RouterHub.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
-            <a href="classes/API-Http-Routes.html#source-view.49" class="phpdocumentor-element-found-in__source" data-line="49" data-modal="source-view" data-src="files/src/API/Http/Routes.php.txt"></a>
+            <a href="classes/API-Http-Router-RouterHub.html#source-view.55" class="phpdocumentor-element-found-in__source" data-line="55" data-modal="source-view" data-src="files/src/API/Http/Router/RouterHub.php.txt"></a>
     </aside>
 
-            <p class="phpdocumentor-summary">The REST route table. Routes map to a `[ControllerInterface::class, &#039;method&#039;]`
-pair; {@see \API\Http\Middleware\RouteDispatchMiddleware} resolves the
-controller from the {@see \API\Interno\ApiProvider} registry. Path ids are
-**base62** strings (`[A-Za-z0-9]+`), not numeric — ids travel opaque end to end.</p>
+            <p class="phpdocumentor-summary">Joins every published {@see IVersionedRouter} into one dispatcher.</p>
 
 
-    <section class="phpdocumentor-description"><p>The table is the only place a URL appears. Routing to the <em>interface</em> rather
-than a concrete controller is what keeps it that way: this file names no
-implementation, so swapping one changes nothing here.</p>
+    <section class="phpdocumentor-description"><p>Each version is mounted under its own <code class="prettyprint">/v&lt;n&gt;</code> group, taken from the number the
+router itself declares — the prefix has no second source. On top of that, the
+unversioned path space is served too: <code class="prettyprint">/products</code> reaches the <strong>newest version
+that publishes it</strong>, decided per route rather than globally. A route carried
+from v1 into v2 answers from v2 at the root; one that only ever existed in v1
+keeps answering from v1.</p>
+<p>The merge is not written by hand. <a href="classes/API-Http-Router-Route.html"><abbr title="\API\Http\Router\Route">Route</abbr></a> is a <abbr title="\Ds\Key">Key</abbr> whose
+identity is method and path, so filling a <abbr title="\Ds\Set">Set</abbr> newest version first
+leaves exactly one row per route — the newest, because a set keeps what it saw
+first. Doing it any other way would not merely be longer: FastRoute throws on
+two routes matching the same method and path, so the duplicates have to be
+gone <em>before</em> registration, not caught during it.</p>
+<p>The root is a convenience, not a contract. What it points at moves the day a
+new version publishes the same route, so a client that means v1 should ask for
+<code class="prettyprint">/v1</code> — which is what <code class="prettyprint">swagger.json</code> tells it to do in its <code class="prettyprint">servers</code> block,
+and what the front end already does.</p>
 </section>
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/API-Http-Routes.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/API-Http-Router-RouterHub.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -274,14 +285,20 @@ implementation, so swapping one changes nothing here.</p>
                 <span class="phpdocumentor-tag__name">see</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/API-Http-Router-IVersionedRouter.html"><abbr title="\API\Http\Router\IVersionedRouter">IVersionedRouter</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>One version's table.</p>
+</section>
+
+                                    </dd>
+                            <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><a href="classes/API-Http-Middleware-RouteDispatchMiddleware.html"><abbr title="\API\Http\Middleware\RouteDispatchMiddleware">RouteDispatchMiddleware</abbr></a></span>
-                                                                    <section class="phpdocumentor-description"><p>What matches against this.</p>
+                                                                    <section class="phpdocumentor-description"><p>What matches against the result.</p>
 </section>
 
                                     </dd>
                             <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><abbr title="\API\Interno\ApiProvider">ApiProvider</abbr></span>
-                                                                    <section class="phpdocumentor-description"><p>What resolves the matched interface.</p>
+                                                                    <section class="phpdocumentor-description"><p>What builds it, once, at WorkerStart.</p>
 </section>
 
                                     </dd>
@@ -307,7 +324,7 @@ implementation, so swapping one changes nothing here.</p>
     
 <h3 id="toc">
     Table of Contents
-    <a href="classes/API-Http-Routes.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/API-Http-Router-RouterHub.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -319,16 +336,16 @@ implementation, so swapping one changes nothing here.</p>
 
 <h4 id="toc-constants">
     Constants
-    <a href="classes/API-Http-Routes.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/API-Http-Router-RouterHub.html#toc-constants" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -constant -private">
-    <a class="" href="classes/API-Http-Routes.html#constant_ID">ID</a>
+    <a class="" href="classes/API-Http-Router-RouterHub.html#constant_PREFIX">PREFIX</a>
     <span>
-        &nbsp;: string&nbsp;= &#039;{id:[A-Za-z0-9]+}&#039;                            </span>
+        &nbsp;: string&nbsp;= &#039;&#039;                            </span>
 </dt>
-<dd>The path-id placeholder, base62 rather than numeric.</dd>
+<dd>Where the whole API hangs, versions included.</dd>
 
     </dl>
 
@@ -336,16 +353,37 @@ implementation, so swapping one changes nothing here.</p>
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/API-Http-Routes.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/API-Http-Router-RouterHub.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/API-Http-Routes.html#method_dispatcher">dispatcher()</a>
+    <a class="" href="classes/API-Http-Router-RouterHub.html#method_dispatcher">dispatcher()</a>
     <span>
                                 &nbsp;: <abbr title="\FastRoute\Dispatcher">Dispatcher</abbr>    </span>
 </dt>
-<dd>Builds the dispatcher over the whole route table.</dd>
+<dd>Builds the dispatcher over every published version.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a class="" href="classes/API-Http-Router-RouterHub.html#method_newestPerRoute">newestPerRoute()</a>
+    <span>
+                                &nbsp;: <abbr title="\Ds\Set">Set</abbr>&lt;string|int, <a href="classes/API-Http-Router-Route.html"><abbr title="\API\Http\Router\Route">Route</abbr></a>&gt;    </span>
+</dt>
+<dd>The unversioned table: every route, on its newest publisher.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a class="" href="classes/API-Http-Router-RouterHub.html#method_rank">rank()</a>
+    <span>
+                                &nbsp;: array&lt;int, <a href="classes/API-Http-Router-IVersionedRouter.html"><abbr title="\API\Http\Router\IVersionedRouter">IVersionedRouter</abbr></a>&gt;    </span>
+</dt>
+<dd>Indexes the routers by version number, refusing a repeated one.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a class="" href="classes/API-Http-Router-RouterHub.html#method_routers">routers()</a>
+    <span>
+                                &nbsp;: array&lt;int, <a href="classes/API-Http-Router-IVersionedRouter.html"><abbr title="\API\Http\Router\IVersionedRouter">IVersionedRouter</abbr></a>&gt;    </span>
+</dt>
+<dd>Every version this build publishes.</dd>
 
     </dl>
 
@@ -355,36 +393,43 @@ implementation, so swapping one changes nothing here.</p>
     <section class="phpdocumentor-constants">
         <h3 class="phpdocumentor-elements__header" id="constants">
             Constants
-            <a href="classes/API-Http-Routes.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/API-Http-Router-RouterHub.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article class="phpdocumentor-element -constant -private ">
-    <h4 class="phpdocumentor-element__name" id="constant_ID">
-        ID
-        <a href="classes/API-Http-Routes.html#constant_ID" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="constant_PREFIX">
+        PREFIX
+        <a href="classes/API-Http-Router-RouterHub.html#constant_PREFIX" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Routes.php"><a href="files/src-api-http-routes.html"><abbr title="src/API/Http/Routes.php">Routes.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Router/RouterHub.php"><a href="files/src-api-http-router-routerhub.html"><abbr title="src/API/Http/Router/RouterHub.php">RouterHub.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">56</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
-            <a href="classes/API-Http-Routes.html#source-view.56" class="phpdocumentor-element-found-in__source" data-line="56" data-modal="source-view" data-src="files/src/API/Http/Routes.php.txt"></a>
+            <a href="classes/API-Http-Router-RouterHub.html#source-view.69" class="phpdocumentor-element-found-in__source" data-line="69" data-modal="source-view" data-src="files/src/API/Http/Router/RouterHub.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">The path-id placeholder, base62 rather than numeric.</p>
+        <p class="phpdocumentor-summary">Where the whole API hangs, versions included.</p>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">private</span>
         <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">ID</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;{id:[A-Za-z0-9]+}&#039;</span>
+    <span class="phpdocumentor-signature__name">PREFIX</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;&#039;</span>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"><p>Empty: the API <em>is</em> the root of this process. It exists so that mounting
+everything under some long path costs one string and no other change —
+but the <code class="prettyprint">/api</code> a browser sees is <strong>not</strong> that path. That prefix belongs to
+the reverse proxy and is stripped before the request arrives, and the
+server-side renderer, which talks to the loopback port directly, never had
+it at all. Putting <code class="prettyprint">/api</code> here would break both callers at once.</p>
+</section>
+
     
     
 
@@ -397,7 +442,7 @@ implementation, so swapping one changes nothing here.</p>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/API-Http-Routes.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/API-Http-Router-RouterHub.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -408,18 +453,18 @@ implementation, so swapping one changes nothing here.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_dispatcher">
         dispatcher()
-        <a href="classes/API-Http-Routes.html#method_dispatcher" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/API-Http-Router-RouterHub.html#method_dispatcher" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Routes.php"><a href="files/src-api-http-routes.html"><abbr title="src/API/Http/Routes.php">Routes.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Router/RouterHub.php"><a href="files/src-api-http-router-routerhub.html"><abbr title="src/API/Http/Router/RouterHub.php">RouterHub.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">102</span>
 
-            <a href="classes/API-Http-Routes.html#source-view.71" class="phpdocumentor-element-found-in__source" data-line="71" data-modal="source-view" data-src="files/src/API/Http/Routes.php.txt"></a>
+            <a href="classes/API-Http-Router-RouterHub.html#source-view.102" class="phpdocumentor-element-found-in__source" data-line="102" data-modal="source-view" data-src="files/src/API/Http/Router/RouterHub.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">Builds the dispatcher over the whole route table.</p>
+        <p class="phpdocumentor-summary">Builds the dispatcher over every published version.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -439,7 +484,7 @@ a cache to save.</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="method_dispatcher_tags">
         Tags
-        <a href="classes/API-Http-Routes.html#method_dispatcher_tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/API-Http-Router-RouterHub.html#method_dispatcher_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -465,13 +510,237 @@ a cache to save.</p>
             </section>
 
 </article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_newestPerRoute">
+        newestPerRoute()
+        <a href="classes/API-Http-Router-RouterHub.html#method_newestPerRoute" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Router/RouterHub.php"><a href="files/src-api-http-router-routerhub.html"><abbr title="src/API/Http/Router/RouterHub.php">RouterHub.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">162</span>
+
+            <a href="classes/API-Http-Router-RouterHub.html#source-view.162" class="phpdocumentor-element-found-in__source" data-line="162" data-modal="source-view" data-src="files/src/API/Http/Router/RouterHub.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">The unversioned table: every route, on its newest publisher.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">newestPerRoute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;int, <a href="classes/API-Http-Router-IVersionedRouter.html"><abbr title="\API\Http\Router\IVersionedRouter">IVersionedRouter</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ranked</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Ds\Set">Set</abbr>&lt;string|int, <a href="classes/API-Http-Router-Route.html"><abbr title="\API\Http\Router\Route">Route</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>The merge is the set, not the loop. <a href="classes/API-Http-Router-Route.html"><abbr title="\API\Http\Router\Route">Route</abbr></a> hashes on method and path
+alone and a <abbr title="\Ds\Set">Set</abbr> keeps what it saw first, so walking the versions
+newest first leaves exactly one row per route — and leaves it pointing at
+the newest version that still publishes it, which for a route dropped
+along the way is not the newest version overall.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$ranked</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;int, <a href="classes/API-Http-Router-IVersionedRouter.html"><abbr title="\API\Http\Router\IVersionedRouter">IVersionedRouter</abbr></a>&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Newest first.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_newestPerRoute_tags">
+        Tags
+        <a href="classes/API-Http-Router-RouterHub.html#method_newestPerRoute_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">copyright</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                            <section class="phpdocumentor-description"><p>2026 Tachyon</p>
+</section>
+
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Ds\Set">Set</abbr>&lt;string|int, <a href="classes/API-Http-Router-Route.html"><abbr title="\API\Http\Router\Route">Route</abbr></a>&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Ready to register with no prefix.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_rank">
+        rank()
+        <a href="classes/API-Http-Router-RouterHub.html#method_rank" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Router/RouterHub.php"><a href="files/src-api-http-router-routerhub.html"><abbr title="src/API/Http/Router/RouterHub.php">RouterHub.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">192</span>
+
+            <a href="classes/API-Http-Router-RouterHub.html#source-view.192" class="phpdocumentor-element-found-in__source" data-line="192" data-modal="source-view" data-src="files/src/API/Http/Router/RouterHub.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">Indexes the routers by version number, refusing a repeated one.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">rank</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;int, <a href="classes/API-Http-Router-IVersionedRouter.html"><abbr title="\API\Http\Router\IVersionedRouter">IVersionedRouter</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$routers</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;int, <a href="classes/API-Http-Router-IVersionedRouter.html"><abbr title="\API\Http\Router\IVersionedRouter">IVersionedRouter</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$routers</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;int, <a href="classes/API-Http-Router-IVersionedRouter.html"><abbr title="\API\Http\Router\IVersionedRouter">IVersionedRouter</abbr></a>&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>In any order — the caller's order
+carries no meaning, the numbers do.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_rank_tags">
+        Tags
+        <a href="classes/API-Http-Router-RouterHub.html#method_rank_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">throws</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\RuntimeException">RuntimeException</abbr></span>
+                                                                                        <section class="phpdocumentor-description"><p>If two routers declare the same number, naming
+both classes and the number they collide on.</p>
+</section>
+
+                                    </dd>
+                                <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">copyright</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                            <section class="phpdocumentor-description"><p>2026 Tachyon</p>
+</section>
+
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;int, <a href="classes/API-Http-Router-IVersionedRouter.html"><abbr title="\API\Http\Router\IVersionedRouter">IVersionedRouter</abbr></a>&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Keyed by version number, <strong>newest
+first</strong>, which is the order the
+unversioned merge depends on.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_routers">
+        routers()
+        <a href="classes/API-Http-Router-RouterHub.html#method_routers" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Router/RouterHub.php"><a href="files/src-api-http-router-routerhub.html"><abbr title="src/API/Http/Router/RouterHub.php">RouterHub.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">82</span>
+
+            <a href="classes/API-Http-Router-RouterHub.html#source-view.82" class="phpdocumentor-element-found-in__source" data-line="82" data-modal="source-view" data-src="files/src/API/Http/Router/RouterHub.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">Every version this build publishes.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">routers</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;int, <a href="classes/API-Http-Router-IVersionedRouter.html"><abbr title="\API\Http\Router\IVersionedRouter">IVersionedRouter</abbr></a>&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><p>A new version is a new entry here and a new class beside <a href="classes/API-Http-Router-Interno-V1Router.html"><abbr title="\API\Http\Router\Interno\V1Router">V1Router</abbr></a>;
+the order is irrelevant, since ranking comes from
+<a href="classes/API-Http-Router-IVersionedRouter.html#method_getVersion"><abbr title="\API\Http\Router\IVersionedRouter::getVersion()">IVersionedRouter::getVersion()</abbr></a>.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_routers_tags">
+        Tags
+        <a href="classes/API-Http-Router-RouterHub.html#method_routers_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">copyright</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                            <section class="phpdocumentor-description"><p>2026 Tachyon</p>
+</section>
+
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;int, <a href="classes/API-Http-Router-IVersionedRouter.html"><abbr title="\API\Http\Router\IVersionedRouter">IVersionedRouter</abbr></a>&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>In any order.</p>
+</section>
+
+            </section>
+
+</article>
             </section>
 
         <div class="phpdocumentor-modal" id="source-view">
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/API/Http/Routes.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/API/Http/Router/RouterHub.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -572,14 +841,14 @@ a cache to save.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                        <li><a href="classes/API-Http-Routes.html#toc-constants">Constants</a></li>
-                                                                                <li><a href="classes/API-Http-Routes.html#toc-methods">Methods</a></li>
+                                        <li><a href="classes/API-Http-Router-RouterHub.html#toc-constants">Constants</a></li>
+                                                                                <li><a href="classes/API-Http-Router-RouterHub.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
                             <li class="phpdocumentor-on-this-page-section__title">Constants</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/API-Http-Routes.html#constant_ID">ID</a></li>
+                                                    <li class=""><a href="classes/API-Http-Router-RouterHub.html#constant_PREFIX">PREFIX</a></li>
                                             </ul>
                 </li>
             
@@ -587,7 +856,10 @@ a cache to save.</p>
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li class=""><a href="classes/API-Http-Routes.html#method_dispatcher">dispatcher()</a></li>
+                                            <li class=""><a href="classes/API-Http-Router-RouterHub.html#method_dispatcher">dispatcher()</a></li>
+                                            <li class=""><a href="classes/API-Http-Router-RouterHub.html#method_newestPerRoute">newestPerRoute()</a></li>
+                                            <li class=""><a href="classes/API-Http-Router-RouterHub.html#method_rank">rank()</a></li>
+                                            <li class=""><a href="classes/API-Http-Router-RouterHub.html#method_routers">routers()</a></li>
                                     </ul>
             </li>
                     </ul>
@@ -607,7 +879,7 @@ a cache to save.</p>
     </section>
 </section>
         </div>
-        <a href="classes/API-Http-Routes.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/API-Http-Router-RouterHub.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

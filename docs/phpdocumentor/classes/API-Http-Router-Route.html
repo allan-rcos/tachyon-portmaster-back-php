@@ -219,45 +219,65 @@
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/api.html">API</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/api-controllers.html">Controllers</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/api-http.html">Http</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/api-http-router.html">Router</a></li>
     </ul>
 
-    <article class="phpdocumentor-element -interface">
+    <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    IProductController
-                <div class="phpdocumentor-element__package">
-            in
+    Route
+
+    
+            <div class="phpdocumentor-element__package">
+            in package
             <ul class="phpdocumentor-breadcrumbs">
-                                    <li><a href="packages/Portmaster.html">Portmaster</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Portmaster.html">Portmaster</a></li>
                             </ul>
         </div>
+    
+            <span class="phpdocumentor-element__implements">
+            implements
+                            <abbr title="\Ds\Key">Key</abbr>                    </span>
+    
     </h2>
 
-        <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Controllers/IProductController.php"><a href="files/src-api-controllers-iproductcontroller.html"><abbr title="src/API/Controllers/IProductController.php">IProductController.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+<div class="phpdocumentor-label-line">
+    <div class="phpdocumentor-label phpdocumentor-label--success"><span>Read only</span><span>Yes</span></div>
 
-            <a href="classes/API-Controllers-IProductController.html#source-view.40" class="phpdocumentor-element-found-in__source" data-line="40" data-modal="source-view" data-src="files/src/API/Controllers/IProductController.php.txt"></a>
+
+    <div class="phpdocumentor-label phpdocumentor-label--success"><span>Final</span><span>Yes</span></div>
+
+
+</div>
+
+        <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Router/Route.php"><a href="files/src-api-http-router-route.html"><abbr title="src/API/Http/Router/Route.php">Route.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">42</span>
+
+            <a href="classes/API-Http-Router-Route.html#source-view.42" class="phpdocumentor-element-found-in__source" data-line="42" data-modal="source-view" data-src="files/src/API/Http/Router/Route.php.txt"></a>
     </aside>
 
-            <p class="phpdocumentor-summary">Product catalogue endpoints (`/products`).</p>
+            <p class="phpdocumentor-summary">One line of a route table: a method, a path, and the controller entry point
+the pair resolves to.</p>
 
 
-    <section class="phpdocumentor-description"><p>The <strong>CRUD contract shape</strong>, written out once here and referenced by the other
-resource controllers. Every action takes the PSR-7 request and returns a
-PSR-7 response; path variables arrive as request attributes; a body, where
-there is one, is the matching <code class="prettyprint">*RequestProxy</code> and the answer the matching
-<code class="prettyprint">*ResponseProxy</code>. Failures are RFC 7807 problem documents, so no action
-declares a <code class="prettyprint">@throws</code>.</p>
-<p>Which permission each action needs is the use case's to state, not this
-contract's — see <a href="classes/App-Services-IListProductsUseCase.html"><abbr title="\App\Services\IListProductsUseCase">IListProductsUseCase</abbr></a> and its siblings.</p>
+    <section class="phpdocumentor-description"><p><strong>Identity is the method and the path, not the handler.</strong> That is the exact
+pair FastRoute refuses to see twice, so two rows agreeing on it are the same
+route as far as routing is concerned, however different their handlers. Being
+a <abbr title="\Ds\Key">Key</abbr> with that identity is what lets a <abbr title="\Ds\Set">Set</abbr> answer the
+unversioned-alias question on its own: fill one newest version first, and the
+set keeps the newest publisher of every route and drops the rest.</p>
+<p>The same rule applies inside a single version. A router declaring the same
+method and path twice keeps the first declaration and silently drops the
+second — the set has no way to tell an accident from an override, and the
+first-wins reading is the one that matches the cross-version rule.</p>
 </section>
 
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/API-Controllers-IProductController.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/API-Http-Router-Route.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -265,14 +285,14 @@ contract's — see <a href="classes/App-Services-IListProductsUseCase.html"><abb
                 <span class="phpdocumentor-tag__name">see</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\API\Controllers\Interno\ProductController">ProductController</abbr></span>
-                                                                    <section class="phpdocumentor-description"><p>The implementation.</p>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/API-Http-Router-IVersionedRouter.html"><abbr title="\API\Http\Router\IVersionedRouter">IVersionedRouter</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>Publishes a set of these.</p>
 </section>
 
                                     </dd>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/API-Http-Router-IVersionedRouter.html"><abbr title="\API\Http\Router\IVersionedRouter">IVersionedRouter</abbr></a></span>
-                                                                    <section class="phpdocumentor-description"><p>Where these methods are bound to paths.</p>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/API-Http-Router-RouterHub.html"><abbr title="\API\Http\Router\RouterHub">RouterHub</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>Merges the sets and registers them.</p>
 </section>
 
                                     </dd>
@@ -298,73 +318,210 @@ contract's — see <a href="classes/App-Services-IListProductsUseCase.html"><abb
     
 <h3 id="toc">
     Table of Contents
-    <a href="classes/API-Controllers-IProductController.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/API-Http-Router-Route.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
 
 
+    <h4 id="toc-interfaces">
+        Interfaces
+        <a href="classes/API-Http-Router-Route.html#toc-interfaces" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <dl class="phpdocumentor-table-of-contents">
+                    <dt class="phpdocumentor-table-of-contents__entry -interface"><abbr title="\Ds\Key">Key</abbr></dt>    </dl>
 
 
 
 
 
 
+<h4 id="toc-properties">
+    Properties
+    <a href="classes/API-Http-Router-Route.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/API-Http-Router-Route.html#property_handler">$handler</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/API-Http-Router-Route.html#property_method">$method</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/API-Http-Router-Route.html#property_path">$path</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+
+    </dl>
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/API-Controllers-IProductController.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/API-Http-Router-Route.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/API-Controllers-IProductController.html#method_create">create()</a>
+    <a class="" href="classes/API-Http-Router-Route.html#method___construct">__construct()</a>
     <span>
-                                &nbsp;: <abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr>    </span>
+                                &nbsp;: mixed    </span>
 </dt>
-<dd>`POST /products` — registers a product. Answers 201.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/API-Controllers-IProductController.html#method_delete">delete()</a>
+    <a class="" href="classes/API-Http-Router-Route.html#method_equals">equals()</a>
     <span>
-                                &nbsp;: <abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr>    </span>
+                                &nbsp;: bool    </span>
 </dt>
-<dd>`DELETE /products/{id}` — removes a product. Answers 204.</dd>
+<dd>Whether another value addresses the same method and path.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/API-Controllers-IProductController.html#method_get">get()</a>
+    <a class="" href="classes/API-Http-Router-Route.html#method_hash">hash()</a>
     <span>
-                                &nbsp;: <abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr>    </span>
+                                &nbsp;: string    </span>
 </dt>
-<dd>`GET /products/{id}` — one product, or 404.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/API-Controllers-IProductController.html#method_list">list()</a>
-    <span>
-                                &nbsp;: <abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr>    </span>
-</dt>
-<dd>`GET /products` — a keyset page of products, filtered by `search`.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/API-Controllers-IProductController.html#method_update">update()</a>
-    <span>
-                                &nbsp;: <abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr>    </span>
-</dt>
-<dd>`PUT /products/{id}` — replaces a product&#039;s fields, or 404.</dd>
+<dd>The identity of this route, handler excluded.</dd>
 
     </dl>
 
 
 
-
         
 
         
+    <section class="phpdocumentor-properties">
+        <h3 class="phpdocumentor-elements__header" id="properties">
+            Properties
+            <a href="classes/API-Http-Router-Route.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+
+        </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_handler">
+        $handler
+        <a href="classes/API-Http-Router-Route.html#property_handler" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Router/Route.php"><a href="files/src-api-http-router-route.html"><abbr title="src/API/Http/Router/Route.php">Route.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">54</span>
+
+            <a href="classes/API-Http-Router-Route.html#source-view.54" class="phpdocumentor-element-found-in__source" data-line="54" data-modal="source-view" data-src="files/src/API/Http/Router/Route.php.txt"></a>
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$handler</span>
+    </code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_method">
+        $method
+        <a href="classes/API-Http-Router-Route.html#property_method" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Router/Route.php"><a href="files/src-api-http-router-route.html"><abbr title="src/API/Http/Router/Route.php">Route.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">52</span>
+
+            <a href="classes/API-Http-Router-Route.html#source-view.52" class="phpdocumentor-element-found-in__source" data-line="52" data-modal="source-view" data-src="files/src/API/Http/Router/Route.php.txt"></a>
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$method</span>
+    </code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_path">
+        $path
+        <a href="classes/API-Http-Router-Route.html#property_path" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Router/Route.php"><a href="files/src-api-http-router-route.html"><abbr title="src/API/Http/Router/Route.php">Route.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">53</span>
+
+            <a href="classes/API-Http-Router-Route.html#source-view.53" class="phpdocumentor-element-found-in__source" data-line="53" data-modal="source-view" data-src="files/src/API/Http/Router/Route.php.txt"></a>
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$path</span>
+    </code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+            </section>
 
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/API-Controllers-IProductController.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/API-Http-Router-Route.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -373,48 +530,113 @@ contract's — see <a href="classes/App-Services-IListProductsUseCase.html"><abb
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_create">
-        create()
-        <a href="classes/API-Controllers-IProductController.html#method_create" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method___construct">
+        __construct()
+        <a href="classes/API-Http-Router-Route.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Controllers/IProductController.php"><a href="files/src-api-controllers-iproductcontroller.html"><abbr title="src/API/Controllers/IProductController.php">IProductController.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Router/Route.php"><a href="files/src-api-http-router-route.html"><abbr title="src/API/Http/Router/Route.php">Route.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">64</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
-            <a href="classes/API-Controllers-IProductController.html#source-view.64" class="phpdocumentor-element-found-in__source" data-line="64" data-modal="source-view" data-src="files/src/API/Controllers/IProductController.php.txt"></a>
+            <a href="classes/API-Http-Router-Route.html#source-view.51" class="phpdocumentor-element-found-in__source" data-line="51" data-modal="source-view" data-src="files/src/API/Http/Router/Route.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">`POST /products` — registers a product. Answers 201.</p>
-
+    
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">create</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><abbr title="\Psr\Http\Message\ServerRequestInterface">ServerRequestInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$method</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$path</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">array{class-string, string}&nbsp;</span><span class="phpdocumentor-signature__argument__name">$handler</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
-            <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
-
         </div>
     
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$request</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><abbr title="\Psr\Http\Message\ServerRequestInterface">ServerRequestInterface</abbr></span>
+                <span class="phpdocumentor-argument-list__argument__name">$method</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The incoming HTTP request.</p>
+                    <section class="phpdocumentor-description"><p>The HTTP verb, uppercase.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$path</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Relative to the version prefix,
+in FastRoute syntax.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$handler</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array{class-string, string}</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The controller <em>interface</em> and
+the method on it.</p>
 </section>
 
             </dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="method_create_tags">
+
+        
+    
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_equals">
+        equals()
+        <a href="classes/API-Http-Router-Route.html#method_equals" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Router/Route.php"><a href="files/src-api-http-router-route.html"><abbr title="src/API/Http/Router/Route.php">Route.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">79</span>
+
+            <a href="classes/API-Http-Router-Route.html#source-view.79" class="phpdocumentor-element-found-in__source" data-line="79" data-modal="source-view" data-src="files/src/API/Http/Router/Route.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">Whether another value addresses the same method and path.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">equals</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$other</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$other</span>
+                : <span class="phpdocumentor-argument-list__argument__type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Anything; only a <a href="classes/API-Http-Router-Route.html"><abbr title="\API\Http\Router\Route">Route</abbr></a> can match.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_equals_tags">
         Tags
-        <a href="classes/API-Controllers-IProductController.html#method_create_tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/API-Http-Router-Route.html#method_equals_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -432,9 +654,9 @@ contract's — see <a href="classes/App-Services-IListProductsUseCase.html"><abb
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span>
+        <span class="phpdocumentor-signature__response_type">bool</span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>The outgoing HTTP response.</p>
+                <section class="phpdocumentor-description"><p>True when both would collide in the dispatcher.</p>
 </section>
 
             </section>
@@ -446,48 +668,34 @@ contract's — see <a href="classes/App-Services-IListProductsUseCase.html"><abb
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_delete">
-        delete()
-        <a href="classes/API-Controllers-IProductController.html#method_delete" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_hash">
+        hash()
+        <a href="classes/API-Http-Router-Route.html#method_hash" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Controllers/IProductController.php"><a href="files/src-api-controllers-iproductcontroller.html"><abbr title="src/API/Controllers/IProductController.php">IProductController.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Router/Route.php"><a href="files/src-api-http-router-route.html"><abbr title="src/API/Http/Router/Route.php">Route.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">100</span>
+    <span class="phpdocumentor-element-found-in__line">65</span>
 
-            <a href="classes/API-Controllers-IProductController.html#source-view.100" class="phpdocumentor-element-found-in__source" data-line="100" data-modal="source-view" data-src="files/src/API/Controllers/IProductController.php.txt"></a>
+            <a href="classes/API-Http-Router-Route.html#source-view.65" class="phpdocumentor-element-found-in__source" data-line="65" data-modal="source-view" data-src="files/src/API/Http/Router/Route.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">`DELETE /products/{id}` — removes a product. Answers 204.</p>
+        <p class="phpdocumentor-summary">The identity of this route, handler excluded.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">delete</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><abbr title="\Psr\Http\Message\ServerRequestInterface">ServerRequestInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">hash</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
     <div class="phpdocumentor-label-line">
-            <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
-
         </div>
     
     
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$request</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><abbr title="\Psr\Http\Message\ServerRequestInterface">ServerRequestInterface</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The incoming HTTP request.</p>
-</section>
-
-            </dd>
-            </dl>
-
     
-    <h5 class="phpdocumentor-tag-list__heading" id="method_delete_tags">
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_hash_tags">
         Tags
-        <a href="classes/API-Controllers-IProductController.html#method_delete_tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/API-Http-Router-Route.html#method_hash_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -505,228 +713,9 @@ contract's — see <a href="classes/App-Services-IListProductsUseCase.html"><abb
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span>
+        <span class="phpdocumentor-signature__response_type">string</span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>The outgoing HTTP response.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_get">
-        get()
-        <a href="classes/API-Controllers-IProductController.html#method_get" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Controllers/IProductController.php"><a href="files/src-api-controllers-iproductcontroller.html"><abbr title="src/API/Controllers/IProductController.php">IProductController.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">76</span>
-
-            <a href="classes/API-Controllers-IProductController.html#source-view.76" class="phpdocumentor-element-found-in__source" data-line="76" data-modal="source-view" data-src="files/src/API/Controllers/IProductController.php.txt"></a>
-    </aside>
-
-        <p class="phpdocumentor-summary">`GET /products/{id}` — one product, or 404.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">get</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><abbr title="\Psr\Http\Message\ServerRequestInterface">ServerRequestInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span></code>
-
-    <div class="phpdocumentor-label-line">
-            <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
-
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$request</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><abbr title="\Psr\Http\Message\ServerRequestInterface">ServerRequestInterface</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The incoming HTTP request.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="method_get_tags">
-        Tags
-        <a href="classes/API-Controllers-IProductController.html#method_get_tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                    <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">copyright</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>2026 Tachyon</p>
-</section>
-
-                                    </dd>
-                        </dl>
-
-        
-    
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The outgoing HTTP response.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_list">
-        list()
-        <a href="classes/API-Controllers-IProductController.html#method_list" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Controllers/IProductController.php"><a href="files/src-api-controllers-iproductcontroller.html"><abbr title="src/API/Controllers/IProductController.php">IProductController.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">52</span>
-
-            <a href="classes/API-Controllers-IProductController.html#source-view.52" class="phpdocumentor-element-found-in__source" data-line="52" data-modal="source-view" data-src="files/src/API/Controllers/IProductController.php.txt"></a>
-    </aside>
-
-        <p class="phpdocumentor-summary">`GET /products` — a keyset page of products, filtered by `search`.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">list</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><abbr title="\Psr\Http\Message\ServerRequestInterface">ServerRequestInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span></code>
-
-    <div class="phpdocumentor-label-line">
-            <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
-
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$request</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><abbr title="\Psr\Http\Message\ServerRequestInterface">ServerRequestInterface</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The incoming HTTP request.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="method_list_tags">
-        Tags
-        <a href="classes/API-Controllers-IProductController.html#method_list_tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                    <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">copyright</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>2026 Tachyon</p>
-</section>
-
-                                    </dd>
-                        </dl>
-
-        
-    
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The outgoing HTTP response.</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_update">
-        update()
-        <a href="classes/API-Controllers-IProductController.html#method_update" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Controllers/IProductController.php"><a href="files/src-api-controllers-iproductcontroller.html"><abbr title="src/API/Controllers/IProductController.php">IProductController.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">88</span>
-
-            <a href="classes/API-Controllers-IProductController.html#source-view.88" class="phpdocumentor-element-found-in__source" data-line="88" data-modal="source-view" data-src="files/src/API/Controllers/IProductController.php.txt"></a>
-    </aside>
-
-        <p class="phpdocumentor-summary">`PUT /products/{id}` — replaces a product&#039;s fields, or 404.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">update</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><abbr title="\Psr\Http\Message\ServerRequestInterface">ServerRequestInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span></code>
-
-    <div class="phpdocumentor-label-line">
-            <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
-
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$request</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><abbr title="\Psr\Http\Message\ServerRequestInterface">ServerRequestInterface</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The incoming HTTP request.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="method_update_tags">
-        Tags
-        <a href="classes/API-Controllers-IProductController.html#method_update_tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                    <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">copyright</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>2026 Tachyon</p>
-</section>
-
-                                    </dd>
-                        </dl>
-
-        
-    
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>The outgoing HTTP response.</p>
+                <section class="phpdocumentor-description"><p>Method and path, which is all routing distinguishes.</p>
 </section>
 
             </section>
@@ -738,7 +727,7 @@ contract's — see <a href="classes/App-Services-IListProductsUseCase.html"><abb
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/API/Controllers/IProductController.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/API/Http/Router/Route.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -839,21 +828,28 @@ contract's — see <a href="classes/App-Services-IListProductsUseCase.html"><abb
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                                                <li><a href="classes/API-Controllers-IProductController.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/API-Http-Router-Route.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/API-Http-Router-Route.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
             
-                            <li class="phpdocumentor-on-this-page-section__title">Methods</li>
+                            <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/API-Controllers-IProductController.html#method_create">create()</a></li>
-                                                    <li class=""><a href="classes/API-Controllers-IProductController.html#method_delete">delete()</a></li>
-                                                    <li class=""><a href="classes/API-Controllers-IProductController.html#method_get">get()</a></li>
-                                                    <li class=""><a href="classes/API-Controllers-IProductController.html#method_list">list()</a></li>
-                                                    <li class=""><a href="classes/API-Controllers-IProductController.html#method_update">update()</a></li>
+                                                    <li class=""><a href="classes/API-Http-Router-Route.html#property_handler">$handler</a></li>
+                                                    <li class=""><a href="classes/API-Http-Router-Route.html#property_method">$method</a></li>
+                                                    <li class=""><a href="classes/API-Http-Router-Route.html#property_path">$path</a></li>
                                             </ul>
                 </li>
             
+                        <li class="phpdocumentor-on-this-page-section__title">Methods</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                            <li class=""><a href="classes/API-Http-Router-Route.html#method___construct">__construct()</a></li>
+                                            <li class=""><a href="classes/API-Http-Router-Route.html#method_equals">equals()</a></li>
+                                            <li class=""><a href="classes/API-Http-Router-Route.html#method_hash">hash()</a></li>
+                                    </ul>
+            </li>
                     </ul>
     </section>
 
@@ -871,7 +867,7 @@ contract's — see <a href="classes/App-Services-IListProductsUseCase.html"><abb
     </section>
 </section>
         </div>
-        <a href="classes/API-Controllers-IProductController.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/API-Http-Router-Route.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

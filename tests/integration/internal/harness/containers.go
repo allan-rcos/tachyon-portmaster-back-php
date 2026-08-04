@@ -100,7 +100,7 @@ func startAPI(ctx context.Context, networkName, dbName string) (testcontainers.C
 			"APP_JWT_SECRET":        "integration-test-secret-32-bytes-min",
 			"APP_JWT_COOKIE_SECURE": "false",
 		},
-		WaitingFor: wait.ForHTTP("/info").
+		WaitingFor: wait.ForHTTP("/v1/info").
 			WithPort("8000/tcp").
 			WithStartupTimeout(90 * time.Second),
 	}
@@ -125,7 +125,7 @@ func startAPI(ctx context.Context, networkName, dbName string) (testcontainers.C
 	return container, fmt.Sprintf("http://%s:%s", host, mapped.Port()), nil
 }
 
-// restartAPI stops and starts an API container, waits for it to serve /info
+// restartAPI stops and starts an API container, waits for it to serve /v1/info
 // again, and returns its new base URL.
 //
 // This is how the application's boot-time state is rebuilt after a reset: the
@@ -147,7 +147,7 @@ func restartAPI(ctx context.Context, container testcontainers.Container) (string
 
 	// Start() returns once the container is running, which is well before
 	// OpenSwoole has booted its workers and re-registered the metadata.
-	strategy := wait.ForHTTP("/info").
+	strategy := wait.ForHTTP("/v1/info").
 		WithPort("8000/tcp").
 		WithStartupTimeout(90 * time.Second)
 

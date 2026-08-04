@@ -218,76 +218,47 @@
             <div class="phpdocumentor-column -nine phpdocumentor-content">
                                 <section>
                                         <ul class="phpdocumentor-breadcrumbs">
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/api.html">API</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/api-http.html">Http</a></li>
     </ul>
 
-    <article class="phpdocumentor-element -file">
-        <h2 class="phpdocumentor-content__title">Routes.php</h2>
-
-            <p class="phpdocumentor-summary">Routes.</p>
-
-        
-        
-        
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="files/src-api-http-routes.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                    <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">category</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>API</p>
-</section>
-
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">license</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p><a href="https://opensource.org/licenses/MIT">MIT</a></p>
-</section>
-
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">copyright</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>2026 Tachyon</p>
-</section>
-
-                                    </dd>
-                                <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">filesource</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        
-                                    </dd>
-                        </dl>
-
+    <article class="phpdocumentor-element -namespace">
+        <h2 class="phpdocumentor-content__title">Router</h2>
 
         
 <h3 id="toc">
     Table of Contents
-    <a href="files/src-api-http-routes.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="namespaces/api-http-router.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
 
+<h4 id="namespaces">
+    Namespaces
+    <a href="namespaces/api-http-router.html#namespaces" class="headerlink"><i class="fas fa-link"></i></a>
 
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -namespace"><a href="namespaces/api-http-router-interno.html"><abbr title="\API\Http\Router\Interno">Interno</abbr></a></dt>
+    </dl>
 
-    <h4 id="toc-classes">
-        Classes
-        <a href="files/src-api-http-routes.html#toc-classes" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 id="toc-interfaces">
+        Interfaces
+        <a href="namespaces/api-http-router.html#toc-interfaces" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/API-Http-Routes.html"><abbr title="\API\Http\Routes">Routes</abbr></a></dt><dd>The REST route table. Routes map to a `[ControllerInterface::class, &#039;method&#039;]`
-pair; {@see \API\Http\Middleware\RouteDispatchMiddleware} resolves the
-controller from the {@see \API\Interno\ApiProvider} registry. Path ids are
-**base62** strings (`[A-Za-z0-9]+`), not numeric — ids travel opaque end to end.</dd>    </dl>
+                    <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/API-Http-Router-IVersionedRouter.html"><abbr title="\API\Http\Router\IVersionedRouter">IVersionedRouter</abbr></a></dt><dd>One published version of the REST contract: its number, and every route it
+serves.</dd>    </dl>
 
+    <h4 id="toc-classes">
+        Classes
+        <a href="namespaces/api-http-router.html#toc-classes" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <dl class="phpdocumentor-table-of-contents">
+                    <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/API-Http-Router-Route.html"><abbr title="\API\Http\Router\Route">Route</abbr></a></dt><dd>One line of a route table: a method, a path, and the controller entry point
+the pair resolves to.</dd>            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/API-Http-Router-RouterHub.html"><abbr title="\API\Http\Router\RouterHub">RouterHub</abbr></a></dt><dd>Joins every published {@see IVersionedRouter} into one dispatcher.</dd>    </dl>
 
 
 
@@ -303,7 +274,7 @@ controller from the {@see \API\Interno\ApiProvider} registry. Path ids are
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/API/Http/Routes.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -404,7 +375,8 @@ controller from the {@see \API\Interno\ApiProvider} registry. Path ids are
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                                                                        <li><a href="files/src-api-http-routes.html#toc-classes">Classes</a></li>
+                                                                                <li><a href="namespaces/api-http-router.html#toc-interfaces">Interfaces</a></li>
+                                                            <li><a href="namespaces/api-http-router.html#toc-classes">Classes</a></li>
                                                                                                                     </ul>
             </li>
 
@@ -426,7 +398,7 @@ controller from the {@see \API\Interno\ApiProvider} registry. Path ids are
     </section>
 </section>
         </div>
-        <a href="files/src-api-http-routes.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="namespaces/api-http-router.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

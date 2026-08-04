@@ -78,7 +78,7 @@ re-exported by `AppProvider`. See
      and `Content-Type`.
    - `AuthenticationMiddleware` — validates the JWT from the cookie and attaches
      the caller.
-   - `RouteDispatchMiddleware` — matches `Routes::dispatcher()` and calls the
+   - `RouteDispatchMiddleware` — matches `RouterHub::dispatcher()` and calls the
      controller.
 3. **Controller** (`ProductController::list`) — resolves the caller via
    `ResolvesCaller`, reads query parameters, and builds a `ListProductsQuery`.
