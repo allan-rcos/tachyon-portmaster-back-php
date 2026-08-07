@@ -22,8 +22,9 @@ stays under the gitignored `build/`.
 
 Everything hand-written under `src/`. **Not** the flatc-generated tables and
 enums — `composer flatbuffers` overwrites those, so a docblock written into one
-is lost at the next schema change. Their hand-written `*Proxy` classes *are*
-documented, and they are what the rest of the codebase actually talks to.
+is lost at the next schema change. They are also the whole of `src/API/Fbs/`;
+what the rest of the codebase actually talks to are the DTOs and factories under
+`src/API/Negociation/`, which *are* documented.
 
 The exclusion list is enumerated in `phpdoc.dist.xml`. Regenerate it after
 adding or removing a schema:
@@ -162,8 +163,8 @@ codebase.
 
 The flatc-generated tables under `src/API/Fbs/*/` are the standing exception.
 They are excluded rather than documented, because `composer flatbuffers`
-overwrites them; the hand-written `*Proxy` classes layered over them are
-documented instead.
+overwrites them; the DTOs and factories in `src/API/Negociation/` that stand in
+front of them are documented instead.
 
 ## Keeping it aligned
 

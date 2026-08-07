@@ -80,15 +80,11 @@
                 
             </li>
                     <li>
-                <a href="namespaces/api-dto.html" class="">DTO</a>
-                
-            </li>
-                    <li>
-                <a href="namespaces/api-fbs.html" class="">Fbs</a>
-                
-            </li>
-                    <li>
                 <a href="namespaces/api-http.html" class="">Http</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/api-negociation.html" class="">Negociation</a>
                 
             </li>
             </ul>
@@ -327,7 +323,7 @@ being taken.</p>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Infra-Repository-IMarkerRepository.html#method_get">get()</a>
     <span>
-                                &nbsp;: <a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, bool|null&gt;    </span>
+                                &nbsp;: <a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, bool&gt;    </span>
 </dt>
 <dd>Reads the flag of a live marker.</dd>
 
@@ -377,7 +373,7 @@ expired rows while it holds the lock.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">get</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$group</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, bool|null&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">get</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$group</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, bool&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
             <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
@@ -429,12 +425,12 @@ expired rows while it holds the lock.</dd>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, bool|null&gt;</span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, bool&gt;</span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>The flag, or null when there is no live marker —
-expired and never-existed are the same answer,
-deliberately. A 404 failure when the group is
-not registered, which is a different thing from
+                <section class="phpdocumentor-description"><p>The flag, or <a href="classes/Shared-Exceptions-Result.html#method_void"><abbr title="\Shared\Exceptions\Result::void()">Result::void()</abbr></a> when there is no
+live marker — expired and never-existed are the same
+answer, deliberately. A 404 failure when the group
+is not registered, which is a different thing from
 the group being empty; a 500 on a read error.</p>
 </section>
 

@@ -80,15 +80,11 @@
                 
             </li>
                     <li>
-                <a href="namespaces/api-dto.html" class="">DTO</a>
-                
-            </li>
-                    <li>
-                <a href="namespaces/api-fbs.html" class="">Fbs</a>
-                
-            </li>
-                    <li>
                 <a href="namespaces/api-http.html" class="">Http</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/api-negociation.html" class="">Negociation</a>
                 
             </li>
             </ul>
@@ -247,19 +243,24 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/ProblemResponse.php"><a href="files/src-api-http-problemresponse.html"><abbr title="src/API/Http/ProblemResponse.php">ProblemResponse.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
-            <a href="classes/API-Http-ProblemResponse.html#source-view.39" class="phpdocumentor-element-found-in__source" data-line="39" data-modal="source-view" data-src="files/src/API/Http/ProblemResponse.php.txt"></a>
+            <a href="classes/API-Http-ProblemResponse.html#source-view.47" class="phpdocumentor-element-found-in__source" data-line="47" data-modal="source-view" data-src="files/src/API/Http/ProblemResponse.php.txt"></a>
     </aside>
 
             <p class="phpdocumentor-summary">Builds standardized error responses as RFC 7807 problem details.</p>
 
 
-    <section class="phpdocumentor-description"><p>Errors are always emitted as <code class="prettyprint">application/problem+json</code>, independent of
-content negotiation, so an error never depends on (or fails because of) the
-FlatBuffer machinery. <a href="classes/API-Http-Middleware-RecovererMiddleware.html"><abbr title="\API\Http\Middleware\RecovererMiddleware">RecovererMiddleware</abbr></a>,
-<a href="classes/API-Http-Middleware-RouteDispatchMiddleware.html"><abbr title="\API\Http\Middleware\RouteDispatchMiddleware">RouteDispatchMiddleware</abbr></a> and the controllers (via
-<abbr title="\API\Http\fromResult()">fromResult()</abbr>) all go through here.</p>
+    <section class="phpdocumentor-description"><p><code class="prettyprint">ProblemDetails</code> is a table of the published schema like any other, so an
+error is rendered by the same <a href="classes/API-Negociation-IAcceptsStrategy.html"><abbr title="\API\Negociation\IAcceptsStrategy">IAcceptsStrategy</abbr></a> as a success: a caller
+that asked for binary gets the problem document in binary. What stays special
+is the media type — <code class="prettyprint">application/problem+json</code> on the JSON branch, so a
+client switching on it keeps working — and that follows from the status code,
+in <a href="classes/API-Http-ContentKind.html#method_mediaType"><abbr title="\API\Http\ContentKind::mediaType()">ContentKind::mediaType()</abbr></a>.</p>
+<p>An error raised before negotiation ran — anything
+<a href="classes/API-Http-Middleware-RecovererMiddleware.html"><abbr title="\API\Http\Middleware\RecovererMiddleware">RecovererMiddleware</abbr></a> catches from outside the
+negotiation middleware — still answers, because the strategy context falls
+back to JSON when nothing was recorded.</p>
 </section>
 
 
@@ -279,7 +280,7 @@ FlatBuffer machinery. <a href="classes/API-Http-Middleware-RecovererMiddleware.h
 
                                     </dd>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/API-Fbs-Common-ProblemDetailsProxy.html"><abbr title="\API\Fbs\Common\ProblemDetailsProxy">ProblemDetailsProxy</abbr></a></span>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/API-Negociation-DTO-Common-ProblemDetailsX.html"><abbr title="\API\Negociation\DTO\Common\ProblemDetailsX">ProblemDetailsX</abbr></a></span>
                                                                     <section class="phpdocumentor-description"><p>The document's shape.</p>
 </section>
 
@@ -376,9 +377,9 @@ and message carried by its {@see \Shared\Exceptions\LeafContext}.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/ProblemResponse.php"><a href="files/src-api-http-problemresponse.html"><abbr title="src/API/Http/ProblemResponse.php">ProblemResponse.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
-            <a href="classes/API-Http-ProblemResponse.html#source-view.47" class="phpdocumentor-element-found-in__source" data-line="47" data-modal="source-view" data-src="files/src/API/Http/ProblemResponse.php.txt"></a>
+            <a href="classes/API-Http-ProblemResponse.html#source-view.55" class="phpdocumentor-element-found-in__source" data-line="55" data-modal="source-view" data-src="files/src/API/Http/ProblemResponse.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Reason phrases for the status codes the domain surfaces through a
@@ -389,7 +390,7 @@ and message carried by its {@see \Shared\Exceptions\LeafContext}.</dd>
     <span class="phpdocumentor-signature__visibility">private</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">TITLES</span>
-    = <span class="phpdocumentor-signature__default-value">[400 =&gt; &#039;Bad Request&#039;, 401 =&gt; &#039;Unauthorized&#039;, 403 =&gt; &#039;Forbidden&#039;, 404 =&gt; &#039;Not Found&#039;, 405 =&gt; &#039;Method Not Allowed&#039;, 409 =&gt; &#039;Conflict&#039;, 422 =&gt; &#039;Unprocessable Entity&#039;, 500 =&gt; &#039;Internal Server Error&#039;, 503 =&gt; &#039;Service Unavailable&#039;]</span>
+    = <span class="phpdocumentor-signature__default-value">[400 =&gt; &#039;Bad Request&#039;, 401 =&gt; &#039;Unauthorized&#039;, 403 =&gt; &#039;Forbidden&#039;, 404 =&gt; &#039;Not Found&#039;, 405 =&gt; &#039;Method Not Allowed&#039;, 409 =&gt; &#039;Conflict&#039;, 422 =&gt; &#039;Unprocessable Entity&#039;, 500 =&gt; &#039;Internal Server Error&#039;, 502 =&gt; &#039;Bad Gateway&#039;, 503 =&gt; &#039;Service Unavailable&#039;]</span>
 </code>
 
 
@@ -423,9 +424,9 @@ and message carried by its {@see \Shared\Exceptions\LeafContext}.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/ProblemResponse.php"><a href="files/src-api-http-problemresponse.html"><abbr title="src/API/Http/ProblemResponse.php">ProblemResponse.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">113</span>
+    <span class="phpdocumentor-element-found-in__line">139</span>
 
-            <a href="classes/API-Http-ProblemResponse.html#source-view.113" class="phpdocumentor-element-found-in__source" data-line="113" data-modal="source-view" data-src="files/src/API/Http/ProblemResponse.php.txt"></a>
+            <a href="classes/API-Http-ProblemResponse.html#source-view.139" class="phpdocumentor-element-found-in__source" data-line="139" data-modal="source-view" data-src="files/src/API/Http/ProblemResponse.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Maps a failed {@see Result} to a problem response, using the status code
@@ -433,7 +434,7 @@ and message carried by its {@see \Shared\Exceptions\LeafContext}.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">fromResult</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$result</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">fromResult</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/API-Negociation-IAcceptsStrategy.html"><abbr title="\API\Negociation\IAcceptsStrategy">IAcceptsStrategy</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$accepts</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$result</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
             <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
@@ -447,6 +448,15 @@ problem, not the caller's.</p>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$accepts</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/API-Negociation-IAcceptsStrategy.html"><abbr title="\API\Negociation\IAcceptsStrategy">IAcceptsStrategy</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Renders the document.</p>
+</section>
+
+            </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$result</span>
                 : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, mixed&gt;</span>
@@ -501,28 +511,40 @@ problem, not the caller's.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/ProblemResponse.php"><a href="files/src-api-http-problemresponse.html"><abbr title="src/API/Http/ProblemResponse.php">ProblemResponse.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
-            <a href="classes/API-Http-ProblemResponse.html#source-view.77" class="phpdocumentor-element-found-in__source" data-line="77" data-modal="source-view" data-src="files/src/API/Http/ProblemResponse.php.txt"></a>
+            <a href="classes/API-Http-ProblemResponse.html#source-view.90" class="phpdocumentor-element-found-in__source" data-line="90" data-modal="source-view" data-src="files/src/API/Http/ProblemResponse.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">A problem document with the given status and wording.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">make</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$status</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$title</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$detail</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">'about:blank'</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">make</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/API-Negociation-IAcceptsStrategy.html"><abbr title="\API\Negociation\IAcceptsStrategy">IAcceptsStrategy</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$accepts</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$status</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$title</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$detail</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">'about:blank'</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
             <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
 
         </div>
     
-        <section class="phpdocumentor-description"><p>Always JSON, never a FlatBuffer: an error must be readable by a client
-that failed at the negotiation step.</p>
+        <section class="phpdocumentor-description"><p>Answers a response and not a <a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>, unlike
+<a href="classes/API-Http-ApiResponse.html#method_body"><abbr title="\API\Http\ApiResponse::body()">ApiResponse::body()</abbr></a>: this is what a caller falls back <em>to</em>, so a
+failure here would have nowhere to go. It renders one anyway — see the
+last resort in the body below.</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$accepts</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/API-Negociation-IAcceptsStrategy.html"><abbr title="\API\Negociation\IAcceptsStrategy">IAcceptsStrategy</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Renders the document; in practice the
+request's <abbr title="\API\Negociation\Interno\AcceptsStrategyContext">AcceptsStrategyContext</abbr>.</p>
+</section>
+
+            </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$status</span>
                 : <span class="phpdocumentor-argument-list__argument__type">int</span>

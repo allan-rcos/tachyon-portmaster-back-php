@@ -80,15 +80,11 @@
                 
             </li>
                     <li>
-                <a href="namespaces/api-dto.html" class="">DTO</a>
-                
-            </li>
-                    <li>
-                <a href="namespaces/api-fbs.html" class="">Fbs</a>
-                
-            </li>
-                    <li>
                 <a href="namespaces/api-http.html" class="">Http</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/api-negociation.html" class="">Negociation</a>
                 
             </li>
             </ul>
@@ -259,7 +255,7 @@ a permission exists because a use case declared it, and the set is not
 knowable from the schema.</p>
 <p>The string value is the application/JSON representation and what
 <code class="prettyprint">telemetry_logs.event</code> stores; <abbr title="\Domain\Enums\toInt()">toInt()</abbr> and <abbr title="\Domain\Enums\fromInt()">fromInt()</abbr> convert to
-the FlatBuffer <code class="prettyprint">uint8</code> wire value at the proxy boundary. <strong>Declaration order
+the FlatBuffer <code class="prettyprint">uint8</code> wire value at the factory boundary. <strong>Declaration order
 must match</strong> the <code class="prettyprint">TelemetryEvent</code> enum in
 <code class="prettyprint">swagger/flatbuffers/schemas/common.fbs</code>, because the conversion is by
 ordinal.</p>

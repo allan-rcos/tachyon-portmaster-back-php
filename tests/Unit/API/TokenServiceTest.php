@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 use API\Auth\Interno\FirebaseJwtTokenService;
 use API\Config\JwtConfig;
-use API\Fbs\Token\TokenRoleProxy;
-use API\Fbs\Token\TokenUserProxy;
+use API\Negociation\DTO\Token\TokenRoleX;
+use API\Negociation\DTO\Token\TokenUserX;
+use API\Negociation\DTO\Token\TokenUserXFactory;
 use App\Context\UserContext;
 use Domain\ID\Interno\NanoIdGenerator;
 use Domain\Models\Internal\Role;
@@ -135,15 +136,16 @@ describe('FlatBuffers token claims', function () {
             ->and($this->service->verify($this->service->issueRefresh($this->user))->isSuccess())->toBeFalse();
     });
 
-    it('round-trips the proxy itself, including empty role lists', function () {
-        $bare = new TokenUserProxy('U1', 'Sem papéis', 'x@y.z', []);
+    it('round-trips the claim itself, including empty role lists', function () {
+        $bare = new TokenUserX('U1', 'Sem papéis', 'x@y.z', []);
 
-        $back = TokenUserProxy::fromBinary($bare->toBinary());
+        $back = TokenUserXFactory::fromFlatbuffer(TokenUserXFactory::toFlatbuffer($bare));
 
         expect($back->id)->toBe('U1')->and($back->roles)->toBe([]);
 
-        $withRole = new TokenUserProxy('U1', 'N', 'x@y.z', [new TokenRoleProxy('R', 'Papel', [])]);
+        $withRole = new TokenUserX('U1', 'N', 'x@y.z', [new TokenRoleX('R', 'Papel', [])]);
+        $backWithRole = TokenUserXFactory::fromFlatbuffer(TokenUserXFactory::toFlatbuffer($withRole));
 
-        expect(TokenUserProxy::fromBinary($withRole->toBinary())->roles[0]->permissions)->toBe([]);
+        expect($backWithRole->roles[0]->permissions)->toBe([]);
     });
 })->group('API', 'Auth');

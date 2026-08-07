@@ -25,7 +25,7 @@ use ValueError;
  * metrics; nothing restricts loading by class today.
  *
  * The string value is the application/JSON representation; {@see toInt()} and
- * {@see fromInt()} convert to the FlatBuffer `uint8` wire value at the proxy
+ * {@see fromInt()} convert to the FlatBuffer `uint8` wire value at the factory
  * boundary. **Declaration order must match** the `RiskClass` enum in
  * `swagger/flatbuffers/schemas/common.fbs`, because the conversion is by
  * ordinal.

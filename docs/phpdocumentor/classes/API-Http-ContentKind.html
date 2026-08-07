@@ -80,15 +80,11 @@
                 
             </li>
                     <li>
-                <a href="namespaces/api-dto.html" class="">DTO</a>
-                
-            </li>
-                    <li>
-                <a href="namespaces/api-fbs.html" class="">Fbs</a>
-                
-            </li>
-                    <li>
                 <a href="namespaces/api-http.html" class="">Http</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/api-negociation.html" class="">Negociation</a>
                 
             </li>
             </ul>
@@ -243,20 +239,24 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/ContentKind.php"><a href="files/src-api-http-contentkind.html"><abbr title="src/API/Http/ContentKind.php">ContentKind.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
-            <a href="classes/API-Http-ContentKind.html#source-view.34" class="phpdocumentor-element-found-in__source" data-line="34" data-modal="source-view" data-src="files/src/API/Http/ContentKind.php.txt"></a>
+            <a href="classes/API-Http-ContentKind.html#source-view.39" class="phpdocumentor-element-found-in__source" data-line="39" data-modal="source-view" data-src="files/src/API/Http/ContentKind.php.txt"></a>
     </aside>
 
             <p class="phpdocumentor-summary">Generic wire-format of a payload: FlatBuffer binary or JSON.</p>
 
         
-            <section class="phpdocumentor-description"><p>Negotiation is intentionally reduced to this binary choice. The middleware
-derives the request kind from <code class="prettyprint">Content-Type</code> and the response kind from
-<code class="prettyprint">Accept</code> (they are independent — a caller may POST JSON yet ask for binary
-back, or vice-versa) and stores both in the coroutine context. The Fbs
-proxies read them back to decode the inbound body and to build the outbound
-one.</p>
+            <section class="phpdocumentor-description"><p>Negotiation is intentionally reduced to this binary choice, and this enum is
+only the <em>parser</em> for it: it turns each header into one of two answers, and
+the middleware maps those answers onto the strategies that do the work. The
+request kind comes from <code class="prettyprint">Content-Type</code> and the response kind from <code class="prettyprint">Accept</code>
+— they are independent, since a caller may POST JSON yet ask for binary back.</p>
+<p>It also names the kind: <abbr title="\API\Http\mediaType()">mediaType()</abbr> is what the negotiation middleware
+stamps on the response. That lives here and not on the strategy, because a
+strategy that could be asked which media type it is would be a strategy the
+caller can identify — and the whole point of the pattern is that nobody
+downstream knows which one they hold.</p>
 </section>
 
         
@@ -270,14 +270,14 @@ one.</p>
                 <span class="phpdocumentor-tag__name">see</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/API-Http-Middleware-FlatBufferNegotiationMiddleware.html"><abbr title="\API\Http\Middleware\FlatBufferNegotiationMiddleware">FlatBufferNegotiationMiddleware</abbr></a></span>
-                                                                    <section class="phpdocumentor-description"><p>What resolves both kinds.</p>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/API-Http-Middleware-ContentNegotiationMiddleware.html"><abbr title="\API\Http\Middleware\ContentNegotiationMiddleware">ContentNegotiationMiddleware</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>What resolves both kinds, maps them onto strategies, and labels the answer.</p>
 </section>
 
                                     </dd>
                             <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><a href="classes/API-Http-MediaType.html"><abbr title="\API\Http\MediaType">MediaType</abbr></a></span>
-                                                                    <section class="phpdocumentor-description"><p>The concrete media types these map onto.</p>
+                                                                    <section class="phpdocumentor-description"><p>The concrete names this resolves to.</p>
 </section>
 
                                     </dd>
@@ -363,7 +363,7 @@ that is not an explicit binary/fbs media type falls back to the default.</dd>
     <span>
                                 &nbsp;: <a href="classes/API-Http-MediaType.html"><abbr title="\API\Http\MediaType">MediaType</abbr></a>    </span>
 </dt>
-<dd>The canonical media type to advertise for this kind.</dd>
+<dd>The media type a response of this kind and status advertises.</dd>
 
     </dl>
 
@@ -389,9 +389,9 @@ that is not an explicit binary/fbs media type falls back to the default.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/ContentKind.php"><a href="files/src-api-http-contentkind.html"><abbr title="src/API/Http/ContentKind.php">ContentKind.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
-            <a href="classes/API-Http-ContentKind.html#source-view.39" class="phpdocumentor-element-found-in__source" data-line="39" data-modal="source-view" data-src="files/src/API/Http/ContentKind.php.txt"></a>
+            <a href="classes/API-Http-ContentKind.html#source-view.44" class="phpdocumentor-element-found-in__source" data-line="44" data-modal="source-view" data-src="files/src/API/Http/ContentKind.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">FlatBuffer binary.</p>
@@ -417,9 +417,9 @@ that is not an explicit binary/fbs media type falls back to the default.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/ContentKind.php"><a href="files/src-api-http-contentkind.html"><abbr title="src/API/Http/ContentKind.php">ContentKind.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
-            <a href="classes/API-Http-ContentKind.html#source-view.44" class="phpdocumentor-element-found-in__source" data-line="44" data-modal="source-view" data-src="files/src/API/Http/ContentKind.php.txt"></a>
+            <a href="classes/API-Http-ContentKind.html#source-view.49" class="phpdocumentor-element-found-in__source" data-line="49" data-modal="source-view" data-src="files/src/API/Http/ContentKind.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">JSON.</p>
@@ -453,9 +453,9 @@ that is not an explicit binary/fbs media type falls back to the default.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/ContentKind.php"><a href="files/src-api-http-contentkind.html"><abbr title="src/API/Http/ContentKind.php">ContentKind.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">83</span>
+    <span class="phpdocumentor-element-found-in__line">88</span>
 
-            <a href="classes/API-Http-ContentKind.html#source-view.83" class="phpdocumentor-element-found-in__source" data-line="83" data-modal="source-view" data-src="files/src/API/Http/ContentKind.php.txt"></a>
+            <a href="classes/API-Http-ContentKind.html#source-view.88" class="phpdocumentor-element-found-in__source" data-line="88" data-modal="source-view" data-src="files/src/API/Http/ContentKind.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Resolves the kind a client wants for the response from `Accept`. Anything
@@ -537,9 +537,9 @@ for neither.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/ContentKind.php"><a href="files/src-api-http-contentkind.html"><abbr title="src/API/Http/ContentKind.php">ContentKind.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
-            <a href="classes/API-Http-ContentKind.html#source-view.61" class="phpdocumentor-element-found-in__source" data-line="61" data-modal="source-view" data-src="files/src/API/Http/ContentKind.php.txt"></a>
+            <a href="classes/API-Http-ContentKind.html#source-view.66" class="phpdocumentor-element-found-in__source" data-line="66" data-modal="source-view" data-src="files/src/API/Http/ContentKind.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Resolves the kind a client used for its request body from `Content-Type`.</p>
@@ -623,24 +623,42 @@ side's <abbr title="\API\Http\self::Json">self::Json</abbr>.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/ContentKind.php"><a href="files/src-api-http-contentkind.html"><abbr title="src/API/Http/ContentKind.php">ContentKind.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">111</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
-            <a href="classes/API-Http-ContentKind.html#source-view.111" class="phpdocumentor-element-found-in__source" data-line="111" data-modal="source-view" data-src="files/src/API/Http/ContentKind.php.txt"></a>
+            <a href="classes/API-Http-ContentKind.html#source-view.123" class="phpdocumentor-element-found-in__source" data-line="123" data-modal="source-view" data-src="files/src/API/Http/ContentKind.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">The canonical media type to advertise for this kind.</p>
+        <p class="phpdocumentor-summary">The media type a response of this kind and status advertises.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">mediaType</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/API-Http-MediaType.html"><abbr title="\API\Http\MediaType">MediaType</abbr></a></span></code>
+                    <span class="phpdocumentor-signature__name">mediaType</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$status</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">200</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/API-Http-MediaType.html"><abbr title="\API\Http\MediaType">MediaType</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
             <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
 
         </div>
     
-    
-    
+        <section class="phpdocumentor-description"><p>The status is what decides between <code class="prettyprint">application/json</code> and RFC 7807's
+<code class="prettyprint">application/problem+json</code>: every 4xx and 5xx in this API <em>is</em> a problem
+document, and a client switching on that media type must keep seeing it.
+Binary has no such variant — an error and a success carry the same type
+there, and the status code is what tells them apart.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$status</span>
+                : <span class="phpdocumentor-argument-list__argument__type">int</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">200</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The response's HTTP status.</p>
+</section>
+
+            </dd>
+            </dl>
+
     
     <h5 class="phpdocumentor-tag-list__heading" id="method_mediaType_tags">
         Tags

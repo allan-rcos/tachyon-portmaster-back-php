@@ -164,9 +164,10 @@ final readonly class RefreshTokenService implements IRefreshTokenService
             return self::invalid();
         }
 
-        // Anything but true means this token is spent: consumed by an earlier
-        // refresh, revoked by a logout, or expired. All the same answer.
-        if ($live->getValue() !== true) {
+        // Anything but a live `true` means this token is spent: consumed by an
+        // earlier refresh, revoked by a logout, or expired — the empty result.
+        // All the same answer.
+        if ($live->isEmpty() || $live->getValue() !== true) {
             return self::invalid();
         }
 

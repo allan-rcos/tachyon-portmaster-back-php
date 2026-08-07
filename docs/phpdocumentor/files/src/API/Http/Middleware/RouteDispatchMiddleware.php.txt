@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace API\Http\Middleware;
 
 use API\Http\ProblemResponse;
+use API\Negociation\IAcceptsStrategy;
 use FastRoute\Dispatcher;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -45,12 +46,14 @@ final class RouteDispatchMiddleware implements MiddlewareInterface
     /**
      * @param  Dispatcher  $dispatcher  Built from {@see \API\Http\Router\RouterHub}.
      * @param  array<class-string, object>  $controllers  Controller interface => instance.
+     * @param  IAcceptsStrategy  $accepts  Renders the problem documents below.
      *
      * @copyright 2026 Tachyon
      */
     public function __construct(
         private readonly Dispatcher $dispatcher,
         private readonly array $controllers,
+        private readonly IAcceptsStrategy $accepts,
     ) {
     }
 
@@ -92,6 +95,7 @@ final class RouteDispatchMiddleware implements MiddlewareInterface
                 $controller = $this->controllers[$controllerInterface] ?? null;
                 if ($controller === null) {
                     return ProblemResponse::make(
+                        $this->accepts,
                         500,
                         'Internal Server Error',
                         sprintf('No controller registered for %s.', $controllerInterface),
@@ -106,6 +110,7 @@ final class RouteDispatchMiddleware implements MiddlewareInterface
                 $allowedMethods = $routeInfo[1];
 
                 return ProblemResponse::make(
+                    $this->accepts,
                     405,
                     'Method Not Allowed',
                     sprintf('The %s method is not allowed for this route.', $request->getMethod()),
@@ -114,6 +119,7 @@ final class RouteDispatchMiddleware implements MiddlewareInterface
             case Dispatcher::NOT_FOUND:
             default:
                 return ProblemResponse::make(
+                    $this->accepts,
                     404,
                     'Not Found',
                     sprintf("The route '%s' was not found.", $request->getUri()->getPath()),

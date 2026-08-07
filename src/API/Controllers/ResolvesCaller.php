@@ -28,7 +28,7 @@ use Shared\Exceptions\Result;
  * ```php
  * $caller = $this->caller();
  * if (!$caller->isSuccess()) {
- *     return ProblemResponse::fromResult($caller);
+ *     return ProblemResponse::fromResult($this->accepts, $caller);
  * }
  * $context = $caller->getValue();
  * ```

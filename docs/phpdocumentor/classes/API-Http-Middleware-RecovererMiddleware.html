@@ -80,15 +80,11 @@
                 
             </li>
                     <li>
-                <a href="namespaces/api-dto.html" class="">DTO</a>
-                
-            </li>
-                    <li>
-                <a href="namespaces/api-fbs.html" class="">Fbs</a>
-                
-            </li>
-                    <li>
                 <a href="namespaces/api-http.html" class="">Http</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/api-negociation.html" class="">Negociation</a>
                 
             </li>
             </ul>
@@ -251,9 +247,9 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Middleware/RecovererMiddleware.php"><a href="files/src-api-http-middleware-recoverermiddleware.html"><abbr title="src/API/Http/Middleware/RecovererMiddleware.php">RecovererMiddleware.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">58</span>
 
-            <a href="classes/API-Http-Middleware-RecovererMiddleware.html#source-view.46" class="phpdocumentor-element-found-in__source" data-line="46" data-modal="source-view" data-src="files/src/API/Http/Middleware/RecovererMiddleware.php.txt"></a>
+            <a href="classes/API-Http-Middleware-RecovererMiddleware.html#source-view.58" class="phpdocumentor-element-found-in__source" data-line="58" data-modal="source-view" data-src="files/src/API/Http/Middleware/RecovererMiddleware.php.txt"></a>
     </aside>
 
             <p class="phpdocumentor-summary">Catches any {@see Throwable} thrown by inner middlewares/controllers and turns
@@ -268,6 +264,13 @@ converted to a response.</p>
 request that throws never reaches that middleware's &quot;Request handled&quot; line,
 so a 500 recovered here appears in the log as this class's error entry and
 not as an access-log line.</p>
+<p>It is also outside the negotiation middleware, which has two consequences.
+A throwable raised before negotiation ran is answered in JSON — the strategy
+context's fallback, and the safe direction: a client that failed at the
+negotiation step can still read the document explaining why. And nothing has
+labelled the response by the time it gets here, so this reads <code class="prettyprint">Accept</code> itself
+for the one answer that never passes through the middleware that normally
+would.</p>
 </section>
 
 
@@ -343,6 +346,12 @@ not as an access-log line.</p>
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
+    <a class="" href="classes/API-Http-Middleware-RecovererMiddleware.html#property_accepts">$accepts</a>
+    <span>
+                        &nbsp;: <a href="classes/API-Negociation-IAcceptsStrategy.html"><abbr title="\API\Negociation\IAcceptsStrategy">IAcceptsStrategy</abbr></a>            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a class="" href="classes/API-Http-Middleware-RecovererMiddleware.html#property_logger">$logger</a>
     <span>
                         &nbsp;: <a href="classes/Infra-Logging-ILogger.html"><abbr title="\Infra\Logging\ILogger">ILogger</abbr></a>            </span>
@@ -387,6 +396,44 @@ not as an access-log line.</p>
             phpdocumentor-element
             -property
             -private
+                                                -read-only                    "
+>
+    <h4 class="phpdocumentor-element__name" id="property_accepts">
+        $accepts
+        <a href="classes/API-Http-Middleware-RecovererMiddleware.html#property_accepts" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>                    </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Middleware/RecovererMiddleware.php"><a href="files/src-api-http-middleware-recoverermiddleware.html"><abbr title="src/API/Http/Middleware/RecovererMiddleware.php">RecovererMiddleware.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">72</span>
+
+            <a href="classes/API-Http-Middleware-RecovererMiddleware.html#source-view.72" class="phpdocumentor-element-found-in__source" data-line="72" data-modal="source-view" data-src="files/src/API/Http/Middleware/RecovererMiddleware.php.txt"></a>
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/API-Negociation-IAcceptsStrategy.html"><abbr title="\API\Negociation\IAcceptsStrategy">IAcceptsStrategy</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$accepts</span>
+    </code>
+
+    
+    
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -private
                                                                     "
 >
     <h4 class="phpdocumentor-element__name" id="property_logger">
@@ -399,9 +446,9 @@ not as an access-log line.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Middleware/RecovererMiddleware.php"><a href="files/src-api-http-middleware-recoverermiddleware.html"><abbr title="src/API/Http/Middleware/RecovererMiddleware.php">RecovererMiddleware.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 
-            <a href="classes/API-Http-Middleware-RecovererMiddleware.html#source-view.51" class="phpdocumentor-element-found-in__source" data-line="51" data-modal="source-view" data-src="files/src/API/Http/Middleware/RecovererMiddleware.php.txt"></a>
+            <a href="classes/API-Http-Middleware-RecovererMiddleware.html#source-view.63" class="phpdocumentor-element-found-in__source" data-line="63" data-modal="source-view" data-src="files/src/API/Http/Middleware/RecovererMiddleware.php.txt"></a>
     </aside>
 
     
@@ -444,15 +491,15 @@ not as an access-log line.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Middleware/RecovererMiddleware.php"><a href="files/src-api-http-middleware-recoverermiddleware.html"><abbr title="src/API/Http/Middleware/RecovererMiddleware.php">RecovererMiddleware.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">71</span>
 
-            <a href="classes/API-Http-Middleware-RecovererMiddleware.html#source-view.58" class="phpdocumentor-element-found-in__source" data-line="58" data-modal="source-view" data-src="files/src/API/Http/Middleware/RecovererMiddleware.php.txt"></a>
+            <a href="classes/API-Http-Middleware-RecovererMiddleware.html#source-view.71" class="phpdocumentor-element-found-in__source" data-line="71" data-modal="source-view" data-src="files/src/API/Http/Middleware/RecovererMiddleware.php.txt"></a>
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Infra-Logging-ILogger.html"><abbr title="\Infra\Logging\ILogger">ILogger</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$logger</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/API-Negociation-IAcceptsStrategy.html"><abbr title="\API\Negociation\IAcceptsStrategy">IAcceptsStrategy</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$accepts</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Infra-Logging-ILogger.html"><abbr title="\Infra\Logging\ILogger">ILogger</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$logger</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -460,6 +507,15 @@ not as an access-log line.</p>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$accepts</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/API-Negociation-IAcceptsStrategy.html"><abbr title="\API\Negociation\IAcceptsStrategy">IAcceptsStrategy</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Renders the problem document.</p>
+</section>
+
+            </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-argument-list__argument__name">$logger</span>
                 : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Infra-Logging-ILogger.html"><abbr title="\Infra\Logging\ILogger">ILogger</abbr></a></span>
@@ -506,9 +562,9 @@ not as an access-log line.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/Middleware/RecovererMiddleware.php"><a href="files/src-api-http-middleware-recoverermiddleware.html"><abbr title="src/API/Http/Middleware/RecovererMiddleware.php">RecovererMiddleware.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
-            <a href="classes/API-Http-Middleware-RecovererMiddleware.html#source-view.78" class="phpdocumentor-element-found-in__source" data-line="78" data-modal="source-view" data-src="files/src/API/Http/Middleware/RecovererMiddleware.php.txt"></a>
+            <a href="classes/API-Http-Middleware-RecovererMiddleware.html#source-view.93" class="phpdocumentor-element-found-in__source" data-line="93" data-modal="source-view" data-src="files/src/API/Http/Middleware/RecovererMiddleware.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Runs the inner stack, converting anything it throws into a 500.</p>
@@ -693,6 +749,7 @@ caller's report.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Properties</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/API-Http-Middleware-RecovererMiddleware.html#property_accepts">$accepts</a></li>
                                                     <li class=""><a href="classes/API-Http-Middleware-RecovererMiddleware.html#property_logger">$logger</a></li>
                                             </ul>
                 </li>

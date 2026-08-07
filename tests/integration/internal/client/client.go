@@ -15,6 +15,11 @@ import (
 
 const contentType = "application/x-flatbuffers"
 
+// jsonContentType is what a client asks for when it wants the JSON side of the
+// same contract. Used only by the negotiation test — every other request in the
+// suite is binary, which is the wire the front end actually speaks.
+const jsonContentType = "application/json"
+
 // The two halves of what sits between the base URL and a path, mirroring the
 // back end: apiPrefix is where the whole API is mounted (empty — it is the root
 // of the process), apiVersion is the contract version. Applied here, once, so
@@ -29,13 +34,17 @@ const (
 type Client struct {
 	baseURL string
 	prefix  string
+	accept  string
 	http    *http.Client
 }
 
-// Response is a decoded HTTP response: status plus the raw FlatBuffers body.
+// Response is a decoded HTTP response: status, the raw body, and the media type
+// the server said the body is. The last one is what proves negotiation happened
+// rather than merely not failing.
 type Response struct {
-	Status int
-	Body   []byte
+	Status      int
+	ContentType string
+	Body        []byte
 }
 
 // New returns a client for the given base URL with its own cookie jar. It asks
@@ -46,6 +55,7 @@ func New(baseURL string) *Client {
 	return &Client{
 		baseURL: baseURL,
 		prefix:  apiPrefix + apiVersion,
+		accept:  contentType,
 		http:    &http.Client{Jar: jar, Timeout: 20 * time.Second},
 	}
 }
@@ -58,6 +68,19 @@ func (c *Client) Unversioned() *Client {
 	return &Client{
 		baseURL: c.baseURL,
 		prefix:  apiPrefix,
+		accept:  c.accept,
+		http:    c.http,
+	}
+}
+
+// AsJSON returns a view of the same session that asks for JSON back. Like
+// Unversioned it shares the http client and therefore the cookie jar, so the
+// same authenticated caller can be answered in either format.
+func (c *Client) AsJSON() *Client {
+	return &Client{
+		baseURL: c.baseURL,
+		prefix:  c.prefix,
+		accept:  jsonContentType,
 		http:    c.http,
 	}
 }
@@ -74,8 +97,10 @@ func (c *Client) do(t *testing.T, method, path string, body []byte) Response {
 	if err != nil {
 		t.Fatalf("build request %s %s: %v", method, path, err)
 	}
-	req.Header.Set("Accept", contentType)
+	req.Header.Set("Accept", c.accept)
 	if body != nil {
+		// The request body stays binary even when the answer is asked for in
+		// JSON: the two headers are negotiated independently.
 		req.Header.Set("Content-Type", contentType)
 	}
 
@@ -90,7 +115,11 @@ func (c *Client) do(t *testing.T, method, path string, body []byte) Response {
 		t.Fatalf("read body %s %s: %v", method, path, err)
 	}
 
-	return Response{Status: resp.StatusCode, Body: data}
+	return Response{
+		Status:      resp.StatusCode,
+		ContentType: resp.Header.Get("Content-Type"),
+		Body:        data,
+	}
 }
 
 // Cookie returns the value of a cookie currently held in the jar, or "" when it

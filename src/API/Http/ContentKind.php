@@ -18,15 +18,20 @@ namespace API\Http;
 /**
  * Generic wire-format of a payload: FlatBuffer binary or JSON.
  *
- * Negotiation is intentionally reduced to this binary choice. The middleware
- * derives the request kind from `Content-Type` and the response kind from
- * `Accept` (they are independent — a caller may POST JSON yet ask for binary
- * back, or vice-versa) and stores both in the coroutine context. The Fbs
- * proxies read them back to decode the inbound body and to build the outbound
- * one.
+ * Negotiation is intentionally reduced to this binary choice, and this enum is
+ * only the *parser* for it: it turns each header into one of two answers, and
+ * the middleware maps those answers onto the strategies that do the work. The
+ * request kind comes from `Content-Type` and the response kind from `Accept`
+ * — they are independent, since a caller may POST JSON yet ask for binary back.
  *
- * @see \API\Http\Middleware\FlatBufferNegotiationMiddleware What resolves both kinds.
- * @see MediaType The concrete media types these map onto.
+ * It also names the kind: {@see mediaType()} is what the negotiation middleware
+ * stamps on the response. That lives here and not on the strategy, because a
+ * strategy that could be asked which media type it is would be a strategy the
+ * caller can identify — and the whole point of the pattern is that nobody
+ * downstream knows which one they hold.
+ *
+ * @see \API\Http\Middleware\ContentNegotiationMiddleware What resolves both kinds, maps them onto strategies, and labels the answer.
+ * @see MediaType The concrete names this resolves to.
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
@@ -100,16 +105,27 @@ enum ContentKind: string
     }
 
     /**
-     * The canonical media type to advertise for this kind.
+     * The media type a response of this kind and status advertises.
      *
+     * The status is what decides between `application/json` and RFC 7807's
+     * `application/problem+json`: every 4xx and 5xx in this API *is* a problem
+     * document, and a client switching on that media type must keep seeing it.
+     * Binary has no such variant — an error and a success carry the same type
+     * there, and the status code is what tells them apart.
+     *
+     * @param  int  $status  The response's HTTP status.
      * @return MediaType What goes in the response's `Content-Type`.
      *
      * @copyright 2026 Tachyon
      *
      * @api
      */
-    public function mediaType(): MediaType
+    public function mediaType(int $status = 200): MediaType
     {
-        return $this === self::Json ? MediaType::Json : MediaType::Fbs;
+        if ($this === self::Fbs) {
+            return MediaType::Fbs;
+        }
+
+        return $status >= 400 ? MediaType::ProblemJson : MediaType::Json;
     }
 }

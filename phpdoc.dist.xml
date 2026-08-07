@@ -33,10 +33,11 @@
                     Every `composer flatbuffers` run overwrites these, so any
                     docblock written into them is lost on the next schema change
                     — which is exactly why they are excluded rather than
-                    documented. What the rest of the codebase actually talks to
-                    is the hand-written `*Proxy` class layered over each one
-                    (see src/API/Fbs/Contracts/IFbsProxy.php), and those ARE
-                    documented and rendered.
+                    documented. They are also the whole of src/API/Fbs/. What the
+                    rest of the codebase actually talks to is the DTO and factory
+                    pair standing in front of each one, under
+                    src/API/Negociation/DTO/, and those ARE documented and
+                    rendered.
 
                     The same boundary is drawn in phpstan.neon, whose baseline
                     holds findings from these files and nothing else.

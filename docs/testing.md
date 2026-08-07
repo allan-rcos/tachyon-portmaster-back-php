@@ -96,8 +96,10 @@ manifests, metrics).
 PHPStan level 9 over `src`, with a baseline holding findings from
 flatc-generated files **and nothing else** — those are rewritten on every
 `composer flatbuffers`, so a finding there cannot be fixed in place; the fix
-belongs in `scripts/patch-flatbuffers.php`. Everything hand-written, including
-the `*Proxy` classes that extend generated tables, is fully analysed. See
+belongs in `scripts/patch-flatbuffers.php`. `src/API/Fbs/` holds nothing but
+generated code, so that directory and the baseline are the same set; everything
+hand-written, the DTOs and factories under `src/API/Negociation/` included, is
+fully analysed. See
 [ADR 0007](adr/0007-phpstan-baseline-limited-to-generated-code.md).
 
 ```bash

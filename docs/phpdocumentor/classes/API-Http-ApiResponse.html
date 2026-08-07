@@ -80,15 +80,11 @@
                 
             </li>
                     <li>
-                <a href="namespaces/api-dto.html" class="">DTO</a>
-                
-            </li>
-                    <li>
-                <a href="namespaces/api-fbs.html" class="">Fbs</a>
-                
-            </li>
-                    <li>
                 <a href="namespaces/api-http.html" class="">Http</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/api-negociation.html" class="">Negociation</a>
                 
             </li>
             </ul>
@@ -247,18 +243,20 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/ApiResponse.php"><a href="files/src-api-http-apiresponse.html"><abbr title="src/API/Http/ApiResponse.php">ApiResponse.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
-            <a href="classes/API-Http-ApiResponse.html#source-view.41" class="phpdocumentor-element-found-in__source" data-line="41" data-modal="source-view" data-src="files/src/API/Http/ApiResponse.php.txt"></a>
+            <a href="classes/API-Http-ApiResponse.html#source-view.45" class="phpdocumentor-element-found-in__source" data-line="45" data-modal="source-view" data-src="files/src/API/Http/ApiResponse.php.txt"></a>
     </aside>
 
-            <p class="phpdocumentor-summary">Builds successful API responses from a FlatBuffer proxy, honouring the
-response {@see ContentKind} negotiated for the request.</p>
+            <p class="phpdocumentor-summary">Builds successful API responses out of a message factory and the strategy
+negotiated for the request.</p>
 
 
-    <section class="phpdocumentor-description"><p>Controllers stay oblivious to json-vs-binary: they hand a proxy here and the
-body is serialized via <a href="classes/API-Fbs-Contracts-IFbsProxy.html#method_toStream"><abbr title="\API\Fbs\Contracts\IFbsProxy::toStream()">IFbsProxy::toStream()</abbr></a> with the matching
-<code class="prettyprint">Content-Type</code>. Errors go through <a href="classes/API-Http-ProblemResponse.html"><abbr title="\API\Http\ProblemResponse">ProblemResponse</abbr></a> instead.</p>
+    <section class="phpdocumentor-description"><p>Controllers stay oblivious to json-vs-binary: they wrap their DTO in its
+<a href="classes/API-Negociation-IResponseAbstractFactory.html"><abbr title="\API\Negociation\IResponseAbstractFactory">IResponseAbstractFactory</abbr></a> and hand it here with the
+<a href="classes/API-Negociation-IAcceptsStrategy.html"><abbr title="\API\Negociation\IAcceptsStrategy">IAcceptsStrategy</abbr></a> they were injected with. The strategy renders the
+body; the negotiation middleware names it on the way out, so neither this
+class nor its caller ever has to know which format was chosen.</p>
 <p>There is deliberately <strong>no</strong> &quot;plain JSON&quot; escape hatch. Every response body
 must be a FlatBuffers table declared in <code class="prettyprint">swagger/flatbuffers/schemas</code> and
 published in <code class="prettyprint">swagger.json</code> — an endpoint answering with an ad-hoc structure
@@ -282,8 +280,8 @@ is an endpoint no client can discover.</p>
 
                                     </dd>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/API-Fbs-Contracts-IFbsProxy.html"><abbr title="\API\Fbs\Contracts\IFbsProxy">IFbsProxy</abbr></a></span>
-                                                                    <section class="phpdocumentor-description"><p>What every body must be.</p>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/API-Negociation-IResponseAbstractFactory.html"><abbr title="\API\Negociation\IResponseAbstractFactory">IResponseAbstractFactory</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>What every body must be wrapped in.</p>
 </section>
 
                                     </dd>
@@ -331,9 +329,9 @@ is an endpoint no client can discover.</p>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/API-Http-ApiResponse.html#method_body">body()</a>
     <span>
-                                &nbsp;: <abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr>    </span>
+                                &nbsp;: <a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, <abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr>&gt;    </span>
 </dt>
-<dd>A response carrying the proxy as its (negotiated) body.</dd>
+<dd>A response carrying the factory&#039;s message as its (negotiated) body.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/API-Http-ApiResponse.html#method_noContent">noContent()</a>
@@ -370,35 +368,50 @@ is an endpoint no client can discover.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/ApiResponse.php"><a href="files/src-api-http-apiresponse.html"><abbr title="src/API/Http/ApiResponse.php">ApiResponse.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">70</span>
 
-            <a href="classes/API-Http-ApiResponse.html#source-view.58" class="phpdocumentor-element-found-in__source" data-line="58" data-modal="source-view" data-src="files/src/API/Http/ApiResponse.php.txt"></a>
+            <a href="classes/API-Http-ApiResponse.html#source-view.70" class="phpdocumentor-element-found-in__source" data-line="70" data-modal="source-view" data-src="files/src/API/Http/ApiResponse.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">A response carrying the proxy as its (negotiated) body.</p>
+        <p class="phpdocumentor-summary">A response carrying the factory&#039;s message as its (negotiated) body.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">body</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/API-Fbs-Contracts-IFbsProxy.html"><abbr title="\API\Fbs\Contracts\IFbsProxy">IFbsProxy</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$proxy</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$status</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">200</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">body</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/API-Negociation-IAcceptsStrategy.html"><abbr title="\API\Negociation\IAcceptsStrategy">IAcceptsStrategy</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$accepts</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/API-Negociation-IResponseAbstractFactory.html"><abbr title="\API\Negociation\IResponseAbstractFactory">IResponseAbstractFactory</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$factory</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$status</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">200</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, <abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
             <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
 
         </div>
     
-        <section class="phpdocumentor-description"><p>Falls back to JSON when no kind was negotiated — which happens only if the
-negotiation middleware did not run, so the safe default is the one any
-client can read.</p>
+        <section class="phpdocumentor-description"><p>Answers a <a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a> because rendering can fail, and this is not the
+place that decides what such a failure means: the controller receives it
+and answers a problem document — a 502, since the message was built and
+it is the <em>server</em> that could not put it on the wire.</p>
+<p>No <code class="prettyprint">Content-Type</code> is set here. The bytes are one decision and their name
+is another, and the second belongs to
+<a href="classes/API-Http-Middleware-ContentNegotiationMiddleware.html"><abbr title="\API\Http\Middleware\ContentNegotiationMiddleware">ContentNegotiationMiddleware</abbr></a>, which read the
+<code class="prettyprint">Accept</code> header in the first place and labels every answer on the way out.</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$proxy</span>
-                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/API-Fbs-Contracts-IFbsProxy.html"><abbr title="\API\Fbs\Contracts\IFbsProxy">IFbsProxy</abbr></a></span>
+                <span class="phpdocumentor-argument-list__argument__name">$accepts</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/API-Negociation-IAcceptsStrategy.html"><abbr title="\API\Negociation\IAcceptsStrategy">IAcceptsStrategy</abbr></a></span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The table to serialize as the body.</p>
+                    <section class="phpdocumentor-description"><p>Renders the body; in practice the
+request's <abbr title="\API\Negociation\Interno\AcceptsStrategyContext">AcceptsStrategyContext</abbr>.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$factory</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/API-Negociation-IResponseAbstractFactory.html"><abbr title="\API\Negociation\IResponseAbstractFactory">IResponseAbstractFactory</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Wraps the message to serialize.</p>
 </section>
 
             </dd>
@@ -434,7 +447,7 @@ client can read.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, <abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr>&gt;</span>
                     &mdash;
                 <section class="phpdocumentor-description"><p>The outgoing HTTP response.</p>
 </section>
@@ -456,9 +469,9 @@ client can read.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/ApiResponse.php"><a href="files/src-api-http-apiresponse.html"><abbr title="src/API/Http/ApiResponse.php">ApiResponse.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">83</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 
-            <a href="classes/API-Http-ApiResponse.html#source-view.83" class="phpdocumentor-element-found-in__source" data-line="83" data-modal="source-view" data-src="files/src/API/Http/ApiResponse.php.txt"></a>
+            <a href="classes/API-Http-ApiResponse.html#source-view.96" class="phpdocumentor-element-found-in__source" data-line="96" data-modal="source-view" data-src="files/src/API/Http/ApiResponse.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">An empty `204 No Content` response.</p>
@@ -473,7 +486,7 @@ client can read.</p>
         </div>
     
         <section class="phpdocumentor-description"><p>No <code class="prettyprint">Content-Type</code>, since there is no content to describe — this is what a
-delete answers with.</p>
+delete answers with, and the one answer that needs no negotiation.</p>
 </section>
 
     

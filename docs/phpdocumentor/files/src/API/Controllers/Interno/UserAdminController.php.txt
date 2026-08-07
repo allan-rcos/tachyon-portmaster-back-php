@@ -17,19 +17,23 @@ namespace API\Controllers\Interno;
 
 use API\Controllers\IUserAdminController;
 use API\Controllers\ResolvesCaller;
-use API\Fbs\Account\RoleResponseProxy;
-use API\Fbs\Admin\UserAdminPasswordResetRequestProxy;
-use API\Fbs\Admin\UserAdminResponseProxy;
-use API\Fbs\Admin\UserListResponseProxy;
-use API\Fbs\Admin\UserCreateRequestProxy;
-use API\Fbs\Admin\UserUpdateRequestProxy;
 use API\Http\ApiResponse;
 use API\Http\ProblemResponse;
+use API\Negociation\DTO\Account\RoleXResponse;
+use API\Negociation\DTO\Admin\UserAdminPasswordResetXRequestFactory;
+use API\Negociation\DTO\Admin\UserAdminXResponse;
+use API\Negociation\DTO\Admin\UserAdminXResponseFactory;
+use API\Negociation\DTO\Admin\UserCreateXRequestFactory;
+use API\Negociation\DTO\Admin\UserListXResponse;
+use API\Negociation\DTO\Admin\UserListXResponseFactory;
+use API\Negociation\DTO\Admin\UserUpdateXRequestFactory;
+use API\Negociation\IAcceptsStrategy;
+use API\Negociation\IContentTypeStrategy;
 use App\Commands\User\CreateUserCommand;
+use App\Commands\User\DeleteUserCommand;
 use App\Commands\User\ResetUserPasswordCommand;
 use App\Commands\User\UpdateUserCommand;
 use App\Commands\User\UpdateUserRolesCommand;
-use App\Commands\User\DeleteUserCommand;
 use App\Context\UserContext;
 use App\Queries\User\GetUserQuery;
 use App\Queries\User\ListUsersQuery;
@@ -50,7 +54,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * User administration endpoints.
  *
  * Every write answers by re-reading through the query side — see
- * {@see respondWithUser()}. The response is the same `UserAdminResponseProxy`
+ * {@see respondWithUser()}. The response is the same `UserAdminXResponse`
  * throughout, so a client gets the whole profile back whichever part of it was
  * just changed.
  *
@@ -77,6 +81,8 @@ final readonly class UserAdminController implements IUserAdminController
      *                                                    {@see resetPassword()}.
      * @param  IUpdateUserRolesUseCase  $updateUserRoles  Backs
      *                                                    {@see updateRoles()}.
+     * @param  IContentTypeStrategy  $contentType  Decodes the request bodies.
+                 * @param  IAcceptsStrategy  $accepts  Renders the response bodies.
      *
      * @copyright 2026 Tachyon
      */
@@ -88,6 +94,8 @@ final readonly class UserAdminController implements IUserAdminController
         private IDeleteUserUseCase $deleteUser,
         private IResetUserPasswordUseCase $resetPassword,
         private IUpdateUserRolesUseCase $updateUserRoles,
+        private IContentTypeStrategy $contentType,
+        private IAcceptsStrategy $accepts,
     ) {
     }
 
@@ -99,7 +107,7 @@ final readonly class UserAdminController implements IUserAdminController
      * `total`.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `UserListResponseProxy`, or a problem
+     * @return ResponseInterface A `UserListXResponse`, or a problem
      *                           document.
      *
      * @copyright 2026 Tachyon
@@ -108,7 +116,7 @@ final readonly class UserAdminController implements IUserAdminController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
@@ -119,7 +127,7 @@ final readonly class UserAdminController implements IUserAdminController
             limit: isset($params['limit']) && is_numeric($params['limit']) ? (int) $params['limit'] : null,
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var UserListView $view */
@@ -130,14 +138,18 @@ final readonly class UserAdminController implements IUserAdminController
             $users[] = $this->response($item);
         }
 
-        return ApiResponse::body(new UserListResponseProxy(data: $users));
+        $response = ApiResponse::body($this->accepts, new UserListXResponseFactory(new UserListXResponse(data: $users)));
+
+        return $response->isSuccess()
+            ? $response->getValue()
+            : ProblemResponse::fromResult($this->accepts, $response);
     }
 
     /**
      * Registers a user with an initial password and role set.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `UserAdminResponseProxy` with 201, or a
+     * @return ResponseInterface A `UserAdminXResponse` with 201, or a
      *                           problem document.
      *
      * @copyright 2026 Tachyon
@@ -146,11 +158,16 @@ final readonly class UserAdminController implements IUserAdminController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
-        $body = UserCreateRequestProxy::fromStream($request->getBody());
+        $decoded = $this->contentType->execute($request->getBody(), new UserCreateXRequestFactory());
+        if (!$decoded->isSuccess()) {
+            return ProblemResponse::fromResult($this->accepts, $decoded);
+        }
+
+        $body = $decoded->getValue();
         $result = $this->createUser->execute(new CreateUserCommand(
             context: $context,
             name: $body->name ?? '',
@@ -159,7 +176,7 @@ final readonly class UserAdminController implements IUserAdminController
             roleIds: $body->roleIds,
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var IUser $user */
@@ -172,7 +189,7 @@ final readonly class UserAdminController implements IUserAdminController
      * Renders one user's full profile, roles included.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `UserAdminResponseProxy`, or a problem
+     * @return ResponseInterface A `UserAdminXResponse`, or a problem
      *                           document — 404 when nothing matches the id.
      *
      * @copyright 2026 Tachyon
@@ -181,7 +198,7 @@ final readonly class UserAdminController implements IUserAdminController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
@@ -193,7 +210,7 @@ final readonly class UserAdminController implements IUserAdminController
      * through {@see updateRoles()} and {@see resetPassword()}.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `UserAdminResponseProxy`, or a problem
+     * @return ResponseInterface A `UserAdminXResponse`, or a problem
      *                           document — 404 when nothing matches the id.
      *
      * @copyright 2026 Tachyon
@@ -202,11 +219,16 @@ final readonly class UserAdminController implements IUserAdminController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
-        $body = UserUpdateRequestProxy::fromStream($request->getBody());
+        $decoded = $this->contentType->execute($request->getBody(), new UserUpdateXRequestFactory());
+        if (!$decoded->isSuccess()) {
+            return ProblemResponse::fromResult($this->accepts, $decoded);
+        }
+
+        $body = $decoded->getValue();
         $result = $this->updateUser->execute(new UpdateUserCommand(
             context: $context,
             id: $this->pathId($request),
@@ -214,7 +236,7 @@ final readonly class UserAdminController implements IUserAdminController
             email: $body->email ?? '',
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var IUser $user */
@@ -235,13 +257,13 @@ final readonly class UserAdminController implements IUserAdminController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
         $result = $this->deleteUser->execute(new DeleteUserCommand($context, $this->pathId($request)));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         return ApiResponse::noContent();
@@ -262,18 +284,23 @@ final readonly class UserAdminController implements IUserAdminController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
-        $body = UserAdminPasswordResetRequestProxy::fromStream($request->getBody());
+        $decoded = $this->contentType->execute($request->getBody(), new UserAdminPasswordResetXRequestFactory());
+        if (!$decoded->isSuccess()) {
+            return ProblemResponse::fromResult($this->accepts, $decoded);
+        }
+
+        $body = $decoded->getValue();
         $result = $this->resetPassword->execute(new ResetUserPasswordCommand(
             context: $context,
             id: $this->pathId($request),
             newPassword: $body->newPassword ?? '',
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         return ApiResponse::noContent();
@@ -285,7 +312,7 @@ final readonly class UserAdminController implements IUserAdminController
      * A replacement, not a merge: a role left out of the body is taken away.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `UserAdminResponseProxy`, or a problem
+     * @return ResponseInterface A `UserAdminXResponse`, or a problem
      *                           document — 404 when nothing matches the id.
      *
      * @copyright 2026 Tachyon
@@ -294,7 +321,7 @@ final readonly class UserAdminController implements IUserAdminController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
@@ -304,7 +331,7 @@ final readonly class UserAdminController implements IUserAdminController
             roleIds: $this->roleIdsFromBody($request),
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var IUser $user */
@@ -323,7 +350,7 @@ final readonly class UserAdminController implements IUserAdminController
      * @param  UserContext  $context  The caller, forwarded to the query.
      * @param  string  $id  User to read back.
      * @param  int  $status  201 after a create, 200 otherwise.
-     * @return ResponseInterface A `UserAdminResponseProxy`, or a problem
+     * @return ResponseInterface A `UserAdminXResponse`, or a problem
      *                           document.
      *
      * @copyright 2026 Tachyon
@@ -332,28 +359,32 @@ final readonly class UserAdminController implements IUserAdminController
     {
         $result = $this->getUser->execute(new GetUserQuery($context, $id));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var AccountView $view */
         $view = $result->getValue();
 
-        return ApiResponse::body($this->response($view), $status);
+        $response = ApiResponse::body($this->accepts, new UserAdminXResponseFactory($this->response($view)), $status);
+
+        return $response->isSuccess()
+            ? $response->getValue()
+            : ProblemResponse::fromResult($this->accepts, $response);
     }
 
     /**
-     * The response proxy for one user, roles expanded.
+     * The response message for one user, roles expanded.
      *
      * @param  AccountView  $view  A profile row from the query side.
-     * @return UserAdminResponseProxy Ready to serialize.
+     * @return UserAdminXResponse Ready to serialize.
      *
      * @copyright 2026 Tachyon
      */
-    private function response(AccountView $view): UserAdminResponseProxy
+    private function response(AccountView $view): UserAdminXResponse
     {
         $roles = [];
         foreach ($view->roles as $role) {
-            $roles[] = new RoleResponseProxy(
+            $roles[] = new RoleXResponse(
                 id: $role->id,
                 name: $role->name,
                 userCount: $role->userCount,
@@ -361,7 +392,7 @@ final readonly class UserAdminController implements IUserAdminController
             );
         }
 
-        return new UserAdminResponseProxy(
+        return new UserAdminXResponse(
             id: $view->id,
             name: $view->name,
             email: $view->email,

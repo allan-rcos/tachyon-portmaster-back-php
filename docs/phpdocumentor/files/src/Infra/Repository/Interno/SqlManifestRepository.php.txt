@@ -93,9 +93,11 @@ final readonly class SqlManifestRepository implements IManifestRepository
      *
      * @param  string  $containerId  Base62 id of the container.
      * @param  string  $productId  Base62 id of the product.
-     * @return Result<IManifestCargo|null> The line, or a successful null when
-     *                                     the select returned nothing; a 500
-     *                                     failure when it threw.
+     * @return Result<IManifestCargo> The line; {@see Result::void()} when the
+     *                                 select returned nothing, which is the
+     *                                 normal state of a product never loaded
+     *                                 into this container; a 500 failure when
+     *                                 it threw.
      *
      * @copyright 2026 Tachyon
      */
@@ -120,7 +122,7 @@ final readonly class SqlManifestRepository implements IManifestRepository
         }
 
         if (!$row) {
-            return Result::success(null);
+            return Result::void();
         }
 
         /** @var array<string, mixed> $row */
@@ -293,8 +295,9 @@ final readonly class SqlManifestRepository implements IManifestRepository
      * @param  array<string, scalar>  $details  Identifying values for the log
      *                                          line, keyed by name.
      * @param  Throwable  $e  What the statement threw.
-     * @return Result<null> Always a 500 failure; the return type exists so
-     *                      callers can hand it straight back.
+     * @return Result<never> Always a 500 failure; carrying no value, it hands
+     *                        straight back out of a method of any type — the
+     *                        same reason {@see Result::failure()} is typed so.
      *
      * @copyright 2026 Tachyon
      */

@@ -18,14 +18,17 @@ namespace API\Controllers\Interno;
 use API\Auth\IRefreshTokenService;
 use API\Auth\ITokenService;
 use API\Controllers\IAuthController;
-use API\Fbs\Auth\LoginRequestProxy;
-use API\Fbs\Auth\SetupRequestProxy;
-use API\Fbs\Auth\LoginResponseProxy;
-use API\Fbs\Auth\UserProxy;
 use API\Http\ApiResponse;
 use API\Http\AuthCookie;
 use API\Http\HttpHeader;
 use API\Http\ProblemResponse;
+use API\Negociation\DTO\Auth\LoginXRequestFactory;
+use API\Negociation\DTO\Auth\LoginXResponse;
+use API\Negociation\DTO\Auth\LoginXResponseFactory;
+use API\Negociation\DTO\Auth\SetupXRequestFactory;
+use API\Negociation\DTO\Auth\UserX;
+use API\Negociation\IAcceptsStrategy;
+use API\Negociation\IContentTypeStrategy;
 use App\Commands\LoginCommand;
 use App\Commands\SetupCommand;
 use App\Services\ILoginUseCase;
@@ -77,6 +80,8 @@ final readonly class AuthController implements IAuthController
      *                                               the refresh token.
      * @param  AuthCookie  $authCookie  Builds and clears both cookies.
      * @param  ILogger  $logger  Narrowed to this controller's channel.
+     * @param  IContentTypeStrategy  $contentType  Decodes the request bodies.
+             * @param  IAcceptsStrategy  $accepts  Renders the response bodies.
      *
      * @copyright 2026 Tachyon
      */
@@ -87,6 +92,8 @@ final readonly class AuthController implements IAuthController
         private readonly IRefreshTokenService $refreshTokens,
         private readonly AuthCookie $authCookie,
         ILogger $logger,
+        private readonly IContentTypeStrategy $contentType,
+        private readonly IAcceptsStrategy $accepts,
     ) {
         $this->logger = $logger->withChannel('AuthController');
     }
@@ -95,7 +102,7 @@ final readonly class AuthController implements IAuthController
      * Bootstraps the first user and logs them straight in.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `LoginResponseProxy` with 201 and both
+     * @return ResponseInterface A `LoginXResponse` with 201 and both
      *                           cookies, or a problem document — 409 once any
      *                           user exists.
      *
@@ -103,7 +110,12 @@ final readonly class AuthController implements IAuthController
      */
     public function setup(ServerRequestInterface $request): ResponseInterface
     {
-        $payload = SetupRequestProxy::fromStream($request->getBody());
+        $decoded = $this->contentType->execute($request->getBody(), new SetupXRequestFactory());
+        if (!$decoded->isSuccess()) {
+            return ProblemResponse::fromResult($this->accepts, $decoded);
+        }
+
+        $payload = $decoded->getValue();
 
         $result = $this->setupUseCase->execute(new SetupCommand(
             name: $payload->name ?? '',
@@ -112,7 +124,7 @@ final readonly class AuthController implements IAuthController
         ));
 
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var IUser $user */
@@ -130,7 +142,7 @@ final readonly class AuthController implements IAuthController
      * Verifies credentials and opens a session.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `LoginResponseProxy` with both cookies, or a
+     * @return ResponseInterface A `LoginXResponse` with both cookies, or a
      *                           problem document — 401 for bad credentials,
      *                           without saying which half was wrong.
      *
@@ -138,7 +150,12 @@ final readonly class AuthController implements IAuthController
      */
     public function login(ServerRequestInterface $request): ResponseInterface
     {
-        $credentials = LoginRequestProxy::fromStream($request->getBody());
+        $decoded = $this->contentType->execute($request->getBody(), new LoginXRequestFactory());
+        if (!$decoded->isSuccess()) {
+            return ProblemResponse::fromResult($this->accepts, $decoded);
+        }
+
+        $credentials = $decoded->getValue();
 
         $result = $this->loginUseCase->execute(new LoginCommand(
             email: $credentials->email ?? '',
@@ -146,7 +163,7 @@ final readonly class AuthController implements IAuthController
         ));
 
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var IUser $user */
@@ -181,20 +198,26 @@ final readonly class AuthController implements IAuthController
     {
         $refresh = $this->refreshTokens->issue($user);
         if (!$refresh->isSuccess()) {
-            return ProblemResponse::fromResult($refresh);
+            return ProblemResponse::fromResult($this->accepts, $refresh);
         }
 
         /** @var string $refreshToken */
         $refreshToken = $refresh->getValue();
         $accessToken = $this->tokenService->issue($user);
 
-        $body = new LoginResponseProxy(
+        $body = new LoginXResponse(
             token: $accessToken,
             tokenType: 'cookie',
-            user: new UserProxy(id: $user->id, name: $user->name, email: $user->email),
+            user: new UserX(id: $user->id, name: $user->name, email: $user->email),
         );
 
-        return ApiResponse::body($body, $status)
+        $response = ApiResponse::body($this->accepts, new LoginXResponseFactory($body), $status);
+
+        if (!$response->isSuccess()) {
+            return ProblemResponse::fromResult($this->accepts, $response);
+        }
+
+        return $response->getValue()
             ->withAddedHeader(HttpHeader::SetCookie->value, $this->authCookie->issue($accessToken))
             ->withAddedHeader(HttpHeader::SetCookie->value, $this->authCookie->issueRefresh($refreshToken));
     }
@@ -216,14 +239,14 @@ final readonly class AuthController implements IAuthController
         $presented = $this->authCookie->readRefresh($request);
 
         if ($presented === null) {
-            return ProblemResponse::fromResult(self::missingRefreshToken());
+            return ProblemResponse::fromResult($this->accepts, self::missingRefreshToken());
         }
 
         $rotated = $this->refreshTokens->rotate($presented);
         if (!$rotated->isSuccess()) {
             // The presented token is dead; clear both cookies so the client
             // stops resending it and is forced back through login.
-            return ProblemResponse::fromResult($rotated)
+            return ProblemResponse::fromResult($this->accepts, $rotated)
                 ->withAddedHeader(HttpHeader::SetCookie->value, $this->authCookie->clear())
                 ->withAddedHeader(HttpHeader::SetCookie->value, $this->authCookie->clearRefresh());
         }

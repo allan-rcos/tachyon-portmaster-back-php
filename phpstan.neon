@@ -11,7 +11,9 @@ includes:
     # which already normalizes builder casing, create*() return docblocks,
     # child-table sentinels, scalar type names and string accessor types.
     #
-    # Everything hand-written — including the *Proxy classes that extend the
-    # generated tables — stays fully analysed at level 9. Regenerate with
-    # scripts/generate-phpstan-baseline.php after changing the schemas.
+    # src/API/Fbs/ now holds *nothing but* generated tables, so this baseline and
+    # that directory are the same set: everything hand-written, including the DTOs
+    # and abstract factories in src/API/Negociation/, stays fully analysed at
+    # level 9. Regenerate with scripts/generate-phpstan-baseline.php after
+    # changing the schemas.
     - phpstan-generated-baseline.neon

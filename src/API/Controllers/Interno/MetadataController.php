@@ -17,10 +17,12 @@ namespace API\Controllers\Interno;
 
 use API\Controllers\IMetadataController;
 use API\Controllers\ResolvesCaller;
-use API\Fbs\Metadata\MetadataItemResponseProxy;
-use API\Fbs\Metadata\PermissionListResponseProxy;
 use API\Http\ApiResponse;
 use API\Http\ProblemResponse;
+use API\Negociation\DTO\Metadata\MetadataItemXResponse;
+use API\Negociation\DTO\Metadata\PermissionListXResponse;
+use API\Negociation\DTO\Metadata\PermissionListXResponseFactory;
+use API\Negociation\IAcceptsStrategy;
 use App\Queries\Role\ListPermissionsQuery;
 use App\Services\IListPermissionsUseCase;
 use Domain\Models\IPermission;
@@ -51,11 +53,13 @@ final readonly class MetadataController implements IMetadataController
     /**
      * @param  IListPermissionsUseCase  $listPermissions  Backs
      *                                                    {@see listPermissions()}.
+     * @param  IAcceptsStrategy  $accepts  Renders the response bodies.
      *
      * @copyright 2026 Tachyon
      */
     public function __construct(
         private IListPermissionsUseCase $listPermissions,
+        private IAcceptsStrategy $accepts,
     ) {
     }
 
@@ -63,7 +67,7 @@ final readonly class MetadataController implements IMetadataController
      * Renders the permission catalogue.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `PermissionListResponseProxy`, or a problem
+     * @return ResponseInterface A `PermissionListXResponse`, or a problem
      *                           document.
      *
      * @copyright 2026 Tachyon
@@ -72,7 +76,7 @@ final readonly class MetadataController implements IMetadataController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
 
         $result = $this->listPermissions->execute(new ListPermissionsQuery(
@@ -80,7 +84,7 @@ final readonly class MetadataController implements IMetadataController
             search: $this->search($request),
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var Seq<IPermission> $items */
@@ -88,10 +92,14 @@ final readonly class MetadataController implements IMetadataController
 
         $data = [];
         foreach ($items as $item) {
-            $data[] = new MetadataItemResponseProxy(id: $item->id, slug: $item->slug);
+            $data[] = new MetadataItemXResponse(id: $item->id, slug: $item->slug);
         }
 
-        return ApiResponse::body(new PermissionListResponseProxy(data: $data));
+        $response = ApiResponse::body($this->accepts, new PermissionListXResponseFactory(new PermissionListXResponse(data: $data)));
+
+        return $response->isSuccess()
+            ? $response->getValue()
+            : ProblemResponse::fromResult($this->accepts, $response);
     }
 
     /**

@@ -17,12 +17,16 @@ namespace API\Controllers\Interno;
 
 use API\Controllers\IRoleAdminController;
 use API\Controllers\ResolvesCaller;
-use API\Fbs\Account\RoleResponseProxy;
-use API\Fbs\Admin\RoleCreateRequestProxy;
-use API\Fbs\Admin\RoleListResponseProxy;
-use API\Fbs\Admin\RolePermissionsUpdateRequestProxy;
 use API\Http\ApiResponse;
 use API\Http\ProblemResponse;
+use API\Negociation\DTO\Account\RoleXResponse;
+use API\Negociation\DTO\Account\RoleXResponseFactory;
+use API\Negociation\DTO\Admin\RoleCreateXRequestFactory;
+use API\Negociation\DTO\Admin\RoleListXResponse;
+use API\Negociation\DTO\Admin\RoleListXResponseFactory;
+use API\Negociation\DTO\Admin\RolePermissionsUpdateXRequestFactory;
+use API\Negociation\IAcceptsStrategy;
+use API\Negociation\IContentTypeStrategy;
 use App\Commands\Role\CreateRoleCommand;
 use App\Commands\Role\UpdateRolePermissionsCommand;
 use App\Context\UserContext;
@@ -62,6 +66,8 @@ final readonly class RoleAdminController implements IRoleAdminController
      * @param  IUpdateRolePermissionsUseCase  $updatePermissions  Backs
      *                                                            {@see syncPermissions()}.
      * @param  IGetRoleUseCase  $getRole  Re-reads a role after either write.
+     * @param  IContentTypeStrategy  $contentType  Decodes the request bodies.
+             * @param  IAcceptsStrategy  $accepts  Renders the response bodies.
      *
      * @copyright 2026 Tachyon
      */
@@ -70,6 +76,8 @@ final readonly class RoleAdminController implements IRoleAdminController
         private ICreateRoleUseCase $createRole,
         private IUpdateRolePermissionsUseCase $updatePermissions,
         private IGetRoleUseCase $getRole,
+        private IContentTypeStrategy $contentType,
+        private IAcceptsStrategy $accepts,
     ) {
     }
 
@@ -77,7 +85,7 @@ final readonly class RoleAdminController implements IRoleAdminController
      * Renders a page of roles.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `RoleListResponseProxy`, or a problem
+     * @return ResponseInterface A `RoleListXResponse`, or a problem
      *                           document.
      *
      * @copyright 2026 Tachyon
@@ -86,7 +94,7 @@ final readonly class RoleAdminController implements IRoleAdminController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
@@ -98,7 +106,7 @@ final readonly class RoleAdminController implements IRoleAdminController
             search: isset($params['search']) && is_string($params['search']) ? $params['search'] : null,
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var RoleListView $view */
@@ -109,18 +117,22 @@ final readonly class RoleAdminController implements IRoleAdminController
             $data[] = $this->response($item);
         }
 
-        return ApiResponse::body(new RoleListResponseProxy(
+        $response = ApiResponse::body($this->accepts, new RoleListXResponseFactory(new RoleListXResponse(
             data: $data,
             nextCursor: $view->nextCursor,
             total: $view->total,
-        ));
+        )));
+
+        return $response->isSuccess()
+            ? $response->getValue()
+            : ProblemResponse::fromResult($this->accepts, $response);
     }
 
     /**
      * Registers a role with its initial permissions.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `RoleResponseProxy` with 201, or a problem
+     * @return ResponseInterface A `RoleXResponse` with 201, or a problem
      *                           document.
      *
      * @copyright 2026 Tachyon
@@ -129,18 +141,23 @@ final readonly class RoleAdminController implements IRoleAdminController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
-        $body = RoleCreateRequestProxy::fromStream($request->getBody());
+        $decoded = $this->contentType->execute($request->getBody(), new RoleCreateXRequestFactory());
+        if (!$decoded->isSuccess()) {
+            return ProblemResponse::fromResult($this->accepts, $decoded);
+        }
+
+        $body = $decoded->getValue();
         $result = $this->createRole->execute(new CreateRoleCommand(
             context: $context,
             name: $body->name ?? '',
             permissions: $body->permissions,
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var IRole $role */
@@ -155,7 +172,7 @@ final readonly class RoleAdminController implements IRoleAdminController
      * A replacement, not a merge: a permission left out of the body is revoked.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `RoleResponseProxy`, or a problem document —
+     * @return ResponseInterface A `RoleXResponse`, or a problem document —
      *                           404 when nothing matches the id.
      *
      * @copyright 2026 Tachyon
@@ -164,17 +181,24 @@ final readonly class RoleAdminController implements IRoleAdminController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
+
+        $decoded = $this->contentType->execute($request->getBody(), new RolePermissionsUpdateXRequestFactory());
+        if (!$decoded->isSuccess()) {
+            return ProblemResponse::fromResult($this->accepts, $decoded);
+        }
+
+        $body = $decoded->getValue();
 
         $result = $this->updatePermissions->execute(new UpdateRolePermissionsCommand(
             context: $context,
             id: $this->pathId($request),
-            permissions: RolePermissionsUpdateRequestProxy::fromStream($request->getBody())->permissions,
+            permissions: $body->permissions,
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var IRole $role */
@@ -190,7 +214,7 @@ final readonly class RoleAdminController implements IRoleAdminController
      * @param  UserContext  $context  The caller, forwarded to the query.
      * @param  string  $id  Role to read back.
      * @param  int  $status  201 after a create, 200 after an update.
-     * @return ResponseInterface A `RoleResponseProxy`, or a problem document.
+     * @return ResponseInterface A `RoleXResponse`, or a problem document.
      *
      * @copyright 2026 Tachyon
      */
@@ -198,26 +222,30 @@ final readonly class RoleAdminController implements IRoleAdminController
     {
         $view = $this->getRole->execute(new GetRoleQuery($context, $id));
         if (!$view->isSuccess()) {
-            return ProblemResponse::fromResult($view);
+            return ProblemResponse::fromResult($this->accepts, $view);
         }
 
         /** @var RoleViewItem $item */
         $item = $view->getValue();
 
-        return ApiResponse::body($this->response($item), $status);
+        $response = ApiResponse::body($this->accepts, new RoleXResponseFactory($this->response($item)), $status);
+
+        return $response->isSuccess()
+            ? $response->getValue()
+            : ProblemResponse::fromResult($this->accepts, $response);
     }
 
     /**
-     * The response proxy for one role.
+     * The response message for one role.
      *
      * @param  RoleViewItem  $item  One row of a role query.
-     * @return RoleResponseProxy Ready to serialize.
+     * @return RoleXResponse Ready to serialize.
      *
      * @copyright 2026 Tachyon
      */
-    private function response(RoleViewItem $item): RoleResponseProxy
+    private function response(RoleViewItem $item): RoleXResponse
     {
-        return new RoleResponseProxy(
+        return new RoleXResponse(
             id: $item->id,
             name: $item->name,
             userCount: $item->userCount,

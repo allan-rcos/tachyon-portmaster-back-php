@@ -66,11 +66,11 @@ interface IMarkerRepository
      * @param  string  $group  Slug of a registered group.
      * @param  string  $key  The digest, as produced by
      *                       {@see \Domain\TableModules\IMarkerTM}.
-     * @return Result<bool|null> The flag, or null when there is no live marker —
-     *                           expired and never-existed are the same answer,
-     *                           deliberately. A 404 failure when the group is
-     *                           not registered, which is a different thing from
-     *                           the group being empty; a 500 on a read error.
+     * @return Result<bool> The flag, or {@see Result::void()} when there is no
+     *                       live marker — expired and never-existed are the same
+     *                       answer, deliberately. A 404 failure when the group
+     *                       is not registered, which is a different thing from
+     *                       the group being empty; a 500 on a read error.
      *
      * @copyright 2026 Tachyon
      *

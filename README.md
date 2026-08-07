@@ -28,7 +28,7 @@ O projeto é uma **base de ecossistema para APIs de alto desempenho** — arquit
 ## ✨ Destaques
 
 * **Runtime persistente.** PHP 8.4 CLI sob OpenSwoole, sem Nginx/Apache. O grafo de objetos inteiro é montado uma vez em `WorkerStart` — depois do fork — e cada worker é dono das suas instâncias pelo tempo de vida do processo.
-* **FlatBuffers como formato de fio.** Requisições e respostas são tabelas geradas por `flatc` a partir dos schemas em `swagger/` (submódulo). Sem parsing, sem alocação por campo — e JSON continua disponível por negociação de `Accept`/`Content-Type`.
+* **FlatBuffers como formato de fio.** Requisições e respostas são tabelas geradas por `flatc` a partir dos schemas em `swagger/` (submódulo). Sem parsing, sem alocação por campo — e JSON continua disponível por negociação de `Accept`/`Content-Type`, inclusive nos erros: um `ProblemDetails` é uma tabela publicada como qualquer outra, e volta em binário para quem pediu binário.
 * **Cinco camadas, dependências de mão única.** `API → App → Infra → Domain`, com `Shared` transversal. `Domain` não depende de nada além de `Shared`.
 * **Composição explícita, sem container de DI.** Cada camada tem seu provider, que constrói os próprios objetos e memoiza. O grafo é legível de cima a baixo, sem reflexão nem resolução em runtime.
 * **Erros como valores.** Toda operação falível devolve `Result` — sucesso com valor, ou falha com um id de erro que indexa mensagem, detalhe e status HTTP. Falha é valor justamente para que o caso de uso consiga fazer *rollback* antes de retornar, algo que uma exceção desempilhando ignoraria.

@@ -29,7 +29,7 @@ use ValueError;
  *
  * The string value is the application/JSON representation and what
  * `telemetry_logs.event` stores; {@see toInt()} and {@see fromInt()} convert to
- * the FlatBuffer `uint8` wire value at the proxy boundary. **Declaration order
+ * the FlatBuffer `uint8` wire value at the factory boundary. **Declaration order
  * must match** the `TelemetryEvent` enum in
  * `swagger/flatbuffers/schemas/common.fbs`, because the conversion is by
  * ordinal.

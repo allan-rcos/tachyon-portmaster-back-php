@@ -80,15 +80,11 @@
                 
             </li>
                     <li>
-                <a href="namespaces/api-dto.html" class="">DTO</a>
-                
-            </li>
-                    <li>
-                <a href="namespaces/api-fbs.html" class="">Fbs</a>
-                
-            </li>
-                    <li>
                 <a href="namespaces/api-http.html" class="">Http</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/api-negociation.html" class="">Negociation</a>
                 
             </li>
             </ul>
@@ -242,7 +238,7 @@
 to a few lines at each call site:</p>
 <pre class="prettyprint"><code class="language-php">$caller = $this-&gt;caller();
 if (!$caller-&gt;isSuccess()) {
-    return ProblemResponse::fromResult($caller);
+    return ProblemResponse::fromResult($this-&gt;accepts, $caller);
 }
 $context = $caller-&gt;getValue();
 </code></pre>

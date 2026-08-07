@@ -179,9 +179,10 @@ final readonly class SqlMarkerRepository implements IMarkerRepository
      *
      * @param  string  $group  Slug of a registered group.
      * @param  string  $key  The digest.
-     * @return Result<bool|null> The flag, or a successful null when no live row
-     *                           matched; a 404 failure when the group is not
-     *                           registered, a 500 when the select threw.
+     * @return Result<bool> The flag; {@see Result::void()} when no live row
+     *                       matched, which an expired marker is; a 404 failure
+     *                       when the group is not registered, a 500 when the
+     *                       select threw.
      *
      * @copyright 2026 Tachyon
      */
@@ -215,7 +216,7 @@ final readonly class SqlMarkerRepository implements IMarkerRepository
         }
 
         if (!is_array($row)) {
-            return Result::success(null);
+            return Result::void();
         }
 
         return Result::success((bool) ($row['flag'] ?? false));
