@@ -18,9 +18,11 @@ time.
 `phpstan-generated-baseline.neon` holds findings from flatc-generated files
 **and nothing else**.
 
-Everything hand-written stays fully analysed at level 9 — including the `*Proxy`
-classes that *extend* the generated tables, which is the interesting part: the
-boundary is drawn at the file, not at the type.
+Everything hand-written stays fully analysed at level 9. Since
+[ADR 0009](0009-abstract-factory-e-strategy-na-negociacao.md) moved the
+hand-written half out of `src/API/Fbs/`, that directory and this baseline are
+simply the same set — the boundary that used to run *through* a directory now
+runs between two.
 
 A finding inside a generated file is not fixed in place. The fix belongs in
 `scripts/patch-flatbuffers.php`, which already normalises builder class casing,

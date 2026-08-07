@@ -25,7 +25,7 @@ use ValueError;
  * is loaded, cannot be loaded once sealed, and cannot be dispatched twice.
  *
  * The string value is the application/JSON representation; {@see toInt()} and
- * {@see fromInt()} convert to the FlatBuffer `uint8` wire value at the proxy
+ * {@see fromInt()} convert to the FlatBuffer `uint8` wire value at the factory
  * boundary. **Declaration order must match** the `ContainerStatus` enum in
  * `swagger/flatbuffers/schemas/common.fbs`, because the conversion is by
  * ordinal.

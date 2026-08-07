@@ -80,15 +80,11 @@
                 
             </li>
                     <li>
-                <a href="namespaces/api-dto.html" class="">DTO</a>
-                
-            </li>
-                    <li>
-                <a href="namespaces/api-fbs.html" class="">Fbs</a>
-                
-            </li>
-                    <li>
                 <a href="namespaces/api-http.html" class="">Http</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/api-negociation.html" class="">Negociation</a>
                 
             </li>
             </ul>
@@ -243,9 +239,9 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/RequestAttributes.php"><a href="files/src-api-http-requestattributes.html"><abbr title="src/API/Http/RequestAttributes.php">RequestAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
-            <a href="classes/API-Http-RequestAttributes.html#source-view.39" class="phpdocumentor-element-found-in__source" data-line="39" data-modal="source-view" data-src="files/src/API/Http/RequestAttributes.php.txt"></a>
+            <a href="classes/API-Http-RequestAttributes.html#source-view.41" class="phpdocumentor-element-found-in__source" data-line="41" data-modal="source-view" data-src="files/src/API/Http/RequestAttributes.php.txt"></a>
     </aside>
 
             <p class="phpdocumentor-summary">Keys for per-request state carried in the coroutine context, with typed
@@ -257,7 +253,9 @@ other class free of hard-coded context keys (and of a direct dependency on
 the coroutine API): middlewares write, proxies and logging read.</p>
 <p>The context is per-coroutine, which under OpenSwoole means per-request: two
 requests being served concurrently in one worker never see each other's
-values, and everything written here is discarded when the coroutine ends.</p>
+values, and everything written here is discarded when the coroutine ends.
+That is what lets the per-worker negotiation contexts hold a per-request
+strategy.</p>
 </section>
 
         
@@ -277,8 +275,8 @@ values, and everything written here is discarded when the coroutine ends.</p>
 
                                     </dd>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/API-Http-Middleware-FlatBufferNegotiationMiddleware.html"><abbr title="\API\Http\Middleware\FlatBufferNegotiationMiddleware">FlatBufferNegotiationMiddleware</abbr></a></span>
-                                                                    <section class="phpdocumentor-description"><p>Writes both content kinds.</p>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/API-Http-Middleware-ContentNegotiationMiddleware.html"><abbr title="\API\Http\Middleware\ContentNegotiationMiddleware">ContentNegotiationMiddleware</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>Writes both strategies.</p>
 </section>
 
                                     </dd>
@@ -335,11 +333,12 @@ values, and everything written here is discarded when the coroutine ends.</p>
 <dd>The caller&#039;s {@see \App\Context\UserContext}, once authentication has run.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -case -">
-    <a class="" href="classes/API-Http-RequestAttributes.html#enumcase_RequestContentKind">RequestContentKind</a>
+    <a class="" href="classes/API-Http-RequestAttributes.html#enumcase_RequestContentStrategy">RequestContentStrategy</a>
     <span>
-                &nbsp;= &#039;request_content_kind&#039;                    </span>
+                &nbsp;= &#039;request_content_strategy&#039;                    </span>
 </dt>
-<dd>{@see ContentKind} the request body is encoded in.</dd>
+<dd>The {@see \API\Negociation\IContentTypeStrategy} that decodes this
+request&#039;s body, resolved from `Content-Type`.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -case -">
     <a class="" href="classes/API-Http-RequestAttributes.html#enumcase_RequestId">RequestId</a>
@@ -349,12 +348,13 @@ values, and everything written here is discarded when the coroutine ends.</p>
 <dd>Correlation id for this request, as a string.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -case -">
-    <a class="" href="classes/API-Http-RequestAttributes.html#enumcase_ResponseContentKind">ResponseContentKind</a>
+    <a class="" href="classes/API-Http-RequestAttributes.html#enumcase_ResponseAcceptsStrategy">ResponseAcceptsStrategy</a>
     <span>
-                &nbsp;= &#039;response_content_kind&#039;                    </span>
+                &nbsp;= &#039;response_accepts_strategy&#039;                    </span>
 </dt>
-<dd>{@see ContentKind} the response should be encoded in. Independent of the
-request&#039;s: a caller may POST JSON and ask for binary back.</dd>
+<dd>The {@see \API\Negociation\IAcceptsStrategy} that renders this request&#039;s
+response, resolved from `Accept`. Independent of the request&#039;s: a caller
+may POST JSON and ask for binary back.</dd>
 
     </dl>
 
@@ -403,9 +403,9 @@ request&#039;s: a caller may POST JSON and ask for binary back.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/RequestAttributes.php"><a href="files/src-api-http-requestattributes.html"><abbr title="src/API/Http/RequestAttributes.php">RequestAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
-            <a href="classes/API-Http-RequestAttributes.html#source-view.44" class="phpdocumentor-element-found-in__source" data-line="44" data-modal="source-view" data-src="files/src/API/Http/RequestAttributes.php.txt"></a>
+            <a href="classes/API-Http-RequestAttributes.html#source-view.46" class="phpdocumentor-element-found-in__source" data-line="46" data-modal="source-view" data-src="files/src/API/Http/RequestAttributes.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Correlation id for this request, as a string.</p>
@@ -423,20 +423,21 @@ request&#039;s: a caller may POST JSON and ask for binary back.</dd>
             -enum-case
         "
 >
-    <h4 class="phpdocumentor-element__name" id="enumcase_RequestContentKind">
-        RequestContentKind
-        <a href="classes/API-Http-RequestAttributes.html#enumcase_RequestContentKind" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="enumcase_RequestContentStrategy">
+        RequestContentStrategy
+        <a href="classes/API-Http-RequestAttributes.html#enumcase_RequestContentStrategy" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/RequestAttributes.php"><a href="files/src-api-http-requestattributes.html"><abbr title="src/API/Http/RequestAttributes.php">RequestAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
-            <a href="classes/API-Http-RequestAttributes.html#source-view.49" class="phpdocumentor-element-found-in__source" data-line="49" data-modal="source-view" data-src="files/src/API/Http/RequestAttributes.php.txt"></a>
+            <a href="classes/API-Http-RequestAttributes.html#source-view.52" class="phpdocumentor-element-found-in__source" data-line="52" data-modal="source-view" data-src="files/src/API/Http/RequestAttributes.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">{@see ContentKind} the request body is encoded in.</p>
+        <p class="phpdocumentor-summary">The {@see \API\Negociation\IContentTypeStrategy} that decodes this
+request&#039;s body, resolved from `Content-Type`.</p>
 
     
     
@@ -451,21 +452,22 @@ request&#039;s: a caller may POST JSON and ask for binary back.</dd>
             -enum-case
         "
 >
-    <h4 class="phpdocumentor-element__name" id="enumcase_ResponseContentKind">
-        ResponseContentKind
-        <a href="classes/API-Http-RequestAttributes.html#enumcase_ResponseContentKind" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="enumcase_ResponseAcceptsStrategy">
+        ResponseAcceptsStrategy
+        <a href="classes/API-Http-RequestAttributes.html#enumcase_ResponseAcceptsStrategy" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/RequestAttributes.php"><a href="files/src-api-http-requestattributes.html"><abbr title="src/API/Http/RequestAttributes.php">RequestAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
-            <a href="classes/API-Http-RequestAttributes.html#source-view.55" class="phpdocumentor-element-found-in__source" data-line="55" data-modal="source-view" data-src="files/src/API/Http/RequestAttributes.php.txt"></a>
+            <a href="classes/API-Http-RequestAttributes.html#source-view.59" class="phpdocumentor-element-found-in__source" data-line="59" data-modal="source-view" data-src="files/src/API/Http/RequestAttributes.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">{@see ContentKind} the response should be encoded in. Independent of the
-request&#039;s: a caller may POST JSON and ask for binary back.</p>
+        <p class="phpdocumentor-summary">The {@see \API\Negociation\IAcceptsStrategy} that renders this request&#039;s
+response, resolved from `Accept`. Independent of the request&#039;s: a caller
+may POST JSON and ask for binary back.</p>
 
     
     
@@ -488,9 +490,9 @@ request&#039;s: a caller may POST JSON and ask for binary back.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/RequestAttributes.php"><a href="files/src-api-http-requestattributes.html"><abbr title="src/API/Http/RequestAttributes.php">RequestAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">60</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
-            <a href="classes/API-Http-RequestAttributes.html#source-view.60" class="phpdocumentor-element-found-in__source" data-line="60" data-modal="source-view" data-src="files/src/API/Http/RequestAttributes.php.txt"></a>
+            <a href="classes/API-Http-RequestAttributes.html#source-view.64" class="phpdocumentor-element-found-in__source" data-line="64" data-modal="source-view" data-src="files/src/API/Http/RequestAttributes.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">The caller&#039;s {@see \App\Context\UserContext}, once authentication has run.</p>
@@ -524,9 +526,9 @@ request&#039;s: a caller may POST JSON and ask for binary back.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/RequestAttributes.php"><a href="files/src-api-http-requestattributes.html"><abbr title="src/API/Http/RequestAttributes.php">RequestAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
-            <a href="classes/API-Http-RequestAttributes.html#source-view.72" class="phpdocumentor-element-found-in__source" data-line="72" data-modal="source-view" data-src="files/src/API/Http/RequestAttributes.php.txt"></a>
+            <a href="classes/API-Http-RequestAttributes.html#source-view.76" class="phpdocumentor-element-found-in__source" data-line="76" data-modal="source-view" data-src="files/src/API/Http/RequestAttributes.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Reads this attribute from the current coroutine context.</p>
@@ -586,9 +588,9 @@ coroutine.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/RequestAttributes.php"><a href="files/src-api-http-requestattributes.html"><abbr title="src/API/Http/RequestAttributes.php">RequestAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">96</span>
+    <span class="phpdocumentor-element-found-in__line">100</span>
 
-            <a href="classes/API-Http-RequestAttributes.html#source-view.96" class="phpdocumentor-element-found-in__source" data-line="96" data-modal="source-view" data-src="files/src/API/Http/RequestAttributes.php.txt"></a>
+            <a href="classes/API-Http-RequestAttributes.html#source-view.100" class="phpdocumentor-element-found-in__source" data-line="100" data-modal="source-view" data-src="files/src/API/Http/RequestAttributes.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Writes this attribute into the current coroutine context.</p>
@@ -755,8 +757,8 @@ than failing — the readers all treat an absent value as &quot;not set yet&quot
                 <li>
                     <ul class="phpdocumentor-list -clean">
                                                     <li class=""><a href="classes/API-Http-RequestAttributes.html#enumcase_RequestId">RequestId</a></li>
-                                                    <li class=""><a href="classes/API-Http-RequestAttributes.html#enumcase_RequestContentKind">RequestContentKind</a></li>
-                                                    <li class=""><a href="classes/API-Http-RequestAttributes.html#enumcase_ResponseContentKind">ResponseContentKind</a></li>
+                                                    <li class=""><a href="classes/API-Http-RequestAttributes.html#enumcase_RequestContentStrategy">RequestContentStrategy</a></li>
+                                                    <li class=""><a href="classes/API-Http-RequestAttributes.html#enumcase_ResponseAcceptsStrategy">ResponseAcceptsStrategy</a></li>
                                                     <li class=""><a href="classes/API-Http-RequestAttributes.html#enumcase_AuthenticatedUser">AuthenticatedUser</a></li>
                                             </ul>
                 </li>

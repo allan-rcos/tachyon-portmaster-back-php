@@ -40,7 +40,7 @@ where there is no request to fail.
 |---|---|
 | an endpoint | the current version's table in `API/Http/Router/Interno/` + a controller in `API/Controllers/` |
 | something that runs per request before the controller | `API/Http/Middleware/` |
-| a request or response body | a `*Proxy` in `API/Fbs/<Feature>/` |
+| a request or response body | a DTO **and** its factory in `API/Negociation/DTO/<Feature>/` |
 | an action a user performs | `App/Commands/` + `App/Services/` |
 | a read | `App/Queries/` + `Infra/Query/` |
 | a business rule | the feature's `*TM` in `Domain/TableModules/` |
@@ -53,11 +53,19 @@ where there is no request to fail.
 ### `API/`
 
 `Http/` holds the middleware stack, in order: `Recoverer` → `RequestId` →
-`Logging` → `FlatBufferNegotiation` → `Authentication` → `RouteDispatch`.
+`Logging` → `ContentNegotiation` → `Authentication` → `RouteDispatch`.
 
-`Fbs/` is half generated, half not. Files carrying the flatc header are
-overwritten by `composer flatbuffers` — never edit them. Their hand-written
-`*Proxy` siblings are where everything else goes.
+`Fbs/` is **only** generated code: `composer flatbuffers` overwrites all of it,
+so never edit anything in there.
+
+Everything hand-written about a message lives in `Negociation/`. Each message is
+a readonly DTO plus a factory that knows the schema's field names and can build
+the message from — or render it as — either wire format. Which format is not the
+factory's call: the negotiation middleware resolves `Content-Type` and `Accept`
+to a pair of strategies, and the controller only ever hands one a factory. Both
+sides answer a `Result`, and the controller is the only thing that turns a failed
+one into a status. See
+[ADR 0009](../docs/adr/0009-abstract-factory-e-strategy-na-negociacao.md).
 
 Controllers resolve the caller, build a command or query, and map the result.
 They do **not** check permissions.

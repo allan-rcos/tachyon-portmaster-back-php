@@ -15,12 +15,16 @@ declare(strict_types=1);
 
 namespace API\Http\Middleware;
 
+use API\Http\ContentKind;
+use API\Http\HttpHeader;
 use API\Http\ProblemResponse;
+use API\Http\RequestAttributes;
+use API\Negociation\IAcceptsStrategy;
+use Infra\Logging\ILogger;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Infra\Logging\ILogger;
 use Throwable;
 
 /**
@@ -37,6 +41,14 @@ use Throwable;
  * so a 500 recovered here appears in the log as this class's error entry and
  * not as an access-log line.
  *
+ * It is also outside the negotiation middleware, which has two consequences.
+ * A throwable raised before negotiation ran is answered in JSON — the strategy
+ * context's fallback, and the safe direction: a client that failed at the
+ * negotiation step can still read the document explaining why. And nothing has
+ * labelled the response by the time it gets here, so this reads `Accept` itself
+ * for the one answer that never passes through the middleware that normally
+ * would.
+ *
  * @see ProblemResponse What the throwable becomes.
  * @uses ILogger Records the throwable before it is discarded.
  *
@@ -51,12 +63,15 @@ final class RecovererMiddleware implements MiddlewareInterface
     private ILogger $logger;
 
     /**
+     * @param  IAcceptsStrategy  $accepts  Renders the problem document.
      * @param  ILogger  $logger  Narrowed to the `recoverer` channel.
      *
      * @copyright 2026 Tachyon
      */
-    public function __construct(ILogger $logger)
-    {
+    public function __construct(
+        private readonly IAcceptsStrategy $accepts,
+        ILogger $logger,
+    ) {
         $this->logger = $logger->withChannel('recoverer');
     }
 
@@ -87,11 +102,26 @@ final class RecovererMiddleware implements MiddlewareInterface
                 'line'      => $e->getLine(),
             ]);
 
-            return ProblemResponse::make(
+            $response = ProblemResponse::make(
+                $this->accepts,
                 500,
                 'Internal Server Error',
                 'An unexpected error occurred while processing the request.',
             );
+
+            if ($response->hasHeader(HttpHeader::ContentType->value)) {
+                return $response;
+            }
+
+            // The document was rendered by the strategy context, which falls
+            // back to JSON when the negotiation middleware — inside this one —
+            // never ran. Reading `Accept` in that case would promise a format
+            // the bytes are not in, so the label follows what was recorded.
+            $kind = RequestAttributes::ResponseAcceptsStrategy->read() === null
+                ? ContentKind::Json
+                : ContentKind::fromAccept($request->getHeaderLine(HttpHeader::Accept->value));
+
+            return $response->withHeader(HttpHeader::ContentType->value, $kind->mediaType(500)->value);
         }
     }
 }

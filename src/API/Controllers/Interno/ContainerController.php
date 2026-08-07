@@ -17,30 +17,35 @@ namespace API\Controllers\Interno;
 
 use API\Controllers\IContainerController;
 use API\Controllers\ResolvesCaller;
-use API\Fbs\Container\CargoManifestItemProxy;
-use API\Fbs\Container\ContainerCreateRequestProxy;
-use API\Fbs\Container\ContainerListResponseProxy;
-use API\Fbs\Container\ContainerResponseProxy;
-use API\Fbs\Container\ContainerSummaryListResponseProxy;
-use API\Fbs\Container\ContainerSummaryResponseProxy;
-use API\Fbs\Container\ContainerUpdateRequestProxy;
-use API\Fbs\Container\TelemetryLogItemProxy;
 use API\Http\ApiResponse;
 use API\Http\ProblemResponse;
+use API\Negociation\DTO\Container\CargoManifestItemX;
+use API\Negociation\DTO\Container\ContainerCreateXRequestFactory;
+use API\Negociation\DTO\Container\ContainerListXResponse;
+use API\Negociation\DTO\Container\ContainerListXResponseFactory;
+use API\Negociation\DTO\Container\ContainerSummaryListXResponse;
+use API\Negociation\DTO\Container\ContainerSummaryListXResponseFactory;
+use API\Negociation\DTO\Container\ContainerSummaryXResponse;
+use API\Negociation\DTO\Container\ContainerUpdateXRequestFactory;
+use API\Negociation\DTO\Container\ContainerXResponse;
+use API\Negociation\DTO\Container\ContainerXResponseFactory;
+use API\Negociation\DTO\Container\TelemetryLogItemX;
+use API\Negociation\IAcceptsStrategy;
+use API\Negociation\IContentTypeStrategy;
 use App\Commands\Container\CreateContainerCommand;
 use App\Commands\Container\DeleteContainerCommand;
 use App\Commands\Container\DispatchContainerCommand;
 use App\Commands\Container\SealContainerCommand;
 use App\Commands\Container\UpdateContainerCommand;
 use App\Queries\Container\GetContainerQuery;
-use App\Queries\Container\ListContainersQuery;
 use App\Queries\Container\ListContainerSummariesQuery;
+use App\Queries\Container\ListContainersQuery;
 use App\Services\ICreateContainerUseCase;
 use App\Services\IDeleteContainerUseCase;
 use App\Services\IDispatchContainerUseCase;
 use App\Services\IGetContainerUseCase;
-use App\Services\IListContainersUseCase;
 use App\Services\IListContainerSummariesUseCase;
+use App\Services\IListContainersUseCase;
 use App\Services\ISealContainerUseCase;
 use App\Services\IUpdateContainerUseCase;
 use Domain\Models\IContainer;
@@ -81,6 +86,8 @@ final readonly class ContainerController implements IContainerController
      * @param  ISealContainerUseCase  $sealContainer  Backs {@see seal()}.
      * @param  IDispatchContainerUseCase  $dispatchContainer  Backs
      *                                                        {@see dispatch()}.
+     * @param  IContentTypeStrategy  $contentType  Decodes the request bodies.
+             * @param  IAcceptsStrategy  $accepts  Renders the response bodies.
      *
      * @copyright 2026 Tachyon
      */
@@ -93,6 +100,8 @@ final readonly class ContainerController implements IContainerController
         private IDeleteContainerUseCase $deleteContainer,
         private ISealContainerUseCase $sealContainer,
         private IDispatchContainerUseCase $dispatchContainer,
+        private IContentTypeStrategy $contentType,
+        private IAcceptsStrategy $accepts,
     ) {
     }
 
@@ -104,7 +113,7 @@ final readonly class ContainerController implements IContainerController
      * dispatched containers needs.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `ContainerListResponseProxy`, or a problem
+     * @return ResponseInterface A `ContainerListXResponse`, or a problem
      *                           document.
      *
      * @copyright 2026 Tachyon
@@ -113,7 +122,7 @@ final readonly class ContainerController implements IContainerController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
@@ -127,7 +136,7 @@ final readonly class ContainerController implements IContainerController
             statusIn: isset($params['status_in']) && is_string($params['status_in']) ? $params['status_in'] : null,
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var ContainerListView $view */
@@ -138,11 +147,15 @@ final readonly class ContainerController implements IContainerController
             $data[] = $this->containerResponse($item);
         }
 
-        return ApiResponse::body(new ContainerListResponseProxy(
+        $response = ApiResponse::body($this->accepts, new ContainerListXResponseFactory(new ContainerListXResponse(
             data: $data,
             nextCursor: $view->nextCursor,
             total: $view->total,
-        ));
+        )));
+
+        return $response->isSuccess()
+            ? $response->getValue()
+            : ProblemResponse::fromResult($this->accepts, $response);
     }
 
     /**
@@ -153,7 +166,7 @@ final readonly class ContainerController implements IContainerController
      * so it is the same endpoint rather than a second one.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `ContainerSummaryListResponseProxy`, or a
+     * @return ResponseInterface A `ContainerSummaryListXResponse`, or a
      *                           problem document.
      *
      * @copyright 2026 Tachyon
@@ -162,7 +175,7 @@ final readonly class ContainerController implements IContainerController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
@@ -174,7 +187,7 @@ final readonly class ContainerController implements IContainerController
             limit: isset($params['limit']) && is_numeric($params['limit']) ? (int) $params['limit'] : null,
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var ContainerSummaryListView $view */
@@ -185,18 +198,22 @@ final readonly class ContainerController implements IContainerController
             $data[] = $this->summaryResponse($item);
         }
 
-        return ApiResponse::body(new ContainerSummaryListResponseProxy(
+        $response = ApiResponse::body($this->accepts, new ContainerSummaryListXResponseFactory(new ContainerSummaryListXResponse(
             data: $data,
             nextCursor: $view->nextCursor,
             total: $view->total,
-        ));
+        )));
+
+        return $response->isSuccess()
+            ? $response->getValue()
+            : ProblemResponse::fromResult($this->accepts, $response);
     }
 
     /**
      * Registers a container.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `ContainerResponseProxy` with 201, or a
+     * @return ResponseInterface A `ContainerXResponse` with 201, or a
      *                           problem document.
      *
      * @copyright 2026 Tachyon
@@ -205,31 +222,40 @@ final readonly class ContainerController implements IContainerController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
-        $body = ContainerCreateRequestProxy::fromStream($request->getBody());
+        $decoded = $this->contentType->execute($request->getBody(), new ContainerCreateXRequestFactory());
+        if (!$decoded->isSuccess()) {
+            return ProblemResponse::fromResult($this->accepts, $decoded);
+        }
+
+        $body = $decoded->getValue();
         $result = $this->createContainer->execute(new CreateContainerCommand(
             context: $context,
             code: $body->code ?? '',
             maxCapacity: $body->maxCapacity,
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var IContainer $container */
         $container = $result->getValue();
 
-        return ApiResponse::body($this->fromModel($container), 201);
+        $response = ApiResponse::body($this->accepts, new ContainerXResponseFactory($this->fromModel($container)), 201);
+
+        return $response->isSuccess()
+            ? $response->getValue()
+            : ProblemResponse::fromResult($this->accepts, $response);
     }
 
     /**
      * Renders one container by its path id.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `ContainerResponseProxy`, or a problem
+     * @return ResponseInterface A `ContainerXResponse`, or a problem
      *                           document — 404 when nothing matches the id.
      *
      * @copyright 2026 Tachyon
@@ -238,19 +264,23 @@ final readonly class ContainerController implements IContainerController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
         $result = $this->getContainer->execute(new GetContainerQuery($context, $this->pathId($request)));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var ContainerViewItem $item */
         $item = $result->getValue();
 
-        return ApiResponse::body($this->containerResponse($item));
+        $response = ApiResponse::body($this->accepts, new ContainerXResponseFactory($this->containerResponse($item)));
+
+        return $response->isSuccess()
+            ? $response->getValue()
+            : ProblemResponse::fromResult($this->accepts, $response);
     }
 
     /**
@@ -260,7 +290,7 @@ final readonly class ContainerController implements IContainerController
      * physical unit, and changing it would rename a thing rather than edit it.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `ContainerResponseProxy`, or a problem
+     * @return ResponseInterface A `ContainerXResponse`, or a problem
      *                           document — 404 when nothing matches the id.
      *
      * @copyright 2026 Tachyon
@@ -269,24 +299,33 @@ final readonly class ContainerController implements IContainerController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
-        $body = ContainerUpdateRequestProxy::fromStream($request->getBody());
+        $decoded = $this->contentType->execute($request->getBody(), new ContainerUpdateXRequestFactory());
+        if (!$decoded->isSuccess()) {
+            return ProblemResponse::fromResult($this->accepts, $decoded);
+        }
+
+        $body = $decoded->getValue();
         $result = $this->updateContainer->execute(new UpdateContainerCommand(
             context: $context,
             id: $this->pathId($request),
             maxCapacity: $body->maxCapacity,
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var IContainer $container */
         $container = $result->getValue();
 
-        return ApiResponse::body($this->fromModel($container));
+        $response = ApiResponse::body($this->accepts, new ContainerXResponseFactory($this->fromModel($container)));
+
+        return $response->isSuccess()
+            ? $response->getValue()
+            : ProblemResponse::fromResult($this->accepts, $response);
     }
 
     /**
@@ -301,13 +340,13 @@ final readonly class ContainerController implements IContainerController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
         $result = $this->deleteContainer->execute(new DeleteContainerCommand($context, $this->pathId($request)));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         return ApiResponse::noContent();
@@ -327,13 +366,13 @@ final readonly class ContainerController implements IContainerController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
         $result = $this->sealContainer->execute(new SealContainerCommand($context, $this->pathId($request)));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         return ApiResponse::noContent();
@@ -352,29 +391,29 @@ final readonly class ContainerController implements IContainerController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
         $result = $this->dispatchContainer->execute(new DispatchContainerCommand($context, $this->pathId($request)));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         return ApiResponse::noContent();
     }
 
     /**
-     * The response proxy for a container read out of a view.
+     * The response message for a container read out of a view.
      *
      * @param  ContainerViewItem  $item  One row of a list or single-read query.
-     * @return ContainerResponseProxy Ready to serialize.
+     * @return ContainerXResponse Ready to serialize.
      *
      * @copyright 2026 Tachyon
      */
-    private function containerResponse(ContainerViewItem $item): ContainerResponseProxy
+    private function containerResponse(ContainerViewItem $item): ContainerXResponse
     {
-        return new ContainerResponseProxy(
+        return new ContainerXResponse(
             id: $item->id,
             code: $item->code,
             currentWeight: $item->currentWeight,
@@ -384,19 +423,19 @@ final readonly class ContainerController implements IContainerController
     }
 
     /**
-     * The same proxy, from the domain model a write returns.
+     * The same message, from the domain model a write returns.
      *
      * Twinned with {@see containerResponse()} because a view row and a model
      * carry the same five fields under no common type.
      *
      * @param  IContainer  $container  The container as a write left it.
-     * @return ContainerResponseProxy Ready to serialize.
+     * @return ContainerXResponse Ready to serialize.
      *
      * @copyright 2026 Tachyon
      */
-    private function fromModel(IContainer $container): ContainerResponseProxy
+    private function fromModel(IContainer $container): ContainerXResponse
     {
-        return new ContainerResponseProxy(
+        return new ContainerXResponse(
             id: $container->id,
             code: $container->code,
             currentWeight: $container->currentWeight,
@@ -406,18 +445,18 @@ final readonly class ContainerController implements IContainerController
     }
 
     /**
-     * The summary proxy: a container plus its cargo and recent telemetry.
+     * The summary message: a container plus its cargo and recent telemetry.
      *
      * @param  ContainerSummaryViewItem  $item  One row of the summary query.
-     * @return ContainerSummaryResponseProxy Ready to serialize.
+     * @return ContainerSummaryXResponse Ready to serialize.
      *
      * @copyright 2026 Tachyon
      */
-    private function summaryResponse(ContainerSummaryViewItem $item): ContainerSummaryResponseProxy
+    private function summaryResponse(ContainerSummaryViewItem $item): ContainerSummaryXResponse
     {
         $manifest = [];
         foreach ($item->manifest as $cargo) {
-            $manifest[] = new CargoManifestItemProxy(
+            $manifest[] = new CargoManifestItemX(
                 productId: $cargo->productId,
                 productName: $cargo->productName,
                 quantity: $cargo->quantity,
@@ -427,7 +466,7 @@ final readonly class ContainerController implements IContainerController
 
         $logs = [];
         foreach ($item->recentLogs as $log) {
-            $logs[] = new TelemetryLogItemProxy(
+            $logs[] = new TelemetryLogItemX(
                 id: $log->id,
                 event: $log->event,
                 description: $log->description,
@@ -435,7 +474,7 @@ final readonly class ContainerController implements IContainerController
             );
         }
 
-        return new ContainerSummaryResponseProxy(
+        return new ContainerSummaryXResponse(
             container: $this->containerResponse($item->container),
             manifest: $manifest,
             recentLogs: $logs,

@@ -17,12 +17,18 @@ namespace API\Controllers\Interno;
 
 use API\Controllers\IProductController;
 use API\Controllers\ResolvesCaller;
-use API\Fbs\Product\ProductCreateRequestProxy;
-use API\Fbs\Product\ProductListResponseProxy;
-use API\Fbs\Product\ProductResponseProxy;
-use API\Fbs\Product\ProductUpdateRequestProxy;
 use API\Http\ApiResponse;
 use API\Http\ProblemResponse;
+use API\Negociation\DTO\Product\ProductCreateXRequest;
+use API\Negociation\DTO\Product\ProductCreateXRequestFactory;
+use API\Negociation\DTO\Product\ProductListXResponse;
+use API\Negociation\DTO\Product\ProductListXResponseFactory;
+use API\Negociation\DTO\Product\ProductUpdateXRequest;
+use API\Negociation\DTO\Product\ProductUpdateXRequestFactory;
+use API\Negociation\DTO\Product\ProductXResponse;
+use API\Negociation\DTO\Product\ProductXResponseFactory;
+use API\Negociation\IAcceptsStrategy;
+use API\Negociation\IContentTypeStrategy;
 use App\Commands\Product\CreateProductCommand;
 use App\Commands\Product\DeleteProductCommand;
 use App\Commands\Product\UpdateProductCommand;
@@ -50,13 +56,22 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * The **action shape**, written out once here and followed by every other
  * controller: resolve the caller, bail out as a problem response if there is
- * none, decode the body into a request proxy, hand a command or query to the use
- * case, bail out again on failure, and render the value as a response proxy. A
- * controller holds no rules of its own — every branch it takes is either "no
- * caller" or "the use case said no".
+ * none, decode the body by handing its factory to the content-type strategy,
+ * hand a command or query to the use case, bail out again on failure, and wrap
+ * the value in a response factory for the accepts strategy to render.
+ *
+ * Four of those steps answer a {@see \Shared\Exceptions\Result}, and unwrapping
+ * every one of them is the controller's job: it is the only place that knows
+ * what a failure means for the response. A controller still holds no rules of
+ * its own — its branches are "no caller", "the body could not be read", "the
+ * use case said no" and "the answer could not be rendered", and all four end in
+ * {@see ProblemResponse::fromResult()}. It decides no wire format either: both
+ * strategies were chosen by the negotiation middleware, and it only uses them.
  *
  * @see IProductController The contract this implements.
  * @see ResolvesCaller Supplies `caller()` and `pathId()`.
+ * @see IContentTypeStrategy How the body is decoded.
+ * @see IAcceptsStrategy How the answer is rendered.
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
@@ -73,6 +88,8 @@ final readonly class ProductController implements IProductController
      * @param  IGetProductUseCase  $getProduct  Backs {@see get()}.
      * @param  IUpdateProductUseCase  $updateProduct  Backs {@see update()}.
      * @param  IDeleteProductUseCase  $deleteProduct  Backs {@see delete()}.
+     * @param  IContentTypeStrategy  $contentType  Decodes the request bodies.
+             * @param  IAcceptsStrategy  $accepts  Renders the response bodies.
      *
      * @copyright 2026 Tachyon
      */
@@ -82,6 +99,8 @@ final readonly class ProductController implements IProductController
         private IGetProductUseCase $getProduct,
         private IUpdateProductUseCase $updateProduct,
         private IDeleteProductUseCase $deleteProduct,
+        private IContentTypeStrategy $contentType,
+        private IAcceptsStrategy $accepts,
     ) {
     }
 
@@ -94,7 +113,7 @@ final readonly class ProductController implements IProductController
      * malformed `limit` is not worth a 400.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `ProductListResponseProxy`, or a problem
+     * @return ResponseInterface A `ProductListXResponse`, or a problem
      *                           document.
      *
      * @copyright 2026 Tachyon
@@ -103,7 +122,7 @@ final readonly class ProductController implements IProductController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
@@ -115,7 +134,7 @@ final readonly class ProductController implements IProductController
             search: isset($params['search']) && is_string($params['search']) ? $params['search'] : null,
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var ProductListView $view */
@@ -126,22 +145,26 @@ final readonly class ProductController implements IProductController
             $data[] = $this->response($item->id, $item->name, $item->density, $item->riskClass);
         }
 
-        return ApiResponse::body(new ProductListResponseProxy(
+        $response = ApiResponse::body($this->accepts, new ProductListXResponseFactory(new ProductListXResponse(
             data: $data,
             nextCursor: $view->nextCursor,
             total: $view->total,
-        ));
+        )));
+
+        return $response->isSuccess()
+            ? $response->getValue()
+            : ProblemResponse::fromResult($this->accepts, $response);
     }
 
     /**
-     * Decodes a `ProductCreateRequestProxy` and registers the product.
+     * Decodes a `ProductCreateXRequest` and registers the product.
      *
      * A missing `name` is passed on as an empty string rather than rejected
      * here: the table module owns that rule and answers 422 with every broken
      * field at once.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `ProductResponseProxy` with 201, or a problem
+     * @return ResponseInterface A `ProductXResponse` with 201, or a problem
      *                           document.
      *
      * @copyright 2026 Tachyon
@@ -150,11 +173,16 @@ final readonly class ProductController implements IProductController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
-        $body = ProductCreateRequestProxy::fromStream($request->getBody());
+        $decoded = $this->contentType->execute($request->getBody(), new ProductCreateXRequestFactory());
+        if (!$decoded->isSuccess()) {
+            return ProblemResponse::fromResult($this->accepts, $decoded);
+        }
+
+        $body = $decoded->getValue();
         $result = $this->createProduct->execute(new CreateProductCommand(
             context: $context,
             name: $body->name ?? '',
@@ -162,23 +190,30 @@ final readonly class ProductController implements IProductController
             riskClass: $body->riskClass,
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var IProduct $product */
         $product = $result->getValue();
 
-        return ApiResponse::body(
-            $this->response($product->id, $product->name, $product->density, $product->riskClass),
+        $response = ApiResponse::body(
+            $this->accepts,
+            new ProductXResponseFactory(
+                $this->response($product->id, $product->name, $product->density, $product->riskClass),
+            ),
             201,
         );
+
+        return $response->isSuccess()
+            ? $response->getValue()
+            : ProblemResponse::fromResult($this->accepts, $response);
     }
 
     /**
      * Renders one product by its path id.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `ProductResponseProxy`, or a problem document
+     * @return ResponseInterface A `ProductXResponse`, or a problem document
      *                           — 404 when nothing matches the id.
      *
      * @copyright 2026 Tachyon
@@ -187,26 +222,30 @@ final readonly class ProductController implements IProductController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
         $result = $this->getProduct->execute(new GetProductQuery($context, $this->pathId($request)));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var ProductViewItem $item */
         $item = $result->getValue();
 
-        return ApiResponse::body($this->response($item->id, $item->name, $item->density, $item->riskClass));
+        $response = ApiResponse::body($this->accepts, new ProductXResponseFactory($this->response($item->id, $item->name, $item->density, $item->riskClass)));
+
+        return $response->isSuccess()
+            ? $response->getValue()
+            : ProblemResponse::fromResult($this->accepts, $response);
     }
 
     /**
-     * Decodes a `ProductUpdateRequestProxy` and replaces the product's fields.
+     * Decodes a `ProductUpdateXRequest` and replaces the product's fields.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `ProductResponseProxy`, or a problem document
+     * @return ResponseInterface A `ProductXResponse`, or a problem document
      *                           — 404 when nothing matches the id.
      *
      * @copyright 2026 Tachyon
@@ -215,11 +254,16 @@ final readonly class ProductController implements IProductController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
-        $body = ProductUpdateRequestProxy::fromStream($request->getBody());
+        $decoded = $this->contentType->execute($request->getBody(), new ProductUpdateXRequestFactory());
+        if (!$decoded->isSuccess()) {
+            return ProblemResponse::fromResult($this->accepts, $decoded);
+        }
+
+        $body = $decoded->getValue();
         $result = $this->updateProduct->execute(new UpdateProductCommand(
             context: $context,
             id: $this->pathId($request),
@@ -228,13 +272,17 @@ final readonly class ProductController implements IProductController
             riskClass: $body->riskClass,
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var IProduct $product */
         $product = $result->getValue();
 
-        return ApiResponse::body($this->response($product->id, $product->name, $product->density, $product->riskClass));
+        $response = ApiResponse::body($this->accepts, new ProductXResponseFactory($this->response($product->id, $product->name, $product->density, $product->riskClass)));
+
+        return $response->isSuccess()
+            ? $response->getValue()
+            : ProblemResponse::fromResult($this->accepts, $response);
     }
 
     /**
@@ -249,20 +297,20 @@ final readonly class ProductController implements IProductController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
         $result = $this->deleteProduct->execute(new DeleteProductCommand($context, $this->pathId($request)));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         return ApiResponse::noContent();
     }
 
     /**
-     * The response proxy, from either a domain model or a view row.
+     * The response message, from either a domain model or a view row.
      *
      * The two carry the same four fields under the same names but share no
      * type, so this takes the fields rather than either object.
@@ -271,12 +319,12 @@ final readonly class ProductController implements IProductController
      * @param  string  $name  Commercial name.
      * @param  float  $density  Kilograms per litre.
      * @param  RiskClass  $riskClass  Hazard classification.
-     * @return ProductResponseProxy Ready to serialize.
+     * @return ProductXResponse Ready to serialize.
      *
      * @copyright 2026 Tachyon
      */
-    private function response(string $id, string $name, float $density, RiskClass $riskClass): ProductResponseProxy
+    private function response(string $id, string $name, float $density, RiskClass $riskClass): ProductXResponse
     {
-        return new ProductResponseProxy(id: $id, name: $name, density: $density, riskClass: $riskClass);
+        return new ProductXResponse(id: $id, name: $name, density: $density, riskClass: $riskClass);
     }
 }

@@ -17,16 +17,19 @@ namespace API\Controllers\Interno;
 
 use API\Controllers\IAccountController;
 use API\Controllers\ResolvesCaller;
-use API\Fbs\Account\AccountPasswordChangeRequestProxy;
-use API\Fbs\Account\AccountProfileResponseProxy;
-use API\Fbs\Account\AccountUpdateRequestProxy;
-use API\Fbs\Account\RoleResponseProxy;
 use API\Http\ApiResponse;
 use API\Http\ProblemResponse;
+use API\Negociation\DTO\Account\AccountPasswordChangeXRequestFactory;
+use API\Negociation\DTO\Account\AccountProfileXResponse;
+use API\Negociation\DTO\Account\AccountProfileXResponseFactory;
+use API\Negociation\DTO\Account\AccountUpdateXRequestFactory;
+use API\Negociation\DTO\Account\RoleXResponse;
+use API\Negociation\IAcceptsStrategy;
+use API\Negociation\IContentTypeStrategy;
 use App\Commands\Account\ChangePasswordCommand;
+use App\Commands\Account\UpdateAccountCommand;
 use App\Context\UserContext;
 use App\Queries\Account\GetAccountQuery;
-use App\Commands\Account\UpdateAccountCommand;
 use App\Services\IChangePasswordUseCase;
 use App\Services\IGetAccountUseCase;
 use App\Services\IUpdateAccountUseCase;
@@ -62,6 +65,8 @@ final readonly class AccountController implements IAccountController
      * @param  IUpdateAccountUseCase  $updateAccount  Backs {@see update()}.
      * @param  IChangePasswordUseCase  $changePassword  Backs
      *                                                  {@see changePassword()}.
+     * @param  IContentTypeStrategy  $contentType  Decodes the request bodies.
+             * @param  IAcceptsStrategy  $accepts  Renders the response bodies.
      *
      * @copyright 2026 Tachyon
      */
@@ -69,6 +74,8 @@ final readonly class AccountController implements IAccountController
         private IGetAccountUseCase $getAccount,
         private IUpdateAccountUseCase $updateAccount,
         private IChangePasswordUseCase $changePassword,
+        private IContentTypeStrategy $contentType,
+        private IAcceptsStrategy $accepts,
     ) {
     }
 
@@ -76,7 +83,7 @@ final readonly class AccountController implements IAccountController
      * Renders the caller's own profile.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface An `AccountProfileResponseProxy`, or a problem
+     * @return ResponseInterface An `AccountProfileXResponse`, or a problem
      *                           document.
      *
      * @copyright 2026 Tachyon
@@ -85,7 +92,7 @@ final readonly class AccountController implements IAccountController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
@@ -100,7 +107,7 @@ final readonly class AccountController implements IAccountController
      * was just changed.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface An `AccountProfileResponseProxy`, or a problem
+     * @return ResponseInterface An `AccountProfileXResponse`, or a problem
      *                           document.
      *
      * @copyright 2026 Tachyon
@@ -109,18 +116,23 @@ final readonly class AccountController implements IAccountController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
-        $body = AccountUpdateRequestProxy::fromStream($request->getBody());
+        $decoded = $this->contentType->execute($request->getBody(), new AccountUpdateXRequestFactory());
+        if (!$decoded->isSuccess()) {
+            return ProblemResponse::fromResult($this->accepts, $decoded);
+        }
+
+        $body = $decoded->getValue();
         $result = $this->updateAccount->execute(new UpdateAccountCommand(
             context: $context,
             name: $body->name ?? '',
             email: $body->email ?? '',
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         return $this->profile($context);
@@ -138,18 +150,23 @@ final readonly class AccountController implements IAccountController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
-        $body = AccountPasswordChangeRequestProxy::fromStream($request->getBody());
+        $decoded = $this->contentType->execute($request->getBody(), new AccountPasswordChangeXRequestFactory());
+        if (!$decoded->isSuccess()) {
+            return ProblemResponse::fromResult($this->accepts, $decoded);
+        }
+
+        $body = $decoded->getValue();
         $result = $this->changePassword->execute(new ChangePasswordCommand(
             context: $context,
             currentPassword: $body->currentPassword ?? '',
             newPassword: $body->newPassword ?? '',
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         return ApiResponse::noContent();
@@ -162,7 +179,7 @@ final readonly class AccountController implements IAccountController
      * document.
      *
      * @param  UserContext  $context  The caller.
-     * @return ResponseInterface An `AccountProfileResponseProxy`, or a problem
+     * @return ResponseInterface An `AccountProfileXResponse`, or a problem
      *                           document.
      *
      * @copyright 2026 Tachyon
@@ -171,7 +188,7 @@ final readonly class AccountController implements IAccountController
     {
         $result = $this->getAccount->execute(new GetAccountQuery($context));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var AccountView $view */
@@ -179,7 +196,7 @@ final readonly class AccountController implements IAccountController
 
         $roles = [];
         foreach ($view->roles as $role) {
-            $roles[] = new RoleResponseProxy(
+            $roles[] = new RoleXResponse(
                 id: $role->id,
                 name: $role->name,
                 userCount: $role->userCount,
@@ -187,11 +204,15 @@ final readonly class AccountController implements IAccountController
             );
         }
 
-        return ApiResponse::body(new AccountProfileResponseProxy(
+        $response = ApiResponse::body($this->accepts, new AccountProfileXResponseFactory(new AccountProfileXResponse(
             id: $view->id,
             name: $view->name,
             email: $view->email,
             roles: $roles,
-        ));
+        )));
+
+        return $response->isSuccess()
+            ? $response->getValue()
+            : ProblemResponse::fromResult($this->accepts, $response);
     }
 }

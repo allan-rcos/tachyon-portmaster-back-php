@@ -80,15 +80,11 @@
                 
             </li>
                     <li>
-                <a href="namespaces/api-dto.html" class="">DTO</a>
-                
-            </li>
-                    <li>
-                <a href="namespaces/api-fbs.html" class="">Fbs</a>
-                
-            </li>
-                    <li>
                 <a href="namespaces/api-http.html" class="">Http</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/api-negociation.html" class="">Negociation</a>
                 
             </li>
             </ul>
@@ -320,7 +316,7 @@ knowing the value <em>is</em> the authorization.</p>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/App-Services-IGetMarkerUseCase.html#method_execute">execute()</a>
     <span>
-                                &nbsp;: <a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, bool|null&gt;    </span>
+                                &nbsp;: <a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, bool&gt;    </span>
 </dt>
 <dd>Reads the flag currently held for a value.</dd>
 
@@ -353,16 +349,16 @@ knowing the value <em>is</em> the authorization.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/App/Services/IGetMarkerUseCase.php"><a href="files/src-app-services-igetmarkerusecase.html"><abbr title="src/App/Services/IGetMarkerUseCase.php">IGetMarkerUseCase.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">53</span>
+    <span class="phpdocumentor-element-found-in__line">54</span>
 
-            <a href="classes/App-Services-IGetMarkerUseCase.html#source-view.53" class="phpdocumentor-element-found-in__source" data-line="53" data-modal="source-view" data-src="files/src/App/Services/IGetMarkerUseCase.php.txt"></a>
+            <a href="classes/App-Services-IGetMarkerUseCase.html#source-view.54" class="phpdocumentor-element-found-in__source" data-line="54" data-modal="source-view" data-src="files/src/App/Services/IGetMarkerUseCase.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Reads the flag currently held for a value.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">execute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/App-Queries-Marker-GetMarkerQuery.html"><abbr title="\App\Queries\Marker\GetMarkerQuery">GetMarkerQuery</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$query</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, bool|null&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">execute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/App-Queries-Marker-GetMarkerQuery.html"><abbr title="\App\Queries\Marker\GetMarkerQuery">GetMarkerQuery</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$query</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, bool&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
             <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
@@ -370,7 +366,7 @@ knowing the value <em>is</em> the authorization.</p>
         </div>
     
         <section class="phpdocumentor-description"><p><code class="prettyprint">true</code> is the only answer that means &quot;we issued this and it is still
-live&quot;. <code class="prettyprint">false</code> (consumed) and <code class="prettyprint">null</code> (expired, or never existed) are
+live&quot;. <code class="prettyprint">false</code> (consumed) and an empty result (expired, or never existed) are
 different histories with the same consequence, and a caller should treat
 them the same — telling them apart would leak whether a value was ever
 valid.</p>
@@ -410,10 +406,11 @@ valid.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, bool|null&gt;</span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, bool&gt;</span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>404 when the group is not registered, 422 when
-the value is empty.</p>
+                <section class="phpdocumentor-description"><p>The flag, or <a href="classes/Shared-Exceptions-Result.html#method_void"><abbr title="\Shared\Exceptions\Result::void()">Result::void()</abbr></a> when no live
+marker matched; 404 when the group is not
+registered, 422 when the value is empty.</p>
 </section>
 
             </section>

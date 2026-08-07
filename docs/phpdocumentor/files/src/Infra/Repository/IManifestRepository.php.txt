@@ -44,7 +44,7 @@ interface IManifestRepository
      *
      * @param  string  $containerId  Base62 id of the container.
      * @param  string  $productId  Base62 id of the product.
-     * @return Result<IManifestCargo|null> The line, or null when the container
+     * @return Result<IManifestCargo> The line, or {@see Result::void()} when the container
      *                                     does not carry that product. An absent
      *                                     line is a success, not a 404 — callers
      *                                     loading a line to add to it need to

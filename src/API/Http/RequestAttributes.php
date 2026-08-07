@@ -28,9 +28,11 @@ use OpenSwoole\Coroutine;
  * The context is per-coroutine, which under OpenSwoole means per-request: two
  * requests being served concurrently in one worker never see each other's
  * values, and everything written here is discarded when the coroutine ends.
+ * That is what lets the per-worker negotiation contexts hold a per-request
+ * strategy.
  *
  * @see \API\Http\Middleware\RequestIdMiddleware Writes the request id.
- * @see \API\Http\Middleware\FlatBufferNegotiationMiddleware Writes both content kinds.
+ * @see \API\Http\Middleware\ContentNegotiationMiddleware Writes both strategies.
  * @see \API\Http\Middleware\AuthenticationMiddleware Writes the caller.
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
@@ -44,15 +46,17 @@ enum RequestAttributes: string
     case RequestId = 'request_id';
 
     /**
-     * {@see ContentKind} the request body is encoded in.
+     * The {@see \API\Negociation\IContentTypeStrategy} that decodes this
+     * request's body, resolved from `Content-Type`.
      */
-    case RequestContentKind = 'request_content_kind';
+    case RequestContentStrategy = 'request_content_strategy';
 
     /**
-     * {@see ContentKind} the response should be encoded in. Independent of the
-     * request's: a caller may POST JSON and ask for binary back.
+     * The {@see \API\Negociation\IAcceptsStrategy} that renders this request's
+     * response, resolved from `Accept`. Independent of the request's: a caller
+     * may POST JSON and ask for binary back.
      */
-    case ResponseContentKind = 'response_content_kind';
+    case ResponseAcceptsStrategy = 'response_accepts_strategy';
 
     /**
      * The caller's {@see \App\Context\UserContext}, once authentication has run.

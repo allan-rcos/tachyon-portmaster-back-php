@@ -41,7 +41,9 @@ final readonly class LeafContext implements JsonSerializable
      *                                         failures concerning more than one field.
      * @param  int  $code  HTTP status this failure becomes: 422 for a broken
      *                     rule, 409 for a conflicting state, 404 for a missing
-     *                     one, 403 for a denied permission, 500 for infrastructure.
+     *                     one, 403 for a denied permission, 500 for
+     *                     infrastructure, 502 when the answer itself could not
+     *                     be put on the wire.
      *
      * @copyright 2026 Tachyon
      */

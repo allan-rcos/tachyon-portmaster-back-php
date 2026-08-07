@@ -1,6 +1,7 @@
 # 0001. FlatBuffers as the wire format, with hand-written proxies
 
-**Status:** Accepted · 2026-07-26
+**Status:** Accepted · 2026-07-26 · the proxy half superseded by
+[ADR 0009](0009-abstract-factory-e-strategy-na-negociacao.md), 2026-08-03
 
 ## Context
 
@@ -28,7 +29,13 @@ and adding what the application actually uses: a typed constructor, `buildInto`,
 `toBinary`, and JSON coercion via the `CoercesJson` trait. The rest of the
 codebase talks to proxies exclusively.
 
-Content negotiation is a middleware (`FlatBufferNegotiationMiddleware`), so the
+> **Superseded.** The proxy was later split into a DTO, an abstract factory and
+> a strategy, and moved out of `src/API/Fbs/` entirely — see
+> [ADR 0009](0009-abstract-factory-e-strategy-na-negociacao.md). What survives
+> from this decision is everything else on this page: the schemas, the
+> generation, the patching, and the rule that generated code is never edited.
+
+Content negotiation is a middleware (`ContentNegotiationMiddleware`), so the
 same endpoint serves binary or JSON from `Accept` and `Content-Type`. Clients
 that cannot do FlatBuffers are not shut out, and the tests can read a response
 by hand when debugging.

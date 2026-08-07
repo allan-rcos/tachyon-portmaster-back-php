@@ -80,15 +80,11 @@
                 
             </li>
                     <li>
-                <a href="namespaces/api-dto.html" class="">DTO</a>
-                
-            </li>
-                    <li>
-                <a href="namespaces/api-fbs.html" class="">Fbs</a>
-                
-            </li>
-                    <li>
                 <a href="namespaces/api-http.html" class="">Http</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/api-negociation.html" class="">Negociation</a>
                 
             </li>
             </ul>
@@ -340,7 +336,7 @@ caller's open transaction.</p>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Infra-Repository-IManifestRepository.html#method_findCargo">findCargo()</a>
     <span>
-                                &nbsp;: <a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, <a href="classes/Domain-Models-IManifestCargo.html"><abbr title="\Domain\Models\IManifestCargo">IManifestCargo</abbr></a>|null&gt;    </span>
+                                &nbsp;: <a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, <a href="classes/Domain-Models-IManifestCargo.html"><abbr title="\Domain\Models\IManifestCargo">IManifestCargo</abbr></a>&gt;    </span>
 </dt>
 <dd>Loads one product&#039;s cargo line from a container.</dd>
 
@@ -557,7 +553,7 @@ Matching no line is <em>not</em> a failure.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">findCargo</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$containerId</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$productId</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, <a href="classes/Domain-Models-IManifestCargo.html"><abbr title="\Domain\Models\IManifestCargo">IManifestCargo</abbr></a>|null&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">findCargo</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$containerId</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$productId</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, <a href="classes/Domain-Models-IManifestCargo.html"><abbr title="\Domain\Models\IManifestCargo">IManifestCargo</abbr></a>&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
             <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
@@ -608,9 +604,9 @@ Matching no line is <em>not</em> a failure.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, <a href="classes/Domain-Models-IManifestCargo.html"><abbr title="\Domain\Models\IManifestCargo">IManifestCargo</abbr></a>|null&gt;</span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, <a href="classes/Domain-Models-IManifestCargo.html"><abbr title="\Domain\Models\IManifestCargo">IManifestCargo</abbr></a>&gt;</span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>The line, or null when the container
+                <section class="phpdocumentor-description"><p>The line, or <a href="classes/Shared-Exceptions-Result.html#method_void"><abbr title="\Shared\Exceptions\Result::void()">Result::void()</abbr></a> when the container
 does not carry that product. An absent
 line is a success, not a 404 — callers
 loading a line to add to it need to

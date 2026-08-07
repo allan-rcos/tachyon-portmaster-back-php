@@ -18,6 +18,7 @@ API documentation useless. The code now states what it does; these state why.
 | [0006](0006-layered-providers-per-feature.md) | Hand-wired providers, split per feature |
 | [0007](0007-phpstan-baseline-limited-to-generated-code.md) | A PHPStan baseline holding only generated code |
 | [0008](0008-minified-tarball-as-the-release-artifact.md) | A minified tarball as the release artifact, migrations apart |
+| [0009](0009-abstract-factory-e-strategy-na-negociacao.md) | Abstract factory and strategy instead of one proxy per message |
 
 ## Writing one
 

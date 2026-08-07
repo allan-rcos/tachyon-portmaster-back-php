@@ -43,12 +43,20 @@ use API\Controllers\IServerController;
 use API\Controllers\IUserAdminController;
 use API\Http\AuthCookie;
 use API\Http\Middleware\AuthenticationMiddleware;
-use API\Http\Middleware\FlatBufferNegotiationMiddleware;
+use API\Http\Middleware\ContentNegotiationMiddleware;
 use API\Http\Middleware\LoggingMiddleware;
 use API\Http\Middleware\RecovererMiddleware;
 use API\Http\Middleware\RequestIdMiddleware;
 use API\Http\Middleware\RouteDispatchMiddleware;
 use API\Http\Router\RouterHub;
+use API\Negociation\IAcceptsStrategy;
+use API\Negociation\IContentTypeStrategy;
+use API\Negociation\Interno\AcceptsStrategyContext;
+use API\Negociation\Interno\ContentTypeStrategyContext;
+use API\Negociation\Interno\FlatbufferAcceptsStrategy;
+use API\Negociation\Interno\FlatbufferContentTypeStrategy;
+use API\Negociation\Interno\JsonAcceptsStrategy;
+use API\Negociation\Interno\JsonContentTypeStrategy;
 use API\IApiProvider;
 use App\IAppProvider;
 use OpenSwoole\Core\Psr\Middleware\StackHandler;
@@ -77,6 +85,36 @@ final class ApiProvider implements IApiProvider
      * @var AuthCookie|null Memoized; see {@see authCookie()}.
      */
     private ?AuthCookie $authCookie = null;
+
+    /**
+     * @var ContentTypeStrategyContext|null Memoized; see {@see contentType()}.
+     */
+    private ?ContentTypeStrategyContext $contentType = null;
+
+    /**
+     * @var AcceptsStrategyContext|null Memoized; see {@see accepts()}.
+     */
+    private ?AcceptsStrategyContext $accepts = null;
+
+    /**
+     * @var IContentTypeStrategy|null Memoized; see {@see jsonBody()}.
+     */
+    private ?IContentTypeStrategy $jsonBody = null;
+
+    /**
+     * @var IContentTypeStrategy|null Memoized; see {@see flatbufferBody()}.
+     */
+    private ?IContentTypeStrategy $flatbufferBody = null;
+
+    /**
+     * @var IAcceptsStrategy|null Memoized; see {@see jsonAnswer()}.
+     */
+    private ?IAcceptsStrategy $jsonAnswer = null;
+
+    /**
+     * @var IAcceptsStrategy|null Memoized; see {@see flatbufferAnswer()}.
+     */
+    private ?IAcceptsStrategy $flatbufferAnswer = null;
 
     /**
      * @var ITokenService|null Memoized; see {@see tokenService()}.
@@ -121,7 +159,7 @@ final class ApiProvider implements IApiProvider
 
         /** @var array<class-string, object> $controllers */
         $controllers = [
-            IServerController::class => new ServerController($this->api),
+            IServerController::class => new ServerController($this->api, $this->accepts()),
             IAuthController::class => new AuthController(
                 $this->app->loginUseCase(),
                 $this->app->setupUseCase(),
@@ -129,11 +167,15 @@ final class ApiProvider implements IApiProvider
                 $this->refreshTokenService(),
                 $this->authCookie(),
                 $logger,
+                $this->contentType(),
+                $this->accepts(),
             ),
             IAccountController::class => new AccountController(
                 $this->app->getAccountUseCase(),
                 $this->app->updateAccountUseCase(),
                 $this->app->changePasswordUseCase(),
+                $this->contentType(),
+                $this->accepts(),
             ),
             IProductController::class => new ProductController(
                 $this->app->listProductsUseCase(),
@@ -141,12 +183,16 @@ final class ApiProvider implements IApiProvider
                 $this->app->getProductUseCase(),
                 $this->app->updateProductUseCase(),
                 $this->app->deleteProductUseCase(),
+                $this->contentType(),
+                $this->accepts(),
             ),
             IRoleAdminController::class => new RoleAdminController(
                 $this->app->listRolesUseCase(),
                 $this->app->createRoleUseCase(),
                 $this->app->updateRolePermissionsUseCase(),
                 $this->app->getRoleUseCase(),
+                $this->contentType(),
+                $this->accepts(),
             ),
             IContainerController::class => new ContainerController(
                 $this->app->listContainersUseCase(),
@@ -157,10 +203,14 @@ final class ApiProvider implements IApiProvider
                 $this->app->deleteContainerUseCase(),
                 $this->app->sealContainerUseCase(),
                 $this->app->dispatchContainerUseCase(),
+                $this->contentType(),
+                $this->accepts(),
             ),
             IManifestController::class => new ManifestController(
                 $this->app->loadItemUseCase(),
                 $this->app->unloadItemUseCase(),
+                $this->contentType(),
+                $this->accepts(),
             ),
             IUserAdminController::class => new UserAdminController(
                 $this->app->listUsersUseCase(),
@@ -170,22 +220,34 @@ final class ApiProvider implements IApiProvider
                 $this->app->deleteUserUseCase(),
                 $this->app->resetUserPasswordUseCase(),
                 $this->app->updateUserRolesUseCase(),
+                $this->contentType(),
+                $this->accepts(),
             ),
             IMetricsController::class => new MetricsController(
                 $this->app->getMetricsUseCase(),
+                $this->accepts(),
             ),
             IMetadataController::class => new MetadataController(
                 $this->app->listPermissionsUseCase(),
+                $this->accepts(),
             ),
         ];
 
         return new StackHandler(
-            new RecovererMiddleware($logger),
+            new RecovererMiddleware($this->accepts(), $logger),
             new RequestIdMiddleware($this->app->sequentialIdGenerator(), $logger),
             new LoggingMiddleware($logger),
-            new FlatBufferNegotiationMiddleware($logger),
+            new ContentNegotiationMiddleware(
+                $this->contentType(),
+                $this->accepts(),
+                $this->jsonBody(),
+                $this->flatbufferBody(),
+                $this->jsonAnswer(),
+                $this->flatbufferAnswer(),
+                $logger,
+            ),
             new AuthenticationMiddleware($this->tokenService(), $this->authCookie(), $logger),
-            new RouteDispatchMiddleware(RouterHub::dispatcher(), $controllers),
+            new RouteDispatchMiddleware(RouterHub::dispatcher(), $controllers, $this->accepts()),
         );
     }
 
@@ -203,6 +265,90 @@ final class ApiProvider implements IApiProvider
     private function authCookie(): AuthCookie
     {
         return $this->authCookie ??= new AuthCookie($this->jwt);
+    }
+
+    /**
+     * The inbound negotiation context, memoized.
+     *
+     * Memoization is not an optimization here, it is the mechanism: the
+     * middleware writes the request's strategy through this exact object and
+     * the controllers read it back through the same one. Two instances and the
+     * middleware's decision would reach nobody.
+     *
+     * @return ContentTypeStrategyContext The single instance for this worker.
+     *
+     * @copyright 2026 Tachyon
+     */
+    private function contentType(): ContentTypeStrategyContext
+    {
+        return $this->contentType ??= new ContentTypeStrategyContext($this->flatbufferBody());
+    }
+
+    /**
+     * The outbound negotiation context, memoized for the same reason as
+     * {@see contentType()}.
+     *
+     * @return AcceptsStrategyContext The single instance for this worker.
+     *
+     * @copyright 2026 Tachyon
+     */
+    private function accepts(): AcceptsStrategyContext
+    {
+        return $this->accepts ??= new AcceptsStrategyContext($this->jsonAnswer());
+    }
+
+    /**
+     * The JSON request-body reader, memoized.
+     *
+     * The four strategies below hold no state at all, which is why one instance
+     * per worker serves every request: the middleware records a *reference* to
+     * one of them for the request, and nothing about it is ever request-specific.
+     *
+     * @return IContentTypeStrategy The single instance for this worker.
+     *
+     * @copyright 2026 Tachyon
+     */
+    private function jsonBody(): IContentTypeStrategy
+    {
+        return $this->jsonBody ??= new JsonContentTypeStrategy();
+    }
+
+    /**
+     * The FlatBuffer request-body reader, memoized. Also the inbound fallback,
+     * for a request that arrived with no `Content-Type` at all.
+     *
+     * @return IContentTypeStrategy The single instance for this worker.
+     *
+     * @copyright 2026 Tachyon
+     */
+    private function flatbufferBody(): IContentTypeStrategy
+    {
+        return $this->flatbufferBody ??= new FlatbufferContentTypeStrategy();
+    }
+
+    /**
+     * The JSON response renderer, memoized. Also the outbound fallback: an
+     * error raised before negotiation ran still has to answer something.
+     *
+     * @return IAcceptsStrategy The single instance for this worker.
+     *
+     * @copyright 2026 Tachyon
+     */
+    private function jsonAnswer(): IAcceptsStrategy
+    {
+        return $this->jsonAnswer ??= new JsonAcceptsStrategy();
+    }
+
+    /**
+     * The FlatBuffer response renderer, memoized.
+     *
+     * @return IAcceptsStrategy The single instance for this worker.
+     *
+     * @copyright 2026 Tachyon
+     */
+    private function flatbufferAnswer(): IAcceptsStrategy
+    {
+        return $this->flatbufferAnswer ??= new FlatbufferAcceptsStrategy();
     }
 
     /**

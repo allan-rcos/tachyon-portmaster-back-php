@@ -17,12 +17,15 @@ namespace API\Controllers\Interno;
 
 use API\Controllers\IManifestController;
 use API\Controllers\ResolvesCaller;
-use API\Fbs\Container\ContainerResponseProxy;
-use API\Fbs\Manifest\LoadItemRequestProxy;
-use API\Fbs\Manifest\ManifestResponseProxy;
-use API\Fbs\Manifest\UnloadItemRequestProxy;
 use API\Http\ApiResponse;
 use API\Http\ProblemResponse;
+use API\Negociation\DTO\Container\ContainerXResponse;
+use API\Negociation\DTO\Manifest\LoadItemXRequestFactory;
+use API\Negociation\DTO\Manifest\ManifestXResponse;
+use API\Negociation\DTO\Manifest\ManifestXResponseFactory;
+use API\Negociation\DTO\Manifest\UnloadItemXRequestFactory;
+use API\Negociation\IAcceptsStrategy;
+use API\Negociation\IContentTypeStrategy;
 use App\Commands\Manifest\LoadItemCommand;
 use App\Commands\Manifest\UnloadItemCommand;
 use App\Services\ILoadItemUseCase;
@@ -55,12 +58,16 @@ final readonly class ManifestController implements IManifestController
     /**
      * @param  ILoadItemUseCase  $loadItem  Backs {@see loadItem()}.
      * @param  IUnloadItemUseCase  $unloadItem  Backs {@see unloadItem()}.
+     * @param  IContentTypeStrategy  $contentType  Decodes the request bodies.
+             * @param  IAcceptsStrategy  $accepts  Renders the response bodies.
      *
      * @copyright 2026 Tachyon
      */
     public function __construct(
         private ILoadItemUseCase $loadItem,
         private IUnloadItemUseCase $unloadItem,
+        private IContentTypeStrategy $contentType,
+        private IAcceptsStrategy $accepts,
     ) {
     }
 
@@ -71,7 +78,7 @@ final readonly class ManifestController implements IManifestController
      * a container and a product and neither is the resource being addressed.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `ManifestResponseProxy` carrying the updated
+     * @return ResponseInterface A `ManifestXResponse` carrying the updated
      *                           container, or a problem document — 409 when the
      *                           container will not take the cargo.
      *
@@ -81,11 +88,16 @@ final readonly class ManifestController implements IManifestController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
-        $body = LoadItemRequestProxy::fromStream($request->getBody());
+        $decoded = $this->contentType->execute($request->getBody(), new LoadItemXRequestFactory());
+        if (!$decoded->isSuccess()) {
+            return ProblemResponse::fromResult($this->accepts, $decoded);
+        }
+
+        $body = $decoded->getValue();
         $result = $this->loadItem->execute(new LoadItemCommand(
             context: $context,
             containerId: $body->containerId ?? '',
@@ -93,20 +105,24 @@ final readonly class ManifestController implements IManifestController
             quantity: $body->quantity,
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var IContainer $container */
         $container = $result->getValue();
 
-        return ApiResponse::body($this->response('Item loaded successfully.', $container));
+        $response = ApiResponse::body($this->accepts, new ManifestXResponseFactory($this->response('Item loaded successfully.', $container)));
+
+        return $response->isSuccess()
+            ? $response->getValue()
+            : ProblemResponse::fromResult($this->accepts, $response);
     }
 
     /**
      * Unloads cargo from a container.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `ManifestResponseProxy` carrying the updated
+     * @return ResponseInterface A `ManifestXResponse` carrying the updated
      *                           container, or a problem document — 409 when the
      *                           container will not give the cargo up.
      *
@@ -116,11 +132,16 @@ final readonly class ManifestController implements IManifestController
     {
         $caller = $this->caller();
         if (!$caller->isSuccess()) {
-            return ProblemResponse::fromResult($caller);
+            return ProblemResponse::fromResult($this->accepts, $caller);
         }
         $context = $caller->getValue();
 
-        $body = UnloadItemRequestProxy::fromStream($request->getBody());
+        $decoded = $this->contentType->execute($request->getBody(), new UnloadItemXRequestFactory());
+        if (!$decoded->isSuccess()) {
+            return ProblemResponse::fromResult($this->accepts, $decoded);
+        }
+
+        $body = $decoded->getValue();
         $result = $this->unloadItem->execute(new UnloadItemCommand(
             context: $context,
             containerId: $body->containerId ?? '',
@@ -128,29 +149,33 @@ final readonly class ManifestController implements IManifestController
             quantity: $body->quantity,
         ));
         if (!$result->isSuccess()) {
-            return ProblemResponse::fromResult($result);
+            return ProblemResponse::fromResult($this->accepts, $result);
         }
 
         /** @var IContainer $container */
         $container = $result->getValue();
 
-        return ApiResponse::body($this->response('Item unloaded successfully.', $container));
+        $response = ApiResponse::body($this->accepts, new ManifestXResponseFactory($this->response('Item unloaded successfully.', $container)));
+
+        return $response->isSuccess()
+            ? $response->getValue()
+            : ProblemResponse::fromResult($this->accepts, $response);
     }
 
     /**
-     * The response proxy both actions answer with.
+     * The response message both actions answer with.
      *
      * @param  string  $message  Which move succeeded.
      * @param  IContainer  $container  The container as it now stands.
-     * @return ManifestResponseProxy Ready to serialize.
+     * @return ManifestXResponse Ready to serialize.
      *
      * @copyright 2026 Tachyon
      */
-    private function response(string $message, IContainer $container): ManifestResponseProxy
+    private function response(string $message, IContainer $container): ManifestXResponse
     {
-        return new ManifestResponseProxy(
+        return new ManifestXResponse(
             message: $message,
-            container: new ContainerResponseProxy(
+            container: new ContainerXResponse(
                 id: $container->id,
                 code: $container->code,
                 currentWeight: $container->currentWeight,

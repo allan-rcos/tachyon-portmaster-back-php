@@ -17,18 +17,21 @@ namespace API\Controllers\Interno;
 
 use API\Config\ApiConfig;
 use API\Controllers\IServerController;
-use API\Fbs\Server\ProjectInfoProxy;
 use API\Http\ApiResponse;
+use API\Http\ProblemResponse;
+use API\Negociation\DTO\Server\ProjectInfoX;
+use API\Negociation\DTO\Server\ProjectInfoXFactory;
+use API\Negociation\IAcceptsStrategy;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * `GET /info` — server metadata.
  *
- * The response is a {@see ProjectInfoProxy}, declared in `server.fbs` and
+ * The response is a {@see ProjectInfoX}, declared in `server.fbs` and
  * published in swagger.json, so it is content-negotiated like every other
- * endpoint. It previously built a `ProjectInfoDTO` and called `json_encode`
- * by hand, which put an endpoint outside the contract entirely.
+ * endpoint — an endpoint that hand-rolled its own JSON would be one no
+ * client could discover.
  *
  * The environment is read from {@see ApiConfig} rather than hard-coded, so the
  * value actually reflects how the server was started.
@@ -64,11 +67,13 @@ final readonly class ServerController implements IServerController
 
     /**
      * @param  ApiConfig  $config  Supplies the reported environment.
+     * @param  IAcceptsStrategy  $accepts  Renders the response body.
      *
      * @copyright 2026 Tachyon
      */
     public function __construct(
         private ApiConfig $config,
+        private IAcceptsStrategy $accepts,
     ) {
     }
 
@@ -79,18 +84,22 @@ final readonly class ServerController implements IServerController
      * several workers, successive requests will report different numbers.
      *
      * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return ResponseInterface A `ProjectInfoProxy`.
+     * @return ResponseInterface A `ProjectInfoX`.
      *
      * @copyright 2026 Tachyon
      */
     public function getInfo(ServerRequestInterface $request): ResponseInterface
     {
-        return ApiResponse::body(new ProjectInfoProxy(
+        $response = ApiResponse::body($this->accepts, new ProjectInfoXFactory(new ProjectInfoX(
             name: self::NAME,
             version: self::VERSION,
             environment: $this->config->environment->value,
             runtime: 'PHP '.PHP_VERSION.' + OpenSwoole',
             memoryUsageMb: round(memory_get_usage() / 1024 / 1024, 2),
-        ));
+        )));
+
+        return $response->isSuccess()
+            ? $response->getValue()
+            : ProblemResponse::fromResult($this->accepts, $response);
     }
 }

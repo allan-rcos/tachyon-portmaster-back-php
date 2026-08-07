@@ -47,26 +47,68 @@ composer flatbuffers                  # PHP tables under src/API/Fbs/Shipment/
 scripts/generate-flatbuffers-go.sh    # Go bindings for the tests
 ```
 
-Then write one **proxy** per table — the generated classes are overwritten on
-every run, so everything hand-written goes in the proxy beside them.
+Then write, per table, a **DTO** and its **factory** under
+`src/API/Negociation/DTO/Shipment/`. The generated classes are overwritten on
+every run, so `src/API/Fbs/` holds nothing but them, and everything the
+application decides about a message lives in the factory.
 
-Mirror: `src/API/Fbs/Product/ProductResponseProxy.php`.
+The `X` marks the internal type: it goes before a trailing `Request`/`Response`,
+or at the end when the schema name has neither (`UserX`).
+
+Mirror, for a response: `src/API/Negociation/DTO/Product/ProductXResponse.php`
+and `ProductXResponseFactory.php`.
 
 ```php
-final class ShipmentResponseProxy extends ShipmentResponse implements IFbsProxy
+final readonly class ShipmentXResponse
 {
-    use CoercesJson;
-
     public function __construct(
         public ?string $id = null,
         public ?string $containerId = null,
         // ...
     ) {}
+}
 
-    public function buildInto(FlatbufferBuilder $builder): int { /* ... */ }
-    public function toBinary(): string { /* ... */ }
+final readonly class ShipmentXResponseFactory implements IResponseAbstractFactory
+{
+    /** @var IResponseAbstractFactory|null The nested container, wrapped once. */
+    private ?IResponseAbstractFactory $containerFactory;
+
+    public function __construct(private ShipmentXResponse $message)
+    {
+        // A nested message's factory is built here, not in the methods below:
+        // it is wrapped once, however many times the message is rendered.
+        $this->containerFactory = $message->container !== null
+            ? new ContainerXResponseFactory($message->container)
+            : null;
+    }
+
+    // The builder is the strategy's — write the table into it, answer the
+    // offset, and never call finish(). Children go in first, through this very
+    // interface, because FlatBuffers stores them as offsets into this buffer.
+    public function createFlatbuffer(FlatbufferBuilder $builder): Result
+    {
+        $container = $this->containerFactory?->createFlatbuffer($builder)->getValue() ?? 0;
+        $id = $this->message->id !== null ? $builder->createString($this->message->id) : 0;
+
+        return Result::success(ShipmentResponse::createShipmentResponse($builder, $id, $container));
+    }
+
+    // Keyed by the *schema's* names, snake_case — not the DTO's properties.
+    public function createJson(): Result { /* ... */ }
 }
 ```
+
+Those two methods are the factory's whole surface. A parent nests a child by
+calling the same two on it, so nothing has to live outside the contract and no
+factory ever binds to another factory's class.
+
+A response is only ever written and a request only ever read, so a request's
+factory implements `IRequestAbstractFactory` instead — `fromJson()` and
+`fromFlatbuffer()`, one per format a body can arrive in. Reading the root table
+and copying its fields is `fromFlatbuffer()`'s whole job, written out in it. Every one of those methods
+answers a `Result`, like everything else that can fail. Neither factory branches
+on the wire format: that is the strategies' job, and there are
+exactly two of each for the whole application.
 
 Update `swagger/swagger.json` with the new endpoints.
 
@@ -295,10 +337,20 @@ public function create(ServerRequestInterface $request): ResponseInterface
 {
     $caller = $this->caller();
     if (!$caller->isSuccess()) {
-        return ProblemResponse::fromResult($caller);
+        return ProblemResponse::fromResult($this->accepts, $caller);
     }
 
-    $body = ShipmentCreateRequestProxy::fromRequest($request);
+    // The strategy was chosen by the negotiation middleware; the controller
+    // only tells it which message to build — and what its answer means.
+    $decoded = $this->contentType->execute($request->getBody(), new ShipmentCreateXRequestFactory());
+    if (!$decoded->isSuccess()) {
+        return ProblemResponse::fromResult($this->accepts, $decoded);
+    }
+
+    // A success always carries the message. No body at all, or one that does
+    // not parse, is the failure above — the controller never builds a request
+    // object to stand in for a message that did not arrive.
+    $body = $decoded->getValue();
 
     $result = $this->createShipment->execute(new CreateShipmentCommand(
         context: $caller->getValue(),
@@ -307,18 +359,29 @@ public function create(ServerRequestInterface $request): ResponseInterface
         destination: (string) $body->destination,
     ));
     if (!$result->isSuccess()) {
-        return ProblemResponse::fromResult($result);
+        return ProblemResponse::fromResult($this->accepts, $result);
     }
 
     /** @var IShipment $shipment */
     $shipment = $result->getValue();
 
-    return ApiResponse::created($request, new ShipmentResponseProxy(
+    $response = ApiResponse::body($this->accepts, new ShipmentXResponseFactory(new ShipmentXResponse(
         id: $shipment->id,
         // ...
-    ));
+    )), 201);
+
+    // Rendering can fail too, and the controller decides what that means: a 502,
+    // because the message was built and the server could not put it on the wire.
+    return $response->isSuccess()
+        ? $response->getValue()
+        : ProblemResponse::fromResult($this->accepts, $response);
 }
 ```
+
+The controller takes `IContentTypeStrategy` and/or `IAcceptsStrategy` in its
+constructor. Both are the same two context objects for the whole worker — see
+[ADR 0009](../adr/0009-abstract-factory-e-strategy-na-negociacao.md) for why the
+per-request choice lives in the coroutine context and not on them.
 
 **Routes** — the table of the current contract version, today
 `src/API/Http/Router/Interno/V1Router.php`. Ids are Base62, so use `self::ID`,

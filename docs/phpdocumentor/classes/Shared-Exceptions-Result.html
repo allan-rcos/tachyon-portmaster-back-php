@@ -80,15 +80,11 @@
                 
             </li>
                     <li>
-                <a href="namespaces/api-dto.html" class="">DTO</a>
-                
-            </li>
-                    <li>
-                <a href="namespaces/api-fbs.html" class="">Fbs</a>
-                
-            </li>
-                    <li>
                 <a href="namespaces/api-http.html" class="">Http</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/api-negociation.html" class="">Negociation</a>
                 
             </li>
             </ul>
@@ -249,19 +245,21 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Shared/Exceptions/Result.php"><a href="files/src-shared-exceptions-result.html"><abbr title="src/Shared/Exceptions/Result.php">Result.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">38</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
-            <a href="classes/Shared-Exceptions-Result.html#source-view.38" class="phpdocumentor-element-found-in__source" data-line="38" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
+            <a href="classes/Shared-Exceptions-Result.html#source-view.40" class="phpdocumentor-element-found-in__source" data-line="40" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
     </aside>
 
             <p class="phpdocumentor-summary">The return type of every operation that can fail.</p>
 
 
-    <section class="phpdocumentor-description"><p>A Result is either a success carrying a value or a failure carrying an error
-id — never both, and never neither. Failures travel as ids rather than as
-thrown exceptions so a use case can decide what to do with one without
-unwinding the stack, which matters when the boundary in between is a database
-transaction that must be rolled back rather than abandoned.</p>
+    <section class="phpdocumentor-description"><p>A Result is either a success or a failure carrying an error id — never both,
+and never neither. A success usually carries a value; <abbr title="\Shared\Exceptions\void()">void()</abbr> is the
+one that carries nothing, and means &quot;no error&quot;, never &quot;the value is null&quot;.
+Failures travel as ids rather than as thrown exceptions so a use case can
+decide what to do with one without unwinding the stack, which matters when
+the boundary in between is a database transaction that must be rolled back
+rather than abandoned.</p>
 <p>The id indexes into <a href="classes/Shared-Exceptions-Leaf.html"><abbr title="\Shared\Exceptions\Leaf">Leaf</abbr></a>, which holds the <a href="classes/Shared-Exceptions-LeafContext.html"><abbr title="\Shared\Exceptions\LeafContext">LeafContext</abbr></a> carrying
 the message, details and HTTP status. Keeping that context out of the Result
 is what lets a failure be typed <code class="prettyprint">Result&lt;never&gt;</code> and so satisfy any signature
@@ -384,6 +382,14 @@ it is propagated through.</p>
 <dd>The value carried by a success.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Shared-Exceptions-Result.html#method_isEmpty">isEmpty()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Whether this is a success that carries nothing — what {@see void()}
+produces.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Shared-Exceptions-Result.html#method_isSuccess">isSuccess()</a>
     <span>
                                 &nbsp;: bool    </span>
@@ -400,9 +406,11 @@ it is propagated through.</p>
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Shared-Exceptions-Result.html#method_void">void()</a>
     <span>
-                                &nbsp;: <a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, null&gt;    </span>
+                                &nbsp;: <a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, never&gt;    </span>
 </dt>
-<dd>A success with nothing to return — the shape of a command that worked.</dd>
+<dd>A success with nothing to return — the shape of a command that worked,
+and of a question whose honest answer is &quot;nothing&quot;, such as a lookup that
+matched no row where matching none is not a fault.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a class="" href="classes/Shared-Exceptions-Result.html#method___construct">__construct()</a>
@@ -442,9 +450,9 @@ constructors, none of which can produce an inconsistent state.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Shared/Exceptions/Result.php"><a href="files/src-shared-exceptions-result.html"><abbr title="src/Shared/Exceptions/Result.php">Result.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">54</span>
 
-            <a href="classes/Shared-Exceptions-Result.html#source-view.52" class="phpdocumentor-element-found-in__source" data-line="52" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
+            <a href="classes/Shared-Exceptions-Result.html#source-view.54" class="phpdocumentor-element-found-in__source" data-line="54" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
     </aside>
 
     
@@ -480,9 +488,9 @@ constructors, none of which can produce an inconsistent state.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Shared/Exceptions/Result.php"><a href="files/src-shared-exceptions-result.html"><abbr title="src/Shared/Exceptions/Result.php">Result.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">53</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
-            <a href="classes/Shared-Exceptions-Result.html#source-view.53" class="phpdocumentor-element-found-in__source" data-line="53" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
+            <a href="classes/Shared-Exceptions-Result.html#source-view.55" class="phpdocumentor-element-found-in__source" data-line="55" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
     </aside>
 
     
@@ -518,9 +526,9 @@ constructors, none of which can produce an inconsistent state.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Shared/Exceptions/Result.php"><a href="files/src-shared-exceptions-result.html"><abbr title="src/Shared/Exceptions/Result.php">Result.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
-            <a href="classes/Shared-Exceptions-Result.html#source-view.51" class="phpdocumentor-element-found-in__source" data-line="51" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
+            <a href="classes/Shared-Exceptions-Result.html#source-view.53" class="phpdocumentor-element-found-in__source" data-line="53" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
     </aside>
 
     
@@ -561,9 +569,9 @@ constructors, none of which can produce an inconsistent state.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Shared/Exceptions/Result.php"><a href="files/src-shared-exceptions-result.html"><abbr title="src/Shared/Exceptions/Result.php">Result.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">90</span>
+    <span class="phpdocumentor-element-found-in__line">92</span>
 
-            <a href="classes/Shared-Exceptions-Result.html#source-view.90" class="phpdocumentor-element-found-in__source" data-line="90" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
+            <a href="classes/Shared-Exceptions-Result.html#source-view.92" class="phpdocumentor-element-found-in__source" data-line="92" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Wraps a registered error id as a failure.</p>
@@ -637,9 +645,9 @@ method.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Shared/Exceptions/Result.php"><a href="files/src-shared-exceptions-result.html"><abbr title="src/Shared/Exceptions/Result.php">Result.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">156</span>
+    <span class="phpdocumentor-element-found-in__line">194</span>
 
-            <a href="classes/Shared-Exceptions-Result.html#source-view.156" class="phpdocumentor-element-found-in__source" data-line="156" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
+            <a href="classes/Shared-Exceptions-Result.html#source-view.194" class="phpdocumentor-element-found-in__source" data-line="194" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">The error id carried by a failure, for {@see Leaf::getError()}.</p>
@@ -698,9 +706,9 @@ method.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Shared/Exceptions/Result.php"><a href="files/src-shared-exceptions-result.html"><abbr title="src/Shared/Exceptions/Result.php">Result.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">142</span>
+    <span class="phpdocumentor-element-found-in__line">180</span>
 
-            <a href="classes/Shared-Exceptions-Result.html#source-view.142" class="phpdocumentor-element-found-in__source" data-line="142" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
+            <a href="classes/Shared-Exceptions-Result.html#source-view.180" class="phpdocumentor-element-found-in__source" data-line="180" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">The value carried by a success.</p>
@@ -714,7 +722,12 @@ method.</p>
 
         </div>
     
-    
+        <section class="phpdocumentor-description"><p>Null on a failure and on a <abbr title="\Shared\Exceptions\void()">void()</abbr> success, and in neither case
+does that null mean anything: it is the absence of a value, not a value.
+Check <abbr title="\Shared\Exceptions\isSuccess()">isSuccess()</abbr> — and <abbr title="\Shared\Exceptions\isEmpty()">isEmpty()</abbr> where nothing is a
+possible answer — rather than reading this to find out which happened.</p>
+</section>
+
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="method_getValue_tags">
@@ -739,7 +752,73 @@ method.</p>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><abbr title="\Shared\Exceptions\T">T</abbr></span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>The value, or null when this is a failure.</p>
+                <section class="phpdocumentor-description"><p>The value; null when there is none.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_isEmpty">
+        isEmpty()
+        <a href="classes/Shared-Exceptions-Result.html#method_isEmpty" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Shared/Exceptions/Result.php"><a href="files/src-shared-exceptions-result.html"><abbr title="src/Shared/Exceptions/Result.php">Result.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">141</span>
+
+            <a href="classes/Shared-Exceptions-Result.html#source-view.141" class="phpdocumentor-element-found-in__source" data-line="141" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">Whether this is a success that carries nothing — what {@see void()}
+produces.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">isEmpty</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+            <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
+
+        </div>
+    
+        <section class="phpdocumentor-description"><p>The counterpart to <abbr title="\Shared\Exceptions\isSuccess()">isSuccess()</abbr>, for the callers that have a branch
+for &quot;nothing came back&quot; and must not reach <abbr title="\Shared\Exceptions\getValue()">getValue()</abbr> to find out.
+A success that is not empty always carries its value.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_isEmpty_tags">
+        Tags
+        <a href="classes/Shared-Exceptions-Result.html#method_isEmpty_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">copyright</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                            <section class="phpdocumentor-description"><p>2026 Tachyon</p>
+</section>
+
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>True for a void success, false for any other Result.</p>
 </section>
 
             </section>
@@ -759,9 +838,9 @@ method.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Shared/Exceptions/Result.php"><a href="files/src-shared-exceptions-result.html"><abbr title="src/Shared/Exceptions/Result.php">Result.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">128</span>
+    <span class="phpdocumentor-element-found-in__line">161</span>
 
-            <a href="classes/Shared-Exceptions-Result.html#source-view.128" class="phpdocumentor-element-found-in__source" data-line="128" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
+            <a href="classes/Shared-Exceptions-Result.html#source-view.161" class="phpdocumentor-element-found-in__source" data-line="161" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Whether this is a success.</p>
@@ -775,9 +854,11 @@ method.</p>
 
         </div>
     
-        <section class="phpdocumentor-description"><p>Always the first thing a caller checks: <abbr title="\Shared\Exceptions\getValue()">getValue()</abbr> is only
-meaningful when this returns true, and <abbr title="\Shared\Exceptions\getErrorId()">getErrorId()</abbr> only when it
-returns false.</p>
+        <section class="phpdocumentor-description"><p>Always the first thing a caller checks: <abbr title="\Shared\Exceptions\getErrorId()">getErrorId()</abbr> is only
+meaningful when this returns false, and <abbr title="\Shared\Exceptions\getValue()">getValue()</abbr> only when it
+returns true <em>and</em> <abbr title="\Shared\Exceptions\isEmpty()">isEmpty()</abbr> returns false. A caller with no
+branch for nothing does not need the second check — the operations that
+can answer <abbr title="\Shared\Exceptions\void()">void()</abbr> say so.</p>
 </section>
 
     
@@ -824,9 +905,9 @@ returns false.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Shared/Exceptions/Result.php"><a href="files/src-shared-exceptions-result.html"><abbr title="src/Shared/Exceptions/Result.php">Result.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">69</span>
+    <span class="phpdocumentor-element-found-in__line">71</span>
 
-            <a href="classes/Shared-Exceptions-Result.html#source-view.69" class="phpdocumentor-element-found-in__source" data-line="69" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
+            <a href="classes/Shared-Exceptions-Result.html#source-view.71" class="phpdocumentor-element-found-in__source" data-line="71" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Wraps a value as a success.</p>
@@ -903,23 +984,32 @@ returns false.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Shared/Exceptions/Result.php"><a href="files/src-shared-exceptions-result.html"><abbr title="src/Shared/Exceptions/Result.php">Result.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">107</span>
+    <span class="phpdocumentor-element-found-in__line">119</span>
 
-            <a href="classes/Shared-Exceptions-Result.html#source-view.107" class="phpdocumentor-element-found-in__source" data-line="107" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
+            <a href="classes/Shared-Exceptions-Result.html#source-view.119" class="phpdocumentor-element-found-in__source" data-line="119" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">A success with nothing to return — the shape of a command that worked.</p>
+        <p class="phpdocumentor-summary">A success with nothing to return — the shape of a command that worked,
+and of a question whose honest answer is &quot;nothing&quot;, such as a lookup that
+matched no row where matching none is not a fault.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">void</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, null&gt;</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">void</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, never&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
             <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
 
         </div>
     
-    
+        <section class="phpdocumentor-description"><p>It means <strong>no error</strong>, and never &quot;the value is null&quot;: a null on a success
+carries no information, so nothing should read one. Ask <abbr title="\Shared\Exceptions\isEmpty()">isEmpty()</abbr>
+instead, then take the branch.</p>
+<p>Typed <code class="prettyprint">Result&lt;never&gt;</code> for the same reason <abbr title="\Shared\Exceptions\failure()">failure()</abbr> is: carrying no
+value, it satisfies a signature of any type, so a method declared
+<code class="prettyprint">Result&lt;IProduct&gt;</code> can answer one without widening to <code class="prettyprint">IProduct|null</code>.</p>
+</section>
+
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="method_void_tags">
@@ -942,9 +1032,9 @@ returns false.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, null&gt;</span>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, never&gt;</span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>A success whose value is null.</p>
+                <section class="phpdocumentor-description"><p>A success carrying nothing.</p>
 </section>
 
             </section>
@@ -964,9 +1054,9 @@ returns false.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Shared/Exceptions/Result.php"><a href="files/src-shared-exceptions-result.html"><abbr title="src/Shared/Exceptions/Result.php">Result.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
-            <a href="classes/Shared-Exceptions-Result.html#source-view.50" class="phpdocumentor-element-found-in__source" data-line="50" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
+            <a href="classes/Shared-Exceptions-Result.html#source-view.52" class="phpdocumentor-element-found-in__source" data-line="52" data-modal="source-view" data-src="files/src/Shared/Exceptions/Result.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Private so a Result can only be built through the three named
@@ -1159,6 +1249,7 @@ constructors, none of which can produce an inconsistent state.</p>
                                             <li class=""><a href="classes/Shared-Exceptions-Result.html#method_failure">failure()</a></li>
                                             <li class=""><a href="classes/Shared-Exceptions-Result.html#method_getErrorId">getErrorId()</a></li>
                                             <li class=""><a href="classes/Shared-Exceptions-Result.html#method_getValue">getValue()</a></li>
+                                            <li class=""><a href="classes/Shared-Exceptions-Result.html#method_isEmpty">isEmpty()</a></li>
                                             <li class=""><a href="classes/Shared-Exceptions-Result.html#method_isSuccess">isSuccess()</a></li>
                                             <li class=""><a href="classes/Shared-Exceptions-Result.html#method_success">success()</a></li>
                                             <li class=""><a href="classes/Shared-Exceptions-Result.html#method_void">void()</a></li>

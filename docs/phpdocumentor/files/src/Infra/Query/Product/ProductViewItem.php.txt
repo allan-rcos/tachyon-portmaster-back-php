@@ -19,7 +19,7 @@ use Domain\Enums\RiskClass;
 
 /**
  * A single product read record. Read-side DTO — built only by the product DQLs,
- * mapped to a response proxy by the controller.
+ * mapped to a response message by the controller.
  *
  * Not a {@see \Domain\Models\IProduct}: this carries what a reader is shown,
  * with no rule attached and nothing that could be written back.

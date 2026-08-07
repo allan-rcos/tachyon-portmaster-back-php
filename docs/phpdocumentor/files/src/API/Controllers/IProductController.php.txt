@@ -24,8 +24,8 @@ use Psr\Http\Message\ServerRequestInterface;
  * The **CRUD contract shape**, written out once here and referenced by the other
  * resource controllers. Every action takes the PSR-7 request and returns a
  * PSR-7 response; path variables arrive as request attributes; a body, where
- * there is one, is the matching `*RequestProxy` and the answer the matching
- * `*ResponseProxy`. Failures are RFC 7807 problem documents, so no action
+ * there is one, is the matching `*XRequest` and the answer the matching
+ * `*XResponse`. Failures are RFC 7807 problem documents, so no action
  * declares a `@throws`.
  *
  * Which permission each action needs is the use case's to state, not this

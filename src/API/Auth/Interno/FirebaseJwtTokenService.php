@@ -17,8 +17,9 @@ namespace API\Auth\Interno;
 
 use API\Auth\ITokenService;
 use API\Config\JwtConfig;
-use API\Fbs\Token\TokenRoleProxy;
-use API\Fbs\Token\TokenUserProxy;
+use API\Negociation\DTO\Token\TokenRoleX;
+use API\Negociation\DTO\Token\TokenUserX;
+use API\Negociation\DTO\Token\TokenUserXFactory;
 use App\Context\RoleContext;
 use App\Context\UserContext;
 use Domain\ID\IRandomIdGenerator;
@@ -26,6 +27,7 @@ use Domain\Models\IRole;
 use Domain\Models\IUser;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Google\FlatBuffers\ByteBuffer;
 use Shared\Exceptions\Leaf;
 use Shared\Exceptions\LeafContext;
 use Shared\Exceptions\Result;
@@ -35,8 +37,8 @@ use Throwable;
  * {@see ITokenService} backed by firebase/php-jwt (HS256 by default).
  *
  * The principal does not travel as loose claims. It is serialized as a
- * {@see TokenUserProxy} FlatBuffer, base64'd, and carried in the single
- * {@see CLAIM_PRINCIPAL} claim — see that proxy for the trade-off this makes.
+ * {@see TokenUserX} FlatBuffer, base64'd, and carried in the single
+ * {@see CLAIM_PRINCIPAL} claim — see that message for the trade-off this makes.
  * Roles keep their own permission lists, so the context rebuilt on the way in
  * still knows which role granted what.
  *
@@ -166,12 +168,12 @@ final readonly class FirebaseJwtTokenService implements ITokenService
     {
         $now = time();
 
-        $principal = new TokenUserProxy(
+        $principal = new TokenUserX(
             id: $user->id,
             name: $user->name,
             email: $user->email,
             roles: array_map(
-                static fn (IRole $role): TokenRoleProxy => new TokenRoleProxy(
+                static fn (IRole $role): TokenRoleX => new TokenRoleX(
                     id: $role->id,
                     name: $role->name,
                     permissions: array_values(array_filter($role->permissions, 'is_string')),
@@ -194,7 +196,7 @@ final readonly class FirebaseJwtTokenService implements ITokenService
             // only by exact match.
             'jti' => $this->ids->generate(),
             self::CLAIM_TYPE => $type,
-            self::CLAIM_PRINCIPAL => base64_encode($principal->toBinary()),
+            self::CLAIM_PRINCIPAL => base64_encode(TokenUserXFactory::toFlatbuffer($principal)->data()),
         ];
 
         return JWT::encode($payload, $this->config->secret, $this->config->algorithm);
@@ -244,7 +246,7 @@ final readonly class FirebaseJwtTokenService implements ITokenService
         }
 
         try {
-            $principal = TokenUserProxy::fromBinary($binary);
+            $principal = TokenUserXFactory::fromFlatbuffer(ByteBuffer::wrap($binary));
         } catch (Throwable) {
             return self::invalid();
         }
@@ -254,7 +256,7 @@ final readonly class FirebaseJwtTokenService implements ITokenService
             name: $principal->name,
             email: $principal->email,
             roles: array_map(
-                static fn (TokenRoleProxy $role): RoleContext => new RoleContext(
+                static fn (TokenRoleX $role): RoleContext => new RoleContext(
                     id: $role->id,
                     name: $role->name,
                     permissions: $role->permissions,

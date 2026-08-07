@@ -20,7 +20,6 @@ use App\Services\IRegisterPermissionUseCase;
 use App\Commands\Manifest\LoadItemCommand;
 use App\Services\ILoadItemUseCase;
 use Domain\Models\IContainer;
-use Domain\Models\IManifestCargo;
 use Domain\Models\IManifestChange;
 use Domain\Models\IProduct;
 use Domain\TableModules\IManifestTM;
@@ -140,8 +139,9 @@ final readonly class LoadItemUseCase implements ILoadItemUseCase
         $container = $containerResult->getValue();
         /** @var IProduct $product */
         $product = $productResult->getValue();
-        /** @var IManifestCargo|null $current */
-        $current = $cargoResult->getValue();
+        // No line yet is the ordinary state of a product that has never been
+        // in this container, so the lookup answers void rather than failing.
+        $current = $cargoResult->isEmpty() ? null : $cargoResult->getValue();
 
         $changeResult = $this->manifestTM->load($container, $product, $command->quantity, $current);
         if (!$changeResult->isSuccess()) {

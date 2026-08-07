@@ -19,7 +19,7 @@ namespace App\Commands;
  * Input for {@see \App\Services\ILoginUseCase}: the credentials to authenticate.
  *
  * Commands are plain DTOs — they carry the use case's input across the
- * controller boundary so the use case never sees an HTTP request or a proxy.
+ * controller boundary so the use case never sees an HTTP request or a wire message.
  *
  * Carries no {@see \App\Context\UserContext}, and could not: establishing who
  * the caller is *is* the operation. That also means the use case behind it has

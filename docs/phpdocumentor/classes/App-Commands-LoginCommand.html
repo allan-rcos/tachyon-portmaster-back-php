@@ -80,15 +80,11 @@
                 
             </li>
                     <li>
-                <a href="namespaces/api-dto.html" class="">DTO</a>
-                
-            </li>
-                    <li>
-                <a href="namespaces/api-fbs.html" class="">Fbs</a>
-                
-            </li>
-                    <li>
                 <a href="namespaces/api-http.html" class="">Http</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/api-negociation.html" class="">Negociation</a>
                 
             </li>
             </ul>
@@ -258,7 +254,7 @@
 
 
     <section class="phpdocumentor-description"><p>Commands are plain DTOs — they carry the use case's input across the
-controller boundary so the use case never sees an HTTP request or a proxy.</p>
+controller boundary so the use case never sees an HTTP request or a wire message.</p>
 <p>Carries no <a href="classes/App-Context-UserContext.html"><abbr title="\App\Context\UserContext">UserContext</abbr></a>, and could not: establishing who
 the caller is <em>is</em> the operation. That also means the use case behind it has
 no permission to declare — there is nobody yet to check one against.</p>

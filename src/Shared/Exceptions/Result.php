@@ -16,11 +16,13 @@ namespace Shared\Exceptions;
 /**
  * The return type of every operation that can fail.
  *
- * A Result is either a success carrying a value or a failure carrying an error
- * id — never both, and never neither. Failures travel as ids rather than as
- * thrown exceptions so a use case can decide what to do with one without
- * unwinding the stack, which matters when the boundary in between is a database
- * transaction that must be rolled back rather than abandoned.
+ * A Result is either a success or a failure carrying an error id — never both,
+ * and never neither. A success usually carries a value; {@see void()} is the
+ * one that carries nothing, and means "no error", never "the value is null".
+ * Failures travel as ids rather than as thrown exceptions so a use case can
+ * decide what to do with one without unwinding the stack, which matters when
+ * the boundary in between is a database transaction that must be rolled back
+ * rather than abandoned.
  *
  * The id indexes into {@see Leaf}, which holds the {@see LeafContext} carrying
  * the message, details and HTTP status. Keeping that context out of the Result
@@ -96,9 +98,19 @@ final readonly class Result
     }
 
     /**
-     * A success with nothing to return — the shape of a command that worked.
+     * A success with nothing to return — the shape of a command that worked,
+     * and of a question whose honest answer is "nothing", such as a lookup that
+     * matched no row where matching none is not a fault.
      *
-     * @return Result<null> A success whose value is null.
+     * It means **no error**, and never "the value is null": a null on a success
+     * carries no information, so nothing should read one. Ask {@see isEmpty()}
+     * instead, then take the branch.
+     *
+     * Typed `Result<never>` for the same reason {@see failure()} is: carrying no
+     * value, it satisfies a signature of any type, so a method declared
+     * `Result<IProduct>` can answer one without widening to `IProduct|null`.
+     *
+     * @return Result<never> A success carrying nothing.
      *
      * @copyright 2026 Tachyon
      *
@@ -106,18 +118,39 @@ final readonly class Result
      */
     public static function void(): self
     {
-        /** @var self<null> $instance */
+        /** @var self<never> $instance */
         $instance = new self(null, -1, true);
 
         return $instance;
     }
 
     /**
+     * Whether this is a success that carries nothing — what {@see void()}
+     * produces.
+     *
+     * The counterpart to {@see isSuccess()}, for the callers that have a branch
+     * for "nothing came back" and must not reach {@see getValue()} to find out.
+     * A success that is not empty always carries its value.
+     *
+     * @return bool True for a void success, false for any other Result.
+     *
+     * @copyright 2026 Tachyon
+     *
+     * @api
+     */
+    public function isEmpty(): bool
+    {
+        return $this->isSuccess && $this->value === null;
+    }
+
+    /**
      * Whether this is a success.
      *
-     * Always the first thing a caller checks: {@see getValue()} is only
-     * meaningful when this returns true, and {@see getErrorId()} only when it
-     * returns false.
+     * Always the first thing a caller checks: {@see getErrorId()} is only
+     * meaningful when this returns false, and {@see getValue()} only when it
+     * returns true *and* {@see isEmpty()} returns false. A caller with no
+     * branch for nothing does not need the second check — the operations that
+     * can answer {@see void()} say so.
      *
      * @return bool True for a success, false for a failure.
      *
@@ -133,7 +166,12 @@ final readonly class Result
     /**
      * The value carried by a success.
      *
-     * @return T The value, or null when this is a failure.
+     * Null on a failure and on a {@see void()} success, and in neither case
+     * does that null mean anything: it is the absence of a value, not a value.
+     * Check {@see isSuccess()} — and {@see isEmpty()} where nothing is a
+     * possible answer — rather than reading this to find out which happened.
+     *
+     * @return T The value; null when there is none.
      *
      * @copyright 2026 Tachyon
      *

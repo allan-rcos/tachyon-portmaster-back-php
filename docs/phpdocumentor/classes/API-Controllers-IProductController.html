@@ -80,15 +80,11 @@
                 
             </li>
                     <li>
-                <a href="namespaces/api-dto.html" class="">DTO</a>
-                
-            </li>
-                    <li>
-                <a href="namespaces/api-fbs.html" class="">Fbs</a>
-                
-            </li>
-                    <li>
                 <a href="namespaces/api-http.html" class="">Http</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/api-negociation.html" class="">Negociation</a>
                 
             </li>
             </ul>
@@ -247,8 +243,8 @@
     <section class="phpdocumentor-description"><p>The <strong>CRUD contract shape</strong>, written out once here and referenced by the other
 resource controllers. Every action takes the PSR-7 request and returns a
 PSR-7 response; path variables arrive as request attributes; a body, where
-there is one, is the matching <code class="prettyprint">*RequestProxy</code> and the answer the matching
-<code class="prettyprint">*ResponseProxy</code>. Failures are RFC 7807 problem documents, so no action
+there is one, is the matching <code class="prettyprint">*XRequest</code> and the answer the matching
+<code class="prettyprint">*XResponse</code>. Failures are RFC 7807 problem documents, so no action
 declares a <code class="prettyprint">@throws</code>.</p>
 <p>Which permission each action needs is the use case's to state, not this
 contract's — see <a href="classes/App-Services-IListProductsUseCase.html"><abbr title="\App\Services\IListProductsUseCase">IListProductsUseCase</abbr></a> and its siblings.</p>
