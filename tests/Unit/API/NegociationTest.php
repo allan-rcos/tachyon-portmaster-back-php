@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+use API\Fbs\Admin\UserRolesUpdateRequest;
 use API\Http\ContentKind;
 use API\Http\MediaType;
+use API\Negociation\DTO\Admin\UserRolesUpdateXRequest;
+use API\Negociation\DTO\Admin\UserRolesUpdateXRequestFactory;
 use API\Negociation\DTO\Auth\LoginXRequest;
 use API\Negociation\DTO\Auth\LoginXRequestFactory;
 use API\Negociation\DTO\Auth\LoginXResponse;
@@ -179,6 +182,78 @@ describe('Negotiation strategies', function () {
         expect($json['status'])->toBe(404)
             ->and($json['detail'])->toBe('No such product.')
             ->and($fbs)->not->toBe('');
+    });
+})->group('API', 'Negociation');
+
+describe('User roles update message', function () {
+    /**
+     * The bytes of a `UserRolesUpdateRequest`, written the way a client would.
+     *
+     * There is no response factory for this table to round-trip through — it is
+     * a request-only message — so the builder is driven directly.
+     */
+    $buffer = function (string ...$ids): string {
+        $builder = new FlatbufferBuilder(0);
+        $offsets = array_map(static fn (string $id) => $builder->createString($id), $ids);
+        $vector = UserRolesUpdateRequest::createRoleIdsVector($builder, $offsets);
+        UserRolesUpdateRequest::startUserRolesUpdateRequest($builder);
+        UserRolesUpdateRequest::addRoleIds($builder, $vector);
+        $builder->finish(UserRolesUpdateRequest::endUserRolesUpdateRequest($builder));
+
+        return $builder->sizedByteArray();
+    };
+
+    it('reads role_ids from a JSON body', function () {
+        $decoded = (new JsonContentTypeStrategy())->execute(
+            Stream::streamFor('{"role_ids":["1","3"]}'),
+            new UserRolesUpdateXRequestFactory(),
+        );
+
+        expect($decoded->isSuccess())->toBeTrue()
+            ->and($decoded->getValue())->toBeInstanceOf(UserRolesUpdateXRequest::class)
+            ->and($decoded->getValue()->roleIds)->toBe(['1', '3']);
+    });
+
+    it('reads role_ids from a FlatBuffer body', function () use ($buffer) {
+        // The regression this table exists for: the endpoint used to parse the
+        // body as JSON whatever was negotiated, so a caller sending the binary
+        // format the contract defaults to got an empty list — read downstream as
+        // "revoke every role" — instead of these ids.
+        $decoded = (new FlatbufferContentTypeStrategy())->execute(
+            Stream::streamFor($buffer('1', '3')),
+            new UserRolesUpdateXRequestFactory(),
+        );
+
+        expect($decoded->isSuccess())->toBeTrue()
+            ->and($decoded->getValue()->roleIds)->toBe(['1', '3']);
+    });
+
+    it('drops empty ids on both branches', function () use ($buffer) {
+        // Base62::decode() throws on an empty string and syncRoles() turns that
+        // into a 500, so one empty entry would otherwise cost the whole request.
+        $json = (new JsonContentTypeStrategy())->execute(
+            Stream::streamFor('{"role_ids":["","3"]}'),
+            new UserRolesUpdateXRequestFactory(),
+        );
+        $fbs = (new FlatbufferContentTypeStrategy())->execute(
+            Stream::streamFor($buffer('', '3')),
+            new UserRolesUpdateXRequestFactory(),
+        );
+
+        expect($json->getValue()->roleIds)->toBe(['3'])
+            ->and($fbs->getValue()->roleIds)->toBe(['3']);
+    });
+
+    it('reads an absent role_ids as the empty set, which revokes every role', function () {
+        // The one way to reach an empty list is now to send one. A body that
+        // cannot be read fails at the strategy and never gets here.
+        $decoded = (new JsonContentTypeStrategy())->execute(
+            Stream::streamFor('{}'),
+            new UserRolesUpdateXRequestFactory(),
+        );
+
+        expect($decoded->isSuccess())->toBeTrue()
+            ->and($decoded->getValue()->roleIds)->toBe([]);
     });
 })->group('API', 'Negociation');
 

@@ -345,6 +345,26 @@ parameters:
 			count: 1
 			path: src/API/Fbs/Admin/UserListResponse.php
 		-
+			message: '#^Method API\\Fbs\\Admin\\UserRolesUpdateRequest\:\:addRoleIds\(\) has parameter \$roleIds with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserRolesUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserRolesUpdateRequest\:\:createRoleIdsVector\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserRolesUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserRolesUpdateRequest\:\:createUserRolesUpdateRequest\(\) has parameter \$role_ids with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserRolesUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserRolesUpdateRequest\:\:getRoleIds\(\) has parameter \$j with no type specified\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserRolesUpdateRequest.php
+		-
+			message: '#^Method API\\Fbs\\Admin\\UserRolesUpdateRequest\:\:getRoleIds\(\) should return string but returns int\|string\.$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserRolesUpdateRequest.php
+		-
 			message: '#^Method API\\Fbs\\Admin\\UserUpdateRequest\:\:addEmail\(\) has parameter \$email with no type specified\.$#'
 			count: 1
 			path: src/API/Fbs/Admin/UserUpdateRequest.php
@@ -1367,6 +1387,10 @@ parameters:
 		-
 			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
 			count: 1
+			path: src/API/Fbs/Admin/UserRolesUpdateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
+			count: 1
 			path: src/API/Fbs/Auth/LoginResponse.php
 		-
 			message: '#^PHPDoc tag @param has invalid value \(VectorOffset\)\: Unexpected token "\\n     \* ", expected variable at offset 71 on line 3$#'
@@ -1436,6 +1460,10 @@ parameters:
 			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
 			count: 1
 			path: src/API/Fbs/Admin/UserListResponse.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserRolesUpdateRequest.php
 		-
 			message: '#^PHPDoc tag @param has invalid value \(array offset array\)\: Unexpected token "offset", expected variable at offset 65 on line 3$#'
 			count: 1
@@ -1544,6 +1572,10 @@ parameters:
 			message: '#^PHPDoc tag @param has invalid value \(int offset\)\: Unexpected token "offset", expected variable at offset 22 on line 2$#'
 			count: 1
 			path: src/API/Fbs/Admin/UserCreateRequest.php
+		-
+			message: '#^PHPDoc tag @param has invalid value \(int offset\)\: Unexpected token "offset", expected variable at offset 22 on line 2$#'
+			count: 1
+			path: src/API/Fbs/Admin/UserRolesUpdateRequest.php
 		-
 			message: '#^PHPDoc tag @param has invalid value \(int offset\)\: Unexpected token "offset", expected variable at offset 22 on line 2$#'
 			count: 1

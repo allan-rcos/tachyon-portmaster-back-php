@@ -1,8 +1,6 @@
 package factories
 
 import (
-	"encoding/json"
-
 	"github.com/brianvoe/gofakeit/v7"
 	flatbuffers "github.com/google/flatbuffers/go"
 
@@ -100,18 +98,30 @@ func PasswordReset(newPassword string) []byte {
 	return b.FinishedBytes()
 }
 
-// RoleIDs builds the body for PUT /users/{id}/roles.
+// RoleIDs builds a PUT /users/{id}/roles body.
 //
-// That endpoint is the one place the API still parses an inline JSON object
-// (`{"role_ids": [...]}`) instead of a FlatBuffers table — it has no schema in
-// the published contract. The factory mirrors that shape verbatim so the test
-// exercises the endpoint as it actually is, not as it ought to be.
+// The endpoint replaces the whole set rather than merging into it, so the ids
+// passed here are the user's roles afterwards — omitting one revokes it.
+//
+// This used to marshal inline JSON while the client labelled every body
+// application/x-flatbuffers, because the endpoint had no table in the published
+// contract. The header lied and the API's hand-rolled parser ignored it, so the
+// two defects cancelled and the story stayed green. Both are gone.
 func RoleIDs(ids ...string) []byte {
-	payload, err := json.Marshal(map[string][]string{"role_ids": ids})
-	if err != nil {
-		panic(err)
+	b := flatbuffers.NewBuilder(0)
+	idOffsets := make([]flatbuffers.UOffsetT, len(ids))
+	for i, id := range ids {
+		idOffsets[i] = b.CreateString(id)
 	}
-	return payload
+	fbs.UserRolesUpdateRequestStartRoleIdsVector(b, len(idOffsets))
+	for i := len(idOffsets) - 1; i >= 0; i-- {
+		b.PrependUOffsetT(idOffsets[i])
+	}
+	vec := b.EndVector(len(idOffsets))
+	fbs.UserRolesUpdateRequestStart(b)
+	fbs.UserRolesUpdateRequestAddRoleIds(b, vec)
+	b.Finish(fbs.UserRolesUpdateRequestEnd(b))
+	return b.FinishedBytes()
 }
 
 // UserWithEmail builds a POST /users body with a chosen e-mail and password, to
