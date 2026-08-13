@@ -1,4 +1,4 @@
-module dagger/back
+module dagger/back-php
 
 go 1.26.5
 

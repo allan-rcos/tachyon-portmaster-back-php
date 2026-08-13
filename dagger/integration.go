@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"dagger/back/internal/dagger"
+	"dagger/back-php/internal/dagger"
 	"strings"
 )
 
@@ -31,7 +31,7 @@ import (
 // copiar um diretório, enquanto trazer o daemon para a imagem do Go seria
 // perseguir dockerd, containerd, runc e iptables um a um.
 // ---------------------------------------------------------------------------
-func (m *Back) IntegrationTest(
+func (m *BackPhp) IntegrationTest(
 	ctx context.Context,
 	// +defaultPath="/"
 	// +ignore=["vendor", "dist", "docs", "build", ".git", ".github", "node_modules", "**/.git"]

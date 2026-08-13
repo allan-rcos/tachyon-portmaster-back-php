@@ -2,12 +2,12 @@ package main
 
 import (
 	"context"
-	"dagger/back/internal/dagger"
+	"dagger/back-php/internal/dagger"
 )
 
 // Version devolve a versão declarada em composer.json — a mesma que a API em
 // execução reporta.
-func (m *Back) Version(
+func (m *BackPhp) Version(
 	ctx context.Context,
 	// +defaultPath="/composer.json"
 	composerJSON *dagger.File,

@@ -2,14 +2,14 @@ package main
 
 import (
 	"context"
-	"dagger/back/internal/dagger"
+	"dagger/back-php/internal/dagger"
 )
 
 // Pest roda a suíte unitária.
 //
 // Só os unitários: tests/integration é uma suíte Go, com testcontainers, e tem
 // função própria — ver integration.go.
-func (m *Back) Pest(
+func (m *BackPhp) Pest(
 	ctx context.Context,
 	// +defaultPath="/"
 	// +ignore=["vendor", "dist", "docs", "build", ".git", ".github", "node_modules", "**/.git"]

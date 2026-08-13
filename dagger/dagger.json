@@ -1,5 +1,5 @@
 {
-  "name": "back",
+  "name": "back-php",
   "engineVersion": "v0.21.8",
   "sdk": {
     "source": "go"

@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"dagger/back/internal/dagger"
+	"dagger/back-php/internal/dagger"
 )
 
 // Ci roda o que tem de estar verde antes de um merge.
@@ -13,7 +13,7 @@ import (
 //
 // A suíte de integração fica de fora, como no ci.yml: é um job à parte, com
 // custo e teto de tempo próprios.
-func (m *Back) Ci(
+func (m *BackPhp) Ci(
 	ctx context.Context,
 	// +defaultPath="/"
 	// +ignore=["vendor", "dist", "docs", "build", ".git", ".github", "node_modules", "**/.git"]

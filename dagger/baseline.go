@@ -1,11 +1,11 @@
 package main
 
-import "dagger/back/internal/dagger"
+import "dagger/back-php/internal/dagger"
 
 // GeneratePhpstanBaseline reconstrói a baseline do PHPStan.
 //
 //	dagger call generate-phpstan-baseline export --path phpstan-generated-baseline.neon
-func (m *Back) GeneratePhpstanBaseline(
+func (m *BackPhp) GeneratePhpstanBaseline(
 	// +defaultPath="/"
 	// +ignore=["vendor", "dist", "docs", "build", ".git", ".github", "node_modules", "**/.git"]
 	source *dagger.Directory,

@@ -1,11 +1,11 @@
 package main
 
-import "dagger/back/internal/dagger"
+import "dagger/back-php/internal/dagger"
 
 // Docs renderiza a referência de API com o phpDocumentor.
 //
 //	dagger call docs export --path docs/phpdocumentor
-func (m *Back) Docs(
+func (m *BackPhp) Docs(
 	// +defaultPath="/"
 	// +ignore=["vendor", "dist", "docs", "build", ".git", ".github", "node_modules", "**/.git"]
 	source *dagger.Directory,
