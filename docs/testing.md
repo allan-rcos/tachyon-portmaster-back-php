@@ -8,7 +8,7 @@ Two suites, split by what they can prove.
 | Lives in | `tests/Unit` | `tests/integration` |
 | Covers | Domain rules, use-case control flow | the API as a client sees it |
 | Talks to | doubles and mocks | real HTTP, real MariaDB |
-| Run with | `composer pest` | `dagger call integration-test` |
+| Run with | `dagger call pest` | `dagger call integration-test` |
 | Costs | ~1 s | ~20 s per leased environment |
 
 The dividing line: **if a behaviour can be observed through a request and a
@@ -103,15 +103,15 @@ fully analysed. See
 [ADR 0007](adr/0007-phpstan-baseline-limited-to-generated-code.md).
 
 ```bash
-composer phpstan
+dagger call phpstan
 scripts/generate-phpstan-baseline.php   # after changing schemas
 ```
 
 ## Running everything
 
 ```bash
-composer phpstan
-composer pest
+dagger call phpstan
+dagger call pest
 dagger call integration-test
 ```
 

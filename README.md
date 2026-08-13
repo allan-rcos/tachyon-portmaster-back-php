@@ -196,12 +196,12 @@ Ciclo de vida de um contêiner: crie-o, embarque itens com `POST /manifests/load
 
 | Comando | O que faz |
 |---|---|
-| `composer phpstan` | análise estática, **nível 9** (com `--memory-limit=2G`) |
-| `composer pest` | testes unitários — regras de domínio e espinha transacional |
+| `dagger call phpstan` | análise estática, **nível 9** (com `--memory-limit=2G`) |
+| `dagger call pest` | testes unitários — regras de domínio e espinha transacional |
 | `dagger call integration-test` | suíte de integração em Go (precisa de Docker) |
 | `dagger call generate-fbs-php` | regera e normaliza as classes PHP a partir dos `.fbs` |
 | `dagger call generate-fbs-go` | regera os bindings Go da suíte de testes |
-| `composer phpdoc` | renderiza a documentação de API em `docs/phpdocumentor` (versionada; GitHub Pages) |
+| `dagger call docs` | renderiza a documentação de API em `docs/phpdocumentor` (versionada; GitHub Pages) |
 
 **A linha divisória entre as suítes:** se um comportamento é observável por uma requisição e uma resposta, é integração; se é uma regra ou um desvio, é unitário. Os testes unitários batem direto nos *table modules* — é onde as regras existem — e nos casos de uso, verificando *commit* no caminho felizes, *rollback* em qualquer falha e o guarda de `403`. A suíte de integração é escrita como **histórias** (sessão, administração, pátio) que sobem MariaDB em tmpfs e um pool de APIs reais via testcontainers-go.
 
@@ -227,7 +227,7 @@ O CI ([GitHub Actions](.github/workflows/ci.yml)) roda três jobs independentes:
 
 Contribuições são bem-vindas. Antes de abrir um PR:
 
-1. `composer phpstan` e `composer pest` precisam passar; para mudanças na borda da API, `dagger call integration-test` também.
+1. `dagger call phpstan` e `dagger call pest` precisam passar; para mudanças na borda da API, `dagger call integration-test` também.
 2. Siga a convenção de contrato/implementação (`IFoo` no topo, `Interno/BarFoo` abaixo) e mantenha a direção das dependências.
 3. Regra nova vive no *table module*, não no controller nem no repositório.
 4. Mudou schema `.fbs`? Regere os dois lados e comite o resultado.

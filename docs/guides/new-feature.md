@@ -422,7 +422,7 @@ then steps appended to `yard_story_test.go` (a shipment follows a dispatched
 container, so it belongs to that narrative rather than a new one).
 
 ```bash
-composer pest
+dagger call pest
 dagger call integration-test -run TestYardStory
 ```
 
@@ -442,10 +442,10 @@ would otherwise have to reverse-engineer. Not for routine work.
 ## 9. Verify
 
 ```bash
-composer phpstan            # level 9, must be clean
-composer pest
+dagger call phpstan            # level 9, must be clean
+dagger call pest
 dagger call integration-test
-composer phpdoc
+dagger call docs
 ```
 
 ---

@@ -5,7 +5,7 @@ Everything else — the why, the guides, the ADRs — lives here in `docs/` and 
 the per-directory READMEs.
 
 ```bash
-composer phpdoc          # renders to docs/phpdocumentor
+dagger call docs          # renders to docs/phpdocumentor
 ```
 
 `dagger call docs` runs the `phpdoc/phpdoc` image against `phpdoc.dist.xml`;
@@ -140,7 +140,7 @@ stale. `@license` and `@copyright` stay — they say something git does not.
 
 **Never delete a PHPStan generic.** `@template`, `@extends`, `@return Seq<T>`,
 `@return Result<TItem>`, `@var list<...>` carry typing that level 9 depends on.
-Rewrite the prose around them. `composer phpstan` is the check that this was
+Rewrite the prose around them. `dagger call phpstan` is the check that this was
 respected, and it must stay clean.
 
 **Say what it does, not what it is.** "Builds validated products" beats "Product
@@ -174,5 +174,5 @@ Documentation does not have to be perfect at the moment code is written. The
 format — that is the intended workflow: write the code, then align the docs.
 
 ```bash
-composer phpstan && composer phpdoc
+dagger call phpstan && dagger call docs
 ```

@@ -11,9 +11,12 @@ failure.
 
 | Job | Runs | Typical |
 |---|---|---|
-| `static` | `composer phpstan` — level 9 over `src/` | ~1 min |
-| `php-unit` | `vendor/bin/pest` | ~1 min |
-| `go-integration` | `go test` na suíte de integração | 10–25 min |
+| `checks` | `dagger call ci` — PHPStan nível 9 e depois Pest | ~2 min |
+| `go-integration` | `dagger call check-fbs-go`, depois `go test` na suíte | 10–25 min |
+
+Os jobs `static` e `php-unit` eram dois e viraram um: o cache do Dagger não segue
+runner, e separados cada um reconstruiria do zero o ambiente PHP. Juntos, o
+segundo passo reaproveita o primeiro.
 
 ### `go-integration`
 

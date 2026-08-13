@@ -55,7 +55,7 @@ where there is no request to fail.
 `Http/` holds the middleware stack, in order: `Recoverer` → `RequestId` →
 `Logging` → `ContentNegotiation` → `Authentication` → `RouteDispatch`.
 
-`Fbs/` is **only** generated code: `composer flatbuffers` overwrites all of it,
+`Fbs/` is **only** generated code: `dagger call generate-fbs-php` overwrites all of it,
 so never edit anything in there.
 
 Everything hand-written about a message lives in `Negociation/`. Each message is
@@ -124,6 +124,6 @@ docblock on every member. Format and rules:
 [`docs/documentation.md`](../docs/documentation.md).
 
 ```bash
-composer phpdoc     # renders src/ to build/docs
-composer phpstan    # level 9 — must stay clean
+dagger call docs     # renders src/ to build/docs
+dagger call phpstan    # level 9 — must stay clean
 ```

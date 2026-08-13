@@ -69,6 +69,102 @@ O diretório `back/scripts/` não existe mais. Os sete scripts foram portados, e
 
 -----
 
+## 📋 Os métodos
+
+Onze funções. Nenhuma pede nada instalado além do Docker; `dagger call <nome> --help` lista os argumentos.
+
+| Comando | Devolve | Arquivo | Para quê |
+|---|---|---|---|
+| `ci` | `String` | `ci.go` | `phpstan` e depois `pest` — o que tem de estar verde antes de um merge |
+| `phpstan` | `String` | `phpstan.go` | Análise estática nível 9 sobre `src/` |
+| `pest` | `String` | `pest.go` | A suíte unitária |
+| `dist` | `Directory` | `dist.go` | Os dois tarballs de produção |
+| `version` | `String` | `version.go` | A versão de `composer.json` |
+| `docs` | `Directory` | `docs.go` | A referência de API (phpDocumentor) |
+| `generate-fbs-php` | `Directory` | `fbsphp.go` | Regera `src/API/Fbs` a partir dos schemas |
+| `generate-fbs-go` | `Directory` | `fbsgo.go` | Regera os bindings Go da suíte de integração |
+| `check-fbs-go` | `String` | `fbscheck.go` | Falha se os bindings commitados estiverem defasados |
+| `generate-phpstan-baseline` | `File` | `baseline.go` | Reconstrói a baseline do código gerado |
+| `integration-test` | `String` | `integration.go` | A suíte Go, com o daemon Docker junto |
+
+**As que devolvem `Directory` ou `File` pedem `export`** — nenhuma escreve no repositório por conta própria (R6.1):
+
+```bash
+dagger call generate-fbs-php export --path ../src/API/Fbs
+dagger call generate-fbs-go  export --path ../tests/integration/internal/fbs
+dagger call generate-phpstan-baseline export --path ../phpstan-generated-baseline.neon
+dagger call docs export --path ../docs/phpdocumentor
+dagger call dist --version 1.1.0 export --path ../dist
+```
+
+### Argumentos
+
+Quase todas recebem só `--source`, que tem `defaultPath` para a raiz do repositório — na prática você não passa nada. As exceções:
+
+| Comando | Argumento | Padrão | |
+|---|---|---|---|
+| `ci` `phpstan` `pest` `generate-phpstan-baseline` | `--dockerfile` | `/Dockerfile` | De onde sai o estágio `ext` |
+| `dist` | `--version` | de `composer.json` | Sobrepor para uma beta |
+| `version` | `--composer-json` | `/composer.json` | |
+| `docs` | `--contract-only` | desligado | Omite o `--parseprivate`: só a visão de contrato |
+| `integration-test` | `--args` | — | Repassado ao `go test`: `--args -run,TestYardStory` |
+| `integration-test` | `--pool-size` | GOMAXPROCS | Quantos ambientes {API + banco} em paralelo |
+
+-----
+
+## ➕ Como acrescentar um método
+
+1. **Decida onde.** Compõe outras funções? Um arquivo na raiz de `dagger/`. Constrói ambiente ou implementa lógica? Um módulo — a R2 diz que a raiz não tem `Container.From()`. `integration.go` é a única exceção, e o comentário lá explica por quê.
+
+2. **Um arquivo, com o nome do comando.** `dagger call pest` vive em `pest.go`.
+
+3. **Escreva a função.** A primeira linha do comentário vira a descrição no `dagger functions`:
+
+   ```go
+   package main
+
+   import (
+   	"context"
+   	"dagger/back-php/internal/dagger"
+   )
+
+   // Lint roda o PHP_CodeSniffer sobre src/.
+   func (m *BackPhp) Lint(
+   	ctx context.Context,
+   	// +defaultPath="/"
+   	// +ignore=["vendor", "dist", "docs", "build", ".git", ".github", "node_modules", "**/.git"]
+   	source *dagger.Directory,
+   	// +defaultPath="/Dockerfile"
+   	dockerfile *dagger.File,
+   ) (string, error) {
+   	return dag.Toolchain().Dev(dagger.ToolchainDevOpts{
+   		Source: source, Dockerfile: dockerfile,
+   	}).
+   		WithExec([]string{"vendor/bin/phpcs", "src"}).
+   		Stdout(ctx)
+   }
+   ```
+
+4. **`dagger develop`** no módulo alterado, e depois na raiz se ela depende dele.
+
+5. **`dagger functions`** para confirmar que apareceu.
+
+### As armadilhas na hora de nomear
+
+> **Nunca termine um arquivo em `_test.go`.** O sufixo é reservado pelo Go: o arquivo fica fora do build e a função não existe, com `unknown command` como único sintoma. É por isso que a suíte de integração está em `integration.go`.
+
+> **Um módulo não pode se chamar `dist`, `build` nem `docs`.** O `.gitignore` deste repositório traz `dist/` e `build/` sem barra inicial, e o Dagger respeita o `.gitignore` — o módulo é carregado **vazio** e roda o esqueleto do `dagger init`, sem erro que explique. Confira com `git check-ignore -v dagger/modules/<nome>`.
+
+> **`Api` vira `API` no binding gerado**, e `Json` vira `JSON`. Se o compilador reclamar de campo inexistente num `…Opts`, é isso.
+
+> **`+ignore` idêntico ao das vizinhas.** Um divergente muda a chave de cache e faz a função reexecutar sozinha, sem erro nenhum.
+
+### E se a função substitui um script
+
+A regra é reimplementar, não envelopar — e **provar equivalência antes de apagar o original**, com `diff` da saída. As provas dos sete scripts que já saíram daqui estão na seção acima.
+
+-----
+
 ## 🐢 A exceção: `integration-test`
 
 É a única função que **não** se espera rápida, e a única que o CI não usa.

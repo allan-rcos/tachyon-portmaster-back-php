@@ -39,10 +39,10 @@ curl localhost:8000/v1/info
 ```
 
 ```bash
-composer phpstan             # static analysis, level 9
-composer pest                # unit tests
+dagger call phpstan             # static analysis, level 9
+dagger call pest                # unit tests
 dagger call integration-test  # integration suite (needs Docker)
-composer phpdoc              # render API documentation to docs/phpdocumentor
+dagger call docs              # render API documentation to docs/phpdocumentor
 ```
 
 ## Skills
