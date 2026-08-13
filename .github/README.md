@@ -13,7 +13,7 @@ failure.
 |---|---|---|
 | `static` | `composer phpstan` — level 9 over `src/` | ~1 min |
 | `php-unit` | `vendor/bin/pest` | ~1 min |
-| `go-integration` | `scripts/integration-test.sh` | 10–25 min |
+| `go-integration` | `go test` na suíte de integração | 10–25 min |
 
 ### `go-integration`
 
@@ -29,15 +29,22 @@ the Go bindings, and fails on a diff:
 
 ```yaml
 - name: Verify generated Go bindings are up to date
-  run: |
-    scripts/generate-flatbuffers-go.sh
-    git diff --exit-code tests/integration/internal/fbs \
-      || (echo "::error::Go FlatBuffers bindings are stale — run scripts/generate-flatbuffers-go.sh" && exit 1)
+  working-directory: dagger
+  run: dagger call check-fbs-go
 ```
 
 The bindings are committed so the test runtime never needs `flatc`. This is what
 stops that convenience from letting the contract silently drift between the API
-and the tests. If it fires, run the script locally and commit the result.
+and the tests. If it fires, run
+
+```bash
+cd dagger && dagger call generate-fbs-go \
+  export --path ../tests/integration/internal/fbs
+```
+
+locally and commit the result. `check-fbs-go` regenerates and compares *inside*
+the container, so the check itself never dirties the working tree — the old
+`generate && git diff --exit-code` did.
 
 `flatc` is pinned to `25.12.19`. Bump it in lockstep with the `google/flatbuffers`
 constraint in `composer.json`, or the two sides generate from different
@@ -45,9 +52,10 @@ compilers.
 
 ## Release
 
-`workflows/release.yml`, one job, in an `alpine:3.22` container so the build
-matches the musl of the target. It runs `scripts/build-dist.sh` and nothing else
-— anything CI does here, a developer can do with the same command.
+`workflows/release.yml`, one job on a plain runner. The `alpine:3.22` that the
+build needs — musl, to match the target the tarball is deployed to — is now
+`dagger/modules/toolchain`, not a `container:` key in the workflow. The job runs
+`dagger call dist` and nothing else, which is exactly what a developer runs.
 
 **The version decides, not the trigger.** Every push to `main` builds — the
 build has to be exercised on ordinary days, because release day is the worst one
@@ -112,4 +120,4 @@ not need another to have passed first. If it can take an unbounded amount of
 time, give it a `timeout-minutes`.
 
 Anything a job runs should be runnable locally by the same command. If CI needs
-a step a developer cannot reproduce, put it in `scripts/` first.
+a step a developer cannot reproduce, put it in a `dagger/` function first.

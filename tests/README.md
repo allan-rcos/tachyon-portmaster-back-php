@@ -17,7 +17,7 @@ tests/
 | Tool | Pest | `go test` + testcontainers |
 | Covers | rules and control flow | the API as a client sees it |
 | Talks to | doubles and mocks | real HTTP, real MariaDB |
-| Run | `composer pest` | `scripts/integration-test.sh` |
+| Run | `composer pest` | `dagger call integration-test` |
 | Costs | ~1 s | ~20 s per leased environment |
 
 **The dividing line:** if a behaviour is observable through a request and a
@@ -83,8 +83,8 @@ Full detail, including the factory layout and the comment convention:
 ```bash
 composer pest                                  # unit
 composer pest -- --filter=ProductTM            # one file
-scripts/integration-test.sh                    # integration
-scripts/integration-test.sh -run TestYardStory # one story
+dagger call integration-test                    # integration
+dagger call integration-test -run TestYardStory # one story
 ```
 
 CI runs them as separate jobs — see [`.github/README.md`](../.github/README.md).

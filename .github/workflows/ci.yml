@@ -10,62 +10,50 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  # Pinned rather than "latest": the Dagger modules under dagger/ declare this
+  # same engine version in their dagger.json, and a CLI newer than the engine
+  # they were generated against re-runs codegen mid-job.
+  DAGGER_VERSION: "0.21.8"
+
 jobs:
-  static:
-    name: PHPStan (level 9)
+  # PHPStan and Pest used to be two jobs, each installing its own PHP through
+  # shivammathur/setup-php. They are one job now, and both changes are the point
+  # of the migration to Dagger:
+  #
+  #   * The environment is no longer described here. `dagger call` builds the
+  #     `ext` stage of the Dockerfile, so the checks run on the very extensions
+  #     production runs on. What this file used to carry — and had to keep in
+  #     sync by hand — was the `openswoole-26.2.0` pin, needed because
+  #     setup-php's default was 25.2.0 while composer.lock demanded >= 26.2.0.
+  #     There is nothing to pin now.
+  #
+  #   * One job, not two, because a Dagger cache does not follow a runner. Split
+  #     across two runners, each would build that PHP environment from scratch;
+  #     together they build it once and the second check reuses it.
+  #
+  # `dagger call ci` composes phpstan and pest in that order — the cheap, more
+  # specific check first, since a type error usually explains a red test while
+  # the reverse almost never happens. Each is still callable on its own
+  # (`dagger call phpstan`), on a laptop or here.
+  checks:
+    name: PHPStan (level 9) and Pest
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.4"
-          # openswoole is pinned because setup-php's own default for it is
-          # 25.2.0, while composer.lock holds openswoole/core 26.2.0, which
-          # requires ext-openswoole >= 26.2.0 — so `composer install` refused the
-          # lock file outright and every PHP job died before running anything.
-          # The Dockerfile installs the same extension unpinned, i.e. the latest
-          # PECL release, which is what 26.2.0 is; bump both together.
-          extensions: ds, pdo_mysql, mbstring, iconv, openswoole-26.2.0
-          tools: composer:v2
-          coverage: none
+      - name: Install Dagger
+        run: |
+          curl -fsSL https://dl.dagger.io/dagger/install.sh \
+            | DAGGER_VERSION="${DAGGER_VERSION}" BIN_DIR=/usr/local/bin sudo -E sh
+          dagger version
 
-      - name: Install dependencies
-        run: composer install --no-interaction --prefer-dist --no-progress
-
-      - name: PHPStan
-        run: composer phpstan
-
-  php-unit:
-    name: Pest unit tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.4"
-          # openswoole is pinned because setup-php's own default for it is
-          # 25.2.0, while composer.lock holds openswoole/core 26.2.0, which
-          # requires ext-openswoole >= 26.2.0 — so `composer install` refused the
-          # lock file outright and every PHP job died before running anything.
-          # The Dockerfile installs the same extension unpinned, i.e. the latest
-          # PECL release, which is what 26.2.0 is; bump both together.
-          extensions: ds, pdo_mysql, mbstring, iconv, openswoole-26.2.0
-          tools: composer:v2
-          coverage: none
-
-      - name: Install dependencies
-        run: composer install --no-interaction --prefer-dist --no-progress
-
-      - name: Pest (unit)
-        run: vendor/bin/pest
+      - name: PHPStan and Pest
+        working-directory: dagger
+        run: dagger call ci
 
   go-integration:
     name: Go integration (FlatBuffers, testcontainers)
@@ -73,6 +61,15 @@ jobs:
     # Building the API image and restarting a container per test makes this the
     # slow job by a wide margin; the ceiling is here so a hung container fails
     # rather than burning the default six hours.
+    #
+    # This job deliberately does NOT go through Dagger. testcontainers-go needs a
+    # Docker daemon, and a Dagger container cannot reach the host's — the
+    # containers it starts would be siblings on the host, unreachable from
+    # inside. Running it under Dagger means nesting a docker:dind service inside
+    # the engine, which costs more than it saves on a runner that already has a
+    # daemon. `dagger call integration-test` exists for running this suite on a
+    # laptop without assembling the environment by hand; here, the script is the
+    # cheaper path.
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
@@ -85,19 +82,33 @@ jobs:
           go-version: "1.25"
           cache-dependency-path: tests/integration/go.sum
 
-      - name: Install flatc
+      - name: Install Dagger
         run: |
-          FLATC_VERSION=25.12.19
-          curl -fsSL -o /tmp/flatc.zip \
-            "https://github.com/google/flatbuffers/releases/download/v${FLATC_VERSION}/Linux.flatc.binary.g++-13.zip"
-          sudo unzip -o /tmp/flatc.zip -d /usr/local/bin
-          flatc --version
+          curl -fsSL https://dl.dagger.io/dagger/install.sh \
+            | DAGGER_VERSION="${DAGGER_VERSION}" BIN_DIR=/usr/local/bin sudo -E sh
+          dagger version
 
+      # The flatc install that used to sit here is gone: dagger/modules/codegen
+      # brings its own, pinned in one place instead of copied into every
+      # workflow that needed it.
+      #
+      # `check-fbs-go` regenerates and compares inside the container, so this
+      # check no longer needs flatc, perl or gofmt on the runner — and it no
+      # longer dirties the working tree before the suite runs, which the old
+      # `generate && git diff --exit-code` did.
       - name: Verify generated Go bindings are up to date
-        run: |
-          scripts/generate-flatbuffers-go.sh
-          git diff --exit-code tests/integration/internal/fbs \
-            || (echo "::error::Go FlatBuffers bindings are stale — run scripts/generate-flatbuffers-go.sh" && exit 1)
+        working-directory: dagger
+        run: dagger call check-fbs-go
 
+      # The same command lives in the `IntegrationTest` function of
+      # dagger/main.go, and the repetition is deliberate. The suite needs a
+      # Docker daemon; this runner already has one, so calling it directly is
+      # free, while going through Dagger would nest a second daemon inside the
+      # engine and roughly double the wall time. The Dagger function exists for
+      # running the suite on a laptop, where there is no runner to inherit.
+      #
+      # `-timeout 20m` is not slack: the suite builds the API image and restarts
+      # a container per test.
       - name: Run integration suite
-        run: scripts/integration-test.sh
+        working-directory: tests/integration
+        run: go test ./... -count=1 -timeout 20m

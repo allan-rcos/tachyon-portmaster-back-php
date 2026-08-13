@@ -23,73 +23,66 @@ on:
 concurrency:
   group: release-${{ github.ref }}
 
+env:
+  # Pinned to the version the modules under dagger/ were generated against.
+  DAGGER_VERSION: "0.21.8"
+
 jobs:
   artifact:
     name: Build the production artifact
     runs-on: ubuntu-latest
-    # Alpine, to match the musl of the target the tarball is deployed to.
-    container: alpine:3.22
     permissions:
       # softprops/action-gh-release creates a release with the automatic
       # GITHUB_TOKEN — no secret is involved — but the default token is
       # read-only, so without this the publish step fails with a 403.
       contents: write
     steps:
-      # Three things about this Alpine cost an afternoon each if discovered
-      # from a red build rather than read here:
+      # This job used to run *inside* `container: alpine:3.22`, and carried a
+      # long comment about three Alpine footguns: that its `composer` package is
+      # wired to php83, that php84 ships without openssl, and that bash is not
+      # installed. None of that is this file's business any more — the Alpine
+      # toolchain is `dagger/modules/toolchain`, where those three decisions live
+      # next to the code that depends on them, and the same module is what a
+      # developer gets from `dagger call dist` on their own machine. The build
+      # itself — staging, vendor pruning, `php -w` minification, reproducible
+      # tar — is `dagger/modules/artifact`, in Go.
       #
-      #   1. Alpine's `composer` package is wired to php83 — its wrapper calls
-      #      /usr/bin/php83 — so the build would silently run on the wrong PHP.
-      #      Hence the official composer.phar under php84.
-      #   2. php84 does not ship the openssl extension, and without it every
-      #      HTTPS download from inside PHP dies with "Unable to find the
-      #      socket transport ssl", which reads like a network fault.
-      #   3. bash is not installed. The scripts in scripts/ are bash by
-      #      convention, and busybox sh does not understand `set -o pipefail`.
-      - name: Install the toolchain
-        run: |
-          apk add --no-cache \
-            php84 php84-phar php84-openssl php84-mbstring php84-iconv \
-            php84-tokenizer php84-dom php84-xml php84-xmlwriter \
-            php84-pecl-ds php84-curl php84-session php84-fileinfo \
-            php84-pdo php84-pdo_mysql \
-            bash git curl tar zstd coreutils findutils gawk
-          ln -sf /usr/bin/php84 /usr/local/bin/php
-          curl -fsSL https://getcomposer.org/download/2.8.10/composer.phar \
-            -o /usr/local/bin/composer
-          chmod +x /usr/local/bin/composer
-
-      # No `submodules: recursive` here, unlike every job in ci.yml: this
-      # workflow generates nothing from the schemas — src/API/Fbs/ is committed.
-      # The default shallow checkout is enough: nothing here reads history, and
-      # the tag question is asked of the remote below.
+      # No `submodules: recursive`, unlike ci.yml: this workflow generates
+      # nothing from the schemas — src/API/Fbs/ is committed. The default shallow
+      # checkout is enough; nothing here reads history, and the tag question is
+      # asked of the remote below.
       - uses: actions/checkout@v4
 
-      - name: Trust the workspace
-        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - name: Install Dagger
+        run: |
+          curl -fsSL https://dl.dagger.io/dagger/install.sh \
+            | DAGGER_VERSION="${DAGGER_VERSION}" BIN_DIR=/usr/local/bin sudo -E sh
+          dagger version
 
-      # The version is declared in composer.json and read from there by
-      # scripts/build-dist.sh; this only asks the same field the same way, to
-      # find out whether that version has been released already. `git ls-remote`
+      # The version is declared in composer.json, and `dagger call version`
+      # reads that same field — no PHP or jq on the runner just to read one
+      # key of one JSON file. This step only asks whether that version has been
+      # released already. `git ls-remote`
       # rather than a local tag list, so the answer is what is actually
       # published and not what this checkout happens to have fetched.
       - name: Decide the version and whether it is new
         id: version
+        working-directory: dagger
         run: |
+          version="$(dagger call version)"
+          [ -n "$version" ] && [ "$version" != null ] \
+            || { echo "composer.json declares no version" >&2; exit 1; }
+
           if [ "$GITHUB_REF_TYPE" = tag ]; then
             version="${GITHUB_REF_NAME#v}"
             publish=true
             echo "building tag $GITHUB_REF_NAME"
+          elif git ls-remote --exit-code --tags origin "refs/tags/v${version}" >/dev/null 2>&1; then
+            publish=false
+            echo "v${version} is already released — building as a check, publishing nothing"
           else
-            version="$(php -r 'echo json_decode(file_get_contents("composer.json"), true)["version"] ?? "";')"
-            [ -n "$version" ] || { echo "composer.json declares no version" >&2; exit 1; }
-            if git ls-remote --exit-code --tags origin "refs/tags/v${version}" >/dev/null 2>&1; then
-              publish=false
-              echo "v${version} is already released — building as a check, publishing nothing"
-            else
-              publish=true
-              echo "v${version} has no tag yet — this build publishes it"
-            fi
+            publish=true
+            echo "v${version} has no tag yet — this build publishes it"
           fi
           {
             echo "version=${version}"
@@ -97,8 +90,12 @@ jobs:
             echo "publish=${publish}"
           } >> "$GITHUB_OUTPUT"
 
+      # Dagger never writes to the host on its own, so the artifact is exported
+      # explicitly — and only if the build succeeded, which is what keeps a
+      # half-written tarball from ever reaching the release.
       - name: Build
-        run: scripts/build-dist.sh "${{ steps.version.outputs.version }}"
+        working-directory: dagger
+        run: dagger call dist --version "${{ steps.version.outputs.version }}" export --path ../dist
 
       # tag_name creates the tag on this commit when it does not exist, so
       # cutting a release is a change to composer.json and nothing else. The

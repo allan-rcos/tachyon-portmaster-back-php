@@ -8,8 +8,9 @@ the per-directory READMEs.
 composer phpdoc          # renders to docs/phpdocumentor
 ```
 
-`scripts/generate-docs.sh` prefers a `phpdoc` binary on `PATH` and falls back to
-the `phpdoc/phpdoc` Docker image. phpDocumentor is deliberately **not** a
+`dagger call docs` runs the `phpdoc/phpdoc` image against `phpdoc.dist.xml`;
+there is no script to find a local binary any more, because the container always
+has one. phpDocumentor is deliberately **not** a
 composer dependency: its own Twig/Symfony constraints conflict with what the
 application and PHPStan pin, which is why upstream ships a PHAR and an image.
 
@@ -21,7 +22,7 @@ stays under the gitignored `build/`.
 ## What gets documented
 
 Everything hand-written under `src/`. **Not** the flatc-generated tables and
-enums — `composer flatbuffers` overwrites those, so a docblock written into one
+enums — `dagger call generate-fbs-php` overwrites those, so a docblock written into one
 is lost at the next schema change. They are also the whole of `src/API/Fbs/`;
 what the rest of the codebase actually talks to are the DTOs and factories under
 `src/API/Negociation/`, which *are* documented.
@@ -128,8 +129,8 @@ rule despite spelling the directory in English.
 
 `@internal` also has a rendering consequence worth knowing: phpDocumentor
 **omits** tagged elements from the HTML unless `--parseprivate` is given.
-`scripts/generate-docs.sh` passes it by default, so the implementations stay
-visible — drop the flag to render the contract-only view.
+`dagger/modules/docs` passes it by default, so the implementations stay
+visible — `dagger call docs --contract-only` renders the contract-only view.
 
 ## Rules
 
@@ -162,7 +163,7 @@ been through this format, so the per-file ledger that tracked it is gone and the
 codebase.
 
 The flatc-generated tables under `src/API/Fbs/*/` are the standing exception.
-They are excluded rather than documented, because `composer flatbuffers`
+They are excluded rather than documented, because `dagger call generate-fbs-php`
 overwrites them; the DTOs and factories in `src/API/Negociation/` that stand in
 front of them are documented instead.
 

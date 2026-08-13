@@ -22,7 +22,7 @@ reasoning across directories.
 
 - [`src/`](../src/README.md) — the layers and where a class goes
 - [`db/`](../db/README.md) — migrations and seeds
-- [`scripts/`](../scripts/README.md) — what each script does
+- [`dagger/`](../dagger/README.md) — the build and check functions, and what each replaced
 - [`tests/`](../tests/README.md) — both suites
 - [`tests/integration/`](../tests/integration/README.md) — the Go suite in detail
 - [`.github/`](../.github/README.md) — the CI jobs
@@ -41,7 +41,7 @@ curl localhost:8000/v1/info
 ```bash
 composer phpstan             # static analysis, level 9
 composer pest                # unit tests
-scripts/integration-test.sh  # integration suite (needs Docker)
+dagger call integration-test  # integration suite (needs Docker)
 composer phpdoc              # render API documentation to docs/phpdocumentor
 ```
 

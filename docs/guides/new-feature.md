@@ -43,8 +43,9 @@ table ShipmentListResponse {
 Generate:
 
 ```bash
-composer flatbuffers                  # PHP tables under src/API/Fbs/Shipment/
-scripts/generate-flatbuffers-go.sh    # Go bindings for the tests
+dagger call generate-fbs-php                  # PHP tables under src/API/Fbs/Shipment/
+(cd dagger && dagger call generate-fbs-go \
+   export --path ../tests/integration/internal/fbs)   # Go bindings for the tests
 ```
 
 Then write, per table, a **DTO** and its **factory** under
@@ -422,7 +423,7 @@ container, so it belongs to that narrative rather than a new one).
 
 ```bash
 composer pest
-scripts/integration-test.sh -run TestYardStory
+dagger call integration-test -run TestYardStory
 ```
 
 ---
@@ -443,7 +444,7 @@ would otherwise have to reverse-engineer. Not for routine work.
 ```bash
 composer phpstan            # level 9, must be clean
 composer pest
-scripts/integration-test.sh
+dagger call integration-test
 composer phpdoc
 ```
 

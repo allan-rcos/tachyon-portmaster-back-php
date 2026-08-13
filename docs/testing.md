@@ -8,7 +8,7 @@ Two suites, split by what they can prove.
 | Lives in | `tests/Unit` | `tests/integration` |
 | Covers | Domain rules, use-case control flow | the API as a client sees it |
 | Talks to | doubles and mocks | real HTTP, real MariaDB |
-| Run with | `composer pest` | `scripts/integration-test.sh` |
+| Run with | `composer pest` | `dagger call integration-test` |
 | Costs | ~1 s | ~20 s per leased environment |
 
 The dividing line: **if a behaviour can be observed through a request and a
@@ -95,7 +95,7 @@ manifests, metrics).
 
 PHPStan level 9 over `src`, with a baseline holding findings from
 flatc-generated files **and nothing else** — those are rewritten on every
-`composer flatbuffers`, so a finding there cannot be fixed in place; the fix
+`dagger call generate-fbs-php`, so a finding there cannot be fixed in place; the fix
 belongs in `scripts/patch-flatbuffers.php`. `src/API/Fbs/` holds nothing but
 generated code, so that directory and the baseline are the same set; everything
 hand-written, the DTOs and factories under `src/API/Negociation/` included, is
@@ -112,7 +112,7 @@ scripts/generate-phpstan-baseline.php   # after changing schemas
 ```bash
 composer phpstan
 composer pest
-scripts/integration-test.sh
+dagger call integration-test
 ```
 
 CI runs the three as separate jobs — see [`infrastructure.md`](infrastructure.md).

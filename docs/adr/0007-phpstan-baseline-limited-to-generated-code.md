@@ -6,7 +6,7 @@
 
 PHPStan runs at level 9 over `src`. The flatc-generated FlatBuffers tables do
 not pass it, and cannot be made to: they are rewritten on every
-`composer flatbuffers`, so an annotation added to one is gone at the next schema
+`dagger call generate-fbs-php`, so an annotation added to one is gone at the next schema
 change.
 
 A baseline is the usual answer to "existing code does not pass yet". It is also

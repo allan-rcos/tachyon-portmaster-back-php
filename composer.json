@@ -44,15 +44,6 @@
     "symfony/uid": "^8.1",
     "hidehalo/nanoid-php": "^2.0"
   },
-  "scripts": {
-    "phpstan": "phpstan analyse --memory-limit=2G",
-    "pest": "pest",
-    "flatbuffers": [
-      "@php scripts/generate-flatbuffers.php",
-      "@php scripts/patch-flatbuffers.php"
-    ],
-    "phpdoc": "scripts/generate-docs.sh"
-  },
   "config": {
     "allow-plugins": {
       "pestphp/pest-plugin": true,

@@ -1,0 +1,25 @@
+{
+  "name": "back",
+  "engineVersion": "v0.21.8",
+  "sdk": {
+    "source": "go"
+  },
+  "dependencies": [
+    {
+      "name": "artifact",
+      "source": "modules/artifact"
+    },
+    {
+      "name": "codegen",
+      "source": "modules/codegen"
+    },
+    {
+      "name": "docs",
+      "source": "modules/docs"
+    },
+    {
+      "name": "toolchain",
+      "source": "modules/toolchain"
+    }
+  ]
+}

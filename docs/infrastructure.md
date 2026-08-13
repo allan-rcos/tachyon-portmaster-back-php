@@ -100,8 +100,9 @@ The schemas in `swagger/flatbuffers/schemas/*.fbs` (a git submodule) are the
 single source of truth for both the PHP API and the Go test suite.
 
 ```bash
-composer flatbuffers                  # PHP: generate + patch
-scripts/generate-flatbuffers-go.sh    # Go bindings for the test suite
+dagger call generate-fbs-php                  # PHP: generate + patch
+(cd dagger && dagger call generate-fbs-go \
+   export --path ../tests/integration/internal/fbs)   # Go bindings for the test suite
 ```
 
 **PHP** — `scripts/generate-flatbuffers.php` runs `flatc` (resolving paths in
@@ -122,18 +123,21 @@ namespace is overridden. Output is committed, so the test runtime never needs
 Both generated trees are excluded from hand-written documentation and, for PHP,
 from PHPStan analysis — see [ADR 0001](adr/0001-flatbuffers-over-json.md).
 
-## Scripts
+## Build and check functions
 
-See [`scripts/README.md`](../scripts/README.md). In short:
+There is no `scripts/` directory: everything below is a Dagger function, run
+from `dagger/`. See [`dagger/README.md`](../dagger/README.md) for what each one
+replaced and the equivalence checks behind the port.
 
-| Script | Does |
+| Function | Does |
 |---|---|
-| `generate-flatbuffers.php` | runs flatc for PHP |
-| `patch-flatbuffers.php` | normalises flatc's PHP output |
-| `generate-flatbuffers-go.sh` | regenerates the Go bindings |
-| `generate-phpstan-baseline.php` | rebuilds the generated-code baseline |
-| `integration-test.sh` | runs the Go suite |
-| `generate-docs.sh` | renders the PHPDoc (`composer phpdoc`) |
+| `dagger call generate-fbs-php` | runs flatc and normalises its PHP output |
+| `dagger call generate-fbs-go` | regenerates the Go bindings for the test suite |
+| `dagger call check-fbs-go` | fails if the committed bindings are stale |
+| `dagger call generate-phpstan-baseline` | rebuilds the generated-code baseline |
+| `dagger call dist` | builds the production artifact |
+| `dagger call docs` | renders the API reference |
+| `dagger call integration-test` | runs the Go suite, daemon included |
 
 ## CI
 
@@ -161,5 +165,5 @@ passes `--memory-limit=2G`; running `vendor/bin/phpstan` directly does not.
 **`flatc not found on PATH`.** Install it from the FlatBuffers releases; CI
 pins 25.12.19.
 
-**Go bindings are stale in CI.** Run `scripts/generate-flatbuffers-go.sh` and
-commit the result.
+**Go bindings are stale in CI.** Run `dagger call generate-fbs-go` (exporting
+over `tests/integration/internal/fbs`) and commit the result.

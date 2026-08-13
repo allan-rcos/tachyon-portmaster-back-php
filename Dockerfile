@@ -2,7 +2,24 @@
 # variables (APP_*, APP_DB_*, APP_JWT_*) so the same image serves both the dev
 # compose stack and the testcontainers-go integration pool (each pointed at its
 # own database).
-FROM php:8.4-cli AS base
+#
+# ---------------------------------------------------------------------------
+# `ext` — the PHP environment: extensions and Composer, and nothing of the app.
+#
+# It is a stage of its own so that there is exactly ONE definition, in this
+# repository, of which PHP this project runs on. `dagger/modules/toolchain`
+# builds *this same target* to run PHPStan and Pest, so the checks execute on
+# the same extensions as production.
+#
+# That is what removes the hand-maintained `openswoole-26.2.0` pin that used to
+# live in .github/workflows/ci.yml: setup-php defaulted to 25.2.0 while
+# composer.lock demanded >= 26.2.0, so the version had to be repeated — and kept
+# in sync — in a third place. There is no third place now.
+#
+# Nothing from the build context is copied into this stage, so it rebuilds only
+# when this block itself changes, and the layer is shared with `base` below.
+# ---------------------------------------------------------------------------
+FROM php:8.4-cli AS ext
 
 # System libraries the PECL/bundled extensions link against.
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -35,6 +52,11 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # Ensure OS environment variables (docker -e / compose env) land in $_ENV, which
 # is where the boot config reader looks; the app is configured entirely this way.
 RUN echo 'variables_order=EGPCS' > "$(php -r 'echo PHP_CONFIG_FILE_SCAN_DIR;')/zz-portmaster.ini"
+
+# ---------------------------------------------------------------------------
+# `base` — the application on top of that environment.
+# ---------------------------------------------------------------------------
+FROM ext AS base
 
 WORKDIR /app
 
