@@ -94,7 +94,7 @@ dagger call generate-fbs-php export --path ../src/API/Fbs
 dagger call generate-fbs-go  export --path ../tests/integration/internal/fbs
 dagger call generate-phpstan-baseline export --path ../phpstan-generated-baseline.neon
 dagger call docs export --path ../docs/phpdocumentor
-dagger call dist --version 1.1.0 export --path ../dist
+dagger call dist --version 1.2.0 export --path ../dist
 ```
 
 ### Argumentos

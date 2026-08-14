@@ -6,7 +6,7 @@ import "dagger/back-php/internal/dagger"
 //
 // Use com `export`: o Dagger não escreve no host por conta própria (R6).
 //
-//	dagger call dist --version 1.1.0 export --path dist
+//	dagger call dist --version 1.2.0 export --path dist
 func (m *BackPhp) Dist(
 	// +defaultPath="/"
 	// +ignore=["vendor", "dist", "docs", "build", ".git", ".github", "node_modules", "**/.git"]
