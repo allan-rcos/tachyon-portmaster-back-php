@@ -102,6 +102,10 @@
                 
             </li>
                     <li>
+                <a href="namespaces/app-events.html" class="">Events</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/app-queries.html" class="">Queries</a>
                 
             </li>
@@ -185,6 +189,10 @@
     <ul class="phpdocumentor-list">
                     <li>
                 <a href="namespaces/shared-exceptions.html" class="">Exceptions</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/shared-time.html" class="">Time</a>
                 
             </li>
             </ul>
@@ -313,6 +321,14 @@ pass through untouched.</p>
                 &nbsp;= &#039;Accept&#039;                    </span>
 </dt>
 <dd>What the client wants back; drives the response {@see ContentKind}.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -case -">
+    <a class="" href="classes/API-Http-HttpHeader.html#enumcase_Cache">Cache</a>
+    <span>
+                &nbsp;= &#039;Cache-Status&#039;                    </span>
+</dt>
+<dd>How a cache took part in producing the body, per
+{@link https://www.rfc-editor.org/rfc/rfc9211 RFC 9211}.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -case -">
     <a class="" href="classes/API-Http-HttpHeader.html#enumcase_ContentType">ContentType</a>
@@ -463,6 +479,45 @@ two of them.</p>
 
         
     </article>
+                    <article
+        class="
+            phpdocumentor-element
+            -enum-case
+        "
+>
+    <h4 class="phpdocumentor-element__name" id="enumcase_Cache">
+        Cache
+        <a href="classes/API-Http-HttpHeader.html#enumcase_Cache" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Http/HttpHeader.php"><a href="files/src-api-http-httpheader.html"><abbr title="src/API/Http/HttpHeader.php">HttpHeader.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">69</span>
+
+            <a href="classes/API-Http-HttpHeader.html#source-view.69" class="phpdocumentor-element-found-in__source" data-line="69" data-modal="source-view" data-src="files/src/API/Http/HttpHeader.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">How a cache took part in producing the body, per
+{@link https://www.rfc-editor.org/rfc/rfc9211 RFC 9211}.</p>
+
+    
+        <section class="phpdocumentor-description"><p>The standard field rather than an <code class="prettyprint">X-</code> name of our own: it is a list, so a
+CDN or reverse proxy in front adds its own entry instead of colliding with
+ours, and the vocabulary (<code class="prettyprint">hit</code>, <code class="prettyprint">fwd=…</code>, <code class="prettyprint">ttl=…</code>) is one every cache
+already speaks.</p>
+<p>Carries <a href="classes/API-Http-Middleware-CacheHeaderMiddleware.html#constant_HIT"><abbr title="\API\Http\Middleware\CacheHeaderMiddleware::HIT">CacheHeaderMiddleware::HIT</abbr></a> when the
+view cache answered, and is <strong>absent</strong> otherwise. The RFC asks a cache to
+describe its own part and leaves silence meaning &quot;this cache had none&quot;,
+which is what a read that was never cacheable in the first place should
+say.</p>
+</section>
+
+    
+    
+
+        
+    </article>
             </section>
 
         
@@ -581,6 +636,7 @@ two of them.</p>
                                                     <li class=""><a href="classes/API-Http-HttpHeader.html#enumcase_ContentType">ContentType</a></li>
                                                     <li class=""><a href="classes/API-Http-HttpHeader.html#enumcase_RequestId">RequestId</a></li>
                                                     <li class=""><a href="classes/API-Http-HttpHeader.html#enumcase_SetCookie">SetCookie</a></li>
+                                                    <li class=""><a href="classes/API-Http-HttpHeader.html#enumcase_Cache">Cache</a></li>
                                             </ul>
                 </li>
             

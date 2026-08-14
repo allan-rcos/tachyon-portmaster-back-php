@@ -24,6 +24,8 @@ use Domain\Models\IManifestChange;
 use Domain\Models\IProduct;
 use Domain\TableModules\IManifestTM;
 use Infra\Database\IUnitOfWork;
+use Infra\Repository\IViewCacheRepository;
+use Infra\Repository\ViewCacheGroup;
 use Infra\Repository\IContainerRepository;
 use Infra\Repository\IManifestRepository;
 use Infra\Repository\IProductRepository;
@@ -60,6 +62,8 @@ final readonly class UnloadItemUseCase implements IUnloadItemUseCase
      * Declares `manifest:unload`, separate from `manifest:load`.
      *
      * @param  IUnitOfWork  $unitOfWork  The boundary; never the connection.
+     * @param  IViewCacheRepository  $views  Told to drop the group once the
+     *                                       commit has landed.
      * @param  IContainerRepository  $containers  Loads the target container.
      * @param  IProductRepository  $products  Loads the product being removed.
      * @param  IManifestRepository  $manifest  Loads the existing cargo line, and
@@ -73,6 +77,7 @@ final readonly class UnloadItemUseCase implements IUnloadItemUseCase
      */
     public function __construct(
         private IUnitOfWork $unitOfWork,
+        private IViewCacheRepository $views,
         private IContainerRepository $containers,
         private IProductRepository $products,
         private IManifestRepository $manifest,
@@ -138,6 +143,16 @@ final readonly class UnloadItemUseCase implements IUnloadItemUseCase
         /** @var IManifestChange $change */
         $change = $changeResult->getValue();
 
-        return ManifestPersistence::commit($this->unitOfWork, $this->containers, $this->manifest, $change);
+        $persisted = ManifestPersistence::commit($this->unitOfWork, $this->containers,
+            $this->manifest, $change);
+        if (!$persisted->isSuccess()) {
+            return $persisted;
+        }
+
+        // ManifestPersistence commits, so this is after the commit like
+        // everywhere else.
+        $this->views->invalidate(ViewCacheGroup::Container);
+
+        return $persisted;
     }
 }

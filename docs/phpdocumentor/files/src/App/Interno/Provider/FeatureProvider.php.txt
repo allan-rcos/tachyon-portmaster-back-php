@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace App\Interno\Provider;
 
 use App\Services\Interno\RegisterPermissionUseCase;
+use App\Events\IMetaEventStack;
 use App\Services\IRegisterPermissionUseCase;
 use Domain\IDomainProvider;
 use Infra\IInfraProvider;
@@ -61,18 +62,24 @@ abstract class FeatureProvider
     private ?IRegisterPermissionUseCase $registerPermission = null;
 
     /**
-     * Both layers are held `protected`, so subclasses reach them directly rather
+     * All three are held `protected`, so subclasses reach them directly rather
      * than through accessors.
      *
      * @param  IDomainProvider  $domain  Supplies the table modules.
      * @param  IInfraProvider  $infra  Supplies the repositories, the boundary and
      *                                 the permission registry.
+     * @param  IMetaEventStack  $events  Handed to the read use cases, which
+     *                                   report a cache hit on it. Shared with
+     *                                   the middleware that reads it back —
+     *                                   what scopes it to one request is the
+     *                                   coroutine, not the instance.
      *
      * @copyright 2026 Tachyon
      */
     public function __construct(
         protected readonly IDomainProvider $domain,
         protected readonly IInfraProvider $infra,
+        protected readonly IMetaEventStack $events,
     ) {
     }
 

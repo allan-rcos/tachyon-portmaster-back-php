@@ -20,6 +20,8 @@ use App\Security\AuthorizesWithPermission;
 use App\Services\IRegisterPermissionUseCase;
 use App\Services\IDeleteProductUseCase;
 use Infra\Database\IUnitOfWork;
+use Infra\Repository\IViewCacheRepository;
+use Infra\Repository\ViewCacheGroup;
 use Infra\Repository\IProductRepository;
 use Shared\Exceptions\Result;
 
@@ -55,6 +57,8 @@ final readonly class DeleteProductUseCase implements IDeleteProductUseCase
      * rule to consult.
      *
      * @param  IUnitOfWork  $unitOfWork  The boundary; never the connection.
+     * @param  IViewCacheRepository  $views  Told to drop the group once the
+     *                                       commit has landed.
      * @param  IProductRepository  $products  Read from, then deleted from.
      * @param  IRegisterPermissionUseCase  $registrar  Consulted once, here.
      *
@@ -62,6 +66,7 @@ final readonly class DeleteProductUseCase implements IDeleteProductUseCase
      */
     public function __construct(
         private IUnitOfWork $unitOfWork,
+        private IViewCacheRepository $views,
         private IProductRepository $products,
         IRegisterPermissionUseCase $registrar,
     ) {
@@ -104,6 +109,10 @@ final readonly class DeleteProductUseCase implements IDeleteProductUseCase
         if (!$commit->isSuccess()) {
             return Result::failure($commit->getErrorId());
         }
+
+        // After the commit, never before: a read in between would repopulate
+        // the cache from the state this write replaces.
+        $this->views->invalidate(ViewCacheGroup::Product);
 
         return Result::void();
     }

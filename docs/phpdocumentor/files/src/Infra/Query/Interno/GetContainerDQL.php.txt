@@ -71,6 +71,23 @@ final readonly class GetContainerDQL implements IDQL
     }
 
     /**
+     * The id this lookup is for.
+     *
+     * Answered like every other DQL, though nothing caches a read by id today:
+     * a `SELECT` on the primary key costs about what the cache lookup would, so
+     * there is no round trip to save. See
+     * {@see \Infra\Repository\IViewCacheRepository}.
+     *
+     * @return string The query's identity.
+     *
+     * @copyright 2026 Tachyon
+     */
+    public function cacheKey(): string
+    {
+        return 'get_container:'.$this->id;
+    }
+
+    /**
      * Hands the single row to {@see ContainerRowMapper}, or returns null when
      * there was none.
      *

@@ -46,6 +46,26 @@ use Infra\Query\SqlQuery;
 final readonly class MetricsDQL implements IDQL
 {
     /**
+     * A constant, because the panel takes no parameters.
+     *
+     * There is exactly one metrics query, so there is exactly one entry, and the
+     * whole group holds that single row. It is also the only cached query no
+     * write invalidates: the aggregates are derived from containers and
+     * products, and each of those drops its own group and deliberately leaves
+     * this one alone. See {@see \Infra\Repository\ViewCacheGroup} for why, and
+     * {@see \Infra\Config\CacheLimits::TTL_SECONDS} for how long that leaves the
+     * panel behind.
+     *
+     * @return string The query's identity.
+     *
+     * @copyright 2026 Tachyon
+     */
+    public function cacheKey(): string
+    {
+        return 'metrics';
+    }
+
+    /**
      * Compiles the eight aggregates into one row of correlated sub-selects.
      *
      * Each status literal goes through the outer select's `bindInline()`, which

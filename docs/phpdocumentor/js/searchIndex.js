@@ -881,6 +881,11 @@ Search.appendIndex(
             "summary": "Carries\u0020the\u0020auth\u0020cookies.\u0020Appended\u0020rather\u0020than\u0020set,\u0020since\u0020a\u0020login\u0020writes\ntwo\u0020of\u0020them.",
             "url": "classes/API-Http-HttpHeader.html#enumcase_SetCookie"
         },                {
+            "fqsen": "\\API\\Http\\HttpHeader\u003A\u003ACache",
+            "name": "Cache",
+            "summary": "How\u0020a\u0020cache\u0020took\u0020part\u0020in\u0020producing\u0020the\u0020body,\u0020per\n\u007B\u0040link\u0020https\u003A\/\/www.rfc\u002Deditor.org\/rfc\/rfc9211\u0020RFC\u00209211\u007D.",
+            "url": "classes/API-Http-HttpHeader.html#enumcase_Cache"
+        },                {
             "fqsen": "\\API\\Http\\MediaType",
             "name": "MediaType",
             "summary": "HTTP\u0020media\u0020types\u0020used\u0020by\u0020the\u0020API,\u0020as\u0020a\u0020string\u002Dbacked\u0020enum\u0020so\u0020call\u0020sites\u0020never\ncarry\u0020raw\u0020literals.",
@@ -935,6 +940,36 @@ Search.appendIndex(
             "name": "cookie",
             "summary": "",
             "url": "classes/API-Http-Middleware-AuthenticationMiddleware.html#property_cookie"
+        },                {
+            "fqsen": "\\API\\Http\\Middleware\\CacheHeaderMiddleware",
+            "name": "CacheHeaderMiddleware",
+            "summary": "Says\u0020on\u0020the\u0020response\u0020whether\u0020the\u0020body\u0020came\u0020out\u0020of\u0020the\u0020view\u0020cache.",
+            "url": "classes/API-Http-Middleware-CacheHeaderMiddleware.html"
+        },                {
+            "fqsen": "\\API\\Http\\Middleware\\CacheHeaderMiddleware\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/API-Http-Middleware-CacheHeaderMiddleware.html#method___construct"
+        },                {
+            "fqsen": "\\API\\Http\\Middleware\\CacheHeaderMiddleware\u003A\u003Aprocess\u0028\u0029",
+            "name": "process",
+            "summary": "Clears\u0020the\u0020stack,\u0020runs\u0020the\u0020request,\u0020and\u0020marks\u0020the\u0020response\u0020if\u0020a\u0020cached\nread\u0020answered\u0020it.",
+            "url": "classes/API-Http-Middleware-CacheHeaderMiddleware.html#method_process"
+        },                {
+            "fqsen": "\\API\\Http\\Middleware\\CacheHeaderMiddleware\u003A\u003ACACHE_NAME",
+            "name": "CACHE_NAME",
+            "summary": "",
+            "url": "classes/API-Http-Middleware-CacheHeaderMiddleware.html#constant_CACHE_NAME"
+        },                {
+            "fqsen": "\\API\\Http\\Middleware\\CacheHeaderMiddleware\u003A\u003AHIT",
+            "name": "HIT",
+            "summary": "",
+            "url": "classes/API-Http-Middleware-CacheHeaderMiddleware.html#constant_HIT"
+        },                {
+            "fqsen": "\\API\\Http\\Middleware\\CacheHeaderMiddleware\u003A\u003A\u0024events",
+            "name": "events",
+            "summary": "",
+            "url": "classes/API-Http-Middleware-CacheHeaderMiddleware.html#property_events"
         },                {
             "fqsen": "\\API\\Http\\Middleware\\ContentNegotiationMiddleware",
             "name": "ContentNegotiationMiddleware",
@@ -1765,6 +1800,41 @@ Search.appendIndex(
             "name": "message",
             "summary": "",
             "url": "classes/API-Negociation-DTO-Admin-UserListXResponseFactory.html#property_message"
+        },                {
+            "fqsen": "\\API\\Negociation\\DTO\\Admin\\UserRolesUpdateXRequest",
+            "name": "UserRolesUpdateXRequest",
+            "summary": "The\u0020roles\u0020a\u0020user\u0020should\u0020hold\u0020from\u0020now\u0020on\u0020\u2014\u0020the\u0020whole\u0020set,\u0020not\u0020a\u0020delta.",
+            "url": "classes/API-Negociation-DTO-Admin-UserRolesUpdateXRequest.html"
+        },                {
+            "fqsen": "\\API\\Negociation\\DTO\\Admin\\UserRolesUpdateXRequest\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/API-Negociation-DTO-Admin-UserRolesUpdateXRequest.html#method___construct"
+        },                {
+            "fqsen": "\\API\\Negociation\\DTO\\Admin\\UserRolesUpdateXRequest\u003A\u003A\u0024roleIds",
+            "name": "roleIds",
+            "summary": "",
+            "url": "classes/API-Negociation-DTO-Admin-UserRolesUpdateXRequest.html#property_roleIds"
+        },                {
+            "fqsen": "\\API\\Negociation\\DTO\\Admin\\UserRolesUpdateXRequestFactory",
+            "name": "UserRolesUpdateXRequestFactory",
+            "summary": "Builds\u0020a\u0020\u007B\u0040see\u0020UserRolesUpdateXRequest\u007D\u0020from\u0020either\u0020wire\u0020format.",
+            "url": "classes/API-Negociation-DTO-Admin-UserRolesUpdateXRequestFactory.html"
+        },                {
+            "fqsen": "\\API\\Negociation\\DTO\\Admin\\UserRolesUpdateXRequestFactory\u003A\u003AfromJson\u0028\u0029",
+            "name": "fromJson",
+            "summary": "Builds\u0020the\u0020message\u0020from\u0020a\u0020decoded\u0020JSON\/associative\u0020structure.",
+            "url": "classes/API-Negociation-DTO-Admin-UserRolesUpdateXRequestFactory.html#method_fromJson"
+        },                {
+            "fqsen": "\\API\\Negociation\\DTO\\Admin\\UserRolesUpdateXRequestFactory\u003A\u003AfromFlatbuffer\u0028\u0029",
+            "name": "fromFlatbuffer",
+            "summary": "Builds\u0020the\u0020message\u0020from\u0020a\u0020FlatBuffer.",
+            "url": "classes/API-Negociation-DTO-Admin-UserRolesUpdateXRequestFactory.html#method_fromFlatbuffer"
+        },                {
+            "fqsen": "\\API\\Negociation\\DTO\\Admin\\UserRolesUpdateXRequestFactory\u003A\u003AnonEmpty\u0028\u0029",
+            "name": "nonEmpty",
+            "summary": "Drops\u0020empty\u0020ids,\u0020on\u0020both\u0020branches.",
+            "url": "classes/API-Negociation-DTO-Admin-UserRolesUpdateXRequestFactory.html#method_nonEmpty"
         },                {
             "fqsen": "\\API\\Negociation\\DTO\\Admin\\UserUpdateXRequest",
             "name": "UserUpdateXRequest",
@@ -3866,6 +3936,36 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Context-UserContext.html#property_roles"
         },                {
+            "fqsen": "\\App\\Events\\IMetaEventStack",
+            "name": "IMetaEventStack",
+            "summary": "Collects\u0020the\u0020\u007B\u0040see\u0020MetaEvent\u007Ds\u0020reported\u0020while\u0020one\u0020request\u0020is\u0020answered.",
+            "url": "classes/App-Events-IMetaEventStack.html"
+        },                {
+            "fqsen": "\\App\\Events\\IMetaEventStack\u003A\u003Aemit\u0028\u0029",
+            "name": "emit",
+            "summary": "Reports\u0020that\u0020the\u0020event\u0020happened\u0020while\u0020answering\u0020this\u0020request.",
+            "url": "classes/App-Events-IMetaEventStack.html#method_emit"
+        },                {
+            "fqsen": "\\App\\Events\\IMetaEventStack\u003A\u003Acaptured\u0028\u0029",
+            "name": "captured",
+            "summary": "Whether\u0020the\u0020event\u0020was\u0020reported\u0020while\u0020answering\u0020this\u0020request.",
+            "url": "classes/App-Events-IMetaEventStack.html#method_captured"
+        },                {
+            "fqsen": "\\App\\Events\\IMetaEventStack\u003A\u003Aflush\u0028\u0029",
+            "name": "flush",
+            "summary": "Forgets\u0020everything\u0020reported\u0020so\u0020far.",
+            "url": "classes/App-Events-IMetaEventStack.html#method_flush"
+        },                {
+            "fqsen": "\\App\\Events\\MetaEvent",
+            "name": "MetaEvent",
+            "summary": "Something\u0020that\u0020happened\u0020\u002Awhile\u002A\u0020answering\u0020a\u0020request,\u0020rather\u0020than\u0020something\u0020the\nrequest\u0020asked\u0020for.",
+            "url": "classes/App-Events-MetaEvent.html"
+        },                {
+            "fqsen": "\\App\\Events\\MetaEvent\u003A\u003AViewCacheHit",
+            "name": "ViewCacheHit",
+            "summary": "A\u0020read\u0020was\u0020answered\u0020from\u0020the\u0020view\u0020cache\u0020instead\u0020of\u0020from\u0020the\u0020database.",
+            "url": "classes/App-Events-MetaEvent.html#enumcase_ViewCacheHit"
+        },                {
             "fqsen": "\\App\\IAppProvider",
             "name": "IAppProvider",
             "summary": "Factory\u0020surface\u0020of\u0020the\u0020application\u0020layer\u0020\u2014\u0020the\u0020only\u0020provider\u0020the\u0020presentations\n\u0028api\u002Dhttp,\u0020\u2026\u0029\u0020know.\u0020It\u0020exposes\u0020every\u0020UseCase\u0020\u0028write\u0020Commands\u0020\u002B\u0020read\u0020Queries\u0029\nand\u0020\u002A\u002Are\u002Dexports\u002A\u002A\u0020the\u0020infra\/domain\u0020services\u0020the\u0020presentation\u0020needs\n\u0028\u007B\u0040see\u0020logger\u0028\u0029\u007D,\u0020\u007B\u0040see\u0020sequentialIdGenerator\u0028\u0029\u007D,\u0020\u2026\u0029\u0020so\u0020the\u0020API\u0020never\u0020reaches\ninto\u0020\u007B\u0040see\u0020\\Infra\u007D\u0020or\u0020\u007B\u0040see\u0020\\Domain\u007D\u0020providers\u0020directly.\u0020Built\u0020by\n\u007B\u0040see\u0020\\App\\AppRegister\u003A\u003Aexecute\u0028\u0029\u007D,\u0020which\u0020chains\u0020infra\u0020\u002B\u0020domain\u0020registers.",
@@ -3875,6 +3975,11 @@ Search.appendIndex(
             "name": "logger",
             "summary": "The\u0020\u007B\u0040see\u0020ILogger\u007D\u0020for\u0020this\u0020worker.",
             "url": "classes/App-IAppProvider.html#method_logger"
+        },                {
+            "fqsen": "\\App\\IAppProvider\u003A\u003AmetaEventStack\u0028\u0029",
+            "name": "metaEventStack",
+            "summary": "Where\u0020a\u0020use\u0020case\u0020reports\u0020how\u0020it\u0020answered,\u0020for\u0020the\u0020API\u0020layer\u0020to\u0020read\u0020back.",
+            "url": "classes/App-IAppProvider.html#method_metaEventStack"
         },                {
             "fqsen": "\\App\\IAppProvider\u003A\u003AunitOfWork\u0028\u0029",
             "name": "unitOfWork",
@@ -5266,6 +5371,16 @@ Search.appendIndex(
             "summary": "Produces\u0020the\u0020user\u0020with\u0020a\u0020new\u0020password\u0020\u2014\u0020the\u0020administrator\u0020reset.",
             "url": "classes/Domain-TableModules-IUserTM.html#method_resetPassword"
         },                {
+            "fqsen": "\\Infra\\Config\\CacheLimits",
+            "name": "CacheLimits",
+            "summary": "How\u0020long\u0020a\u0020cached\u0020read\u0020stays\u0020valid.",
+            "url": "classes/Infra-Config-CacheLimits.html"
+        },                {
+            "fqsen": "\\Infra\\Config\\CacheLimits\u003A\u003ATTL_SECONDS",
+            "name": "TTL_SECONDS",
+            "summary": "",
+            "url": "classes/Infra-Config-CacheLimits.html#constant_TTL_SECONDS"
+        },                {
             "fqsen": "\\Infra\\Config\\DatabaseConfig",
             "name": "DatabaseConfig",
             "summary": "Database\u0020connection\u0020and\u0020pool\u0020settings.",
@@ -5741,6 +5856,11 @@ Search.appendIndex(
             "summary": "The\u0020read\u0020side\u003A\u0020runs\u0020a\u0020query\u0020and\u0020returns\u0020its\u0020view.",
             "url": "classes/Infra-IInfraProvider.html#method_queryRepository"
         },                {
+            "fqsen": "\\Infra\\IInfraProvider\u003A\u003AviewCacheRepository\u0028\u0029",
+            "name": "viewCacheRepository",
+            "summary": "The\u0020read\u0020cache\u003A\u0020holds\u0020what\u0020a\u0020query\u0020returned,\u0020keyed\u0020by\u0020group\u0020and\u0020key.",
+            "url": "classes/Infra-IInfraProvider.html#method_viewCacheRepository"
+        },                {
             "fqsen": "\\Infra\\InfraRegister",
             "name": "InfraRegister",
             "summary": "Composition\u0020entry\u0020point\u0020for\u0020the\u0020infrastructure\u0020layer.\u0020Receives\u0020the\u0020infra\nconfig\u0020VOs\u0020\u0028resolved\u0020from\u0020the\u0020environment\u0020at\u0020bootstrap\u0029\u0020and\u0020returns\u0020the\nprovider\u003B\u0020the\u0020actual\u0020pool\/connection\u0020is\u0020opened\u0020lazily\u0020on\u0020first\u0020use.",
@@ -6095,6 +6215,11 @@ Search.appendIndex(
             "name": "hydrate",
             "summary": "Builds\u0020the\u0020view\u0020from\u0020the\u0020rows\u0020returned\u0020by\u0020the\u0020query.",
             "url": "classes/Infra-Query-IDQL.html#method_hydrate"
+        },                {
+            "fqsen": "\\Infra\\Query\\IDQL\u003A\u003AcacheKey\u0028\u0029",
+            "name": "cacheKey",
+            "summary": "What\u0020distinguishes\u0020this\u0020query\u0020from\u0020another\u0020of\u0020the\u0020same\u0020kind.",
+            "url": "classes/Infra-Query-IDQL.html#method_cacheKey"
         },                {
             "fqsen": "\\Infra\\Query\\IQueryRepository",
             "name": "IQueryRepository",
@@ -6566,6 +6691,56 @@ Search.appendIndex(
             "summary": "Replaces\u0020the\u0020user\u0027s\u0020role\u0020assignments\u0020with\u0020exactly\u0020the\u0020set\u0020given.",
             "url": "classes/Infra-Repository-IUserRepository.html#method_syncRoles"
         },                {
+            "fqsen": "\\Infra\\Repository\\IViewCacheRepository",
+            "name": "IViewCacheRepository",
+            "summary": "Holds\u0020what\u0020a\u0020read\u0020query\u0020returned.",
+            "url": "classes/Infra-Repository-IViewCacheRepository.html"
+        },                {
+            "fqsen": "\\Infra\\Repository\\IViewCacheRepository\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "The\u0020View\u0020stored\u0020under\u0020this\u0020key,\u0020if\u0020there\u0020is\u0020one.",
+            "url": "classes/Infra-Repository-IViewCacheRepository.html#method_get"
+        },                {
+            "fqsen": "\\Infra\\Repository\\IViewCacheRepository\u003A\u003Aput\u0028\u0029",
+            "name": "put",
+            "summary": "Stores\u0020the\u0020View\u0020under\u0020this\u0020key.",
+            "url": "classes/Infra-Repository-IViewCacheRepository.html#method_put"
+        },                {
+            "fqsen": "\\Infra\\Repository\\IViewCacheRepository\u003A\u003Ainvalidate\u0028\u0029",
+            "name": "invalidate",
+            "summary": "Discards\u0020the\u0020whole\u0020group.",
+            "url": "classes/Infra-Repository-IViewCacheRepository.html#method_invalidate"
+        },                {
+            "fqsen": "\\Infra\\Repository\\ViewCacheGroup",
+            "name": "ViewCacheGroup",
+            "summary": "The\u0020slice\u0020of\u0020the\u0020read\u0020cache\u0020a\u0020write\u0020drops.",
+            "url": "classes/Infra-Repository-ViewCacheGroup.html"
+        },                {
+            "fqsen": "\\Infra\\Repository\\ViewCacheGroup\u003A\u003AContainer",
+            "name": "Container",
+            "summary": "Container\u0020listings,\u0020summaries\u0020included.",
+            "url": "classes/Infra-Repository-ViewCacheGroup.html#enumcase_Container"
+        },                {
+            "fqsen": "\\Infra\\Repository\\ViewCacheGroup\u003A\u003AMetrics",
+            "name": "Metrics",
+            "summary": "The\u0020occupancy\u0020and\u0020throughput\u0020panel.",
+            "url": "classes/Infra-Repository-ViewCacheGroup.html#enumcase_Metrics"
+        },                {
+            "fqsen": "\\Infra\\Repository\\ViewCacheGroup\u003A\u003AProduct",
+            "name": "Product",
+            "summary": "Product\u0020listings.",
+            "url": "classes/Infra-Repository-ViewCacheGroup.html#enumcase_Product"
+        },                {
+            "fqsen": "\\Infra\\Repository\\ViewCacheGroup\u003A\u003ARole",
+            "name": "Role",
+            "summary": "Role\u0020listings.",
+            "url": "classes/Infra-Repository-ViewCacheGroup.html#enumcase_Role"
+        },                {
+            "fqsen": "\\Infra\\Repository\\ViewCacheGroup\u003A\u003AUser",
+            "name": "User",
+            "summary": "User\u0020listings.",
+            "url": "classes/Infra-Repository-ViewCacheGroup.html#enumcase_User"
+        },                {
             "fqsen": "\\Infra\\Text\\SearchKey",
             "name": "SearchKey",
             "summary": "Builds\u0020the\u0020normalized,\u0020accent\u002Dfolded\u0020lowercase\u0020ASCII\u0020key\u0020that\u0020write\u0020paths\nstore\u0020in\u0020a\u0020\u0060search_\u002A\u0060\u0020column\u0020so\u0020\u0060search\u0060\u0020filters\u0020always\u0020match\u0020regardless\u0020of\ncase\u0020or\u0020diacritics\u0020\u0028the\u0020entity\u0020may\u0020carry\u0020columns\u0020the\u0020domain\u0020model\u0020does\u0020not\u0029.",
@@ -6695,6 +6870,26 @@ Search.appendIndex(
             "name": "errorId",
             "summary": "",
             "url": "classes/Shared-Exceptions-Result.html#property_errorId"
+        },                {
+            "fqsen": "\\Shared\\Time\\Utc",
+            "name": "Utc",
+            "summary": "Renders\u0020a\u0020stored\u0020datetime\u0020as\u0020the\u0020ISO\u002D8601\u0020UTC\u0020instant\u0020that\u0020leaves\u0020the\u0020API.",
+            "url": "classes/Shared-Time-Utc.html"
+        },                {
+            "fqsen": "\\Shared\\Time\\Utc\u003A\u003Aiso8601\u0028\u0029",
+            "name": "iso8601",
+            "summary": "Turns\u0020a\u0020stored\u0020\u0060DATETIME\u0060\u0020into\u0020its\u0020ISO\u002D8601\u0020UTC\u0020form.",
+            "url": "classes/Shared-Time-Utc.html#method_iso8601"
+        },                {
+            "fqsen": "\\Shared\\Time\\Utc\u003A\u003ASTORED_FORMAT",
+            "name": "STORED_FORMAT",
+            "summary": "",
+            "url": "classes/Shared-Time-Utc.html#constant_STORED_FORMAT"
+        },                {
+            "fqsen": "\\Shared\\Time\\Utc\u003A\u003AWIRE_FORMAT",
+            "name": "WIRE_FORMAT",
+            "summary": "",
+            "url": "classes/Shared-Time-Utc.html#constant_WIRE_FORMAT"
         },                {
             "fqsen": "\\",
             "name": "\\",
@@ -6871,6 +7066,11 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/app-context.html"
         },                {
+            "fqsen": "\\App\\Events",
+            "name": "Events",
+            "summary": "",
+            "url": "namespaces/app-events.html"
+        },                {
             "fqsen": "\\App\\Queries\\Account",
             "name": "Account",
             "summary": "",
@@ -7040,5 +7240,10 @@ Search.appendIndex(
             "name": "Shared",
             "summary": "",
             "url": "namespaces/shared.html"
+        },                {
+            "fqsen": "\\Shared\\Time",
+            "name": "Time",
+            "summary": "",
+            "url": "namespaces/shared-time.html"
         }            ]
 );

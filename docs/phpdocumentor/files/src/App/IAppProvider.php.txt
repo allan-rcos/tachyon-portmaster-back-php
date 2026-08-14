@@ -55,6 +55,7 @@ use App\Services\IValidateSessionUseCase;
 use Domain\ID\IRandomIdGenerator;
 use Domain\ID\ISequentialIdGenerator;
 use Infra\Database\IUnitOfWork;
+use App\Events\IMetaEventStack;
 use Infra\Logging\ILogger;
 
 /**
@@ -87,6 +88,23 @@ interface IAppProvider
      * @api
      */
     public function logger(): ILogger;
+
+    /**
+     * Where a use case reports how it answered, for the API layer to read back.
+     *
+     * Exposed on the provider rather than reached through a use case because the
+     * consumer is a middleware, which sits outside the application layer and has
+     * no use case of its own.
+     *
+     * @return IMetaEventStack One instance per worker; its contents are scoped
+     *                         to a single request by the coroutine, not by the
+     *                         object.
+     *
+     * @copyright 2026 Tachyon
+     *
+     * @api
+     */
+    public function metaEventStack(): IMetaEventStack;
 
     /**
      * The boundary a caller opens around its own work.

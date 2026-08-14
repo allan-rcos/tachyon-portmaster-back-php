@@ -39,9 +39,15 @@ final readonly class TelemetryLogView
      * @param  TelemetryEvent  $event  What the row records having happened.
      * @param  string|null  $description  Free text, or null when the entry was
      *                                    written without one.
-     * @param  string|null  $timestamp  When the database stamped it, as the
-     *                                  driver returned it; null when the column
-     *                                  could not be read as a string.
+     * @param  string|null  $timestamp  When the database stamped it, as an
+     *                                  ISO-8601 UTC instant ending in `Z`; null
+     *                                  when the column could not be read or did
+     *                                  not parse. Every datetime in the system
+     *                                  is UTC, and this is the only one that
+     *                                  leaves the API — so it is rendered with
+     *                                  the zone that says so rather than passed
+     *                                  through as the driver's zone-less string.
+     *                                  See {@see \Shared\Time\Utc}.
      *
      * @copyright 2026 Tachyon
      */

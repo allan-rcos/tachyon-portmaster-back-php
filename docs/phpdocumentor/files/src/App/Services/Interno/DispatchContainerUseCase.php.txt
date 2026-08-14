@@ -22,6 +22,8 @@ use App\Services\IDispatchContainerUseCase;
 use Domain\Models\IContainer;
 use Domain\TableModules\IContainerTM;
 use Infra\Database\IUnitOfWork;
+use Infra\Repository\IViewCacheRepository;
+use Infra\Repository\ViewCacheGroup;
 use Infra\Repository\IContainerRepository;
 use Shared\Exceptions\Result;
 
@@ -57,6 +59,8 @@ final readonly class DispatchContainerUseCase implements IDispatchContainerUseCa
      * separate privileges.
      *
      * @param  IUnitOfWork  $unitOfWork  The boundary; never the connection.
+     * @param  IViewCacheRepository  $views  Told to drop the group once the
+     *                                       commit has landed.
      * @param  IContainerRepository  $containers  Read from and written to.
      * @param  IContainerTM  $containerTM  Decides whether the container may be
      *                                     dispatched from where it is.
@@ -66,6 +70,7 @@ final readonly class DispatchContainerUseCase implements IDispatchContainerUseCa
      */
     public function __construct(
         private IUnitOfWork $unitOfWork,
+        private IViewCacheRepository $views,
         private IContainerRepository $containers,
         private IContainerTM $containerTM,
         IRegisterPermissionUseCase $registrar,
@@ -121,6 +126,10 @@ final readonly class DispatchContainerUseCase implements IDispatchContainerUseCa
         if (!$commit->isSuccess()) {
             return Result::failure($commit->getErrorId());
         }
+
+        // After the commit, never before: a read in between would repopulate
+        // the cache from the state this write replaces.
+        $this->views->invalidate(ViewCacheGroup::Container);
 
         return Result::void();
     }

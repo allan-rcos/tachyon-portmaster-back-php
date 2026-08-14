@@ -22,6 +22,8 @@ use App\Services\IUpdateProductUseCase;
 use Domain\Models\IProduct;
 use Domain\TableModules\IProductTM;
 use Infra\Database\IUnitOfWork;
+use Infra\Repository\IViewCacheRepository;
+use Infra\Repository\ViewCacheGroup;
 use Infra\Repository\IProductRepository;
 use Shared\Exceptions\Result;
 
@@ -59,6 +61,8 @@ final readonly class UpdateProductUseCase implements IUpdateProductUseCase
      * Declares `product:update`.
      *
      * @param  IUnitOfWork  $unitOfWork  The boundary; never the connection.
+     * @param  IViewCacheRepository  $views  Told to drop the group once the
+     *                                       commit has landed.
      * @param  IProductRepository  $products  Read from and written to.
      * @param  IProductTM  $productTM  Validates and rebuilds.
      * @param  IRegisterPermissionUseCase  $registrar  Consulted once, here.
@@ -67,6 +71,7 @@ final readonly class UpdateProductUseCase implements IUpdateProductUseCase
      */
     public function __construct(
         private IUnitOfWork $unitOfWork,
+        private IViewCacheRepository $views,
         private IProductRepository $products,
         private IProductTM $productTM,
         IRegisterPermissionUseCase $registrar,
@@ -119,6 +124,10 @@ final readonly class UpdateProductUseCase implements IUpdateProductUseCase
         if (!$commit->isSuccess()) {
             return Result::failure($commit->getErrorId());
         }
+
+        // After the commit, never before: a read in between would repopulate
+        // the cache from the state this write replaces.
+        $this->views->invalidate(ViewCacheGroup::Product);
 
         return Result::success($product);
     }

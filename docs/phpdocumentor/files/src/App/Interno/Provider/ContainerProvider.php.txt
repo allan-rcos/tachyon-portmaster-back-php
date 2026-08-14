@@ -57,7 +57,12 @@ final class ContainerProvider extends FeatureProvider
      */
     public function listContainersUseCase(): IListContainersUseCase
     {
-        return new ListContainersUseCase($this->infra->queryRepository(), $this->registrar());
+        return new ListContainersUseCase(
+            $this->infra->queryRepository(),
+            $this->infra->viewCacheRepository(),
+            $this->events,
+            $this->registrar(),
+        );
     }
 
     /**
@@ -67,7 +72,12 @@ final class ContainerProvider extends FeatureProvider
      */
     public function listContainerSummariesUseCase(): IListContainerSummariesUseCase
     {
-        return new ListContainerSummariesUseCase($this->infra->queryRepository(), $this->registrar());
+        return new ListContainerSummariesUseCase(
+            $this->infra->queryRepository(),
+            $this->infra->viewCacheRepository(),
+            $this->events,
+            $this->registrar(),
+        );
     }
 
     /**
@@ -89,6 +99,7 @@ final class ContainerProvider extends FeatureProvider
     {
         return new CreateContainerUseCase(
             $this->infra->unitOfWork(),
+            $this->infra->viewCacheRepository(),
             $this->infra->containerRepository(),
             $this->domain->containerTM(),
             $this->registrar(),
@@ -104,6 +115,7 @@ final class ContainerProvider extends FeatureProvider
     {
         return new UpdateContainerUseCase(
             $this->infra->unitOfWork(),
+            $this->infra->viewCacheRepository(),
             $this->infra->containerRepository(),
             $this->domain->containerTM(),
             $this->registrar(),
@@ -119,6 +131,7 @@ final class ContainerProvider extends FeatureProvider
     {
         return new SealContainerUseCase(
             $this->infra->unitOfWork(),
+            $this->infra->viewCacheRepository(),
             $this->infra->containerRepository(),
             $this->domain->containerTM(),
             $this->registrar(),
@@ -134,6 +147,7 @@ final class ContainerProvider extends FeatureProvider
     {
         return new DispatchContainerUseCase(
             $this->infra->unitOfWork(),
+            $this->infra->viewCacheRepository(),
             $this->infra->containerRepository(),
             $this->domain->containerTM(),
             $this->registrar(),
@@ -149,6 +163,7 @@ final class ContainerProvider extends FeatureProvider
     {
         return new DeleteContainerUseCase(
             $this->infra->unitOfWork(),
+            $this->infra->viewCacheRepository(),
             $this->infra->containerRepository(),
             $this->registrar(),
         );

@@ -57,6 +57,7 @@
                 <path>src/API/Fbs/Admin/UserAdminResponse.php</path>
                 <path>src/API/Fbs/Admin/UserCreateRequest.php</path>
                 <path>src/API/Fbs/Admin/UserListResponse.php</path>
+                <path>src/API/Fbs/Admin/UserRolesUpdateRequest.php</path>
                 <path>src/API/Fbs/Admin/UserUpdateRequest.php</path>
                 <path>src/API/Fbs/Auth/LoginRequest.php</path>
                 <path>src/API/Fbs/Auth/LoginResponse.php</path>

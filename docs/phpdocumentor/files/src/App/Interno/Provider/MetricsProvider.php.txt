@@ -44,6 +44,11 @@ final class MetricsProvider extends FeatureProvider
      */
     public function getMetricsUseCase(): IGetMetricsUseCase
     {
-        return new GetMetricsUseCase($this->infra->queryRepository(), $this->registrar());
+        return new GetMetricsUseCase(
+            $this->infra->queryRepository(),
+            $this->infra->viewCacheRepository(),
+            $this->events,
+            $this->registrar(),
+        );
     }
 }

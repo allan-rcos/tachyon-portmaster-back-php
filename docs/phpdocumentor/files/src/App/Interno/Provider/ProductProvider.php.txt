@@ -54,7 +54,12 @@ final class ProductProvider extends FeatureProvider
      */
     public function listProductsUseCase(): IListProductsUseCase
     {
-        return new ListProductsUseCase($this->infra->queryRepository(), $this->registrar());
+        return new ListProductsUseCase(
+            $this->infra->queryRepository(),
+            $this->infra->viewCacheRepository(),
+            $this->events,
+            $this->registrar(),
+        );
     }
 
     /**
@@ -66,6 +71,7 @@ final class ProductProvider extends FeatureProvider
     {
         return new CreateProductUseCase(
             $this->infra->unitOfWork(),
+            $this->infra->viewCacheRepository(),
             $this->infra->productRepository(),
             $this->domain->productTM(),
             $this->registrar(),
@@ -91,6 +97,7 @@ final class ProductProvider extends FeatureProvider
     {
         return new UpdateProductUseCase(
             $this->infra->unitOfWork(),
+            $this->infra->viewCacheRepository(),
             $this->infra->productRepository(),
             $this->domain->productTM(),
             $this->registrar(),
@@ -106,6 +113,7 @@ final class ProductProvider extends FeatureProvider
     {
         return new DeleteProductUseCase(
             $this->infra->unitOfWork(),
+            $this->infra->viewCacheRepository(),
             $this->infra->productRepository(),
             $this->registrar(),
         );

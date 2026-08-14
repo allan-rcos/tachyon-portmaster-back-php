@@ -102,6 +102,10 @@
                 
             </li>
                     <li>
+                <a href="namespaces/app-events.html" class="">Events</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/app-queries.html" class="">Queries</a>
                 
             </li>
@@ -185,6 +189,10 @@
     <ul class="phpdocumentor-list">
                     <li>
                 <a href="namespaces/shared-exceptions.html" class="">Exceptions</a>
+                
+            </li>
+                    <li>
+                <a href="namespaces/shared-time.html" class="">Time</a>
                 
             </li>
             </ul>
@@ -320,6 +328,13 @@ return stays typed through <code class="prettyprint">TView</code>.</p>
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Infra-Query-IDQL.html#method_cacheKey">cacheKey()</a>
+    <span>
+                                &nbsp;: string    </span>
+</dt>
+<dd>What distinguishes this query from another of the same kind.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Infra-Query-IDQL.html#method_hydrate">hydrate()</a>
     <span>
                                 &nbsp;: <abbr title="\Infra\Query\TView">TView</abbr>    </span>
@@ -348,6 +363,90 @@ return stays typed through <code class="prettyprint">TView</code>.</p>
             <a href="classes/Infra-Query-IDQL.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_cacheKey">
+        cacheKey()
+        <a href="classes/Infra-Query-IDQL.html#method_cacheKey" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Query/IDQL.php"><a href="files/src-infra-query-idql.html"><abbr title="src/Infra/Query/IDQL.php">IDQL.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">89</span>
+
+            <a href="classes/Infra-Query-IDQL.html#source-view.89" class="phpdocumentor-element-found-in__source" data-line="89" data-modal="source-view" data-src="files/src/Infra/Query/IDQL.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">What distinguishes this query from another of the same kind.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">cacheKey</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+    <div class="phpdocumentor-label-line">
+            <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
+
+        </div>
+    
+        <section class="phpdocumentor-description"><p>This is the query's identity for caching purposes, and the DQL writes it
+because the DQL is what knows what the query is. It used to be assembled
+by the caller in the Rust implementation this mirrors, with a prefix per
+service and the discipline to remember every filter — and a filter nobody
+added to the key made two different queries read the same entry.</p>
+<p><strong>It must include every constructor argument</strong>, in the normalised form
+<abbr title="\Infra\Query\toSql()">toSql()</abbr> actually queries with rather than the raw one. A page is
+identified by the id it resumes from, not by the cursor token that encodes
+it: a token minted for other filters is discarded by <a href="classes/Infra-Query-Cursor.html"><abbr title="\Infra\Query\Cursor">Cursor</abbr></a>,
+so two tokens that both mean &quot;start from the beginning&quot; are the same
+query and belong on the same key.</p>
+<p>It does not come out of the SQL. The compiled statement separates text
+from bound values, and the text alone is identical between two pages of
+the same <code class="prettyprint">SELECT</code>.</p>
+<p>Every DQL answers this, including the ones nothing caches today — the key
+is what the query <em>is</em>, not the decision to store it, and
+<a href="classes/Infra-Repository-IViewCacheRepository.html"><abbr title="\Infra\Repository\IViewCacheRepository">IViewCacheRepository</abbr></a> explains which reads go
+through the cache and why the reads by id do not.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="method_cacheKey_tags">
+        Tags
+        <a href="classes/Infra-Query-IDQL.html#method_cacheKey_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">copyright</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                            <section class="phpdocumentor-description"><p>2026 Tachyon</p>
+</section>
+
+                                    </dd>
+                        </dl>
+
+        
+    
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Stable across calls and unique to the parameters; kept
+readable rather than digested, because an entry that
+cannot say which query it belongs to is hard to debug. The
+cache declines to store a key longer than its column, so
+length is bounded there and not here.</p>
+</section>
+
+            </section>
+
+</article>
                     <article
         class="phpdocumentor-element
             -method
@@ -604,6 +703,7 @@ filters it was constructed with rather than keeping a prepared string.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Methods</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
+                                                    <li class=""><a href="classes/Infra-Query-IDQL.html#method_cacheKey">cacheKey()</a></li>
                                                     <li class=""><a href="classes/Infra-Query-IDQL.html#method_hydrate">hydrate()</a></li>
                                                     <li class=""><a href="classes/Infra-Query-ISqlDQL.html#method_toSql">toSql()</a></li>
                                             </ul>

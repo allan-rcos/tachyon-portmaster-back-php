@@ -26,6 +26,7 @@ use API\Negociation\DTO\Admin\UserAdminXResponseFactory;
 use API\Negociation\DTO\Admin\UserCreateXRequestFactory;
 use API\Negociation\DTO\Admin\UserListXResponse;
 use API\Negociation\DTO\Admin\UserListXResponseFactory;
+use API\Negociation\DTO\Admin\UserRolesUpdateXRequestFactory;
 use API\Negociation\DTO\Admin\UserUpdateXRequestFactory;
 use API\Negociation\IAcceptsStrategy;
 use API\Negociation\IContentTypeStrategy;
@@ -325,10 +326,17 @@ final readonly class UserAdminController implements IUserAdminController
         }
         $context = $caller->getValue();
 
+        $decoded = $this->contentType->execute($request->getBody(), new UserRolesUpdateXRequestFactory());
+        if (!$decoded->isSuccess()) {
+            return ProblemResponse::fromResult($this->accepts, $decoded);
+        }
+
+        $body = $decoded->getValue();
+
         $result = $this->updateUserRoles->execute(new UpdateUserRolesCommand(
             context: $context,
             id: $this->pathId($request),
-            roleIds: $this->roleIdsFromBody($request),
+            roleIds: $body->roleIds,
         ));
         if (!$result->isSuccess()) {
             return ProblemResponse::fromResult($this->accepts, $result);
@@ -399,35 +407,4 @@ final readonly class UserAdminController implements IUserAdminController
             roles: $roles,
         );
     }
-
-    /**
-     * Parses the inline `{ "role_ids": ["base62", ...] }` body (no FlatBuffers schema).
-     *
-     * The one request body in the API that is not a declared table, so this
-     * endpoint takes JSON only regardless of what was negotiated. Anything
-     * unparseable becomes an empty list, which the use case reads as "revoke
-     * every role".
-     *
-     * @param  ServerRequestInterface  $request  The incoming HTTP request.
-     * @return list<string> The non-empty string ids found in the body.
-     *
-     * @copyright 2026 Tachyon
-     */
-    private function roleIdsFromBody(ServerRequestInterface $request): array
-    {
-        $decoded = json_decode((string) $request->getBody(), true);
-        $raw = is_array($decoded) && isset($decoded['role_ids']) && is_array($decoded['role_ids'])
-            ? $decoded['role_ids']
-            : [];
-
-        $ids = [];
-        foreach ($raw as $id) {
-            if (is_string($id) && $id !== '') {
-                $ids[] = $id;
-            }
-        }
-
-        return $ids;
-    }
-
 }
