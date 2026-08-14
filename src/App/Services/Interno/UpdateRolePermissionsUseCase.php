@@ -22,6 +22,8 @@ use App\Services\IUpdateRolePermissionsUseCase;
 use Domain\Models\IRole;
 use Domain\TableModules\IRoleTM;
 use Infra\Database\IUnitOfWork;
+use Infra\Repository\IViewCacheRepository;
+use Infra\Repository\ViewCacheGroup;
 use Infra\Repository\IRoleRepository;
 use Shared\Exceptions\Result;
 
@@ -54,6 +56,8 @@ final readonly class UpdateRolePermissionsUseCase implements IUpdateRolePermissi
      * Declares `role:update-permissions`, separate from `role:create`.
      *
      * @param  IUnitOfWork  $unitOfWork  The boundary; never the connection.
+     * @param  IViewCacheRepository  $views  Told to drop the group once the
+     *                                       commit has landed.
      * @param  IRoleRepository  $roles  Read from and written to.
      * @param  IRoleTM  $roleTM  Validates the slugs and rebuilds the role.
      * @param  IRegisterPermissionUseCase  $registrar  Consulted once, here.
@@ -62,6 +66,7 @@ final readonly class UpdateRolePermissionsUseCase implements IUpdateRolePermissi
      */
     public function __construct(
         private IUnitOfWork $unitOfWork,
+        private IViewCacheRepository $views,
         private IRoleRepository $roles,
         private IRoleTM $roleTM,
         IRegisterPermissionUseCase $registrar,
@@ -117,6 +122,10 @@ final readonly class UpdateRolePermissionsUseCase implements IUpdateRolePermissi
         if (!$commit->isSuccess()) {
             return Result::failure($commit->getErrorId());
         }
+
+        // After the commit, never before: a read in between would repopulate
+        // the cache from the state this write replaces.
+        $this->views->invalidate(ViewCacheGroup::Role);
 
         return Result::success($updated);
     }

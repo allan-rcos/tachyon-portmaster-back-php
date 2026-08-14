@@ -4,9 +4,18 @@
 services:
   db:
     image: mariadb:11
-    # The marker table's hourly purge is a MariaDB EVENT, and events only fire
-    # when the scheduler thread is running — it is off by default.
-    command: ["--event-scheduler=ON"]
+    # Two flags, both load-bearing:
+    #
+    #   * the marker and view-cache purges are MariaDB EVENTs, and events only
+    #     fire when the scheduler thread is running — it is off by default.
+    #   * every datetime in the schema is a UTC instant. Connections pin their
+    #     own session zone too, so this is belt and braces — but it is what
+    #     makes a NOW() typed straight into mariadb agree with the app's.
+    #   * view_cache is ENGINE=MEMORY with a fixed-width payload column, so a
+    #     row costs ~16.6 KB whatever it holds. The default 16 MB heap limit
+    #     fills at roughly 970 rows, after which the cache logs "table is full"
+    #     and stops accepting writes. 256M is about 15,000 rows.
+    command: ["--event-scheduler=ON", "--max-heap-table-size=256M", "--default-time-zone=+00:00"]
     environment:
       MARIADB_ROOT_PASSWORD: root
       MARIADB_DATABASE: portmaster

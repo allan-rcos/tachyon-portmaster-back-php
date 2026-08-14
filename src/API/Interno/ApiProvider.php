@@ -43,6 +43,7 @@ use API\Controllers\IServerController;
 use API\Controllers\IUserAdminController;
 use API\Http\AuthCookie;
 use API\Http\Middleware\AuthenticationMiddleware;
+use API\Http\Middleware\CacheHeaderMiddleware;
 use API\Http\Middleware\ContentNegotiationMiddleware;
 use API\Http\Middleware\LoggingMiddleware;
 use API\Http\Middleware\RecovererMiddleware;
@@ -247,6 +248,7 @@ final class ApiProvider implements IApiProvider
                 $logger,
             ),
             new AuthenticationMiddleware($this->tokenService(), $this->authCookie(), $logger),
+            new CacheHeaderMiddleware($this->app->metaEventStack()),
             new RouteDispatchMiddleware(RouterHub::dispatcher(), $controllers, $this->accepts()),
         );
     }

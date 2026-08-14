@@ -19,13 +19,15 @@ harness (`tests/integration/internal/harness/migrate.go`).
 000001_initial_schema.down.sql    containers, container_items, telemetry_logs
 000002_metadata_and_markers.up.sql    permissions, marker_groups,
 000002_metadata_and_markers.down.sql  markers  (ENGINE=MEMORY)
+000003_view_cache.up.sql              view_cache  (ENGINE=MEMORY)
+000003_view_cache.down.sql
 ```
 
 ### Adding one
 
 ```
-db/migrations/000003_<snake_case_name>.up.sql
-db/migrations/000003_<snake_case_name>.down.sql
+db/migrations/000004_<snake_case_name>.up.sql
+db/migrations/000004_<snake_case_name>.down.sql
 ```
 
 Rules, all of them load-bearing:
@@ -56,22 +58,32 @@ dagger call integration-test               # harness does its own
 
 ## The MEMORY tables
 
-`permissions`, `marker_groups` and `markers` are `ENGINE=MEMORY`. Four
-consequences that matter when writing code against them:
+`permissions`, `marker_groups`, `markers` and `view_cache` are `ENGINE=MEMORY`.
+Consequences that matter when writing code against them:
 
 - A MariaDB restart **empties** them; the definitions survive. Metadata
-  re-registers itself at the next `WorkerStart`.
+  re-registers itself at the next `WorkerStart`, and a cold cache only means the
+  next read recomputes.
 - They are **not transactional** — a `ROLLBACK` does not undo a write. Never put
   anything with a business invariant here.
-- They take **table-level locks**, which is why marker reads filter on
+- They take **table-level locks**, which is why marker and cache reads filter on
   `expires_at` rather than deleting expired rows.
 - `markers` has **no foreign key** to `marker_groups` — MEMORY does not support
   them. The group is registered at boot before any marker can reference it.
+- MEMORY supports **no BLOB or TEXT**, and pads every `VARCHAR`/`VARBINARY` to
+  its declared width. That is why `view_cache.payload` is a fixed
+  `VARBINARY(16384)` and why the repository declines to cache anything larger
+  instead of failing the read.
+- MEMORY has **no LRU eviction**. A full table answers error 1114, so the server
+  needs a `max_heap_table_size` that fits the working set — the default 16 MB
+  holds about 970 cache rows.
 
-The hourly purge is a MariaDB `EVENT` and needs the server started with
-`--event-scheduler=ON`. Both the dev stack and the harness pass it.
+The purges are MariaDB `EVENT`s and need the server started with
+`--event-scheduler=ON`; `view_cache` additionally needs
+`--max-heap-table-size=256M`. Both the dev stack and the harness pass both.
 
-Full rationale: [ADR 0003](../docs/adr/0003-engine-memory-for-runtime-tables.md).
+Full rationale: [ADR 0003](../docs/adr/0003-engine-memory-for-runtime-tables.md)
+and [ADR 0010](../docs/adr/0010-read-cache-in-a-memory-table.md).
 
 ## Seeds
 

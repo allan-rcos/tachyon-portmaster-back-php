@@ -19,6 +19,7 @@ API documentation useless. The code now states what it does; these state why.
 | [0007](0007-phpstan-baseline-limited-to-generated-code.md) | A PHPStan baseline holding only generated code |
 | [0008](0008-minified-tarball-as-the-release-artifact.md) | A minified tarball as the release artifact, migrations apart |
 | [0009](0009-abstract-factory-e-strategy-na-negociacao.md) | Abstract factory and strategy instead of one proxy per message |
+| [0010](0010-read-cache-in-a-memory-table.md) | The read cache in an `ENGINE=MEMORY` table, serialised with igbinary |
 
 ## Writing one
 

@@ -35,6 +35,7 @@
     "atlas/query": "^2.0",
     "firebase/php-jwt": "^7.1",
     "ext-ds": "*",
+    "ext-igbinary": "*",
     "ext-pdo": "*",
     "ext-pdo_mysql": "*",
     "ext-mbstring": "*",

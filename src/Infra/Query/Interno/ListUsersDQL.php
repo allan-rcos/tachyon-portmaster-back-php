@@ -195,4 +195,25 @@ final readonly class ListUsersDQL implements IDQL
     {
         return $this->limit !== null && $this->limit > 0 ? $this->limit : self::DEFAULT_LIMIT;
     }
+
+    /**
+     * The page and its size, which together are what this query is.
+     *
+     * Both go in normalised rather than raw, matching what {@see toSql()}
+     * computes: a non-positive page is page one there, so it has to be page one
+     * here too or the same listing would occupy two entries.
+     *
+     * This listing pages by offset rather than by cursor, unlike the others, so
+     * there is no token to decode — the page number *is* the position.
+     *
+     * @return string The query's identity.
+     *
+     * @copyright 2026 Tachyon
+     */
+    public function cacheKey(): string
+    {
+        $page = $this->page !== null && $this->page > 0 ? $this->page : 1;
+
+        return 'list_users:page='.$page.';limit='.$this->effectiveLimit();
+    }
 }

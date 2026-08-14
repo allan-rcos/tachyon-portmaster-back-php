@@ -22,6 +22,8 @@ use App\Services\IResetUserPasswordUseCase;
 use Domain\Models\IUser;
 use Domain\TableModules\IUserTM;
 use Infra\Database\IUnitOfWork;
+use Infra\Repository\IViewCacheRepository;
+use Infra\Repository\ViewCacheGroup;
 use Infra\Repository\IUserRepository;
 use Shared\Exceptions\Result;
 
@@ -54,6 +56,8 @@ final readonly class ResetUserPasswordUseCase implements IResetUserPasswordUseCa
      * Declares `user:change-password`.
      *
      * @param  IUnitOfWork  $unitOfWork  The boundary; never the connection.
+     * @param  IViewCacheRepository  $views  Told to drop the group once the
+     *                                       commit has landed.
      * @param  IUserRepository  $users  Read from and written to.
      * @param  IUserTM  $userTM  Validates and hashes the new password.
      * @param  IRegisterPermissionUseCase  $registrar  Consulted once, here.
@@ -62,6 +66,7 @@ final readonly class ResetUserPasswordUseCase implements IResetUserPasswordUseCa
      */
     public function __construct(
         private IUnitOfWork $unitOfWork,
+        private IViewCacheRepository $views,
         private IUserRepository $users,
         private IUserTM $userTM,
         IRegisterPermissionUseCase $registrar,
@@ -117,6 +122,10 @@ final readonly class ResetUserPasswordUseCase implements IResetUserPasswordUseCa
         if (!$commit->isSuccess()) {
             return Result::failure($commit->getErrorId());
         }
+
+        // After the commit, never before: a read in between would repopulate
+        // the cache from the state this write replaces.
+        $this->views->invalidate(ViewCacheGroup::User);
 
         return Result::void();
     }

@@ -27,6 +27,7 @@ use Infra\Repository\IPermissionRepository;
 use Infra\Repository\IProductRepository;
 use Infra\Repository\IRoleRepository;
 use Infra\Repository\IUserRepository;
+use Infra\Repository\IViewCacheRepository;
 
 /**
  * Factory surface of the infrastructure layer.
@@ -188,4 +189,21 @@ interface IInfraProvider
      * @api
      */
     public function queryRepository(): IQueryRepository;
+
+    /**
+     * The read cache: holds what a query returned, keyed by group and key.
+     *
+     * Beside {@see queryRepository()} rather than in front of it — the list
+     * use cases consult it themselves, because the group a write drops is
+     * theirs to name.
+     *
+     * @return IViewCacheRepository Leases its own connection, since
+     *                              invalidation runs after the commit it
+     *                              follows and has no boundary to join.
+     *
+     * @copyright 2026 Tachyon
+     *
+     * @api
+     */
+    public function viewCacheRepository(): IViewCacheRepository;
 }

@@ -21,6 +21,8 @@ use App\Commands\User\UpdateUserRolesCommand;
 use App\Services\IUpdateUserRolesUseCase;
 use Domain\Models\IUser;
 use Infra\Database\IUnitOfWork;
+use Infra\Repository\IViewCacheRepository;
+use Infra\Repository\ViewCacheGroup;
 use Infra\Repository\IUserRepository;
 use Shared\Exceptions\Result;
 
@@ -54,6 +56,8 @@ final readonly class UpdateUserRolesUseCase implements IUpdateUserRolesUseCase
      * Declares `user:update-roles`, separate from `user:update`.
      *
      * @param  IUnitOfWork  $unitOfWork  The boundary; never the connection.
+     * @param  IViewCacheRepository  $views  Told to drop the group once the
+     *                                       commit has landed.
      * @param  IUserRepository  $users  Loads the user, then rewrites the pivot.
      * @param  IRegisterPermissionUseCase  $registrar  Consulted once, here.
      *
@@ -61,6 +65,7 @@ final readonly class UpdateUserRolesUseCase implements IUpdateUserRolesUseCase
      */
     public function __construct(
         private IUnitOfWork $unitOfWork,
+        private IViewCacheRepository $views,
         private IUserRepository $users,
         IRegisterPermissionUseCase $registrar,
     ) {
@@ -105,6 +110,10 @@ final readonly class UpdateUserRolesUseCase implements IUpdateUserRolesUseCase
         if (!$commit->isSuccess()) {
             return Result::failure($commit->getErrorId());
         }
+
+        // After the commit, never before: a read in between would repopulate
+        // the cache from the state this write replaces.
+        $this->views->invalidate(ViewCacheGroup::User);
 
         return Result::success($user);
     }

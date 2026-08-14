@@ -22,6 +22,8 @@ use App\Services\ICreateProductUseCase;
 use Domain\Models\IProduct;
 use Domain\TableModules\IProductTM;
 use Infra\Database\IUnitOfWork;
+use Infra\Repository\IViewCacheRepository;
+use Infra\Repository\ViewCacheGroup;
 use Infra\Repository\IProductRepository;
 use Shared\Exceptions\Result;
 
@@ -71,6 +73,8 @@ final readonly class CreateProductUseCase implements ICreateProductUseCase
      * permission in the registry at WorkerStart without any list to maintain.
      *
      * @param  IUnitOfWork  $unitOfWork  The boundary; never the connection.
+     * @param  IViewCacheRepository  $views  Told to drop the group once the
+     *                                       commit has landed.
      * @param  IProductRepository  $products  Where the built product is written.
      * @param  IProductTM  $productTM  Validates and builds it.
      * @param  IRegisterPermissionUseCase  $registrar  Consulted once, here, and
@@ -81,6 +85,7 @@ final readonly class CreateProductUseCase implements ICreateProductUseCase
      */
     public function __construct(
         private IUnitOfWork $unitOfWork,
+        private IViewCacheRepository $views,
         private IProductRepository $products,
         private IProductTM $productTM,
         IRegisterPermissionUseCase $registrar,
@@ -135,6 +140,10 @@ final readonly class CreateProductUseCase implements ICreateProductUseCase
         if (!$commit->isSuccess()) {
             return Result::failure($commit->getErrorId());
         }
+
+        // After the commit, never before: a read in between would repopulate
+        // the cache from the state this write replaces.
+        $this->views->invalidate(ViewCacheGroup::Product);
 
         return Result::success($product);
     }

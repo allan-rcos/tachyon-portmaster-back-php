@@ -20,6 +20,8 @@ use App\Security\AuthorizesWithPermission;
 use App\Services\IRegisterPermissionUseCase;
 use App\Services\IDeleteContainerUseCase;
 use Infra\Database\IUnitOfWork;
+use Infra\Repository\IViewCacheRepository;
+use Infra\Repository\ViewCacheGroup;
 use Infra\Repository\IContainerRepository;
 use Shared\Exceptions\Result;
 
@@ -49,6 +51,8 @@ final readonly class DeleteContainerUseCase implements IDeleteContainerUseCase
      * consult about a removal.
      *
      * @param  IUnitOfWork  $unitOfWork  The boundary; never the connection.
+     * @param  IViewCacheRepository  $views  Told to drop the group once the
+     *                                       commit has landed.
      * @param  IContainerRepository  $containers  Read from, then deleted from.
      * @param  IRegisterPermissionUseCase  $registrar  Consulted once, here.
      *
@@ -56,6 +60,7 @@ final readonly class DeleteContainerUseCase implements IDeleteContainerUseCase
      */
     public function __construct(
         private IUnitOfWork $unitOfWork,
+        private IViewCacheRepository $views,
         private IContainerRepository $containers,
         IRegisterPermissionUseCase $registrar,
     ) {
@@ -97,6 +102,10 @@ final readonly class DeleteContainerUseCase implements IDeleteContainerUseCase
         if (!$commit->isSuccess()) {
             return Result::failure($commit->getErrorId());
         }
+
+        // After the commit, never before: a read in between would repopulate
+        // the cache from the state this write replaces.
+        $this->views->invalidate(ViewCacheGroup::Container);
 
         return Result::void();
     }

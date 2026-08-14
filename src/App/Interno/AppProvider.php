@@ -26,6 +26,8 @@ use App\Interno\Provider\MetricsProvider;
 use App\Interno\Provider\ProductProvider;
 use App\Interno\Provider\RoleProvider;
 use App\Interno\Provider\UserProvider;
+use App\Events\IMetaEventStack;
+use App\Events\Interno\CoroutineMetaEventStack;
 use App\Services\IChangePasswordUseCase;
 use App\Services\ICreateContainerUseCase;
 use App\Services\ICreateProductUseCase;
@@ -97,6 +99,14 @@ use Infra\Logging\ILogger;
 final readonly class AppProvider implements IAppProvider
 {
     /**
+     * @var IMetaEventStack Where a use case reports how it answered, and where
+     *                      the API layer reads that back. One instance for the
+     *                      worker: what scopes its contents to a single request
+     *                      is the coroutine, not the object.
+     */
+    private IMetaEventStack $events;
+
+    /**
      * @var AuthProvider Login, session validation and the deployment bootstrap.
      */
     private AuthProvider $auth;
@@ -164,16 +174,18 @@ final readonly class AppProvider implements IAppProvider
         private IDomainProvider $domain,
         private IInfraProvider $infra,
     ) {
-        $this->auth = new AuthProvider($domain, $infra);
-        $this->account = new AccountProvider($domain, $infra);
-        $this->users = new UserProvider($domain, $infra);
-        $this->roles = new RoleProvider($domain, $infra);
-        $this->products = new ProductProvider($domain, $infra);
-        $this->containers = new ContainerProvider($domain, $infra);
-        $this->manifests = new ManifestProvider($domain, $infra);
-        $this->markers = new MarkerProvider($domain, $infra);
-        $this->metrics = new MetricsProvider($domain, $infra);
-        $this->metadata = new MetadataProvider($domain, $infra);
+        $this->events = new CoroutineMetaEventStack();
+
+        $this->auth = new AuthProvider($domain, $infra, $this->events);
+        $this->account = new AccountProvider($domain, $infra, $this->events);
+        $this->users = new UserProvider($domain, $infra, $this->events);
+        $this->roles = new RoleProvider($domain, $infra, $this->events);
+        $this->products = new ProductProvider($domain, $infra, $this->events);
+        $this->containers = new ContainerProvider($domain, $infra, $this->events);
+        $this->manifests = new ManifestProvider($domain, $infra, $this->events);
+        $this->markers = new MarkerProvider($domain, $infra, $this->events);
+        $this->metrics = new MetricsProvider($domain, $infra, $this->events);
+        $this->metadata = new MetadataProvider($domain, $infra, $this->events);
     }
 
     // --- Re-exported infra/domain services -----------------------------------
@@ -186,6 +198,16 @@ final readonly class AppProvider implements IAppProvider
     public function logger(): ILogger
     {
         return $this->infra->logger();
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @copyright 2026 Tachyon
+     */
+    public function metaEventStack(): IMetaEventStack
+    {
+        return $this->events;
     }
 
     /**

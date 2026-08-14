@@ -38,13 +38,16 @@ type Client struct {
 	http    *http.Client
 }
 
-// Response is a decoded HTTP response: status, the raw body, and the media type
-// the server said the body is. The last one is what proves negotiation happened
-// rather than merely not failing.
+// Response is a decoded HTTP response: status, the raw body, the media type the
+// server said the body is, and the headers it came with. The media type is what
+// proves negotiation happened rather than merely not failing; the headers are
+// what let a test assert Cache-Status, which is the only way a cache hit is
+// visible from outside.
 type Response struct {
 	Status      int
 	ContentType string
 	Body        []byte
+	Header      http.Header
 }
 
 // New returns a client for the given base URL with its own cookie jar. It asks
@@ -70,6 +73,36 @@ func (c *Client) Unversioned() *Client {
 		prefix:  apiPrefix,
 		accept:  c.accept,
 		http:    c.http,
+	}
+}
+
+// WithoutKeepAlive returns a view of the same session whose every request opens
+// a fresh TCP connection.
+//
+// This exists for the tests that are about what one *worker* can see. OpenSwoole
+// is started without an explicit dispatch_mode, so the default applies and a
+// connection is handled by one worker for its whole life. A keep-alive client
+// therefore sends every request of a sub-test down the same connection, to the
+// same worker — and a test written that way passes just as happily against a
+// per-worker cache, which is precisely what it was meant to rule out.
+// Reconnecting each time removes that guarantee of stickiness.
+//
+// Unlike Unversioned and AsJSON it does *not* share the http client, since the
+// connection pool is the thing being avoided. It shares the cookie jar
+// explicitly, so the session still carries over.
+func (c *Client) WithoutKeepAlive() *Client {
+	transport := http.DefaultTransport.(*http.Transport).Clone()
+	transport.DisableKeepAlives = true
+
+	return &Client{
+		baseURL: c.baseURL,
+		prefix:  c.prefix,
+		accept:  c.accept,
+		http: &http.Client{
+			Jar:       c.http.Jar,
+			Timeout:   c.http.Timeout,
+			Transport: transport,
+		},
 	}
 }
 
@@ -119,6 +152,7 @@ func (c *Client) do(t *testing.T, method, path string, body []byte) Response {
 		Status:      resp.StatusCode,
 		ContentType: resp.Header.Get("Content-Type"),
 		Body:        data,
+		Header:      resp.Header,
 	}
 }
 

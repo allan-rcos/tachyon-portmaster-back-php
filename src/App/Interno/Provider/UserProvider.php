@@ -62,7 +62,12 @@ final class UserProvider extends FeatureProvider
      */
     public function listUsersUseCase(): IListUsersUseCase
     {
-        return new ListUsersUseCase($this->infra->queryRepository(), $this->registrar());
+        return new ListUsersUseCase(
+            $this->infra->queryRepository(),
+            $this->infra->viewCacheRepository(),
+            $this->events,
+            $this->registrar(),
+        );
     }
 
     /**
@@ -84,6 +89,7 @@ final class UserProvider extends FeatureProvider
     {
         return new CreateUserUseCase(
             $this->infra->unitOfWork(),
+            $this->infra->viewCacheRepository(),
             $this->infra->userRepository(),
             $this->domain->userTM(),
             $this->registrar(),
@@ -99,6 +105,7 @@ final class UserProvider extends FeatureProvider
     {
         return new UpdateUserUseCase(
             $this->infra->unitOfWork(),
+            $this->infra->viewCacheRepository(),
             $this->infra->userRepository(),
             $this->domain->userTM(),
             $this->registrar(),
@@ -114,6 +121,7 @@ final class UserProvider extends FeatureProvider
     {
         return new DeleteUserUseCase(
             $this->infra->unitOfWork(),
+            $this->infra->viewCacheRepository(),
             $this->infra->userRepository(),
             $this->registrar(),
         );
@@ -128,6 +136,7 @@ final class UserProvider extends FeatureProvider
     {
         return new ResetUserPasswordUseCase(
             $this->infra->unitOfWork(),
+            $this->infra->viewCacheRepository(),
             $this->infra->userRepository(),
             $this->domain->userTM(),
             $this->registrar(),
@@ -143,6 +152,7 @@ final class UserProvider extends FeatureProvider
     {
         return new UpdateUserRolesUseCase(
             $this->infra->unitOfWork(),
+            $this->infra->viewCacheRepository(),
             $this->infra->userRepository(),
             $this->registrar(),
         );

@@ -72,15 +72,28 @@ func TestAdministrationStory(t *testing.T) {
 		require.NotEmpty(t, roleID)
 		assert.Equal(t, role.Name, string(created.Name()))
 
-		list := decodeRoot(t, requireOK(t, c.Get(t, "/roles")).Body, fbs.GetRootAsRoleListResponse)
+		// The POST above dropped the role group, so this read cannot be a hit.
+		list := decodeRoot(t,
+			requireCacheMiss(t, requireOK(t, c.Get(t, "/roles")),
+				"creating a role must have dropped the cached listing").Body,
+			fbs.GetRootAsRoleListResponse)
 		assert.GreaterOrEqual(t, list.Total(), int32(1))
+
+		requireCacheHit(t, requireOK(t, c.Get(t, "/roles")),
+			"reading the same listing again, with no write in between, must hit")
 
 		// There is no GET /roles/{id} in the contract, so the result is read back
 		// off the listing.
 		requireOK(t, c.Put(t, "/roles/"+roleID+"/permissions",
 			factories.RolePermissions("product:read", "metrics:read")))
 
-		after := decodeRoot(t, requireOK(t, c.Get(t, "/roles")).Body, fbs.GetRootAsRoleListResponse)
+		// And the permissions update dropped it again — which is the assertion
+		// that would catch an invalidation removed from the write path, since
+		// the body below would still be right for a whole TTL without it.
+		after := decodeRoot(t,
+			requireCacheMiss(t, requireOK(t, c.Get(t, "/roles")),
+				"replacing permissions must have dropped the cached listing").Body,
+			fbs.GetRootAsRoleListResponse)
 		found := false
 		for i := 0; i < after.DataLength(); i++ {
 			var role fbs.RoleResponse
@@ -110,7 +123,10 @@ func TestAdministrationStory(t *testing.T) {
 
 		assert.Equal(t, http.StatusNotFound, c.Get(t, "/users/P0000000").Status)
 
-		list := decodeRoot(t, requireOK(t, c.Get(t, "/users")).Body, fbs.GetRootAsUserListResponse)
+		list := decodeRoot(t,
+			requireCacheMiss(t, requireOK(t, c.Get(t, "/users")),
+				"creating a user must have dropped the cached listing").Body,
+			fbs.GetRootAsUserListResponse)
 		assert.GreaterOrEqual(t, list.DataLength(), 2, "the bootstrap admin plus the new user")
 	})
 

@@ -38,11 +38,22 @@ func buildAPIImage(ctx context.Context, repoRoot string) error {
 func startMariaDB(ctx context.Context, networkName string) (testcontainers.Container, string, error) {
 	req := testcontainers.ContainerRequest{
 		Image: "mariadb:11",
-		// Matches the dev compose stack: the marker purge is a MariaDB EVENT,
-		// and the scheduler that fires events is off by default. Migrations
-		// create the event either way, so without this the schema would apply
-		// but the purge would silently never run.
-		Cmd:          []string{"--event-scheduler=ON"},
+		// Matches the dev compose stack, and both flags are load-bearing:
+		//
+		//   * the marker and view-cache purges are MariaDB EVENTs, and the
+		//     scheduler that fires events is off by default. Migrations create
+		//     the events either way, so without this the schema would apply but
+		//     the purges would silently never run.
+		//   * view_cache is ENGINE=MEMORY with a fixed-width payload column, so
+		//     the default 16 MB heap limit fills at roughly 970 rows and the
+		//     cache would start refusing writes mid-suite.
+		//   * every datetime in the schema is a UTC instant, and the suite
+		//     asserts that what the API sends back says so.
+		Cmd: []string{
+			"--event-scheduler=ON",
+			"--max-heap-table-size=256M",
+			"--default-time-zone=+00:00",
+		},
 		Env:          map[string]string{"MARIADB_ROOT_PASSWORD": dbRootPass},
 		ExposedPorts: []string{"3306/tcp"},
 		Tmpfs:        map[string]string{"/var/lib/mysql": "rw"},

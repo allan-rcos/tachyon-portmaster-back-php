@@ -17,6 +17,8 @@ use Infra\Database\IUnitOfWork;
 use Tests\Doubles\InMemoryPermissionRepository;
 use Infra\Repository\IContainerRepository;
 use Infra\Repository\IManifestRepository;
+use Infra\Repository\IViewCacheRepository;
+use Infra\Repository\ViewCacheGroup;
 use Infra\Repository\IProductRepository;
 use Shared\Exceptions\Leaf;
 use Shared\Exceptions\LeafContext;
@@ -60,8 +62,13 @@ describe('LoadItemUseCase orchestration', function () {
         $unitOfWork->shouldReceive('commit')->once()->andReturn(Result::void());
         $unitOfWork->shouldNotReceive('rollback');
 
+        $views = Mockery::mock(IViewCacheRepository::class);
+        $views->shouldReceive('invalidate')->once()->with(ViewCacheGroup::Container)
+            ->andReturn(Result::void());
+
         $useCase = new LoadItemUseCase(
-            $unitOfWork, $containers, $products, $manifest, $this->manifestTM, $this->registrar,
+            $unitOfWork, $views, $containers, $products, $manifest, $this->manifestTM,
+            $this->registrar,
         );
 
         $result = $useCase->execute($this->command);
@@ -90,8 +97,13 @@ describe('LoadItemUseCase orchestration', function () {
         $unitOfWork->shouldReceive('rollback')->once()->andReturn(Result::void());
         $unitOfWork->shouldNotReceive('commit');
 
+        // Nothing was committed, so nothing may be dropped from the cache.
+        $views = Mockery::mock(IViewCacheRepository::class);
+        $views->shouldNotReceive('invalidate');
+
         $useCase = new LoadItemUseCase(
-            $unitOfWork, $containers, $products, $manifest, $this->manifestTM, $this->registrar,
+            $unitOfWork, $views, $containers, $products, $manifest, $this->manifestTM,
+            $this->registrar,
         );
 
         $result = $useCase->execute($this->command);
@@ -120,8 +132,13 @@ describe('LoadItemUseCase orchestration', function () {
         $unitOfWork->shouldReceive('rollback')->once()->andReturn(Result::void());
         $unitOfWork->shouldNotReceive('commit');
 
+        // Nothing was committed, so nothing may be dropped from the cache.
+        $views = Mockery::mock(IViewCacheRepository::class);
+        $views->shouldNotReceive('invalidate');
+
         $useCase = new LoadItemUseCase(
-            $unitOfWork, $containers, $products, $manifest, $this->manifestTM, $this->registrar,
+            $unitOfWork, $views, $containers, $products, $manifest, $this->manifestTM,
+            $this->registrar,
         );
 
         $result = $useCase->execute($this->command);

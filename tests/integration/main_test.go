@@ -70,6 +70,46 @@ func decodeRoot[T any](t *testing.T, body []byte, root func([]byte, flatbuffers.
 	return root(body, 0)
 }
 
+// cacheHeader is the RFC 9211 field the API sets when a read was answered from
+// the view cache, and cacheHit is the only value it ever carries. Mirrors
+// API\Http\HttpHeader::Cache and CacheHeaderMiddleware::HIT — if either moves,
+// every assertion below fails loudly rather than silently checking nothing.
+//
+// The field is a list, so a proxy in front would append its own entry rather
+// than replace this one. Nothing sits in front of the API in this suite, so an
+// exact match is right here and would need loosening the day something does.
+const (
+	cacheHeader = "Cache-Status"
+	cacheHit    = "Portmaster; hit"
+)
+
+// requireCacheHit fails unless the response says it came from the view cache.
+//
+// This and its opposite are how the cache is tested at all. A hit and a miss
+// carry identical bodies, so without the header a cache that had quietly stopped
+// storing anything — or one that never invalidated — would pass every assertion
+// in this suite.
+func requireCacheHit(t *testing.T, resp client.Response, why string) client.Response {
+	t.Helper()
+	if got := resp.Header.Get(cacheHeader); got != cacheHit {
+		t.Fatalf("expected a cached answer (%s: %s), got %q - %s", cacheHeader, cacheHit, got, why)
+	}
+	return resp
+}
+
+// requireCacheMiss fails unless the response came from the database.
+//
+// The header is absent on a miss rather than carrying a "MISS" value, so this
+// asserts absence. That is the direction that catches a stale read: after a
+// write, the next read must *not* be served from the cache.
+func requireCacheMiss(t *testing.T, resp client.Response, why string) client.Response {
+	t.Helper()
+	if got := resp.Header.Get(cacheHeader); got != "" {
+		t.Fatalf("expected an uncached answer (no %s), got %q - %s", cacheHeader, got, why)
+	}
+	return resp
+}
+
 // requireOK fails the test unless the response is a 2xx.
 func requireOK(t *testing.T, resp client.Response) client.Response {
 	t.Helper()

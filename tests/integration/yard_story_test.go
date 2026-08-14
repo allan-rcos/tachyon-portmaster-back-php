@@ -51,14 +51,32 @@ func TestYardStory(t *testing.T) {
 		require.NotEmpty(t, productID)
 		assert.Equal(t, product.Name, string(created.Name()))
 
-		got := decodeRoot(t, requireOK(t, c.Get(t, "/products/"+productID)).Body, fbs.GetRootAsProductResponse)
+		// A read by id is deliberately not cached, so it must never carry the
+		// header — not even when repeated, which is when a listing would start
+		// hitting. This is the other half of the assertion: the suite has to
+		// catch caching where none was intended just as much as the reverse.
+		byID := requireCacheMiss(t, requireOK(t, c.Get(t, "/products/"+productID)),
+			"a read by id is not cached")
+		got := decodeRoot(t, byID.Body, fbs.GetRootAsProductResponse)
 		assert.Equal(t, productID, string(got.Id()))
+
+		requireCacheMiss(t, requireOK(t, c.Get(t, "/products/"+productID)),
+			"repeating a read by id must still not be cached")
 
 		assert.Equal(t, http.StatusNotFound, c.Get(t, "/products/P0000000").Status,
 			"an unknown product id must be a 404, not an empty 200")
 
-		list := decodeRoot(t, requireOK(t, c.Get(t, "/products")).Body, fbs.GetRootAsProductListResponse)
+		// First read of this listing on a fresh environment, so it is computed;
+		// the immediate repeat must then come from the cache. The pair is what
+		// proves the cache is storing at all — every other assertion in this
+		// suite passes just as well against a cache that never stores anything.
+		first := requireCacheMiss(t, requireOK(t, c.Get(t, "/products")),
+			"the first read of a listing cannot be a hit")
+		list := decodeRoot(t, first.Body, fbs.GetRootAsProductListResponse)
 		assert.GreaterOrEqual(t, list.Total(), int32(1))
+
+		requireCacheHit(t, requireOK(t, c.Get(t, "/products")),
+			"an immediate repeat of the same listing must be served from the cache")
 
 		_, update := factories.ProductUpdate()
 		requireOK(t, c.Put(t, "/products/"+productID, update))
@@ -188,6 +206,98 @@ func TestYardStory(t *testing.T) {
 		metrics := decodeRoot(t, requireOK(t, c.Get(t, "/metrics")).Body, fbs.GetRootAsMetricsResponse)
 		assert.GreaterOrEqual(t, metrics.TotalContainers(), int32(1))
 		assert.GreaterOrEqual(t, metrics.RegisteredProducts(), int32(1))
+	})
+
+	t.Run("a write is visible to the next read, on whichever worker serves it", func(t *testing.T) {
+		// The listings are cached, and the cache is what this sub-test is about.
+		//
+		// The API container runs APP_WORKER_NUM workers and the object graph is
+		// built per worker, after the fork. An in-process cache would therefore
+		// be one cache per worker, and a write handled by worker 1 would leave
+		// worker 2 serving the page it had already cached. Entries live in an
+		// ENGINE=MEMORY table precisely so that cannot happen.
+		//
+		// Two things make that observable rather than lucky, and both are
+		// load-bearing:
+		//
+		//   * the reads reconnect. The shared client keeps its connection alive,
+		//     and OpenSwoole hands one connection to one worker for its whole
+		//     life, so a keep-alive read is answered by whichever worker handled
+		//     the write — which a per-worker cache would also get right.
+		//   * they repeat. Which worker takes a fresh connection is not ours to
+		//     choose, so one read proves nothing; several make it improbable
+		//     that none of them lands elsewhere.
+		const reads = 8
+
+		cc := c.WithoutKeepAlive()
+
+		before := decodeRoot(t, requireOK(t, cc.Get(t, "/products")).Body, fbs.GetRootAsProductListResponse)
+		beforeTotal := before.Total()
+
+		fresh := factories.NewProduct()
+		created := decodeRoot(t, requireOK(t, c.Post(t, "/products", fresh.Bytes)).Body, fbs.GetRootAsProductResponse)
+		freshID := string(created.Id())
+		require.NotEmpty(t, freshID)
+
+		for i := 0; i < reads; i++ {
+			resp := requireOK(t, cc.Get(t, "/products"))
+
+			// The first read after the write must be computed on whichever
+			// worker takes it — the write dropped the group, so there is nothing
+			// to hit. Later reads may legitimately hit the entry this loop is
+			// itself repopulating, so only the body is checked from then on.
+			if i == 0 {
+				requireCacheMiss(t, resp, "the write must have dropped the cached page")
+			}
+
+			list := decodeRoot(t, resp.Body, fbs.GetRootAsProductListResponse)
+			require.Greater(t, list.Total(), beforeTotal,
+				"read %d still reports the total from before the write: the write did not "+
+					"invalidate the cache every worker reads", i+1)
+		}
+
+		// The same property on a state transition rather than an insertion: a
+		// container that has been sealed must not still list as loading.
+		made := decodeRoot(t, requireOK(t, c.Post(t, "/containers", factories.NewContainer().Bytes)).Body,
+			fbs.GetRootAsContainerResponse)
+		sealTargetID := string(made.Id())
+
+		// Populate the listing cache *before* the transition, so the read below
+		// is answering from an entry the seal has to have dropped.
+		requireOK(t, cc.Get(t, "/containers"))
+
+		// Loaded past the seal floor, computed from what the server holds for
+		// the same reason the sub-test above does it: the product's density is
+		// randomised, so no constant clears the floor on every draw.
+		stored := decodeRoot(t, requireOK(t, c.Get(t, "/products/"+productID)).Body, fbs.GetRootAsProductResponse)
+		require.Positive(t, stored.Density(), "a product without density makes the load unanswerable")
+
+		enough := math.Ceil(sealFillRatio*made.MaxCapacity()/stored.Density()) + 1
+		requireOK(t, c.Post(t, "/manifests/load-item", factories.LoadItem(sealTargetID, productID, enough)))
+		requireNoContent(t, c.Post(t, "/containers/"+sealTargetID+"/seal", nil))
+
+		for i := 0; i < reads; i++ {
+			resp := requireOK(t, cc.Get(t, "/containers"))
+			if i == 0 {
+				requireCacheMiss(t, resp, "sealing must have dropped the cached container page")
+			}
+
+			list := decodeRoot(t, resp.Body, fbs.GetRootAsContainerListResponse)
+
+			var found bool
+			for j := 0; j < list.DataLength(); j++ {
+				var item fbs.ContainerResponse
+				require.True(t, list.Data(&item, j))
+				if string(item.Id()) != sealTargetID {
+					continue
+				}
+				found = true
+				require.Equal(t, fbs.ContainerStatusSealed, item.Status(),
+					"read %d lists the container as unsealed after it was sealed", i+1)
+			}
+
+			require.True(t, found, "read %d does not list the container at all", i+1)
+		}
 	})
 
 	t.Run("containers and products can be retired", func(t *testing.T) {

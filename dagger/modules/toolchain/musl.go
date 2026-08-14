@@ -17,6 +17,14 @@ import "dagger/toolchain/internal/dagger"
 //  3. O composer.phar oficial, NUNCA o pacote `composer` do Alpine. O wrapper do
 //     pacote chama /usr/bin/php83; o build rodaria silenciosamente na versão
 //     errada de PHP, sem erro nenhum, e a divergência só apareceria em produção.
+//
+// A lista tem de acompanhar o `require` do composer.json, porque o
+// `composer install` do artefato confere as extensões da plataforma: uma que
+// esteja no require e não aqui derruba o build com "missing from your system",
+// e a mensagem aponta para o container e não para a lista que a esqueceu. Foi o
+// que aconteceu quando ext-igbinary entrou pelo Dockerfile — que é outro
+// toolchain — e não por aqui. A exceção é ext-openswoole, ignorada de propósito
+// via --ignore-platform-req: ela existe no alvo do deploy e não no montador.
 func (m *Toolchain) Musl() *dagger.Container {
 	return dag.Container().
 		From("alpine:3.22").
@@ -24,8 +32,8 @@ func (m *Toolchain) Musl() *dagger.Container {
 			"apk", "add", "--no-cache",
 			"php84", "php84-phar", "php84-openssl", "php84-mbstring", "php84-iconv",
 			"php84-tokenizer", "php84-dom", "php84-xml", "php84-xmlwriter",
-			"php84-pecl-ds", "php84-curl", "php84-session", "php84-fileinfo",
-			"php84-pdo", "php84-pdo_mysql",
+			"php84-pecl-ds", "php84-pecl-igbinary", "php84-curl", "php84-session",
+			"php84-fileinfo", "php84-pdo", "php84-pdo_mysql",
 			"bash", "git", "curl", "tar", "zstd", "coreutils", "findutils", "gawk",
 		}).
 		WithExec([]string{"ln", "-sf", "/usr/bin/php84", "/usr/local/bin/php"}).

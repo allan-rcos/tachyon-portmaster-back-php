@@ -35,23 +35,37 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Bundled extensions.
 RUN docker-php-ext-install -j"$(nproc)" pdo_mysql mbstring
 
-# PECL extensions: OpenSwoole (HTTP server) and ds (Ds\Seq/Map/Set/etc.).
+# PECL extensions: OpenSwoole (HTTP server), ds (Ds\Seq/Map/Set/etc.) and
+# igbinary (how the read cache turns a View into the bytes a row holds).
 #
 # ext-ds 2.x unified the sequence types: Ds\Seq replaces Vector, Deque, Stack and
 # Queue, and Ds\Vector no longer exists. The Infra layer is written against Seq
 # accordingly — pinning to 1.5.0 to keep Vector would be freezing the extension
 # on a superseded major.
-RUN pecl install ds \
-    && docker-php-ext-enable ds
+#
+# igbinary rather than serialize(): the cached views nest a Ds\Seq of readonly
+# items, and igbinary deduplicates the strings repeated across them. Measured on
+# a default page of container summaries it is ~82% smaller than serialize() —
+# which on an ENGINE=MEMORY table, where the payload column is padded to its
+# declared width, is the difference between the page fitting and not. It also
+# round-trips Ds\Seq, readonly classes and backed enums, and answers null for a
+# payload it cannot read, which is exactly how a stale format is meant to look.
+RUN pecl install ds igbinary \
+    && docker-php-ext-enable ds igbinary
 RUN pecl install openswoole \
     && docker-php-ext-enable openswoole
 
 # Composer.
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Ensure OS environment variables (docker -e / compose env) land in $_ENV, which
-# is where the boot config reader looks; the app is configured entirely this way.
-RUN echo 'variables_order=EGPCS' > "$(php -r 'echo PHP_CONFIG_FILE_SCAN_DIR;')/zz-portmaster.ini"
+# Two settings the app depends on:
+#   * variables_order puts OS environment variables (docker -e / compose env)
+#     into $_ENV, which is where the boot config reader looks.
+#   * date.timezone makes PHP's clock UTC, which is the rule the whole system
+#     holds to: every datetime stored, compared or sent is a UTC instant. The
+#     database side of the same rule is the session time zone pinned in
+#     PDOConfigFactory and the server's --default-time-zone.
+RUN printf 'variables_order=EGPCS\ndate.timezone=UTC\n' > "$(php -r 'echo PHP_CONFIG_FILE_SCAN_DIR;')/zz-portmaster.ini"
 
 # ---------------------------------------------------------------------------
 # `base` — the application on top of that environment.

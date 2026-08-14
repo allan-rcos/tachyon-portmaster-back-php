@@ -51,7 +51,12 @@ final class RoleProvider extends FeatureProvider
      */
     public function listRolesUseCase(): IListRolesUseCase
     {
-        return new ListRolesUseCase($this->infra->queryRepository(), $this->registrar());
+        return new ListRolesUseCase(
+            $this->infra->queryRepository(),
+            $this->infra->viewCacheRepository(),
+            $this->events,
+            $this->registrar(),
+        );
     }
 
     /**
@@ -73,6 +78,7 @@ final class RoleProvider extends FeatureProvider
     {
         return new CreateRoleUseCase(
             $this->infra->unitOfWork(),
+            $this->infra->viewCacheRepository(),
             $this->infra->roleRepository(),
             $this->domain->roleTM(),
             $this->registrar(),
@@ -88,6 +94,7 @@ final class RoleProvider extends FeatureProvider
     {
         return new UpdateRolePermissionsUseCase(
             $this->infra->unitOfWork(),
+            $this->infra->viewCacheRepository(),
             $this->infra->roleRepository(),
             $this->domain->roleTM(),
             $this->registrar(),

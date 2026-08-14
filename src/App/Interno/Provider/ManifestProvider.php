@@ -50,6 +50,7 @@ final class ManifestProvider extends FeatureProvider
     {
         return new LoadItemUseCase(
             $this->infra->unitOfWork(),
+            $this->infra->viewCacheRepository(),
             $this->infra->containerRepository(),
             $this->infra->productRepository(),
             $this->infra->manifestRepository(),
@@ -67,6 +68,7 @@ final class ManifestProvider extends FeatureProvider
     {
         return new UnloadItemUseCase(
             $this->infra->unitOfWork(),
+            $this->infra->viewCacheRepository(),
             $this->infra->containerRepository(),
             $this->infra->productRepository(),
             $this->infra->manifestRepository(),

@@ -14,6 +14,8 @@ use Domain\TableModules\Interno\ProductTM;
 use Infra\Database\IUnitOfWork;
 use Tests\Doubles\InMemoryPermissionRepository;
 use Infra\Repository\IProductRepository;
+use Infra\Repository\IViewCacheRepository;
+use Infra\Repository\ViewCacheGroup;
 use Shared\Exceptions\Leaf;
 use Shared\Exceptions\LeafContext;
 use Shared\Exceptions\Result;
@@ -22,6 +24,13 @@ use Shared\Exceptions\Result;
  * Beyond the 403 guard (see AuthorizationTest), these pin the transactional
  * spine of a write use case: commit on success, rollback on any repository
  * failure, and never both.
+ *
+ * They also pin where the cache invalidation sits relative to that spine. It
+ * belongs *after* a successful commit and nowhere else: before it, a concurrent
+ * read would repopulate the cache from the state being replaced, and on a
+ * rolled-back path there is nothing to invalidate because nothing changed. Both
+ * halves are asserted, because only asserting the happy path would let the
+ * invalidation drift up above the commit without any test noticing.
  */
 describe('CreateProductUseCase transaction', function () {
     beforeEach(function () {
@@ -54,7 +63,12 @@ describe('CreateProductUseCase transaction', function () {
         $products = Mockery::mock(IProductRepository::class);
         $products->shouldReceive('insert')->once()->andReturn(Result::void());
 
-        $useCase = new CreateProductUseCase($unitOfWork, $products, $this->productTM, $this->registrar);
+        $views = Mockery::mock(IViewCacheRepository::class);
+        $views->shouldReceive('invalidate')->once()->with(ViewCacheGroup::Product)
+            ->andReturn(Result::void());
+
+        $useCase = new CreateProductUseCase($unitOfWork, $views, $products, $this->productTM,
+            $this->registrar);
 
         $result = $useCase->execute($this->command);
 
@@ -74,7 +88,12 @@ describe('CreateProductUseCase transaction', function () {
         $products = Mockery::mock(IProductRepository::class);
         $products->shouldReceive('insert')->once()->andReturn(Result::failure($insertError));
 
-        $useCase = new CreateProductUseCase($unitOfWork, $products, $this->productTM, $this->registrar);
+        // Nothing was committed, so nothing may be dropped from the cache.
+        $views = Mockery::mock(IViewCacheRepository::class);
+        $views->shouldNotReceive('invalidate');
+
+        $useCase = new CreateProductUseCase($unitOfWork, $views, $products, $this->productTM,
+            $this->registrar);
 
         $result = $useCase->execute($this->command);
 
@@ -92,7 +111,11 @@ describe('CreateProductUseCase transaction', function () {
         $products = Mockery::mock(IProductRepository::class);
         $products->shouldNotReceive('insert');
 
-        $useCase = new CreateProductUseCase($unitOfWork, $products, $this->productTM, $this->registrar);
+        $views = Mockery::mock(IViewCacheRepository::class);
+        $views->shouldNotReceive('invalidate');
+
+        $useCase = new CreateProductUseCase($unitOfWork, $views, $products, $this->productTM,
+            $this->registrar);
 
         $result = $useCase->execute(new CreateProductCommand(
             context: $this->context,

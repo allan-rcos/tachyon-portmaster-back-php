@@ -43,6 +43,31 @@ use PDO;
 final class PDOConfigFactory
 {
     /**
+     * @var array<int, string> Pins every connection's session time zone to UTC.
+     *
+     * The rule this enforces is that **every datetime in the system is UTC**, so
+     * that a value written by one process and read by another means the same
+     * instant regardless of where either runs. `NOW()` is what the markers and
+     * the read cache compute their expiry from and compare against, and a
+     * connection inheriting the server's local zone would make those two
+     * disagree by the offset.
+     *
+     * An init command rather than a `SET` on every lease: the driver runs it
+     * once per connection, including on the reconnect
+     * {@see PooledPDOClient} can trigger underneath the pool, so it costs one
+     * statement per connection instead of one per borrow.
+     *
+     * The server is also started on UTC (`--default-time-zone=+00:00` in the dev
+     * stack and the integration harness), which makes this belt and braces
+     * rather than the only thing standing between the schema and a local zone.
+     *
+     * @see docs/database.md Why every datetime is UTC.
+     */
+    private const array TIME_ZONE_OPTION = [
+        PDO::MYSQL_ATTR_INIT_COMMAND => "SET time_zone = '+00:00'",
+    ];
+
+    /**
      * Assembles a MySQL connection config.
      *
      * The only driver the application uses, so it is a named method rather than
@@ -67,7 +92,11 @@ final class PDOConfigFactory
      *                                             which are integers, hence the
      *                                             key type. The TLS attributes
      *                                             derived from `$sslMode` win
-     *                                             over anything named twice.
+     *                                             over anything named twice, and
+     *                                             so does
+     *                                             {@see TIME_ZONE_OPTION}: a
+     *                                             caller cannot connect on
+     *                                             anything but UTC.
      *                                             Note that the error mode set
      *                                             here does not survive:
      *                                             {@see PooledPDOClient} forces
@@ -98,7 +127,11 @@ final class PDOConfigFactory
             ->withPassword($password)
             ->withCharset($charset)
             ->withOptions(
-                array_replace($options, self::sslOptions($sslMode, $sslCa, $sslVerifyCn)),
+                array_replace(
+                    $options,
+                    self::TIME_ZONE_OPTION,
+                    self::sslOptions($sslMode, $sslCa, $sslVerifyCn),
+                ),
             );
     }
 

@@ -31,6 +31,10 @@ use Shared\Exceptions\LeafContext;
 
 Runtime::enableCoroutine();
 
+// Every datetime in this system is UTC; see docs/database.md. Set here as well
+// as in the image's php.ini, so a run outside the image behaves the same.
+date_default_timezone_set('UTC');
+
 // Composition root: read the environment into the per-layer config VOs.
 $config = DotEnvStarter::startFromEnv(__DIR__.'/../..');
 if ($config instanceof LeafContext) {

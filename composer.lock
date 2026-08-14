@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "507c370db612d1b7b588dd3a16b92306",
+    "content-hash": "049df430761997150002b92a72221e13",
     "packages": [
         {
             "name": "atlas/pdo",
@@ -5695,6 +5695,7 @@
     "prefer-lowest": false,
     "platform": {
         "ext-ds": "*",
+        "ext-igbinary": "*",
         "ext-pdo": "*",
         "ext-pdo_mysql": "*",
         "ext-mbstring": "*",

@@ -36,6 +36,7 @@ use Infra\Repository\IPermissionRepository;
 use Infra\Repository\IProductRepository;
 use Infra\Repository\IRoleRepository;
 use Infra\Repository\IUserRepository;
+use Infra\Repository\IViewCacheRepository;
 use Infra\Repository\Interno\SqlContainerRepository;
 use Infra\Repository\Interno\MarkerGroupRegistry;
 use Infra\Repository\Interno\SqlManifestRepository;
@@ -44,6 +45,7 @@ use Infra\Repository\Interno\PermissionRegistry;
 use Infra\Repository\Interno\SqlProductRepository;
 use Infra\Repository\Interno\SqlRoleRepository;
 use Infra\Repository\Interno\SqlUserRepository;
+use Infra\Repository\Interno\SqlViewCacheRepository;
 
 /**
  * Hand-wired infrastructure provider. The pool, transaction session, logger,
@@ -135,6 +137,12 @@ final class InfraProvider implements IInfraProvider
      * @var ?IQueryRepository Memoized read-side runner; null until first use.
      */
     private ?IQueryRepository $queryRepository = null;
+
+    /**
+     * @var ?IViewCacheRepository Lazy singleton; the read cache every list use
+     *                            case consults and every write drops from.
+     */
+    private ?IViewCacheRepository $viewCacheRepository = null;
 
     /**
      * Stores the config and builds nothing — every factory is lazy, so
@@ -334,5 +342,26 @@ final class InfraProvider implements IInfraProvider
     public function queryRepository(): IQueryRepository
     {
         return $this->queryRepository ??= new SqlQueryRepository($this->pool(), $this->logger());
+    }
+
+    /**
+     * The read cache, which leases from the pool for the same reason the runner
+     * above does — and additionally because invalidation runs *after* the commit
+     * it follows, so there is no boundary left to join.
+     *
+     * Note what this is not: it does not wrap {@see queryRepository()}. The use
+     * cases consult it themselves, because the group a write drops is an
+     * application decision and hiding the read half of that policy behind the
+     * runner would split one decision across two layers. It is also what keeps
+     * this the single line to change when the entries should live in Redis
+     * instead of an `ENGINE=MEMORY` table.
+     *
+     * @return IViewCacheRepository Memoized; takes the pool, not the session.
+     *
+     * @copyright 2026 Tachyon
+     */
+    public function viewCacheRepository(): IViewCacheRepository
+    {
+        return $this->viewCacheRepository ??= new SqlViewCacheRepository($this->pool(), $this->logger());
     }
 }

@@ -22,6 +22,8 @@ use App\Services\ICreateUserUseCase;
 use Domain\Models\IUser;
 use Domain\TableModules\IUserTM;
 use Infra\Database\IUnitOfWork;
+use Infra\Repository\IViewCacheRepository;
+use Infra\Repository\ViewCacheGroup;
 use Infra\Repository\IUserRepository;
 use Shared\Exceptions\Leaf;
 use Shared\Exceptions\LeafContext;
@@ -62,6 +64,8 @@ final readonly class CreateUserUseCase implements ICreateUserUseCase
      * Declares `user:create`.
      *
      * @param  IUnitOfWork  $unitOfWork  The boundary; never the connection.
+     * @param  IViewCacheRepository  $views  Told to drop the group once the
+     *                                       commit has landed.
      * @param  IUserRepository  $users  Checked for the address, then written to
      *                                  twice — the user row and the pivot.
      * @param  IUserTM  $userTM  Validates and builds, and is the only place the
@@ -72,6 +76,7 @@ final readonly class CreateUserUseCase implements ICreateUserUseCase
      */
     public function __construct(
         private IUnitOfWork $unitOfWork,
+        private IViewCacheRepository $views,
         private IUserRepository $users,
         private IUserTM $userTM,
         IRegisterPermissionUseCase $registrar,
@@ -141,6 +146,10 @@ final readonly class CreateUserUseCase implements ICreateUserUseCase
         if (!$commit->isSuccess()) {
             return Result::failure($commit->getErrorId());
         }
+
+        // After the commit, never before: a read in between would repopulate
+        // the cache from the state this write replaces.
+        $this->views->invalidate(ViewCacheGroup::User);
 
         return Result::success($user);
     }

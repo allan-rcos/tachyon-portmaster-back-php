@@ -50,4 +50,21 @@ enum HttpHeader: string
      * two of them.
      */
     case SetCookie = 'Set-Cookie';
+
+    /**
+     * How a cache took part in producing the body, per
+     * {@link https://www.rfc-editor.org/rfc/rfc9211 RFC 9211}.
+     *
+     * The standard field rather than an `X-` name of our own: it is a list, so a
+     * CDN or reverse proxy in front adds its own entry instead of colliding with
+     * ours, and the vocabulary (`hit`, `fwd=…`, `ttl=…`) is one every cache
+     * already speaks.
+     *
+     * Carries {@see \API\Http\Middleware\CacheHeaderMiddleware::HIT} when the
+     * view cache answered, and is **absent** otherwise. The RFC asks a cache to
+     * describe its own part and leaves silence meaning "this cache had none",
+     * which is what a read that was never cacheable in the first place should
+     * say.
+     */
+    case Cache = 'Cache-Status';
 }

@@ -183,6 +183,35 @@ final readonly class ListProductsDQL implements IDQL
     }
 
     /**
+     * The filters and the page position, which together are what this query is.
+     *
+     * Built from {@see filters()} rather than from the constructor arguments, so
+     * a filter added to the query is in the key by construction instead of by
+     * remembering to put it there.
+     *
+     * The position is the decoded `lastId`, not the cursor token: that is what
+     * {@see toSql()} pages from, and a token minted for other filters is
+     * discarded, so every token that means "start from the beginning" has to
+     * land on the same key as no token at all.
+     *
+     * @return string The query's identity.
+     *
+     * @copyright 2026 Tachyon
+     */
+    public function cacheKey(): string
+    {
+        $decoded = Cursor::decode($this->cursor, $this->filters());
+        $after = $decoded !== null ? $decoded->lastId : 0;
+
+        $parts = ['after='.$after];
+        foreach ($this->filters() as $name => $value) {
+            $parts[] = $name.'='.($value ?? '');
+        }
+
+        return 'list_products:'.implode(';', $parts);
+    }
+
+    /**
      * The page size actually used.
      *
      * Read by both {@see toSql()} and {@see hydrate()} — the second needs it to

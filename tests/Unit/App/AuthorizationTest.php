@@ -12,6 +12,7 @@ use App\Services\IRegisterPermissionUseCase;
 use Domain\Enums\RiskClass;
 use Domain\TableModules\Interno\PermissionTM;
 use Infra\Database\IUnitOfWork;
+use Infra\Repository\IViewCacheRepository;
 use Infra\Repository\IProductRepository;
 use Shared\Exceptions\Leaf;
 use Tests\Doubles\InMemoryPermissionRepository;
@@ -38,6 +39,7 @@ describe('use case authorization', function () {
     it('registers its own permission when constructed', function () {
         new CreateProductUseCase(
             Mockery::mock(IUnitOfWork::class),
+            Mockery::mock(IViewCacheRepository::class),
             Mockery::mock(IProductRepository::class),
             Mockery::mock(Domain\TableModules\IProductTM::class),
             $this->registrar,
@@ -57,6 +59,8 @@ describe('use case authorization', function () {
 
         $useCase = new CreateProductUseCase(
             $unitOfWork,
+            // Strict too: a denied caller must not reach the cache either.
+            Mockery::mock(IViewCacheRepository::class),
             Mockery::mock(IProductRepository::class),
             Mockery::mock(Domain\TableModules\IProductTM::class),
             $this->registrar,
@@ -92,6 +96,8 @@ describe('use case authorization', function () {
 
         $useCase = new CreateProductUseCase(
             $unitOfWork,
+            // The write never lands, so nothing may be invalidated.
+            Mockery::mock(IViewCacheRepository::class),
             Mockery::mock(IProductRepository::class),
             $productTM,
             $this->registrar,
