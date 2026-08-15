@@ -43,8 +43,9 @@ interface IRole
      * Permission slugs this role grants.
      *
      * Slugs, not {@see IPermission} objects: a role is persisted as JSON and
-     * outlives any particular registry, whose numeric ids are reassigned every
-     * time the `MEMORY` table is refilled. The slug is the only stable handle.
+     * outlives any particular registry, whose numeric ids are handed out afresh
+     * every time the catalogue is rebuilt at `WorkerStart`. The slug is the only
+     * stable handle.
      *
      * Updating a role **replaces** this list rather than merging into it, so an
      * omitted slug is a revoked permission.

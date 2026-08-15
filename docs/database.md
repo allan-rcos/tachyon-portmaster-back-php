@@ -4,31 +4,29 @@ MariaDB 11, reached through `pdo_mysql` over a pooled connection. Schema and
 seed data live in [`db/`](../db); the operational reference is
 [`db/README.md`](../db/README.md), and this page covers the design behind it.
 
-## Two kinds of table
+## One kind of table
 
-**Durable (`ENGINE=InnoDB`)** — `roles`, `users`, `user_roles`, `products`,
+**`ENGINE=InnoDB`, all of them** — `roles`, `users`, `user_roles`, `products`,
 `containers`, `container_items`, `telemetry_logs`. Business data, transactional,
 survives a restart.
 
-**Runtime (`ENGINE=MEMORY`)** — `permissions`, `marker_groups`, `markers`,
-`view_cache`. Everything here is either rebuilt from the code on every boot,
-bounded by a TTL, or recomputable from the durable tables, so durability buys
-nothing and the round-trip cost is what matters — these are read on the
-authorization path of every request. The consequences are real and deliberate;
-see [ADR 0003](adr/0003-engine-memory-for-runtime-tables.md) and, for the cache,
-[ADR 0010](adr/0010-read-cache-in-a-memory-table.md).
+There used to be a second kind. `permissions`, `marker_groups`, `markers` and
+`view_cache` were `ENGINE=MEMORY`: rebuilt from code on every boot, bounded by a
+TTL, or recomputable from the durable tables, so durability bought nothing and
+the round trip was what mattered. They were in MariaDB rather than in the
+application only because the object graph is built inside `WorkerStart`, after
+OpenSwoole forks, which would have made an in-process cache one cache per worker.
 
-`view_cache` is in RAM for a second reason on top of speed. The object graph is
-built inside `WorkerStart`, i.e. after OpenSwoole forks, so a cache held in
-process would be one cache per worker and a write handled by one worker would
-leave the others serving pages it had already invalidated. A row in a shared
-table is visible to every worker — and to a second instance — the moment it is
-written.
+Allocating the shared memory *before* the fork removes that constraint, and all
+four moved into the API process — see
+[ADR 0011](adr/0011-cache-em-processo-openswoole.md). **Nothing that wants to
+live in RAM belongs in a table here any more**; it belongs behind
+`Infra\Cache\ICacheProcessDatabase`. What is left in this database is durable by
+definition, so the rule for a new table is simply InnoDB.
 
-The one that catches people: **MEMORY is not transactional**. A `ROLLBACK` will
-not undo a marker write. Nothing in those tables participates in a business
-invariant, so there is nothing to undo — but do not put anything there that
-does.
+Migrations 000002 and 000003 still create the four and 000004 drops them again,
+because an applied migration is history and is corrected by a new one rather than
+edited. The schema a running system ends up with holds none of them.
 
 ## Every datetime is UTC
 
@@ -42,10 +40,11 @@ Without exception, and enforced in four places rather than trusted:
 | What leaves the API | `Shared\Time\Utc` renders the stored value as `2026-08-13T14:32:05Z` |
 
 The first three are what make `NOW()` mean the same instant to the database and
-to PHP. That matters because `NOW()` is not decoration: `markers` and
-`view_cache` compute their `expires_at` from it and compare against it, so a
-connection inheriting a local zone would expire entries early or late by the
-offset — and `telemetry_logs.timestamp` is stamped from it too.
+to PHP. That matters because `NOW()` is not decoration: `telemetry_logs.timestamp`
+is stamped from it, and a connection inheriting a local zone would record every
+event off by the offset. Expiry no longer depends on it — the cache keeps its own
+clock in the API process now — which narrows the blast radius without making the
+setting optional.
 
 The fourth is a separate problem. MariaDB renders a `DATETIME` as
 `2026-08-13 14:32:05`, which names no zone, so a client has to be told out of
@@ -59,16 +58,18 @@ zone to guess at.
 
 ## Ids
 
-Application-generated, never `AUTO_INCREMENT`, except `telemetry_logs` and the
-MEMORY registries. Stored as `BIGINT UNSIGNED`; Base62-encoded by the API layer,
-so a client only ever sees an opaque string.
+Application-generated, never `AUTO_INCREMENT`, except `telemetry_logs`. Stored as
+`BIGINT UNSIGNED`; Base62-encoded by the API layer, so a client only ever sees an
+opaque string.
 
 Snowflake ids take the worker id as their machine id, which is what makes four
 workers generating concurrently safe without coordination.
 
-The MEMORY registries *do* auto-increment, and for the opposite reason: their id
-is a registry index, and computing it as `count() + 1` in PHP with four workers
-registering at once is a race.
+The permission and marker-group registries number their entries `count() + 1`,
+which used to be an `AUTO_INCREMENT` because four workers racing a PHP counter
+would collide. They agree without one now for a different reason: the catalogue
+is a pure function of the source, so every worker derives the same slugs in the
+same order. See [ADR 0011](adr/0011-cache-em-processo-openswoole.md).
 
 ## Denormalised columns
 
@@ -102,11 +103,10 @@ $commit = $this->unitOfWork->commit();
 Failures are returned as values rather than thrown precisely so the rollback
 cannot be skipped by an exception unwinding past it.
 
-**Two things deliberately do not enlist.** The read side
-(`SqlQueryRepository`) and the boot-time registries (`SqlMetadataRegistry`)
-lease a connection from `IPDOPool` directly: a read needs no boundary, and
-registration runs at `WorkerStart` where there is no request and so no boundary
-to join.
+**One thing deliberately does not enlist.** The read side
+(`SqlQueryRepository`) leases a connection from `IPDOPool` directly, because a
+read needs no boundary. The registries used to be the second case; they no longer
+touch the database at all.
 
 ## Connection pool
 
@@ -123,14 +123,10 @@ by the Go test harness. Numbered pairs, `up` and `down` both required:
 db/migrations/
 ├── 000001_initial_schema.up.sql
 ├── 000001_initial_schema.down.sql
-├── 000002_metadata_and_markers.up.sql
-├── 000002_metadata_and_markers.down.sql
-├── 000003_view_cache.up.sql
-└── 000003_view_cache.down.sql
 ```
 
 Every statement is written to survive being applied twice — `CREATE TABLE IF NOT
-EXISTS`, `DROP TABLE IF EXISTS`, `CREATE EVENT IF NOT EXISTS`. `schema_migrations`
+EXISTS`, `DROP TABLE IF EXISTS`. `schema_migrations`
 already prevents a double apply on the normal path; this protects the abnormal
 one, where an operator pipes a file straight into `mariadb` mid-incident and
 gets "table already exists" instead of a repaired database.
@@ -162,8 +158,15 @@ xxh64 digest of a value never stored in the clear. Refresh tokens use one: the
 marker is what makes a consumed token stop working, since the token itself
 remains validly signed and unexpired.
 
-Because MEMORY takes table-level locks, reads *filter* on `expires_at` rather
-than deleting what they find expired, and the sweep happens on write — where the
-lock is already held — plus hourly via a MariaDB `EVENT`. That event needs the
-server started with `--event-scheduler=ON`, which both the dev stack and the
-test harness pass.
+Markers live in the cache process, not in this database
+([ADR 0011](adr/0011-cache-em-processo-openswoole.md)). A read filters on the
+expiry rather than deleting what it finds expired, so correctness never depends
+on when the sweeper last ran; the sweeper reclaims the memory on a timer.
+
+The TTL is the caller's, not the store's: `IMarkerRepository::set()` takes it as
+an argument and passes it through as a `CacheProcessEntryConfig`, because a
+refresh-token marker has to outlive exactly the token it tracks. It is the one
+place in the cache where a single write overrides its database's default.
+
+The cost of the move, and it is deliberate: markers are now per-instance and
+per-process. Restarting the API un-revokes every revoked refresh token.

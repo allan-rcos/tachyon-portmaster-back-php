@@ -38,9 +38,8 @@ use Shared\Exceptions\Result;
  * and not an error.
  *
  * @see IPermission What is registered.
- * @see \Infra\Repository\Interno\PermissionRegistry The implementation.
- * @see docs/adr/0002-metadata-registries-in-the-database.md Why this lives in the database.
- * @see docs/adr/0003-engine-memory-for-runtime-tables.md Why that table is RAM.
+ * @see \Infra\Repository\Interno\CacheProcessPermissionRepository The implementation.
+ * @see docs/adr/0011-cache-em-processo-openswoole.md Where the registry lives, and why.
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
@@ -102,14 +101,30 @@ interface IPermissionRepository
     public function all(): Seq;
 
     /**
-     * Whether a slug has been registered.
+     * Which of these slugs the catalogue does not hold.
      *
-     * @param  string  $slug  `domain:action`.
-     * @return bool True when it is in the catalogue.
+     * The reason this repository is reachable from the application layer at all.
+     * A role is persisted as a list of slugs, so nothing in the schema stops one
+     * naming a permission no use case ever declared — a role that silently grants
+     * `invented:thing` forever. This is what a role use case asks before it
+     * accepts the list.
+     *
+     * A batch rather than a `has()` per slug: the catalogue is one entry, so
+     * answering twenty slugs costs exactly what answering one does. It also lets
+     * the caller name **every** offending slug in a single 422 instead of making
+     * a client discover them one round trip at a time.
+     *
+     * It reads, and by design does not judge. Whether an unknown slug is a 422,
+     * a warning or a silent drop is a decision about state and therefore the use
+     * case's — see {@see \App\Services\Interno\CreateRoleUseCase}.
+     *
+     * @param  list<string>  $slugs  Candidates, in `domain:action` form.
+     * @return list<string> Those absent from the catalogue, in the order given
+     *                      and without duplicates. Empty means every one exists.
      *
      * @copyright 2026 Tachyon
      *
      * @api
      */
-    public function has(string $slug): bool;
+    public function unknown(array $slugs): array;
 }

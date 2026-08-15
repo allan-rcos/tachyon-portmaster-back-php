@@ -21,6 +21,7 @@ use Domain\DomainRegister;
 use Infra\Config\DatabaseConfig;
 use Infra\Config\LogConfig;
 use Infra\InfraRegister;
+use Infra\IOpenSwooleExtensionProvider;
 
 /**
  * Composition entry point for the application layer.
@@ -53,6 +54,12 @@ final class AppRegister
      * @param  int  $serverId  Identifies this server within the Snowflake id
      *                         scheme; two servers sharing one would mint
      *                         colliding ids.
+     * @param  IOpenSwooleExtensionProvider  $extension  The server's shared,
+     *                                                   pre-fork resources. Passed
+     *                                                   straight through — nothing
+     *                                                   in this layer reads it, and
+     *                                                   {@see \Infra\Interno\InfraProvider}
+     *                                                   is what consumes it.
      * @return IAppProvider Everything the presentation layer is allowed to
      *                      reach.
      *
@@ -65,9 +72,12 @@ final class AppRegister
         DatabaseConfig $database,
         LogConfig $log,
         int $serverId,
+        IOpenSwooleExtensionProvider $extension,
     ): IAppProvider {
-        $infra = InfraRegister::execute($database, $log);
+        // Domain first: the infrastructure layer takes its index hasher, which is
+        // a domain service, so the provider that owns it has to exist by then.
         $domainProvider = DomainRegister::execute($domain, $serverId);
+        $infra = InfraRegister::execute($database, $log, $extension, $domainProvider->indexHasher());
 
         return new AppProvider($domainProvider, $infra);
     }

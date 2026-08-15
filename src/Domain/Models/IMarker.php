@@ -33,7 +33,7 @@ namespace Domain\Models;
  *
  * @see \App\Services\ISetMarkerUseCase Owns the flag's transitions.
  * @see \Infra\Repository\IMarkerRepository Where these are stored.
- * @see docs/adr/0003-engine-memory-for-runtime-tables.md Why storage is RAM, and what that costs.
+ * @see docs/adr/0011-cache-em-processo-openswoole.md Why storage is RAM, and what that costs.
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon

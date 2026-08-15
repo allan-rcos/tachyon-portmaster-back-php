@@ -1,6 +1,10 @@
 # 0003. Use `ENGINE=MEMORY` for the runtime tables
 
-**Status:** Accepted · 2026-07-26
+**Status:** Superseded by [0011](0011-cache-em-processo-openswoole.md) · accepted 2026-07-26, superseded 2026-08-15
+
+> The reasoning below is kept because it is why the path taken at the time
+> was the right one. What changed is recorded in 0011: only the *table* had
+> to be allocated before the fork, not the object graph that uses it.
 
 ## Context
 

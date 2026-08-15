@@ -51,11 +51,12 @@ final readonly class PermissionTM implements IPermissionTM
     private const string SLUG_PATTERN = '/^[a-z][a-z0-9]*(-[a-z0-9]+)*:[a-z][a-z0-9]*(-[a-z0-9]+)*$/';
 
     /**
-     * Matches the `slug` column of the `permissions` registry table. Enforced
-     * here because that table is `ENGINE=MEMORY`, where an over-long value is a
-     * write error at boot rather than a truncation nobody notices.
+     * Bounds the slug a use case may declare. There is no column behind it any
+     * more — the catalogue lives in the cache process — so this is the only thing
+     * enforcing it, and it is enforced at boot, where an over-long slug is a
+     * failure to declare rather than a truncation nobody notices.
      *
-     * @var int Characters, matching `VARCHAR(64)`.
+     * @var int Characters.
      */
     private const int MAX_SLUG_LENGTH = 64;
 

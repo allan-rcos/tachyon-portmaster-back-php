@@ -212,10 +212,11 @@ func TestYardStory(t *testing.T) {
 		// The listings are cached, and the cache is what this sub-test is about.
 		//
 		// The API container runs APP_WORKER_NUM workers and the object graph is
-		// built per worker, after the fork. An in-process cache would therefore
-		// be one cache per worker, and a write handled by worker 1 would leave
-		// worker 2 serving the page it had already cached. Entries live in an
-		// ENGINE=MEMORY table precisely so that cannot happen.
+		// built per worker, after the fork. A cache allocated there would be one
+		// cache per worker, and a write handled by worker 1 would leave worker 2
+		// serving the page it had already cached. The OpenSwoole tables holding
+		// the entries are allocated *before* the fork precisely so that cannot
+		// happen, which is what this sub-test would catch if it regressed.
 		//
 		// Two things make that observable rather than lucky, and both are
 		// load-bearing:

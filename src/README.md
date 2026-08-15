@@ -107,9 +107,11 @@ hands the enlisted `PDO` out, `Pool/` keeps a coroutine-safe pool per worker.
 maps rows into a `View`; no domain model is reconstituted. Reads lease their own
 connection and take no transaction.
 
-Two registries deliberately bypass the transaction session and lease directly:
-`SqlQueryRepository` (a read needs no boundary) and `SqlMetadataRegistry` (boot
-runs outside any request).
+One repository deliberately bypasses the transaction session and leases
+directly: `SqlQueryRepository`, because a read needs no boundary. The metadata
+registries were the other case and no longer touch the database — they, the
+markers and the read cache all live in the cache process, behind
+`Infra\Cache\ICacheProcessDatabase`.
 
 ### `Shared/`
 

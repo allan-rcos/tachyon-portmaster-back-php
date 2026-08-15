@@ -9,7 +9,7 @@ MariaDB.
 |---|---|
 | [architecture.md](architecture.md) | The five layers, the request path, and the conventions that hold them together |
 | [guides/new-feature.md](guides/new-feature.md) | Building a feature end to end, with a file to mirror at every step |
-| [database.md](database.md) | Schema, migrations, seeds, transactions, the MEMORY tables |
+| [database.md](database.md) | Schema, migrations, seeds, transactions, why it is InnoDB only |
 | [testing.md](testing.md) | What belongs in a unit test and what belongs in an integration story |
 | [infrastructure.md](infrastructure.md) | Docker, configuration, flatc, scripts, CI |
 | [documentation.md](documentation.md) | The PHPDoc format and how the docs are rendered |

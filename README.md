@@ -119,7 +119,7 @@ Já clonou sem eles? `git submodule update --init --recursive`.
 docker compose up -d
 ```
 
-O Compose orquestra a ordem inteira: `db` (MariaDB 11 com `--event-scheduler=ON`) → `migrate` (golang-migrate) → `seed` (`db/seeds/dev.sql`, idempotente) → `app` (a API na porta `8000`).
+O Compose orquestra a ordem inteira: `db` (MariaDB 11, só InnoDB) → `migrate` (golang-migrate) → `seed` (`db/seeds/dev.sql`, idempotente) → `app` (a API na porta `8000`).
 
 > A primeira subida inicializa um volume novo do MariaDB e pode levar alguns minutos; o healthcheck tem `start_period` de 180s justamente para não estourar o orçamento de tentativas nesse intervalo.
 
@@ -215,7 +215,7 @@ O CI ([GitHub Actions](.github/workflows/ci.yml)) roda três jobs independentes:
 |---|---|
 | [`docs/architecture.md`](docs/architecture.md) | as cinco camadas, o caminho da requisição e as convenções |
 | [`docs/guides/new-feature.md`](docs/guides/new-feature.md) | uma feature de ponta a ponta, com um arquivo para espelhar em cada passo |
-| [`docs/database.md`](docs/database.md) | schema, migrações, seeds, transações, as tabelas MEMORY |
+| [`docs/database.md`](docs/database.md) | schema, migrações, seeds, transações, por que é só InnoDB |
 | [`docs/testing.md`](docs/testing.md) | o que é teste unitário e o que é história de integração |
 | [`docs/infrastructure.md`](docs/infrastructure.md) | Docker, configuração, flatc, scripts, CI |
 | [`docs/documentation.md`](docs/documentation.md) | o formato de PHPDoc e como os docs são renderizados |

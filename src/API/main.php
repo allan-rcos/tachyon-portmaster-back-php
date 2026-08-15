@@ -11,6 +11,11 @@ declare(strict_types=1);
  * per-worker id parameterises the Snowflake generator; the assembled provider
  * hands back a ready PSR-15 handler that drives every request.
  *
+ * The one thing built *outside* that per-worker graph is
+ * {@see \Infra\OpenSwooleExtension}, attached before `$server->start()`: shared
+ * memory has to be allocated while there is still a single process to allocate
+ * it in.
+ *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
  */
@@ -20,6 +25,7 @@ require_once __DIR__.'/../../vendor/autoload.php';
 use API\ApiRegister;
 use API\Bootstrap\DotEnvStarter;
 use Infra\Logging\MonologFactory;
+use Infra\OpenSwooleExtension;
 use API\Http\ResponseEmitter;
 use OpenSwoole\Core\Psr\ServerRequest;
 use OpenSwoole\Http\Request;
@@ -58,6 +64,9 @@ $server->set([
     'enable_coroutine' => true,
 ]);
 
+// Shared memory is allocated here because `$server->start()` below forks.
+$extension = OpenSwooleExtension::attach($server, $config->cache, $config->log);
+
 $server->on('start', function (Server $server) use (&$logger): void {
     $logger->info('Swoole API Stack [OpenSwoole\\Core PSR] started', [
         'host' => $server->host,
@@ -65,10 +74,11 @@ $server->on('start', function (Server $server) use (&$logger): void {
     ]);
 });
 
-$server->on('WorkerStart', function (Server $server, int $workerID) use (&$handler, $config): void {
+$server->on('WorkerStart', function (Server $server, int $workerID) use (&$handler, $config, $extension): void {
     // Materialise the object graph for this worker; the worker id is the
-    // Snowflake server id.
-    $handler = ApiRegister::execute($config, $workerID)->router();
+    // Snowflake server id. The extension is the one collaborator that predates
+    // the fork, so every worker's graph is wired to the same shared memory.
+    $handler = ApiRegister::execute($config, $workerID, $extension)->router();
 });
 
 $server->on('request', function (Request $request, Response $response) use (&$handler, &$logger): void {

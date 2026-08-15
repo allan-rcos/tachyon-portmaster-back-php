@@ -32,11 +32,12 @@ type Environment struct {
 // Reset returns the environment to a clean, migrated, freshly booted state.
 // Each environment resets independently, so parallel tests never contend.
 //
-// The restart is not optional. Dropping the schema also drops the ENGINE=MEMORY
-// registries, and the application fills those exactly once, at WorkerStart —
-// permissions and the `refresh-token` marker group among them. Without a restart
-// every test after the first would run against a server whose catalogue no
-// longer exists in the database it is talking to.
+// The restart is not optional, and what makes it so changed with ADR 0011. It
+// used to be that dropping the schema also dropped the ENGINE=MEMORY registries,
+// which the application fills exactly once at WorkerStart. Those now live in the
+// API process, so a schema drop no longer reaches them — and that is precisely
+// the problem: the read cache lives there too, so without a restart every test
+// after the first would be served pages built from the previous test's data.
 //
 // Seeding then goes through POST /setup rather than SQL, which is the endpoint's
 // own reason for existing: a fresh deployment has no user, and no user can be

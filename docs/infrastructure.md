@@ -26,6 +26,16 @@ test pool, each pointed at its own database.
 | `APP_DB_SSL_CA`, `APP_DB_SSL_VERIFY_CN` | CA bundle and name check — only read under `verify_ca` |
 | `APP_JWT_SECRET` | HS256 signing key — **32 bytes minimum**, shorter is refused |
 | `APP_JWT_COOKIE_SECURE` | `false` for local HTTP |
+| `APP_CACHE_ENTRIES`, `APP_CACHE_PAYLOAD_BYTES` | shared cache sizing — see below |
+| `APP_CACHE_SWEEP_INTERVAL`, `APP_CACHE_HIGH_WATER` | how often the cache process sweeps, and when it starts evicting |
+
+The `APP_CACHE_*` group sizes memory the server allocates **before it forks**,
+so it cannot grow afterwards: `OpenSwoole` rounds `APP_CACHE_ENTRIES` up to a
+power of two and allocates conflict slots on top, making the real cost roughly
+`entries × payload × 2`. The defaults (8192 × 16 KB) come to ~261 MB — the same
+order as the `--max-heap-table-size=256M` the `ENGINE=MEMORY` cache needed, so
+the RAM changed owner rather than size. A view serialising past
+`APP_CACHE_PAYLOAD_BYTES` is answered from the database and cached nowhere.
 
 `APP_DB_SSL_MODE` defaults to `disabled`, which is the right answer for a
 database on `127.0.0.1` or a private subnet and the wrong one for every managed
@@ -69,8 +79,10 @@ use it, testcontainers stands up its own.
 db ──(healthy)──► migrate ──(completed)──► seed ──(completed)──► app
 ```
 
-- **`db`** — MariaDB 11 with `--event-scheduler=ON`, needed for the hourly
-  marker purge `EVENT`. On-disk volume `db_data`. `start_period: 180s` on the
+- **`db`** — MariaDB 11, InnoDB only. On-disk volume `db_data`. It used to
+  carry `--event-scheduler=ON` and `--max-heap-table-size=256M` for the
+  `ENGINE=MEMORY` registries and read cache; both live in the API process now
+  ([ADR 0011](adr/0011-cache-em-processo-openswoole.md)). `start_period: 180s` on the
   healthcheck: initialising a fresh volume on a slow disk takes minutes, and
   without it the retry budget is spent before MariaDB finishes, failing the
   stack with "db is unhealthy" on a database that was merely still starting.

@@ -46,10 +46,13 @@ to `GOMAXPROCS`. A test takes one with `pool.Lease(t)` and gets it back clean;
 it is returned to the pool automatically at the end of the test.
 
 `Lease` costs roughly twenty seconds, because a reset is a schema drop, a
-re-migrate **and** an API restart. The restart is not optional: dropping the
-schema also drops the `ENGINE=MEMORY` registries, which the application fills
-exactly once, at `WorkerStart`. That price is what shapes the whole suite — see
-below.
+re-migrate **and** an API restart. The restart is not optional, and what makes it
+so inverted with [ADR 0011](../../docs/adr/0011-cache-em-processo-openswoole.md):
+the registries and the read cache used to be dropped *by* the schema drop, and
+now cannot be reached by it at all. They live in the API process, so only a
+restart clears them — and without that, every story after the first would be
+served the previous one's cached pages. That price is what shapes the whole suite
+— see below.
 
 ### `internal/client`
 

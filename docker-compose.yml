@@ -4,18 +4,16 @@
 services:
   db:
     image: mariadb:11
-    # Two flags, both load-bearing:
+    # One flag, and it is load-bearing: every datetime in the schema is a UTC
+    # instant. Connections pin their own session zone too, so this is belt and
+    # braces — but it is what makes a NOW() typed straight into mariadb agree
+    # with the app's.
     #
-    #   * the marker and view-cache purges are MariaDB EVENTs, and events only
-    #     fire when the scheduler thread is running — it is off by default.
-    #   * every datetime in the schema is a UTC instant. Connections pin their
-    #     own session zone too, so this is belt and braces — but it is what
-    #     makes a NOW() typed straight into mariadb agree with the app's.
-    #   * view_cache is ENGINE=MEMORY with a fixed-width payload column, so a
-    #     row costs ~16.6 KB whatever it holds. The default 16 MB heap limit
-    #     fills at roughly 970 rows, after which the cache logs "table is full"
-    #     and stops accepting writes. 256M is about 15,000 rows.
-    command: ["--event-scheduler=ON", "--max-heap-table-size=256M", "--default-time-zone=+00:00"]
+    # --event-scheduler and --max-heap-table-size used to be here as well, for
+    # the ENGINE=MEMORY registries and the read cache. Both now live inside the
+    # API process (ADR 0011), so this database holds nothing but InnoDB and has
+    # no events to run.
+    command: ["--default-time-zone=+00:00"]
     environment:
       MARIADB_ROOT_PASSWORD: root
       MARIADB_DATABASE: portmaster

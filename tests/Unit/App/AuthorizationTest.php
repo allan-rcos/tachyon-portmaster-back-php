@@ -45,7 +45,7 @@ describe('use case authorization', function () {
             $this->registrar,
         );
 
-        expect($this->registry->has('product:create'))->toBeTrue()
+        expect($this->registry->unknown(['product:create']))->toBe([])
             // 0 is reserved for "built but not registered", so a registered
             // permission must carry a real index.
             ->and($this->registry->getBySlug('product:create')?->id)->toBe(1);

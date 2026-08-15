@@ -36,8 +36,8 @@ use Shared\Exceptions\Result;
  *
  * @see IMarkerGroup What is registered.
  * @see IMarkerRepository The markers filed under these groups.
- * @see \Infra\Repository\Interno\MarkerGroupRegistry The implementation.
- * @see docs/adr/0002-metadata-registries-in-the-database.md Why this lives in the database.
+ * @see \Infra\Repository\Interno\CacheProcessMarkerGroupRepository The implementation.
+ * @see docs/adr/0011-cache-em-processo-openswoole.md Where the registry lives, and why.
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
@@ -96,16 +96,4 @@ interface IMarkerGroupRepository
      * @api
      */
     public function all(): Seq;
-
-    /**
-     * Whether a slug has been registered.
-     *
-     * @param  string  $slug  Name the feature declared the group under.
-     * @return bool True when it is in the catalogue.
-     *
-     * @copyright 2026 Tachyon
-     *
-     * @api
-     */
-    public function has(string $slug): bool;
 }

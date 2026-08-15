@@ -3,6 +3,11 @@ parameters:
     level: 9
     paths:
         - src
+    # Defines the one constant OpenSwoole's own signatures need and PHP 8.4 no
+    # longer has. See the file: without it the analysis aborts entirely, rather
+    # than reporting an error, on any file that names OpenSwoole\Process.
+    bootstrapFiles:
+        - phpstan-bootstrap.php
 
 includes:
     # Baseline holding **only** findings inside flatc-generated tables. Those

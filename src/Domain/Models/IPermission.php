@@ -28,15 +28,15 @@ namespace Domain\Models;
  * and infrastructure owns the storage.
  *
  * It carries nothing but its identity — see
- * {@see docs/adr/0003-engine-memory-for-runtime-tables.md} for why there is no
- * label or description.
+ * {@see docs/adr/0011-cache-em-processo-openswoole.md} for why there is no label
+ * or description.
  *
  * {@see IMarkerGroup} is the same family. A closed,
  * business-defined set like {@see \Domain\Enums\ContainerStatus} stays an enum.
  *
  * @see \Infra\Repository\IPermissionRepository Where these are stored.
  * @see \App\Security\AuthorizesWithPermission How a use case declares its own.
- * @see docs/adr/0002-metadata-registries-in-the-database.md Why the registry is in the database.
+ * @see docs/adr/0011-cache-em-processo-openswoole.md Where the registry lives, and why.
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
@@ -56,11 +56,11 @@ interface IPermission
     /**
      * The registry's internal index, assigned on registration.
      *
-     * A handle for the lookup table: never serialized, never persisted against a
-     * role, never exposed. It is stable only while the registry table lives — a
-     * `MEMORY` table is emptied when MariaDB restarts, and the ids are then
-     * handed out again in whatever order the workers happen to register — so
-     * nothing may depend on a particular value.
+     * A handle for the lookup table: never persisted against a role. It is
+     * stable only while the process lives — the catalogue is rebuilt from code at
+     * every `WorkerStart`, and an id is the position a slug happened to be
+     * declared in — so nothing may depend on a particular value surviving a
+     * restart, or a slug being added above it.
      *
      * @var int Registry index; zero means built but not yet registered.
      */

@@ -68,8 +68,19 @@ final class InMemoryPermissionRepository implements IPermissionRepository
         return $items;
     }
 
-    public function has(string $slug): bool
+    /**
+     * @param  list<string>  $slugs
+     * @return list<string>
+     */
+    public function unknown(array $slugs): array
     {
-        return isset($this->bySlug[$slug]);
+        $absent = [];
+        foreach ($slugs as $slug) {
+            if (!isset($this->bySlug[$slug]) && !in_array($slug, $absent, true)) {
+                $absent[] = $slug;
+            }
+        }
+
+        return $absent;
     }
 }

@@ -211,7 +211,7 @@ from the docs.
 
 ## Where to go next
 
-- [`database.md`](database.md) — schema, migrations, transactions, the MEMORY tables
+- [`database.md`](database.md) — schema, migrations, transactions, why it is InnoDB only
 - [`testing.md`](testing.md) — unit and integration strategy
 - [`infrastructure.md`](infrastructure.md) — Docker, flatc, scripts, CI
 - [`guides/new-feature.md`](guides/new-feature.md) — building one, step by step
