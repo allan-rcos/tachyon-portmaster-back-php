@@ -106,6 +106,28 @@ func TestAdministrationStory(t *testing.T) {
 		assert.True(t, found, "the created role must appear in the listing")
 	})
 
+	t.Run("a role cannot grant a permission nothing declared", func(t *testing.T) {
+		created := c.Post(t, "/roles", factories.NewRole("product:read", "invented:thing").Bytes)
+		assert.Equal(t, http.StatusUnprocessableEntity, created.Status,
+			"the catalogue is filled from code, so a slug no use case declared can never be granted")
+
+		replaced := c.Put(t, "/roles/"+roleID+"/permissions",
+			factories.RolePermissions("product:read", "invented:thing"))
+		assert.Equal(t, http.StatusUnprocessableEntity, replaced.Status,
+			"replacing permissions is the same rule as granting them")
+
+		// The refusal has to be total: a payload half of which is valid must
+		// leave the role exactly as it was, not grant the half that existed.
+		after := decodeRoot(t, requireOK(t, c.Get(t, "/roles")).Body, fbs.GetRootAsRoleListResponse)
+		for i := 0; i < after.DataLength(); i++ {
+			var role fbs.RoleResponse
+			require.True(t, after.Data(&role, i))
+			if string(role.Id()) == roleID {
+				assert.Equal(t, 2, role.PermissionsLength(), "the rejected update must not have partially applied")
+			}
+		}
+	})
+
 	t.Run("users are created, and duplicates and weak passwords refused", func(t *testing.T) {
 		user = factories.NewUser(roleID)
 		created := decodeRoot(t, requireOK(t, c.Post(t, "/users", user.Bytes)).Body, fbs.GetRootAsUserAdminResponse)

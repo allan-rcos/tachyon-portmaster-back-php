@@ -169,6 +169,18 @@ first role every *registered* permission, so a permission introduced by a new
 use case is granted without anyone maintaining a list. See
 `App/Security/AuthorizesWithPermission`.
 
+The catalogue is also what a role is checked against. A role is persisted as a
+list of slugs, so nothing in the schema stops one naming a permission no use case
+ever declared, and a role granting `invented:thing` would sit there forever
+granting nothing. `CreateRoleUseCase` and `UpdateRolePermissionsUseCase` ask
+`IPermissionRepository::unknown()` first and answer 422 naming every offending
+slug.
+
+That check is in the use case rather than in `RoleTM`, and the line is worth
+knowing: a table module validates the shape of a role, which is knowable from the
+role alone. Whether a slug happens to be registered is a question about *state*,
+and the domain layer neither reaches the catalogue nor should.
+
 ## Identifiers
 
 Ids are application-generated and opaque at the edge. `Domain/ID` offers three
