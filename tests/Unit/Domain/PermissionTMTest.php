@@ -49,8 +49,8 @@ describe('PermissionTM', function () {
     ]);
 
     it('rejects a slug longer than the registry column', function () {
-        // The registry table is ENGINE=MEMORY, where an over-long value is a
-        // write error at boot rather than a silent truncation — so the ceiling
+        // The catalogue lives in the cache process, where an over-long value is
+        // a write error at boot rather than a silent truncation — so the ceiling
         // is enforced here, where it turns into a 422 instead.
         $result = $this->tm->create('product:'.str_repeat('a', 64));
 
