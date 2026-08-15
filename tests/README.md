@@ -51,9 +51,9 @@ it find what it finds, and delete it before staging. What it taught belongs in
 the code or in a comment, not in a file that then has to be maintained against
 an implementation detail that was free to change.
 
-Two things in this tree predate the rule and do not follow it: `Unit/API/`
-(three files) and `Unit/Domain/IdGeneratorTest.php`. They are debt, not
-precedent — do not cite them when adding a third.
+`Unit/API/` used to hold three tests that broke the rule; they are gone.
+`Unit/Domain/IdGeneratorTest.php` is the last one left, and it is debt, not
+precedent — do not cite it when adding a second.
 
 ### `Unit/Domain/` — the rules
 
@@ -79,8 +79,34 @@ table module. The same three things for every write use case:
 3. **The 403 guard** — a context without the permission is refused before any
    work happens.
 
+A read use case has a spine of its own — cache hit, cache miss, and the query
+failing — and the third is the one that matters: a failed query must store
+nothing, or a database outage is served back as an empty page for a whole TTL.
+
+**Mock infrastructure only. The domain is always the real thing.** A use case
+test that mocks its table module proves the mock agrees with the test, not that
+the use case is wired to the rules.
+
 Mirror: `Unit/App/CreateProductUseCaseTest.php`. `Unit/App/AuthorizationTest.php`
 covers the guard across use cases.
+
+### `Pest.php` — the shared harness
+
+Global helpers, so a use case test says what it is asserting instead of
+restating the setup:
+
+| Helper | What it gives |
+|---|---|
+| `domain()` | The real `IDomainProvider`, built as a worker builds it. Memoized |
+| `registrar()` | A real permission registrar over the in-memory catalogue |
+| `caller(...$slugs)` | A `UserContext` holding exactly those permissions |
+| `stranger()` | A caller holding none, for the 403 guard |
+| `commitsOnce()` | A unit of work that must begin and commit, never roll back |
+| `rollsBackOnce()` | Must begin and roll back, never commit |
+| `untouchedUnitOfWork()` | Any call at all fails the test |
+| `events()` | An array-backed `IMetaEventStack` |
+| `anError($code, $message)` | A registered failure id to stand in for infrastructure |
+| `codeOf($result)` | The status a failed `Result` carries |
 
 ### `Doubles/`
 
@@ -88,6 +114,11 @@ Mockery when the calls themselves are the assertion (`IUnitOfWork`,
 repositories). A hand-written fake when the collaborator needs real behaviour —
 `InMemoryPermissionRepository` exists because a use case registers its permission
 in its own constructor, so a mock would have to be taught the whole handshake.
+
+`InMemoryMetaEventStack` is there for a sharper reason: the production
+`CoroutineMetaEventStack` keeps its events in the coroutine context, and a Pest
+test has no coroutine, so it is **silently inert** — every assertion about an
+emitted event would pass against a use case that emitted nothing.
 
 ### `Leaf::flushProcessErrors()`
 
