@@ -8,7 +8,7 @@ tests/
 ├── Pest.php            Pest bootstrap
 ├── TestCase.php        base case
 ├── Doubles/            hand-written fakes
-├── Unit/               Pest — Domain, App, API
+├── Unit/               Pest — table modules and use cases, nothing else
 └── integration/        Go — the API over real HTTP
 ```
 
@@ -28,6 +28,32 @@ code with mocks proves only that the mocks agree with each other.
 ## `Unit/`
 
 Mirrors `src/`.
+
+### What may be committed here
+
+**Only two kinds of unit test go into git: a table module test and a use case
+test.** Nothing else. Not a repository, not an adapter, not a serializer, not a
+router, not a helper — however useful the test was while the code was being
+written.
+
+The reason is what a unit test is *for* here. A table module holds the rules and
+a use case holds the transactional spine, and both are things that can be wrong
+in a way no other test would catch: a rule with no test is untested everywhere,
+because nothing else validates, and a rollback that was dropped from a failure
+path looks exactly like one that was never needed. Everything below them is
+reached through a port, and whether it works is observable through a request and
+a response — which is the integration suite's job, and it proves more there,
+against the real MariaDB and the real wire format, than a mock ever proves in
+isolation.
+
+A test outside those two shapes is not forbidden while you work. Write it, let
+it find what it finds, and delete it before staging. What it taught belongs in
+the code or in a comment, not in a file that then has to be maintained against
+an implementation detail that was free to change.
+
+Two things in this tree predate the rule and do not follow it: `Unit/API/`
+(three files) and `Unit/Domain/IdGeneratorTest.php`. They are debt, not
+precedent — do not cite them when adding a third.
 
 ### `Unit/Domain/` — the rules
 
