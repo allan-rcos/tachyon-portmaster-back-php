@@ -19,6 +19,7 @@ use API\Config\ApiConfig;
 use API\Config\BootConfig;
 use API\Config\JwtConfig;
 use Domain\Config\DomainConfig;
+use Infra\Config\CacheConfig;
 use Infra\Config\DatabaseConfig;
 use Infra\Config\LogConfig;
 use RuntimeException;
@@ -64,6 +65,13 @@ final class BootDraft
     public ?LogConfig $log = null;
 
     /**
+     * @var CacheConfig|null Filled by {@see \API\Bootstrap\Chain\CacheChain}.
+     *                      Read before the server forks, unlike every other
+     *                      group here.
+     */
+    public ?CacheConfig $cache = null;
+
+    /**
      * Freezes the draft into the immutable boot config.
      *
      * @return BootConfig Every group, complete.
@@ -83,6 +91,7 @@ final class BootDraft
             database: $this->database ?? throw self::missing('database'),
             jwt: $this->jwt ?? throw self::missing('jwt'),
             log: $this->log ?? throw self::missing('log'),
+            cache: $this->cache ?? throw self::missing('cache'),
         );
     }
 

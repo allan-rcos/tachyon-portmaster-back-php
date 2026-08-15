@@ -46,10 +46,10 @@ interface IMarkerGroup
     }
 
     /**
-     * Registry index, assigned on registration. This is the value stored on
-     * every marker row, so it is a real foreign key in practice — but only
-     * within the lifetime of the `MEMORY` table that holds both, which are
-     * emptied together when MariaDB restarts.
+     * Registry index, assigned on registration. Nothing stores it: markers are
+     * filed under the group's *slug*, so this is a handle for lookups and
+     * listings rather than a key. It is stable only while the process lives, the
+     * catalogue being rebuilt from code at every `WorkerStart`.
      *
      * @var int Registry index; zero means built but not yet registered.
      */

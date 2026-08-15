@@ -21,21 +21,24 @@ use Shared\Exceptions\Result;
 /**
  * Stores and reads {@see IMarker} flags.
  *
- * Unlike the metadata registries this is written on the request path, so it
- * takes part in the caller's unit of work like any other repository — with one
- * caveat: the table is `ENGINE=MEMORY` and therefore non-transactional, so a
- * `ROLLBACK` will not undo a write here.
+ * Unlike the metadata registries this is written on the request path — and
+ * unlike every other repository here, it takes no part in the caller's unit of
+ * work. The store is the cache process, which knows nothing of transactions, so
+ * a `ROLLBACK` will not undo a write here. Nothing filed under a marker
+ * participates in a business invariant, so there is nothing to undo.
  *
  * **Expiry is the reader's job, not a deleter's.** Every read filters on the
  * TTL, so an expired marker is indistinguishable from one that never existed and
- * no read ever has to delete. That matters because MEMORY locks at table
- * granularity: sweeping on read would serialise every request behind a write
- * lock. The sweep therefore happens on {@see set()}, where a lock is already
- * being taken.
+ * no read ever has to delete. Reclaiming the memory is the sweeper's job, on a
+ * timer, which is what keeps correctness independent of when it last ran.
+ *
+ * **The TTL belongs to the caller.** {@see set()} takes it as an argument
+ * because a refresh-token marker has to outlive exactly the token it tracks, and
+ * the next marker written will expire for some other reason.
  *
  * @see IMarker What is stored.
- * @see \Infra\Repository\Interno\SqlMarkerRepository The implementation.
- * @see docs/adr/0003-engine-memory-for-runtime-tables.md What the MEMORY engine costs here.
+ * @see \Infra\Repository\Interno\CacheProcessMarkerRepository The implementation.
+ * @see docs/adr/0011-cache-em-processo-openswoole.md Why markers live in the cache process.
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon
@@ -66,11 +69,14 @@ interface IMarkerRepository
      * @param  string  $group  Slug of a registered group.
      * @param  string  $key  The digest, as produced by
      *                       {@see \Domain\TableModules\IMarkerTM}.
-     * @return Result<bool> The flag, or {@see Result::void()} when there is no
-     *                       live marker — expired and never-existed are the same
-     *                       answer, deliberately. A 404 failure when the group
-     *                       is not registered, which is a different thing from
-     *                       the group being empty; a 500 on a read error.
+     * @return Result<bool> The flag, or a **404** when there is no live marker —
+     *                       expired and never-existed are the same answer,
+     *                       deliberately. A 404 as well when the group is not
+     *                       registered: a caller must not be able to tell the two
+     *                       apart, or it learns whether a value was ever valid. A
+     *                       500 on a read error, which is *not* the same thing —
+     *                       {@see \App\Services\Interno\SetMarkerUseCase} raises a
+     *                       marker on the first but never on the second.
      *
      * @copyright 2026 Tachyon
      *

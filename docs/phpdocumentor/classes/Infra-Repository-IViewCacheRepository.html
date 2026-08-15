@@ -154,6 +154,10 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/infra-cache.html" class="">Cache</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/infra-config.html" class="">Config</a>
                 
             </li>
@@ -240,9 +244,9 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/IViewCacheRepository.php"><a href="files/src-infra-repository-iviewcacherepository.html"><abbr title="src/Infra/Repository/IViewCacheRepository.php">IViewCacheRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
-            <a href="classes/Infra-Repository-IViewCacheRepository.html#source-view.49" class="phpdocumentor-element-found-in__source" data-line="49" data-modal="source-view" data-src="files/src/Infra/Repository/IViewCacheRepository.php.txt"></a>
+            <a href="classes/Infra-Repository-IViewCacheRepository.html#source-view.51" class="phpdocumentor-element-found-in__source" data-line="51" data-modal="source-view" data-src="files/src/Infra/Repository/IViewCacheRepository.php.txt"></a>
     </aside>
 
             <p class="phpdocumentor-summary">Holds what a read query returned.</p>
@@ -258,8 +262,9 @@ chosen by the caller, and is the slice one write drops.</p>
 <p><strong>This port is the seam</strong>, so everything above it names a group and a key and
 gets a View back without knowing where entries live. <abbr title="\Infra\Repository\put()">put()</abbr> therefore
 takes no TTL: the lifetime is
-<a href="classes/Infra-Config-CacheLimits.html#constant_TTL_SECONDS"><abbr title="\Infra\Config\CacheLimits::TTL_SECONDS">CacheLimits::TTL_SECONDS</abbr></a>, and applying it is the
-implementation's business — an <code class="prettyprint">expires_at</code> column here, a <code class="prettyprint">SETEX</code> elsewhere.</p>
+<abbr title="\Infra\Config\CacheLimits::TTL_SECONDS">CacheLimits::TTL_SECONDS</abbr>, and applying it is the
+implementation's business — an expiry stamped on the entry here, a <code class="prettyprint">SETEX</code>
+elsewhere.</p>
 <p>Only the listings and the metrics panel go through here. Reads by id do not,
 unlike the Rust implementation this mirrors.</p>
 </section>
@@ -287,13 +292,18 @@ unlike the Rust implementation this mirrors.</p>
 
                                     </dd>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Infra\Repository\Interno\SqlViewCacheRepository">SqlViewCacheRepository</abbr></span>
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Infra\Repository\Interno\CacheProcessViewCacheRepository">CacheProcessViewCacheRepository</abbr></span>
                                                                     <section class="phpdocumentor-description"><p>The implementation.</p>
 </section>
 
                                     </dd>
                             <dd class="phpdocumentor-tag-list__definition">
                                                                                                             <section class="phpdocumentor-description"><p>docs/adr/0010-read-cache-in-a-memory-table.md Why the cache is shaped this way, and why reads by id are out.</p>
+</section>
+
+                                    </dd>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                            <section class="phpdocumentor-description"><p>docs/adr/0011-cache-em-processo-openswoole.md Where the entries live now.</p>
 </section>
 
                                     </dd>
@@ -388,9 +398,9 @@ unlike the Rust implementation this mirrors.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/IViewCacheRepository.php"><a href="files/src-infra-repository-iviewcacherepository.html"><abbr title="src/Infra/Repository/IViewCacheRepository.php">IViewCacheRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
-            <a href="classes/Infra-Repository-IViewCacheRepository.html#source-view.70" class="phpdocumentor-element-found-in__source" data-line="70" data-modal="source-view" data-src="files/src/Infra/Repository/IViewCacheRepository.php.txt"></a>
+            <a href="classes/Infra-Repository-IViewCacheRepository.html#source-view.69" class="phpdocumentor-element-found-in__source" data-line="69" data-modal="source-view" data-src="files/src/Infra/Repository/IViewCacheRepository.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">The View stored under this key, if there is one.</p>
@@ -404,11 +414,7 @@ unlike the Rust implementation this mirrors.</p>
 
         </div>
     
-        <section class="phpdocumentor-description"><p>An entry that does not deserialize is reported as <strong>absence</strong>, not as a
-failure: it was written in an earlier format, and recomputing it in
-silence is what keeps a deploy from becoming an incident.</p>
-</section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -454,11 +460,12 @@ silence is what keeps a deploy from becoming an incident.</p>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, mixed&gt;</span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>The stored View; <a href="classes/Shared-Exceptions-Result.html#method_void"><abbr title="\Shared\Exceptions\Result::void()">Result::void()</abbr></a> on a miss,
-which an expired, an unreadable and an absent entry
-all are. A failure only when the store itself broke,
-and even then the caller is expected to carry on to
-the database.</p>
+                <section class="phpdocumentor-description"><p>The stored View. A <strong>404</strong> when nothing live is filed
+under the key, and some other failure when the store
+itself broke. The caller carries on to the database in
+either case — but it is the caller that decides that,
+and a port answering an empty success would have made
+the decision for it.</p>
 </section>
 
             </section>
@@ -478,9 +485,9 @@ the database.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/IViewCacheRepository.php"><a href="files/src-infra-repository-iviewcacherepository.html"><abbr title="src/Infra/Repository/IViewCacheRepository.php">IViewCacheRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">114</span>
+    <span class="phpdocumentor-element-found-in__line">111</span>
 
-            <a href="classes/Infra-Repository-IViewCacheRepository.html#source-view.114" class="phpdocumentor-element-found-in__source" data-line="114" data-modal="source-view" data-src="files/src/Infra/Repository/IViewCacheRepository.php.txt"></a>
+            <a href="classes/Infra-Repository-IViewCacheRepository.html#source-view.111" class="phpdocumentor-element-found-in__source" data-line="111" data-modal="source-view" data-src="files/src/Infra/Repository/IViewCacheRepository.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Discards the whole group.</p>
@@ -560,9 +567,9 @@ outdated expire on their own.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/IViewCacheRepository.php"><a href="files/src-infra-repository-iviewcacherepository.html"><abbr title="src/Infra/Repository/IViewCacheRepository.php">IViewCacheRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">92</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
-            <a href="classes/Infra-Repository-IViewCacheRepository.html#source-view.92" class="phpdocumentor-element-found-in__source" data-line="92" data-modal="source-view" data-src="files/src/Infra/Repository/IViewCacheRepository.php.txt"></a>
+            <a href="classes/Infra-Repository-IViewCacheRepository.html#source-view.89" class="phpdocumentor-element-found-in__source" data-line="89" data-modal="source-view" data-src="files/src/Infra/Repository/IViewCacheRepository.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Stores the View under this key.</p>
@@ -576,11 +583,11 @@ outdated expire on their own.</p>
 
         </div>
     
-        <section class="phpdocumentor-description"><p>Storing is best-effort by contract. A View the implementation cannot hold
-— too large for its backing store, or not serializable — is dropped
-silently and reported as success: the caller already has the correct
-answer, and the only cost is that the next request recomputes it. Failing
-here would turn a full cache into a failed read.</p>
+        <section class="phpdocumentor-description"><p>A View the implementation cannot hold — too large for its backing store,
+or not serializable — is a reported failure, not a silent drop. Callers
+ignore it and should: they already hold the correct answer, and the only
+cost is that the next request recomputes it. Ignoring a failure is a
+decision; never being told is not.</p>
 </section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -637,9 +644,7 @@ here would turn a full cache into a failed read.</p>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, null&gt;</span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>Void on success, including when the entry was
-deliberately not stored. A failure only when the
-store broke in a way worth recording.</p>
+                <section class="phpdocumentor-description"><p>Void once stored; a failure when it could not be.</p>
 </section>
 
             </section>

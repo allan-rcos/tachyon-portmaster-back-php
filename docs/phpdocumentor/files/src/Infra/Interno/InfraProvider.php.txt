@@ -15,6 +15,10 @@ declare(strict_types=1);
 
 namespace Infra\Interno;
 
+use Domain\Security\IIndexHasher;
+use Infra\Cache\CacheProcessDatabaseConfig;
+use Infra\Cache\ICacheProcessDatabase;
+use Infra\Config\CacheLimits;
 use Infra\Config\DatabaseConfig;
 use Infra\Config\LogConfig;
 use Infra\Database\IUnitOfWork;
@@ -24,6 +28,7 @@ use Infra\Database\Pool\IPDOPool;
 use Infra\Database\Pool\Interno\OpenSwoolePDOClientPool;
 use Infra\Database\Pool\Interno\PDOConfigFactory;
 use Infra\IInfraProvider;
+use Infra\IOpenSwooleExtensionProvider;
 use Infra\Logging\ILogger;
 use Infra\Logging\MonologFactory;
 use Infra\Query\IQueryRepository;
@@ -37,15 +42,15 @@ use Infra\Repository\IProductRepository;
 use Infra\Repository\IRoleRepository;
 use Infra\Repository\IUserRepository;
 use Infra\Repository\IViewCacheRepository;
+use Infra\Repository\Interno\CacheProcessMarkerGroupRepository;
+use Infra\Repository\Interno\CacheProcessMarkerRepository;
+use Infra\Repository\Interno\CacheProcessPermissionRepository;
+use Infra\Repository\Interno\CacheProcessViewCacheRepository;
 use Infra\Repository\Interno\SqlContainerRepository;
-use Infra\Repository\Interno\MarkerGroupRegistry;
 use Infra\Repository\Interno\SqlManifestRepository;
-use Infra\Repository\Interno\SqlMarkerRepository;
-use Infra\Repository\Interno\PermissionRegistry;
 use Infra\Repository\Interno\SqlProductRepository;
 use Infra\Repository\Interno\SqlRoleRepository;
 use Infra\Repository\Interno\SqlUserRepository;
-use Infra\Repository\Interno\SqlViewCacheRepository;
 
 /**
  * Hand-wired infrastructure provider. The pool, transaction session, logger,
@@ -150,12 +155,22 @@ final class InfraProvider implements IInfraProvider
      *
      * @param  DatabaseConfig  $database  Connection and pool settings.
      * @param  LogConfig  $log  The level to log at.
+     * @param  IOpenSwooleExtensionProvider  $extension  The server's shared,
+     *                                                   pre-fork resources. The
+     *                                                   one collaborator here
+     *                                                   that was not built in
+     *                                                   this worker — see
+     *                                                   {@see cache()}.
+     * @param  IIndexHasher  $hasher  Handed to every cache slice, which
+     *                                addresses its entries by digest.
      *
      * @copyright 2026 Tachyon
      */
     public function __construct(
         private readonly DatabaseConfig $database,
         private readonly LogConfig $log,
+        private readonly IOpenSwooleExtensionProvider $extension,
+        private readonly IIndexHasher $hasher,
     ) {
     }
 
@@ -297,7 +312,10 @@ final class InfraProvider implements IInfraProvider
      */
     public function permissionRepository(): IPermissionRepository
     {
-        return $this->permissionRepository ??= new PermissionRegistry($this->pool(), $this->logger());
+        return $this->permissionRepository ??= new CacheProcessPermissionRepository(
+            $this->cache('permission', CacheLimits::TTL_FOREVER),
+            $this->logger(),
+        );
     }
 
     /**
@@ -307,7 +325,10 @@ final class InfraProvider implements IInfraProvider
      */
     public function markerGroupRepository(): IMarkerGroupRepository
     {
-        return $this->markerGroupRepository ??= new MarkerGroupRegistry($this->pool(), $this->logger());
+        return $this->markerGroupRepository ??= new CacheProcessMarkerGroupRepository(
+            $this->cache('marker-group', CacheLimits::TTL_FOREVER),
+            $this->logger(),
+        );
     }
 
     /**
@@ -324,10 +345,10 @@ final class InfraProvider implements IInfraProvider
      */
     public function markerRepository(): IMarkerRepository
     {
-        return $this->markerRepository ??= new SqlMarkerRepository(
-            $this->logger(),
-            $this->pdoTransaction(),
+        return $this->markerRepository ??= new CacheProcessMarkerRepository(
+            $this->cache('marker', CacheLimits::MARKER_TTL_SECONDS),
             $this->markerGroupRepository(),
+            $this->logger(),
         );
     }
 
@@ -354,14 +375,44 @@ final class InfraProvider implements IInfraProvider
      * application decision and hiding the read half of that policy behind the
      * runner would split one decision across two layers. It is also what keeps
      * this the single line to change when the entries should live in Redis
-     * instead of an `ENGINE=MEMORY` table.
+     * instead of the cache process.
      *
-     * @return IViewCacheRepository Memoized; takes the pool, not the session.
+     * @return IViewCacheRepository Memoized; takes a cache slice, not the pool.
      *
      * @copyright 2026 Tachyon
      */
     public function viewCacheRepository(): IViewCacheRepository
     {
-        return $this->viewCacheRepository ??= new SqlViewCacheRepository($this->pool(), $this->logger());
+        return $this->viewCacheRepository ??= new CacheProcessViewCacheRepository(
+            $this->cache('view', CacheLimits::VIEW_TTL_SECONDS),
+        );
+    }
+
+    /**
+     * One named slice of the cache the server allocated before it forked.
+     *
+     * The four repositories that used to sit on `ENGINE=MEMORY` tables come
+     * through here, and the key each is given is what keeps them apart — the
+     * shared tables are one pair for the whole application, and the key is the
+     * partition. They have to be unique, and they are declared at exactly one
+     * place: the four call sites above.
+     *
+     * Not memoized, unlike everything else in this class. A slice is a handle on
+     * memory that already exists rather than a resource, so building one is a
+     * constructor call and the repositories that hold them are memoized anyway.
+     *
+     * @param  string  $key  The partition, unique across the four.
+     * @param  int  $ttlSeconds  Default lifetime for entries written to it.
+     *                           {@see CacheLimits::TTL_FOREVER} for a catalogue
+     *                           that must outlive every request.
+     * @return ICacheProcessDatabase Ready to use.
+     *
+     * @copyright 2026 Tachyon
+     */
+    private function cache(string $key, int $ttlSeconds): ICacheProcessDatabase
+    {
+        return $this->extension->cacheProcessAdapter($this->hasher)->database(
+            new CacheProcessDatabaseConfig($key, $ttlSeconds),
+        );
     }
 }

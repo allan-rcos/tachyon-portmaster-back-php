@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace Infra;
 
+use Domain\Security\IIndexHasher;
 use Infra\Config\DatabaseConfig;
 use Infra\Config\LogConfig;
 use Infra\Interno\InfraProvider;
@@ -44,14 +45,24 @@ final class InfraRegister
      *
      * @param  DatabaseConfig  $database  Connection and pool settings.
      * @param  LogConfig  $log  The level to log at.
+     * @param  IOpenSwooleExtensionProvider  $extension  The server's pre-fork
+     *                                                   resources, allocated
+     *                                                   before this ever runs.
+     *                                                   See {@see OpenSwooleExtension}.
+     * @param  IIndexHasher  $hasher  Turns a cache key into the fixed-width
+     *                                digest the shared tables are addressed by.
      * @return IInfraProvider The layer's factory surface.
      *
      * @copyright 2026 Tachyon
      *
      * @api
      */
-    public static function execute(DatabaseConfig $database, LogConfig $log): IInfraProvider
-    {
-        return new InfraProvider($database, $log);
+    public static function execute(
+        DatabaseConfig $database,
+        LogConfig $log,
+        IOpenSwooleExtensionProvider $extension,
+        IIndexHasher $hasher,
+    ): IInfraProvider {
+        return new InfraProvider($database, $log, $extension, $hasher);
     }
 }

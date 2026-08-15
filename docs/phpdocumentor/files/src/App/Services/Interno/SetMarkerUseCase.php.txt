@@ -33,10 +33,10 @@ use Shared\Exceptions\Result;
  * survivable rather than ignored: the digest of an unguessable value is only
  * ever known to whoever holds that value, so two callers racing here means the
  * value leaked — at which point one of them loses the race and gets the 409,
- * which is exactly the signal wanted. Making it atomic would need a lock on a
- * `MEMORY` table, serialising every session operation to buy nothing.
+ * which is exactly the signal wanted. Making it atomic would need a lock across
+ * the whole marker slice, serialising every session operation to buy nothing.
  *
- * Opens no unit of work, unlike every other write here: the marker table is
+ * Opens no unit of work, unlike every other write here: the marker store is
  * non-transactional, so a boundary would buy nothing — see
  * {@see \Infra\Repository\IMarkerRepository} for what that costs.
  *
@@ -82,13 +82,20 @@ final readonly class SetMarkerUseCase implements ISetMarkerUseCase
         /** @var IMarker $marker */
         $marker = $built->getValue();
 
+        /** @var bool|null $flag */
+        $flag = null;
+
         $current = $this->markers->get($marker->group, $marker->key);
-        if (!$current->isSuccess()) {
+        if ($current->isSuccess()) {
+            /** @var bool|null $flag */
+            $flag = $current->getValue();
+        } elseif (Leaf::getError($current->getErrorId())?->code !== 404) {
+            // A 404 is an answer, not a failure: no marker filed under this key
+            // is exactly the "no history" the branch below needs. Any other code
+            // means the store could not be read, and raising a marker against a
+            // store that cannot be read is how a replay gets through.
             return Result::failure($current->getErrorId());
         }
-
-        /** @var bool|null $flag */
-        $flag = $current->getValue();
 
         if ($command->flag === true) {
             // Nothing may be raised to live except a value that has no history:

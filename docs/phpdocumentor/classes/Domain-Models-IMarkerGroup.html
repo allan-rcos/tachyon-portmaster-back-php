@@ -154,6 +154,10 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/infra-cache.html" class="">Cache</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/infra-config.html" class="">Config</a>
                 
             </li>
@@ -324,10 +328,10 @@ for why there is no label or description.</p>
     <span>
                         &nbsp;: int            </span>
 </dt>
-<dd>Registry index, assigned on registration. This is the value stored on
-every marker row, so it is a real foreign key in practice — but only
-within the lifetime of the `MEMORY` table that holds both, which are
-emptied together when MariaDB restarts.</dd>
+<dd>Registry index, assigned on registration. Nothing stores it: markers are
+filed under the group&#039;s *slug*, so this is a handle for lookups and
+listings rather than a key. It is stable only while the process lives, the
+catalogue being rebuilt from code at every `WorkerStart`.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/Domain-Models-IMarkerGroup.html#property_slug">$slug</a>
@@ -388,10 +392,10 @@ after the *kind of flag*, never after the value being flagged.</dd>
             <a href="classes/Domain-Models-IMarkerGroup.html#source-view.56" class="phpdocumentor-element-found-in__source" data-line="56" data-modal="source-view" data-src="files/src/Domain/Models/IMarkerGroup.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">Registry index, assigned on registration. This is the value stored on
-every marker row, so it is a real foreign key in practice — but only
-within the lifetime of the `MEMORY` table that holds both, which are
-emptied together when MariaDB restarts.</p>
+        <p class="phpdocumentor-summary">Registry index, assigned on registration. Nothing stores it: markers are
+filed under the group&#039;s *slug*, so this is a handle for lookups and
+listings rather than a key. It is stable only while the process lives, the
+catalogue being rebuilt from code at every `WorkerStart`.</p>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">

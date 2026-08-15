@@ -154,6 +154,10 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/infra-cache.html" class="">Cache</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/infra-config.html" class="">Config</a>
                 
             </li>
@@ -358,9 +362,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/App/Services/ICreateRoleUseCase.php"><a href="files/src-app-services-icreateroleusecase.html"><abbr title="src/App/Services/ICreateRoleUseCase.php">ICreateRoleUseCase.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">50</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
-            <a href="classes/App-Services-ICreateRoleUseCase.html#source-view.50" class="phpdocumentor-element-found-in__source" data-line="50" data-modal="source-view" data-src="files/src/App/Services/ICreateRoleUseCase.php.txt"></a>
+            <a href="classes/App-Services-ICreateRoleUseCase.html#source-view.53" class="phpdocumentor-element-found-in__source" data-line="53" data-modal="source-view" data-src="files/src/App/Services/ICreateRoleUseCase.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Creates the role described by the command.</p>
@@ -412,7 +416,10 @@ permission slugs.</p>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, <a href="classes/Domain-Models-IRole.html"><abbr title="\Domain\Models\IRole">IRole</abbr></a>&gt;</span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>The created role; a 403, 422 or 500 failure.</p>
+                <section class="phpdocumentor-description"><p>The created role. A 422 both when the name breaks a
+rule and when a slug names a permission nothing ever
+declared, naming every offending slug; a 403 or 500
+otherwise.</p>
 </section>
 
             </section>

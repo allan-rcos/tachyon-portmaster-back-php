@@ -96,6 +96,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/API-Bootstrap-BootDraft.html#property_log"
         },                {
+            "fqsen": "\\API\\Bootstrap\\BootDraft\u003A\u003A\u0024cache",
+            "name": "cache",
+            "summary": "",
+            "url": "classes/API-Bootstrap-BootDraft.html#property_cache"
+        },                {
             "fqsen": "\\API\\Bootstrap\\Chain\\ApiChain",
             "name": "ApiChain",
             "summary": "Reads\u0020the\u0020HTTP\u0020server\u0020variables\u0020into\u0020an\u0020\u007B\u0040see\u0020ApiConfig\u007D.",
@@ -331,6 +336,26 @@ Search.appendIndex(
             "summary": "Seconds\u0020a\u0020refresh\u0020token\u0020stays\u0020valid.",
             "url": "classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_REFRESH_TTL"
         },                {
+            "fqsen": "\\API\\Bootstrap\\DotEnvVariables\u003A\u003AAPP_CACHE_ENTRIES",
+            "name": "APP_CACHE_ENTRIES",
+            "summary": "How\u0020many\u0020entries\u0020the\u0020shared\u0020cache\u0020holds.\u0020OpenSwoole\u0020rounds\u0020it\u0020up\u0020to\u0020a\npower\u0020of\u0020two\u0020and\u0020allocates\u0020conflict\u0020slots\u0020on\u0020top,\u0020so\u0020the\u0020memory\u0020cost\u0020is\nroughly\u0020this\u0020times\u0020\u007B\u0040see\u0020APP_CACHE_PAYLOAD_BYTES\u007D\u0020times\u0020two.",
+            "url": "classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_CACHE_ENTRIES"
+        },                {
+            "fqsen": "\\API\\Bootstrap\\DotEnvVariables\u003A\u003AAPP_CACHE_PAYLOAD_BYTES",
+            "name": "APP_CACHE_PAYLOAD_BYTES",
+            "summary": "Width\u0020of\u0020the\u0020cache\u0027s\u0020payload\u0020column,\u0020in\u0020bytes.\u0020Fixed\u002Dwidth\u0020and\u0020padded,\u0020so\nit\u0020is\u0020charged\u0020on\u0020every\u0020entry\u0020whatever\u0020it\u0020holds\u0020\u2014\u0020and\u0020a\u0020view\u0020serialising\npast\u0020it\u0020is\u0020not\u0020cached\u0020at\u0020all.",
+            "url": "classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_CACHE_PAYLOAD_BYTES"
+        },                {
+            "fqsen": "\\API\\Bootstrap\\DotEnvVariables\u003A\u003AAPP_CACHE_SWEEP_INTERVAL",
+            "name": "APP_CACHE_SWEEP_INTERVAL",
+            "summary": "Milliseconds\u0020between\u0020two\u0020runs\u0020of\u0020the\u0020cache\u0020sweeper.\u0020Governs\u0020when\u0020memory\ncomes\u0020back,\u0020never\u0020whether\u0020a\u0020stale\u0020entry\u0020can\u0020be\u0020served\u0020\u2014\u0020reads\u0020filter\u0020on\nexpiry\u0020themselves.",
+            "url": "classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_CACHE_SWEEP_INTERVAL"
+        },                {
+            "fqsen": "\\API\\Bootstrap\\DotEnvVariables\u003A\u003AAPP_CACHE_HIGH_WATER",
+            "name": "APP_CACHE_HIGH_WATER",
+            "summary": "Occupancy,\u0020between\u00200\u0020and\u00201,\u0020at\u0020which\u0020the\u0020sweeper\u0020starts\u0020evicting\u0020entries\nthat\u0020have\u0020not\u0020expired\u0020yet.\u0020\u0060OpenSwoole\\Table\u0060\u0020has\u0020no\u0020LRU,\u0020so\u0020something\u0020has\nto\u0020make\u0020room\u0020before\u0020a\u0020write\u0020finds\u0020the\u0020table\u0020full.",
+            "url": "classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_CACHE_HIGH_WATER"
+        },                {
             "fqsen": "\\API\\Bootstrap\\EnvSource",
             "name": "EnvSource",
             "summary": "Typed,\u0020validating\u0020reader\u0020over\u0020the\u0020loaded\u0020environment.",
@@ -445,6 +470,11 @@ Search.appendIndex(
             "name": "log",
             "summary": "",
             "url": "classes/API-Config-BootConfig.html#property_log"
+        },                {
+            "fqsen": "\\API\\Config\\BootConfig\u003A\u003A\u0024cache",
+            "name": "cache",
+            "summary": "",
+            "url": "classes/API-Config-BootConfig.html#property_cache"
         },                {
             "fqsen": "\\API\\Config\\JwtConfig",
             "name": "JwtConfig",
@@ -5371,15 +5401,130 @@ Search.appendIndex(
             "summary": "Produces\u0020the\u0020user\u0020with\u0020a\u0020new\u0020password\u0020\u2014\u0020the\u0020administrator\u0020reset.",
             "url": "classes/Domain-TableModules-IUserTM.html#method_resetPassword"
         },                {
+            "fqsen": "\\Infra\\Cache\\CacheProcessDatabaseConfig",
+            "name": "CacheProcessDatabaseConfig",
+            "summary": "What\u0020makes\u0020one\u0020logical\u0020database\u0020inside\u0020the\u0020shared\u0020cache.",
+            "url": "classes/Infra-Cache-CacheProcessDatabaseConfig.html"
+        },                {
+            "fqsen": "\\Infra\\Cache\\CacheProcessDatabaseConfig\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Infra-Cache-CacheProcessDatabaseConfig.html#method___construct"
+        },                {
+            "fqsen": "\\Infra\\Cache\\CacheProcessDatabaseConfig\u003A\u003A\u0024key",
+            "name": "key",
+            "summary": "",
+            "url": "classes/Infra-Cache-CacheProcessDatabaseConfig.html#property_key"
+        },                {
+            "fqsen": "\\Infra\\Cache\\CacheProcessDatabaseConfig\u003A\u003A\u0024ttlSeconds",
+            "name": "ttlSeconds",
+            "summary": "",
+            "url": "classes/Infra-Cache-CacheProcessDatabaseConfig.html#property_ttlSeconds"
+        },                {
+            "fqsen": "\\Infra\\Cache\\CacheProcessEntryConfig",
+            "name": "CacheProcessEntryConfig",
+            "summary": "What\u0020makes\u0020one\u0020operation\u0020differ\u0020from\u0020the\u0020database\u0027s\u0020defaults.",
+            "url": "classes/Infra-Cache-CacheProcessEntryConfig.html"
+        },                {
+            "fqsen": "\\Infra\\Cache\\CacheProcessEntryConfig\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Infra-Cache-CacheProcessEntryConfig.html#method___construct"
+        },                {
+            "fqsen": "\\Infra\\Cache\\CacheProcessEntryConfig\u003A\u003A\u0024suffix",
+            "name": "suffix",
+            "summary": "",
+            "url": "classes/Infra-Cache-CacheProcessEntryConfig.html#property_suffix"
+        },                {
+            "fqsen": "\\Infra\\Cache\\CacheProcessEntryConfig\u003A\u003A\u0024ttlSeconds",
+            "name": "ttlSeconds",
+            "summary": "",
+            "url": "classes/Infra-Cache-CacheProcessEntryConfig.html#property_ttlSeconds"
+        },                {
+            "fqsen": "\\Infra\\Cache\\ICacheProcessDatabase",
+            "name": "ICacheProcessDatabase",
+            "summary": "One\u0020slice\u0020of\u0020the\u0020shared\u0020cache,\u0020addressed\u0020by\u0020suffix.",
+            "url": "classes/Infra-Cache-ICacheProcessDatabase.html"
+        },                {
+            "fqsen": "\\Infra\\Cache\\ICacheProcessDatabase\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "The\u0020value\u0020stored\u0020under\u0020this\u0020suffix,\u0020if\u0020there\u0020is\u0020one.",
+            "url": "classes/Infra-Cache-ICacheProcessDatabase.html#method_get"
+        },                {
+            "fqsen": "\\Infra\\Cache\\ICacheProcessDatabase\u003A\u003Aput\u0028\u0029",
+            "name": "put",
+            "summary": "Stores\u0020the\u0020value\u0020under\u0020this\u0020suffix,\u0020replacing\u0020whatever\u0020was\u0020there.",
+            "url": "classes/Infra-Cache-ICacheProcessDatabase.html#method_put"
+        },                {
+            "fqsen": "\\Infra\\Cache\\ICacheProcessDatabase\u003A\u003Aclean\u0028\u0029",
+            "name": "clean",
+            "summary": "Discards\u0020every\u0020entry\u0020whose\u0020key\u0020starts\u0020with\u0020this\u0020suffix.",
+            "url": "classes/Infra-Cache-ICacheProcessDatabase.html#method_clean"
+        },                {
+            "fqsen": "\\Infra\\Cache\\IOpenSwooleCacheProcessAdapter",
+            "name": "IOpenSwooleCacheProcessAdapter",
+            "summary": "Hands\u0020out\u0020slices\u0020of\u0020the\u0020cache\u0020the\u0020server\u0020process\u0020holds.",
+            "url": "classes/Infra-Cache-IOpenSwooleCacheProcessAdapter.html"
+        },                {
+            "fqsen": "\\Infra\\Cache\\IOpenSwooleCacheProcessAdapter\u003A\u003Adatabase\u0028\u0029",
+            "name": "database",
+            "summary": "The\u0020slice\u0020of\u0020the\u0020cache\u0020described\u0020by\u0020this\u0020config.",
+            "url": "classes/Infra-Cache-IOpenSwooleCacheProcessAdapter.html#method_database"
+        },                {
+            "fqsen": "\\Infra\\Config\\CacheConfig",
+            "name": "CacheConfig",
+            "summary": "How\u0020much\u0020memory\u0020the\u0020cache\u0020process\u0020is\u0020allowed,\u0020and\u0020how\u0020often\u0020it\u0020sweeps.",
+            "url": "classes/Infra-Config-CacheConfig.html"
+        },                {
+            "fqsen": "\\Infra\\Config\\CacheConfig\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/Infra-Config-CacheConfig.html#method___construct"
+        },                {
+            "fqsen": "\\Infra\\Config\\CacheConfig\u003A\u003A\u0024entries",
+            "name": "entries",
+            "summary": "",
+            "url": "classes/Infra-Config-CacheConfig.html#property_entries"
+        },                {
+            "fqsen": "\\Infra\\Config\\CacheConfig\u003A\u003A\u0024payloadBytes",
+            "name": "payloadBytes",
+            "summary": "",
+            "url": "classes/Infra-Config-CacheConfig.html#property_payloadBytes"
+        },                {
+            "fqsen": "\\Infra\\Config\\CacheConfig\u003A\u003A\u0024sweepIntervalMs",
+            "name": "sweepIntervalMs",
+            "summary": "",
+            "url": "classes/Infra-Config-CacheConfig.html#property_sweepIntervalMs"
+        },                {
+            "fqsen": "\\Infra\\Config\\CacheConfig\u003A\u003A\u0024highWater",
+            "name": "highWater",
+            "summary": "",
+            "url": "classes/Infra-Config-CacheConfig.html#property_highWater"
+        },                {
             "fqsen": "\\Infra\\Config\\CacheLimits",
             "name": "CacheLimits",
-            "summary": "How\u0020long\u0020a\u0020cached\u0020read\u0020stays\u0020valid.",
+            "summary": "How\u0020long\u0020a\u0020cached\u0020entry\u0020stays\u0020valid,\u0020and\u0020how\u0020long\u0020a\u0020key\u0020may\u0020be.",
             "url": "classes/Infra-Config-CacheLimits.html"
         },                {
-            "fqsen": "\\Infra\\Config\\CacheLimits\u003A\u003ATTL_SECONDS",
-            "name": "TTL_SECONDS",
+            "fqsen": "\\Infra\\Config\\CacheLimits\u003A\u003AVIEW_TTL_SECONDS",
+            "name": "VIEW_TTL_SECONDS",
             "summary": "",
-            "url": "classes/Infra-Config-CacheLimits.html#constant_TTL_SECONDS"
+            "url": "classes/Infra-Config-CacheLimits.html#constant_VIEW_TTL_SECONDS"
+        },                {
+            "fqsen": "\\Infra\\Config\\CacheLimits\u003A\u003AMARKER_TTL_SECONDS",
+            "name": "MARKER_TTL_SECONDS",
+            "summary": "",
+            "url": "classes/Infra-Config-CacheLimits.html#constant_MARKER_TTL_SECONDS"
+        },                {
+            "fqsen": "\\Infra\\Config\\CacheLimits\u003A\u003ATTL_FOREVER",
+            "name": "TTL_FOREVER",
+            "summary": "",
+            "url": "classes/Infra-Config-CacheLimits.html#constant_TTL_FOREVER"
+        },                {
+            "fqsen": "\\Infra\\Config\\CacheLimits\u003A\u003ALOGICAL_KEY_MAX_BYTES",
+            "name": "LOGICAL_KEY_MAX_BYTES",
+            "summary": "",
+            "url": "classes/Infra-Config-CacheLimits.html#constant_LOGICAL_KEY_MAX_BYTES"
         },                {
             "fqsen": "\\Infra\\Config\\DatabaseConfig",
             "name": "DatabaseConfig",
@@ -5871,6 +6016,16 @@ Search.appendIndex(
             "summary": "Composes\u0020the\u0020layer\u0020from\u0020its\u0020config\u0020and\u0020hands\u0020back\u0020the\u0020provider.",
             "url": "classes/Infra-InfraRegister.html#method_execute"
         },                {
+            "fqsen": "\\Infra\\IOpenSwooleExtensionProvider",
+            "name": "IOpenSwooleExtensionProvider",
+            "summary": "Everything\u0020the\u0020server\u0020holds\u0020outside\u0020a\u0020worker.",
+            "url": "classes/Infra-IOpenSwooleExtensionProvider.html"
+        },                {
+            "fqsen": "\\Infra\\IOpenSwooleExtensionProvider\u003A\u003AcacheProcessAdapter\u0028\u0029",
+            "name": "cacheProcessAdapter",
+            "summary": "The\u0020adapter\u0020that\u0020hands\u0020out\u0020slices\u0020of\u0020the\u0020shared\u0020cache.",
+            "url": "classes/Infra-IOpenSwooleExtensionProvider.html#method_cacheProcessAdapter"
+        },                {
             "fqsen": "\\Infra\\Logging\\ILogger",
             "name": "ILogger",
             "summary": "The\u0020application\u0027s\u0020logging\u0020port.",
@@ -5965,6 +6120,16 @@ Search.appendIndex(
             "name": "create",
             "summary": "Assembles\u0020a\u0020stdout\u0020JSON\u0020logger\u0020at\u0020the\u0020given\u0020level.",
             "url": "classes/Infra-Logging-MonologFactory.html#method_create"
+        },                {
+            "fqsen": "\\Infra\\OpenSwooleExtension",
+            "name": "OpenSwooleExtension",
+            "summary": "Composition\u0020entry\u0020point\u0020for\u0020the\u0020infrastructure\u0020layer\u0027s\u0020\u002A\u002Apre\u002Dfork\u002A\u002A\u0020half.",
+            "url": "classes/Infra-OpenSwooleExtension.html"
+        },                {
+            "fqsen": "\\Infra\\OpenSwooleExtension\u003A\u003Aattach\u0028\u0029",
+            "name": "attach",
+            "summary": "Allocates\u0020the\u0020server\u0027s\u0020shared\u0020resources\u0020and\u0020returns\u0020the\u0020provider\u0020onto\nthem.",
+            "url": "classes/Infra-OpenSwooleExtension.html#method_attach"
         },                {
             "fqsen": "\\Infra\\Query\\Account\\AccountView",
             "name": "AccountView",
@@ -6546,11 +6711,6 @@ Search.appendIndex(
             "summary": "Every\u0020registered\u0020group,\u0020in\u0020registration\u0020order.",
             "url": "classes/Infra-Repository-IMarkerGroupRepository.html#method_all"
         },                {
-            "fqsen": "\\Infra\\Repository\\IMarkerGroupRepository\u003A\u003Ahas\u0028\u0029",
-            "name": "has",
-            "summary": "Whether\u0020a\u0020slug\u0020has\u0020been\u0020registered.",
-            "url": "classes/Infra-Repository-IMarkerGroupRepository.html#method_has"
-        },                {
             "fqsen": "\\Infra\\Repository\\IMarkerRepository",
             "name": "IMarkerRepository",
             "summary": "Stores\u0020and\u0020reads\u0020\u007B\u0040see\u0020IMarker\u007D\u0020flags.",
@@ -6591,10 +6751,10 @@ Search.appendIndex(
             "summary": "Every\u0020registered\u0020permission,\u0020in\u0020registration\u0020order.",
             "url": "classes/Infra-Repository-IPermissionRepository.html#method_all"
         },                {
-            "fqsen": "\\Infra\\Repository\\IPermissionRepository\u003A\u003Ahas\u0028\u0029",
-            "name": "has",
-            "summary": "Whether\u0020a\u0020slug\u0020has\u0020been\u0020registered.",
-            "url": "classes/Infra-Repository-IPermissionRepository.html#method_has"
+            "fqsen": "\\Infra\\Repository\\IPermissionRepository\u003A\u003Aunknown\u0028\u0029",
+            "name": "unknown",
+            "summary": "Which\u0020of\u0020these\u0020slugs\u0020the\u0020catalogue\u0020does\u0020not\u0020hold.",
+            "url": "classes/Infra-Repository-IPermissionRepository.html#method_unknown"
         },                {
             "fqsen": "\\Infra\\Repository\\IProductRepository",
             "name": "IProductRepository",
@@ -7155,6 +7315,11 @@ Search.appendIndex(
             "name": "TableModules",
             "summary": "",
             "url": "namespaces/domain-tablemodules.html"
+        },                {
+            "fqsen": "\\Infra\\Cache",
+            "name": "Cache",
+            "summary": "",
+            "url": "namespaces/infra-cache.html"
         },                {
             "fqsen": "\\Infra\\Config",
             "name": "Config",

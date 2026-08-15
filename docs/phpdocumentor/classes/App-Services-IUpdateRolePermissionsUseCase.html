@@ -154,6 +154,10 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/infra-cache.html" class="">Cache</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/infra-config.html" class="">Config</a>
                 
             </li>
@@ -361,9 +365,9 @@ creating roles and re-arming existing ones are distinct privileges.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/App/Services/IUpdateRolePermissionsUseCase.php"><a href="files/src-app-services-iupdaterolepermissionsusecase.html"><abbr title="src/App/Services/IUpdateRolePermissionsUseCase.php">IUpdateRolePermissionsUseCase.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">56</span>
+    <span class="phpdocumentor-element-found-in__line">59</span>
 
-            <a href="classes/App-Services-IUpdateRolePermissionsUseCase.html#source-view.56" class="phpdocumentor-element-found-in__source" data-line="56" data-modal="source-view" data-src="files/src/App/Services/IUpdateRolePermissionsUseCase.php.txt"></a>
+            <a href="classes/App-Services-IUpdateRolePermissionsUseCase.html#source-view.59" class="phpdocumentor-element-found-in__source" data-line="59" data-modal="source-view" data-src="files/src/App/Services/IUpdateRolePermissionsUseCase.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Replaces what the role the command names grants.</p>
@@ -417,7 +421,10 @@ set.</p>
         <span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, <a href="classes/Domain-Models-IRole.html"><abbr title="\Domain\Models\IRole">IRole</abbr></a>&gt;</span>
                     &mdash;
                 <section class="phpdocumentor-description"><p>The updated role, or 404 when it does not exist; 422
-when a slug is refused, a 403 or 500 otherwise.</p>
+when a slug names a permission nothing ever declared,
+naming every offending one, and the whole update is
+refused rather than partially applied; a 403 or 500
+otherwise.</p>
 </section>
 
             </section>

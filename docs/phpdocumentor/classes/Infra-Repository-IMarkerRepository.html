@@ -154,6 +154,10 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/infra-cache.html" class="">Cache</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/infra-config.html" class="">Config</a>
                 
             </li>
@@ -240,24 +244,26 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/IMarkerRepository.php"><a href="files/src-infra-repository-imarkerrepository.html"><abbr title="src/Infra/Repository/IMarkerRepository.php">IMarkerRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
-            <a href="classes/Infra-Repository-IMarkerRepository.html#source-view.43" class="phpdocumentor-element-found-in__source" data-line="43" data-modal="source-view" data-src="files/src/Infra/Repository/IMarkerRepository.php.txt"></a>
+            <a href="classes/Infra-Repository-IMarkerRepository.html#source-view.46" class="phpdocumentor-element-found-in__source" data-line="46" data-modal="source-view" data-src="files/src/Infra/Repository/IMarkerRepository.php.txt"></a>
     </aside>
 
             <p class="phpdocumentor-summary">Stores and reads {@see IMarker} flags.</p>
 
 
-    <section class="phpdocumentor-description"><p>Unlike the metadata registries this is written on the request path, so it
-takes part in the caller's unit of work like any other repository — with one
-caveat: the table is <code class="prettyprint">ENGINE=MEMORY</code> and therefore non-transactional, so a
-<code class="prettyprint">ROLLBACK</code> will not undo a write here.</p>
+    <section class="phpdocumentor-description"><p>Unlike the metadata registries this is written on the request path — and
+unlike every other repository here, it takes no part in the caller's unit of
+work. The store is the cache process, which knows nothing of transactions, so
+a <code class="prettyprint">ROLLBACK</code> will not undo a write here. Nothing filed under a marker
+participates in a business invariant, so there is nothing to undo.</p>
 <p><strong>Expiry is the reader's job, not a deleter's.</strong> Every read filters on the
 TTL, so an expired marker is indistinguishable from one that never existed and
-no read ever has to delete. That matters because MEMORY locks at table
-granularity: sweeping on read would serialise every request behind a write
-lock. The sweep therefore happens on <abbr title="\Infra\Repository\set()">set()</abbr>, where a lock is already
-being taken.</p>
+no read ever has to delete. Reclaiming the memory is the sweeper's job, on a
+timer, which is what keeps correctness independent of when it last ran.</p>
+<p><strong>The TTL belongs to the caller.</strong> <abbr title="\Infra\Repository\set()">set()</abbr> takes it as an argument
+because a refresh-token marker has to outlive exactly the token it tracks, and
+the next marker written will expire for some other reason.</p>
 </section>
 
 
@@ -277,13 +283,13 @@ being taken.</p>
 
                                     </dd>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Infra\Repository\Interno\SqlMarkerRepository">SqlMarkerRepository</abbr></span>
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Infra\Repository\Interno\CacheProcessMarkerRepository">CacheProcessMarkerRepository</abbr></span>
                                                                     <section class="phpdocumentor-description"><p>The implementation.</p>
 </section>
 
                                     </dd>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>docs/adr/0003-engine-memory-for-runtime-tables.md What the MEMORY engine costs here.</p>
+                                                                                                            <section class="phpdocumentor-description"><p>docs/adr/0011-cache-em-processo-openswoole.md Why markers live in the cache process.</p>
 </section>
 
                                     </dd>
@@ -372,9 +378,9 @@ expired rows while it holds the lock.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/IMarkerRepository.php"><a href="files/src-infra-repository-imarkerrepository.html"><abbr title="src/Infra/Repository/IMarkerRepository.php">IMarkerRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">79</span>
+    <span class="phpdocumentor-element-found-in__line">85</span>
 
-            <a href="classes/Infra-Repository-IMarkerRepository.html#source-view.79" class="phpdocumentor-element-found-in__source" data-line="79" data-modal="source-view" data-src="files/src/Infra/Repository/IMarkerRepository.php.txt"></a>
+            <a href="classes/Infra-Repository-IMarkerRepository.html#source-view.85" class="phpdocumentor-element-found-in__source" data-line="85" data-modal="source-view" data-src="files/src/Infra/Repository/IMarkerRepository.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Reads the flag of a live marker.</p>
@@ -435,11 +441,14 @@ expired rows while it holds the lock.</dd>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type"><a href="classes/Shared-Exceptions-Result.html"><abbr title="\Shared\Exceptions\Result">Result</abbr></a>&lt;string|int, bool&gt;</span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>The flag, or <a href="classes/Shared-Exceptions-Result.html#method_void"><abbr title="\Shared\Exceptions\Result::void()">Result::void()</abbr></a> when there is no
-live marker — expired and never-existed are the same
-answer, deliberately. A 404 failure when the group
-is not registered, which is a different thing from
-the group being empty; a 500 on a read error.</p>
+                <section class="phpdocumentor-description"><p>The flag, or a <strong>404</strong> when there is no live marker —
+expired and never-existed are the same answer,
+deliberately. A 404 as well when the group is not
+registered: a caller must not be able to tell the two
+apart, or it learns whether a value was ever valid. A
+500 on a read error, which is <em>not</em> the same thing —
+<abbr title="\App\Services\Interno\SetMarkerUseCase">SetMarkerUseCase</abbr> raises a
+marker on the first but never on the second.</p>
 </section>
 
             </section>
@@ -459,9 +468,9 @@ the group being empty; a 500 on a read error.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/IMarkerRepository.php"><a href="files/src-infra-repository-imarkerrepository.html"><abbr title="src/Infra/Repository/IMarkerRepository.php">IMarkerRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
-            <a href="classes/Infra-Repository-IMarkerRepository.html#source-view.61" class="phpdocumentor-element-found-in__source" data-line="61" data-modal="source-view" data-src="files/src/Infra/Repository/IMarkerRepository.php.txt"></a>
+            <a href="classes/Infra-Repository-IMarkerRepository.html#source-view.64" class="phpdocumentor-element-found-in__source" data-line="64" data-modal="source-view" data-src="files/src/Infra/Repository/IMarkerRepository.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Writes the flag, creating the marker if it is not there yet, and sweeps

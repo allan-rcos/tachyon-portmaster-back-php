@@ -154,6 +154,10 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/infra-cache.html" class="">Cache</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/infra-config.html" class="">Config</a>
                 
             </li>
@@ -257,8 +261,8 @@ invent, inverting the dependency. The domain declares only the shape; the
 application layer owns the values (each use case registers its own at boot)
 and infrastructure owns the storage.</p>
 <p>It carries nothing but its identity — see
-docs/adr/0003-engine-memory-for-runtime-tables.md for why there is no
-label or description.</p>
+docs/adr/0011-cache-em-processo-openswoole.md for why there is no label
+or description.</p>
 <p><a href="classes/Domain-Models-IMarkerGroup.html"><abbr title="\Domain\Models\IMarkerGroup">IMarkerGroup</abbr></a> is the same family. A closed,
 business-defined set like <a href="classes/Domain-Enums-ContainerStatus.html"><abbr title="\Domain\Enums\ContainerStatus">ContainerStatus</abbr></a> stays an enum.</p>
 </section>
@@ -286,7 +290,7 @@ business-defined set like <a href="classes/Domain-Enums-ContainerStatus.html"><a
 
                                     </dd>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>docs/adr/0002-metadata-registries-in-the-database.md Why the registry is in the database.</p>
+                                                                                                            <section class="phpdocumentor-description"><p>docs/adr/0011-cache-em-processo-openswoole.md Where the registry lives, and why.</p>
 </section>
 
                                     </dd>
@@ -405,11 +409,11 @@ value that travels on the wire and is persisted against a role.</dd>
     <span class="phpdocumentor-signature__name">$id</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>A handle for the lookup table: never serialized, never persisted against a
-role, never exposed. It is stable only while the registry table lives — a
-<code class="prettyprint">MEMORY</code> table is emptied when MariaDB restarts, and the ids are then
-handed out again in whatever order the workers happen to register — so
-nothing may depend on a particular value.</p>
+        <section class="phpdocumentor-description"><p>A handle for the lookup table: never persisted against a role. It is
+stable only while the process lives — the catalogue is rebuilt from code at
+every <code class="prettyprint">WorkerStart</code>, and an id is the position a slug happened to be
+declared in — so nothing may depend on a particular value surviving a
+restart, or a slug being added above it.</p>
 </section>
 
         <section class="phpdocumentor-description"><p>Registry index; zero means built but not yet registered.</p>

@@ -154,6 +154,10 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/infra-cache.html" class="">Cache</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/infra-config.html" class="">Config</a>
                 
             </li>
@@ -240,9 +244,9 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/IPermissionRepository.php"><a href="files/src-infra-repository-ipermissionrepository.html"><abbr title="src/Infra/Repository/IPermissionRepository.php">IPermissionRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
-            <a href="classes/Infra-Repository-IPermissionRepository.html#source-view.48" class="phpdocumentor-element-found-in__source" data-line="48" data-modal="source-view" data-src="files/src/Infra/Repository/IPermissionRepository.php.txt"></a>
+            <a href="classes/Infra-Repository-IPermissionRepository.html#source-view.47" class="phpdocumentor-element-found-in__source" data-line="47" data-modal="source-view" data-src="files/src/Infra/Repository/IPermissionRepository.php.txt"></a>
     </aside>
 
             <p class="phpdocumentor-summary">The permission registry: the runtime catalogue of every permission the
@@ -279,18 +283,13 @@ and not an error.</p>
 
                                     </dd>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Infra\Repository\Interno\PermissionRegistry">PermissionRegistry</abbr></span>
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Infra\Repository\Interno\CacheProcessPermissionRepository">CacheProcessPermissionRepository</abbr></span>
                                                                     <section class="phpdocumentor-description"><p>The implementation.</p>
 </section>
 
                                     </dd>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>docs/adr/0002-metadata-registries-in-the-database.md Why this lives in the database.</p>
-</section>
-
-                                    </dd>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>docs/adr/0003-engine-memory-for-runtime-tables.md Why that table is RAM.</p>
+                                                                                                            <section class="phpdocumentor-description"><p>docs/adr/0011-cache-em-processo-openswoole.md Where the registry lives, and why.</p>
 </section>
 
                                     </dd>
@@ -364,11 +363,11 @@ and not an error.</p>
 <dd>The registered permission for a slug.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Infra-Repository-IPermissionRepository.html#method_has">has()</a>
+    <a class="" href="classes/Infra-Repository-IPermissionRepository.html#method_unknown">unknown()</a>
     <span>
-                                &nbsp;: bool    </span>
+                                &nbsp;: array&lt;int, string&gt;    </span>
 </dt>
-<dd>Whether a slug has been registered.</dd>
+<dd>Which of these slugs the catalogue does not hold.</dd>
 
     </dl>
 
@@ -399,9 +398,9 @@ and not an error.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/IPermissionRepository.php"><a href="files/src-infra-repository-ipermissionrepository.html"><abbr title="src/Infra/Repository/IPermissionRepository.php">IPermissionRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">66</span>
+    <span class="phpdocumentor-element-found-in__line">65</span>
 
-            <a href="classes/Infra-Repository-IPermissionRepository.html#source-view.66" class="phpdocumentor-element-found-in__source" data-line="66" data-modal="source-view" data-src="files/src/Infra/Repository/IPermissionRepository.php.txt"></a>
+            <a href="classes/Infra-Repository-IPermissionRepository.html#source-view.65" class="phpdocumentor-element-found-in__source" data-line="65" data-modal="source-view" data-src="files/src/Infra/Repository/IPermissionRepository.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Registers a permission and returns it carrying its assigned registry index.</p>
@@ -478,9 +477,9 @@ a 500 failure when the write fails.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/IPermissionRepository.php"><a href="files/src-infra-repository-ipermissionrepository.html"><abbr title="src/Infra/Repository/IPermissionRepository.php">IPermissionRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">101</span>
 
-            <a href="classes/Infra-Repository-IPermissionRepository.html#source-view.102" class="phpdocumentor-element-found-in__source" data-line="102" data-modal="source-view" data-src="files/src/Infra/Repository/IPermissionRepository.php.txt"></a>
+            <a href="classes/Infra-Repository-IPermissionRepository.html#source-view.101" class="phpdocumentor-element-found-in__source" data-line="101" data-modal="source-view" data-src="files/src/Infra/Repository/IPermissionRepository.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Every registered permission, in registration order.</p>
@@ -540,9 +539,9 @@ registered anything.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/IPermissionRepository.php"><a href="files/src-infra-repository-ipermissionrepository.html"><abbr title="src/Infra/Repository/IPermissionRepository.php">IPermissionRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">90</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
-            <a href="classes/Infra-Repository-IPermissionRepository.html#source-view.90" class="phpdocumentor-element-found-in__source" data-line="90" data-modal="source-view" data-src="files/src/Infra/Repository/IPermissionRepository.php.txt"></a>
+            <a href="classes/Infra-Repository-IPermissionRepository.html#source-view.89" class="phpdocumentor-element-found-in__source" data-line="89" data-modal="source-view" data-src="files/src/Infra/Repository/IPermissionRepository.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">The registered permission for a registry index.</p>
@@ -613,9 +612,9 @@ registered anything.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/IPermissionRepository.php"><a href="files/src-infra-repository-ipermissionrepository.html"><abbr title="src/Infra/Repository/IPermissionRepository.php">IPermissionRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">77</span>
 
-            <a href="classes/Infra-Repository-IPermissionRepository.html#source-view.78" class="phpdocumentor-element-found-in__source" data-line="78" data-modal="source-view" data-src="files/src/Infra/Repository/IPermissionRepository.php.txt"></a>
+            <a href="classes/Infra-Repository-IPermissionRepository.html#source-view.77" class="phpdocumentor-element-found-in__source" data-line="77" data-modal="source-view" data-src="files/src/Infra/Repository/IPermissionRepository.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">The registered permission for a slug.</p>
@@ -678,48 +677,61 @@ registered anything.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_has">
-        has()
-        <a href="classes/Infra-Repository-IPermissionRepository.html#method_has" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_unknown">
+        unknown()
+        <a href="classes/Infra-Repository-IPermissionRepository.html#method_unknown" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/IPermissionRepository.php"><a href="files/src-infra-repository-ipermissionrepository.html"><abbr title="src/Infra/Repository/IPermissionRepository.php">IPermissionRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">114</span>
+    <span class="phpdocumentor-element-found-in__line">129</span>
 
-            <a href="classes/Infra-Repository-IPermissionRepository.html#source-view.114" class="phpdocumentor-element-found-in__source" data-line="114" data-modal="source-view" data-src="files/src/Infra/Repository/IPermissionRepository.php.txt"></a>
+            <a href="classes/Infra-Repository-IPermissionRepository.html#source-view.129" class="phpdocumentor-element-found-in__source" data-line="129" data-modal="source-view" data-src="files/src/Infra/Repository/IPermissionRepository.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">Whether a slug has been registered.</p>
+        <p class="phpdocumentor-summary">Which of these slugs the catalogue does not hold.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">has</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$slug</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                    <span class="phpdocumentor-signature__name">unknown</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;int, string&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$slugs</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;int, string&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
             <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
 
         </div>
     
-    
+        <section class="phpdocumentor-description"><p>The reason this repository is reachable from the application layer at all.
+A role is persisted as a list of slugs, so nothing in the schema stops one
+naming a permission no use case ever declared — a role that silently grants
+<code class="prettyprint">invented:thing</code> forever. This is what a role use case asks before it
+accepts the list.</p>
+<p>A batch rather than a <code class="prettyprint">has()</code> per slug: the catalogue is one entry, so
+answering twenty slugs costs exactly what answering one does. It also lets
+the caller name <strong>every</strong> offending slug in a single 422 instead of making
+a client discover them one round trip at a time.</p>
+<p>It reads, and by design does not judge. Whether an unknown slug is a 422,
+a warning or a silent drop is a decision about state and therefore the use
+case's — see <abbr title="\App\Services\Interno\CreateRoleUseCase">CreateRoleUseCase</abbr>.</p>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$slug</span>
-                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                <span class="phpdocumentor-argument-list__argument__name">$slugs</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;int, string&gt;</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p><code class="prettyprint">domain:action</code>.</p>
+                    <section class="phpdocumentor-description"><p>Candidates, in <code class="prettyprint">domain:action</code> form.</p>
 </section>
 
             </dd>
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="method_has_tags">
+    <h5 class="phpdocumentor-tag-list__heading" id="method_unknown_tags">
         Tags
-        <a href="classes/Infra-Repository-IPermissionRepository.html#method_has_tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Infra-Repository-IPermissionRepository.html#method_unknown_tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -737,9 +749,10 @@ registered anything.</p>
     
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">bool</span>
+        <span class="phpdocumentor-signature__response_type">array&lt;int, string&gt;</span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>True when it is in the catalogue.</p>
+                <section class="phpdocumentor-description"><p>Those absent from the catalogue, in the order given
+and without duplicates. Empty means every one exists.</p>
 </section>
 
             </section>
@@ -863,7 +876,7 @@ registered anything.</p>
                                                     <li class=""><a href="classes/Infra-Repository-IPermissionRepository.html#method_all">all()</a></li>
                                                     <li class=""><a href="classes/Infra-Repository-IPermissionRepository.html#method_getById">getById()</a></li>
                                                     <li class=""><a href="classes/Infra-Repository-IPermissionRepository.html#method_getBySlug">getBySlug()</a></li>
-                                                    <li class=""><a href="classes/Infra-Repository-IPermissionRepository.html#method_has">has()</a></li>
+                                                    <li class=""><a href="classes/Infra-Repository-IPermissionRepository.html#method_unknown">unknown()</a></li>
                                             </ul>
                 </li>
             

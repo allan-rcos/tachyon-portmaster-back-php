@@ -154,6 +154,10 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/infra-cache.html" class="">Cache</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/infra-config.html" class="">Config</a>
                 
             </li>
@@ -251,9 +255,9 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Bootstrap/BootDraft.php"><a href="files/src-api-bootstrap-bootdraft.html"><abbr title="src/API/Bootstrap/BootDraft.php">BootDraft.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
-            <a href="classes/API-Bootstrap-BootDraft.html#source-view.39" class="phpdocumentor-element-found-in__source" data-line="39" data-modal="source-view" data-src="files/src/API/Bootstrap/BootDraft.php.txt"></a>
+            <a href="classes/API-Bootstrap-BootDraft.html#source-view.40" class="phpdocumentor-element-found-in__source" data-line="40" data-modal="source-view" data-src="files/src/API/Bootstrap/BootDraft.php.txt"></a>
     </aside>
 
             <p class="phpdocumentor-summary">The mutable accumulator the chain fills in, one config group per link.</p>
@@ -342,6 +346,12 @@ runs, and it is discarded as soon as <abbr title="\API\Bootstrap\toBootConfig()"
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a class="" href="classes/API-Bootstrap-BootDraft.html#property_cache">$cache</a>
+    <span>
+                        &nbsp;: <a href="classes/Infra-Config-CacheConfig.html"><abbr title="\Infra\Config\CacheConfig">CacheConfig</abbr></a>|null            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a class="" href="classes/API-Bootstrap-BootDraft.html#property_database">$database</a>
     <span>
                         &nbsp;: <a href="classes/Infra-Config-DatabaseConfig.html"><abbr title="\Infra\Config\DatabaseConfig">DatabaseConfig</abbr></a>|null            </span>
@@ -417,9 +427,9 @@ runs, and it is discarded as soon as <abbr title="\API\Bootstrap\toBootConfig()"
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Bootstrap/BootDraft.php"><a href="files/src-api-bootstrap-bootdraft.html"><abbr title="src/API/Bootstrap/BootDraft.php">BootDraft.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
-            <a href="classes/API-Bootstrap-BootDraft.html#source-view.44" class="phpdocumentor-element-found-in__source" data-line="44" data-modal="source-view" data-src="files/src/API/Bootstrap/BootDraft.php.txt"></a>
+            <a href="classes/API-Bootstrap-BootDraft.html#source-view.45" class="phpdocumentor-element-found-in__source" data-line="45" data-modal="source-view" data-src="files/src/API/Bootstrap/BootDraft.php.txt"></a>
     </aside>
 
     
@@ -447,6 +457,48 @@ runs, and it is discarded as soon as <abbr title="\API\Bootstrap\toBootConfig()"
             -public
                                                                     "
 >
+    <h4 class="phpdocumentor-element__name" id="property_cache">
+        $cache
+        <a href="classes/API-Bootstrap-BootDraft.html#property_cache" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                            </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Bootstrap/BootDraft.php"><a href="files/src-api-bootstrap-bootdraft.html"><abbr title="src/API/Bootstrap/BootDraft.php">BootDraft.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">72</span>
+
+            <a href="classes/API-Bootstrap-BootDraft.html#source-view.72" class="phpdocumentor-element-found-in__source" data-line="72" data-modal="source-view" data-src="files/src/API/Bootstrap/BootDraft.php.txt"></a>
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__type"><a href="classes/Infra-Config-CacheConfig.html"><abbr title="\Infra\Config\CacheConfig">CacheConfig</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__name">$cache</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+        <section class="phpdocumentor-description"><p>Filled by <abbr title="\API\Bootstrap\Chain\CacheChain">CacheChain</abbr>.
+Read before the server forks, unlike every other
+group here.</p>
+</section>
+
+    
+
+        
+        
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                                    "
+>
     <h4 class="phpdocumentor-element__name" id="property_database">
         $database
         <a href="classes/API-Bootstrap-BootDraft.html#property_database" class="headerlink"><i class="fas fa-link"></i></a>
@@ -457,9 +509,9 @@ runs, and it is discarded as soon as <abbr title="\API\Bootstrap\toBootConfig()"
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Bootstrap/BootDraft.php"><a href="files/src-api-bootstrap-bootdraft.html"><abbr title="src/API/Bootstrap/BootDraft.php">BootDraft.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
-            <a href="classes/API-Bootstrap-BootDraft.html#source-view.54" class="phpdocumentor-element-found-in__source" data-line="54" data-modal="source-view" data-src="files/src/API/Bootstrap/BootDraft.php.txt"></a>
+            <a href="classes/API-Bootstrap-BootDraft.html#source-view.55" class="phpdocumentor-element-found-in__source" data-line="55" data-modal="source-view" data-src="files/src/API/Bootstrap/BootDraft.php.txt"></a>
     </aside>
 
     
@@ -497,9 +549,9 @@ runs, and it is discarded as soon as <abbr title="\API\Bootstrap\toBootConfig()"
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Bootstrap/BootDraft.php"><a href="files/src-api-bootstrap-bootdraft.html"><abbr title="src/API/Bootstrap/BootDraft.php">BootDraft.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">50</span>
 
-            <a href="classes/API-Bootstrap-BootDraft.html#source-view.49" class="phpdocumentor-element-found-in__source" data-line="49" data-modal="source-view" data-src="files/src/API/Bootstrap/BootDraft.php.txt"></a>
+            <a href="classes/API-Bootstrap-BootDraft.html#source-view.50" class="phpdocumentor-element-found-in__source" data-line="50" data-modal="source-view" data-src="files/src/API/Bootstrap/BootDraft.php.txt"></a>
     </aside>
 
     
@@ -537,9 +589,9 @@ runs, and it is discarded as soon as <abbr title="\API\Bootstrap\toBootConfig()"
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Bootstrap/BootDraft.php"><a href="files/src-api-bootstrap-bootdraft.html"><abbr title="src/API/Bootstrap/BootDraft.php">BootDraft.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
-            <a href="classes/API-Bootstrap-BootDraft.html#source-view.59" class="phpdocumentor-element-found-in__source" data-line="59" data-modal="source-view" data-src="files/src/API/Bootstrap/BootDraft.php.txt"></a>
+            <a href="classes/API-Bootstrap-BootDraft.html#source-view.60" class="phpdocumentor-element-found-in__source" data-line="60" data-modal="source-view" data-src="files/src/API/Bootstrap/BootDraft.php.txt"></a>
     </aside>
 
     
@@ -577,9 +629,9 @@ runs, and it is discarded as soon as <abbr title="\API\Bootstrap\toBootConfig()"
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Bootstrap/BootDraft.php"><a href="files/src-api-bootstrap-bootdraft.html"><abbr title="src/API/Bootstrap/BootDraft.php">BootDraft.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">64</span>
+    <span class="phpdocumentor-element-found-in__line">65</span>
 
-            <a href="classes/API-Bootstrap-BootDraft.html#source-view.64" class="phpdocumentor-element-found-in__source" data-line="64" data-modal="source-view" data-src="files/src/API/Bootstrap/BootDraft.php.txt"></a>
+            <a href="classes/API-Bootstrap-BootDraft.html#source-view.65" class="phpdocumentor-element-found-in__source" data-line="65" data-modal="source-view" data-src="files/src/API/Bootstrap/BootDraft.php.txt"></a>
     </aside>
 
     
@@ -622,9 +674,9 @@ runs, and it is discarded as soon as <abbr title="\API\Bootstrap\toBootConfig()"
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Bootstrap/BootDraft.php"><a href="files/src-api-bootstrap-bootdraft.html"><abbr title="src/API/Bootstrap/BootDraft.php">BootDraft.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">86</span>
 
-            <a href="classes/API-Bootstrap-BootDraft.html#source-view.78" class="phpdocumentor-element-found-in__source" data-line="78" data-modal="source-view" data-src="files/src/API/Bootstrap/BootDraft.php.txt"></a>
+            <a href="classes/API-Bootstrap-BootDraft.html#source-view.86" class="phpdocumentor-element-found-in__source" data-line="86" data-modal="source-view" data-src="files/src/API/Bootstrap/BootDraft.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Freezes the draft into the immutable boot config.</p>
@@ -693,9 +745,9 @@ wiring mistake in the chain, not a bad <code class="prettyprint">.env</code>.</p
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/Bootstrap/BootDraft.php"><a href="files/src-api-bootstrap-bootdraft.html"><abbr title="src/API/Bootstrap/BootDraft.php">BootDraft.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">97</span>
+    <span class="phpdocumentor-element-found-in__line">106</span>
 
-            <a href="classes/API-Bootstrap-BootDraft.html#source-view.97" class="phpdocumentor-element-found-in__source" data-line="97" data-modal="source-view" data-src="files/src/API/Bootstrap/BootDraft.php.txt"></a>
+            <a href="classes/API-Bootstrap-BootDraft.html#source-view.106" class="phpdocumentor-element-found-in__source" data-line="106" data-modal="source-view" data-src="files/src/API/Bootstrap/BootDraft.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">The failure for a group no link contributed.</p>
@@ -866,6 +918,7 @@ wiring mistake in the chain, not a bad <code class="prettyprint">.env</code>.</p
                 <li>
                     <ul class="phpdocumentor-list -clean">
                                                     <li class=""><a href="classes/API-Bootstrap-BootDraft.html#property_api">$api</a></li>
+                                                    <li class=""><a href="classes/API-Bootstrap-BootDraft.html#property_cache">$cache</a></li>
                                                     <li class=""><a href="classes/API-Bootstrap-BootDraft.html#property_database">$database</a></li>
                                                     <li class=""><a href="classes/API-Bootstrap-BootDraft.html#property_domain">$domain</a></li>
                                                     <li class=""><a href="classes/API-Bootstrap-BootDraft.html#property_jwt">$jwt</a></li>

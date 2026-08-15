@@ -36,6 +36,7 @@ namespace Infra\Repository;
  *
  * @see IViewCacheRepository What takes one of these.
  * @see docs/adr/0010-read-cache-in-a-memory-table.md Why a write drops only its own group, and which drop nothing.
+ * @see docs/adr/0011-cache-em-processo-openswoole.md Where the entries live now.
  *
  * @license {@link https://opensource.org/licenses/MIT MIT}
  * @copyright 2026 Tachyon

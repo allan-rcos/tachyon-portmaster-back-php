@@ -154,6 +154,10 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/infra-cache.html" class="">Cache</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/infra-config.html" class="">Config</a>
                 
             </li>
@@ -247,9 +251,9 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/ViewCacheGroup.php"><a href="files/src-infra-repository-viewcachegroup.html"><abbr title="src/Infra/Repository/ViewCacheGroup.php">ViewCacheGroup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
-            <a href="classes/Infra-Repository-ViewCacheGroup.html#source-view.43" class="phpdocumentor-element-found-in__source" data-line="43" data-modal="source-view" data-src="files/src/Infra/Repository/ViewCacheGroup.php.txt"></a>
+            <a href="classes/Infra-Repository-ViewCacheGroup.html#source-view.44" class="phpdocumentor-element-found-in__source" data-line="44" data-modal="source-view" data-src="files/src/Infra/Repository/ViewCacheGroup.php.txt"></a>
     </aside>
 
             <p class="phpdocumentor-summary">The slice of the read cache a write drops.</p>
@@ -261,7 +265,7 @@ knowing which listings exist, so adding a listing never means hunting for the
 writes that ought to invalidate it.</p>
 <p><strong>A write drops only its own group</strong>, so a resource goes stale in another
 group's views for at most
-<a href="classes/Infra-Config-CacheLimits.html#constant_TTL_SECONDS"><abbr title="\Infra\Config\CacheLimits::TTL_SECONDS">CacheLimits::TTL_SECONDS</abbr></a>. Several writes therefore drop
+<abbr title="\Infra\Config\CacheLimits::TTL_SECONDS">CacheLimits::TTL_SECONDS</abbr>. Several writes therefore drop
 nothing at all — the session use cases, the account ones, and <code class="prettyprint">SetupUseCase</code>.
 Which, and why each is safe, is in the ADR.</p>
 <p>An enum where the Rust implementation uses a private <code class="prettyprint">const</code> per service: one
@@ -288,6 +292,11 @@ typo in any of them would be a cache that silently never invalidates.</p>
                                     </dd>
                             <dd class="phpdocumentor-tag-list__definition">
                                                                                                             <section class="phpdocumentor-description"><p>docs/adr/0010-read-cache-in-a-memory-table.md Why a write drops only its own group, and which drop nothing.</p>
+</section>
+
+                                    </dd>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                                            <section class="phpdocumentor-description"><p>docs/adr/0011-cache-em-processo-openswoole.md Where the entries live now.</p>
 </section>
 
                                     </dd>
@@ -391,9 +400,9 @@ typo in any of them would be a cache that silently never invalidates.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/ViewCacheGroup.php"><a href="files/src-infra-repository-viewcachegroup.html"><abbr title="src/Infra/Repository/ViewCacheGroup.php">ViewCacheGroup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
-            <a href="classes/Infra-Repository-ViewCacheGroup.html#source-view.51" class="phpdocumentor-element-found-in__source" data-line="51" data-modal="source-view" data-src="files/src/Infra/Repository/ViewCacheGroup.php.txt"></a>
+            <a href="classes/Infra-Repository-ViewCacheGroup.html#source-view.52" class="phpdocumentor-element-found-in__source" data-line="52" data-modal="source-view" data-src="files/src/Infra/Repository/ViewCacheGroup.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Container listings, summaries included.</p>
@@ -422,9 +431,9 @@ sealing a container changes what either would return.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/ViewCacheGroup.php"><a href="files/src-infra-repository-viewcachegroup.html"><abbr title="src/Infra/Repository/ViewCacheGroup.php">ViewCacheGroup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">60</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 
-            <a href="classes/Infra-Repository-ViewCacheGroup.html#source-view.60" class="phpdocumentor-element-found-in__source" data-line="60" data-modal="source-view" data-src="files/src/Infra/Repository/ViewCacheGroup.php.txt"></a>
+            <a href="classes/Infra-Repository-ViewCacheGroup.html#source-view.61" class="phpdocumentor-element-found-in__source" data-line="61" data-modal="source-view" data-src="files/src/Infra/Repository/ViewCacheGroup.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">The occupancy and throughput panel.</p>
@@ -454,9 +463,9 @@ most one TTL — on purpose.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/ViewCacheGroup.php"><a href="files/src-infra-repository-viewcachegroup.html"><abbr title="src/Infra/Repository/ViewCacheGroup.php">ViewCacheGroup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
-            <a href="classes/Infra-Repository-ViewCacheGroup.html#source-view.65" class="phpdocumentor-element-found-in__source" data-line="65" data-modal="source-view" data-src="files/src/Infra/Repository/ViewCacheGroup.php.txt"></a>
+            <a href="classes/Infra-Repository-ViewCacheGroup.html#source-view.66" class="phpdocumentor-element-found-in__source" data-line="66" data-modal="source-view" data-src="files/src/Infra/Repository/ViewCacheGroup.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Product listings.</p>
@@ -482,9 +491,9 @@ most one TTL — on purpose.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/ViewCacheGroup.php"><a href="files/src-infra-repository-viewcachegroup.html"><abbr title="src/Infra/Repository/ViewCacheGroup.php">ViewCacheGroup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
+    <span class="phpdocumentor-element-found-in__line">71</span>
 
-            <a href="classes/Infra-Repository-ViewCacheGroup.html#source-view.70" class="phpdocumentor-element-found-in__source" data-line="70" data-modal="source-view" data-src="files/src/Infra/Repository/ViewCacheGroup.php.txt"></a>
+            <a href="classes/Infra-Repository-ViewCacheGroup.html#source-view.71" class="phpdocumentor-element-found-in__source" data-line="71" data-modal="source-view" data-src="files/src/Infra/Repository/ViewCacheGroup.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Role listings.</p>
@@ -510,9 +519,9 @@ most one TTL — on purpose.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/ViewCacheGroup.php"><a href="files/src-infra-repository-viewcachegroup.html"><abbr title="src/Infra/Repository/ViewCacheGroup.php">ViewCacheGroup.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
-            <a href="classes/Infra-Repository-ViewCacheGroup.html#source-view.75" class="phpdocumentor-element-found-in__source" data-line="75" data-modal="source-view" data-src="files/src/Infra/Repository/ViewCacheGroup.php.txt"></a>
+            <a href="classes/Infra-Repository-ViewCacheGroup.html#source-view.76" class="phpdocumentor-element-found-in__source" data-line="76" data-modal="source-view" data-src="files/src/Infra/Repository/ViewCacheGroup.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">User listings.</p>

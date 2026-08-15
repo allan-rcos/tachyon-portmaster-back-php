@@ -81,6 +81,7 @@ final class RoleProvider extends FeatureProvider
             $this->infra->viewCacheRepository(),
             $this->infra->roleRepository(),
             $this->domain->roleTM(),
+            $this->infra->permissionRepository(),
             $this->registrar(),
         );
     }
@@ -97,6 +98,7 @@ final class RoleProvider extends FeatureProvider
             $this->infra->viewCacheRepository(),
             $this->infra->roleRepository(),
             $this->domain->roleTM(),
+            $this->infra->permissionRepository(),
             $this->registrar(),
         );
     }

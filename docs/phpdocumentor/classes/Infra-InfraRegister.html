@@ -154,6 +154,10 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/infra-cache.html" class="">Cache</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/infra-config.html" class="">Config</a>
                 
             </li>
@@ -250,9 +254,9 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/InfraRegister.php"><a href="files/src-infra-infraregister.html"><abbr title="src/Infra/InfraRegister.php">InfraRegister.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
-            <a href="classes/Infra-InfraRegister.html#source-view.37" class="phpdocumentor-element-found-in__source" data-line="37" data-modal="source-view" data-src="files/src/Infra/InfraRegister.php.txt"></a>
+            <a href="classes/Infra-InfraRegister.html#source-view.38" class="phpdocumentor-element-found-in__source" data-line="38" data-modal="source-view" data-src="files/src/Infra/InfraRegister.php.txt"></a>
     </aside>
 
             <p class="phpdocumentor-summary">Composition entry point for the infrastructure layer. Receives the infra
@@ -363,16 +367,16 @@ layer be composed.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/InfraRegister.php"><a href="files/src-infra-infraregister.html"><abbr title="src/Infra/InfraRegister.php">InfraRegister.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">53</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
-            <a href="classes/Infra-InfraRegister.html#source-view.53" class="phpdocumentor-element-found-in__source" data-line="53" data-modal="source-view" data-src="files/src/Infra/InfraRegister.php.txt"></a>
+            <a href="classes/Infra-InfraRegister.html#source-view.60" class="phpdocumentor-element-found-in__source" data-line="60" data-modal="source-view" data-src="files/src/Infra/InfraRegister.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Composes the layer from its config and hands back the provider.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">execute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Infra-Config-DatabaseConfig.html"><abbr title="\Infra\Config\DatabaseConfig">DatabaseConfig</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$database</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Infra-Config-LogConfig.html"><abbr title="\Infra\Config\LogConfig">LogConfig</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$log</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Infra-IInfraProvider.html"><abbr title="\Infra\IInfraProvider">IInfraProvider</abbr></a></span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">execute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Infra-Config-DatabaseConfig.html"><abbr title="\Infra\Config\DatabaseConfig">DatabaseConfig</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$database</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Infra-Config-LogConfig.html"><abbr title="\Infra\Config\LogConfig">LogConfig</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$log</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Infra-IOpenSwooleExtensionProvider.html"><abbr title="\Infra\IOpenSwooleExtensionProvider">IOpenSwooleExtensionProvider</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$extension</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Domain-Security-IIndexHasher.html"><abbr title="\Domain\Security\IIndexHasher">IIndexHasher</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$hasher</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Infra-IInfraProvider.html"><abbr title="\Infra\IInfraProvider">IInfraProvider</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
             <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
@@ -400,6 +404,28 @@ it during bootstrap costs nothing even if the database is not up yet.</p>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>The level to log at.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$extension</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Infra-IOpenSwooleExtensionProvider.html"><abbr title="\Infra\IOpenSwooleExtensionProvider">IOpenSwooleExtensionProvider</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The server's pre-fork
+resources, allocated
+before this ever runs.
+See <a href="classes/Infra-OpenSwooleExtension.html"><abbr title="\Infra\OpenSwooleExtension">OpenSwooleExtension</abbr></a>.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$hasher</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Domain-Security-IIndexHasher.html"><abbr title="\Domain\Security\IIndexHasher">IIndexHasher</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Turns a cache key into the fixed-width
+digest the shared tables are addressed by.</p>
 </section>
 
             </dd>

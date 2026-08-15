@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace API\Config;
 
 use Domain\Config\DomainConfig;
+use Infra\Config\CacheConfig;
 use Infra\Config\DatabaseConfig;
 use Infra\Config\LogConfig;
 
@@ -42,6 +43,12 @@ readonly class BootConfig
      * @param  DatabaseConfig  $database  Connection and pool settings.
      * @param  JwtConfig  $jwt  Session token and cookie settings.
      * @param  LogConfig  $log  Logging destination and level.
+     * @param  CacheConfig  $cache  Shared-cache sizing. The one group read
+     *                              *before* the register chain runs — {@see \API\main}
+     *                              hands it to {@see \Infra\OpenSwooleExtension}
+     *                              in the global context, because the memory it
+     *                              describes has to exist before the server
+     *                              forks.
      *
      * @copyright 2026 Tachyon
      */
@@ -51,6 +58,7 @@ readonly class BootConfig
         public DatabaseConfig $database,
         public JwtConfig $jwt,
         public LogConfig $log,
+        public CacheConfig $cache,
     ) {
     }
 }

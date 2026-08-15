@@ -154,6 +154,10 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/infra-cache.html" class="">Cache</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/infra-config.html" class="">Config</a>
                 
             </li>
@@ -250,9 +254,9 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/ApiRegister.php"><a href="files/src-api-apiregister.html"><abbr title="src/API/ApiRegister.php">ApiRegister.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
-            <a href="classes/API-ApiRegister.html#source-view.39" class="phpdocumentor-element-found-in__source" data-line="39" data-modal="source-view" data-src="files/src/API/ApiRegister.php.txt"></a>
+            <a href="classes/API-ApiRegister.html#source-view.40" class="phpdocumentor-element-found-in__source" data-line="40" data-modal="source-view" data-src="files/src/API/ApiRegister.php.txt"></a>
     </aside>
 
             <p class="phpdocumentor-summary">Composition entry point for the presentation layer — the outermost register.</p>
@@ -364,16 +368,16 @@ own settings, so nothing below the API layer can reach another's.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/API/ApiRegister.php"><a href="files/src-api-apiregister.html"><abbr title="src/API/ApiRegister.php">ApiRegister.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">56</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
-            <a href="classes/API-ApiRegister.html#source-view.56" class="phpdocumentor-element-found-in__source" data-line="56" data-modal="source-view" data-src="files/src/API/ApiRegister.php.txt"></a>
+            <a href="classes/API-ApiRegister.html#source-view.62" class="phpdocumentor-element-found-in__source" data-line="62" data-modal="source-view" data-src="files/src/API/ApiRegister.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Wires every layer and returns the presentation provider.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">execute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/API-Config-BootConfig.html"><abbr title="\API\Config\BootConfig">BootConfig</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$config</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$serverId</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/API-IApiProvider.html"><abbr title="\API\IApiProvider">IApiProvider</abbr></a></span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">execute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/API-Config-BootConfig.html"><abbr title="\API\Config\BootConfig">BootConfig</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$config</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$serverId</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Infra-IOpenSwooleExtensionProvider.html"><abbr title="\Infra\IOpenSwooleExtensionProvider">IOpenSwooleExtensionProvider</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$extension</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/API-IApiProvider.html"><abbr title="\API\IApiProvider">IApiProvider</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
             <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
@@ -402,6 +406,19 @@ that worker's lifetime and is never rebuilt per request.</p>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>This worker's id, used as the snowflake server id
 so two workers cannot mint the same identifier.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$extension</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Infra-IOpenSwooleExtensionProvider.html"><abbr title="\Infra\IOpenSwooleExtensionProvider">IOpenSwooleExtensionProvider</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>What the server
+allocated before it
+forked, threaded down to
+the infra layer that
+consumes it.</p>
 </section>
 
             </dd>

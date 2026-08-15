@@ -154,6 +154,10 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/infra-cache.html" class="">Cache</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/infra-config.html" class="">Config</a>
                 
             </li>
@@ -235,6 +239,10 @@ whole object graph through the hand-wired register chain
 (<a href="classes/API-ApiRegister.html"><abbr title="\API\ApiRegister">ApiRegister</abbr></a> → app → { infra → domain }) — no DI container. The
 per-worker id parameterises the Snowflake generator; the assembled provider
 hands back a ready PSR-15 handler that drives every request.</p>
+<p>The one thing built <em>outside</em> that per-worker graph is
+<a href="classes/Infra-OpenSwooleExtension.html"><abbr title="\Infra\OpenSwooleExtension">OpenSwooleExtension</abbr></a>, attached before <code class="prettyprint">$server-&gt;start()</code>: shared
+memory has to be allocated while there is still a single process to allocate
+it in.</p>
 </section>
 
         

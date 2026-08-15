@@ -18,6 +18,7 @@ namespace API;
 use API\Config\BootConfig;
 use API\Interno\ApiProvider;
 use App\AppRegister;
+use Infra\IOpenSwooleExtensionProvider;
 
 /**
  * Composition entry point for the presentation layer — the outermost register.
@@ -47,19 +48,28 @@ final class ApiRegister
      * @param  BootConfig  $config  Every layer's settings, resolved.
      * @param  int  $serverId  This worker's id, used as the snowflake server id
      *                         so two workers cannot mint the same identifier.
+     * @param  IOpenSwooleExtensionProvider  $extension  What the server
+     *                                                   allocated before it
+     *                                                   forked, threaded down to
+     *                                                   the infra layer that
+     *                                                   consumes it.
      * @return IApiProvider The provider that builds the router.
      *
      * @copyright 2026 Tachyon
      *
      * @api
      */
-    public static function execute(BootConfig $config, int $serverId): IApiProvider
-    {
+    public static function execute(
+        BootConfig $config,
+        int $serverId,
+        IOpenSwooleExtensionProvider $extension,
+    ): IApiProvider {
         $app = AppRegister::execute(
             $config->domain,
             $config->database,
             $config->log,
             $serverId,
+            $extension,
         );
 
         return new ApiProvider($app, $config->api, $config->jwt);

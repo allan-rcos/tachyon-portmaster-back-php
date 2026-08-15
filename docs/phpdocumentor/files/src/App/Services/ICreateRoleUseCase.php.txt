@@ -41,7 +41,10 @@ interface ICreateRoleUseCase
      *
      * @param  CreateRoleCommand  $command  Carries the caller, the name and the
      *                                      permission slugs.
-     * @return Result<IRole> The created role; a 403, 422 or 500 failure.
+     * @return Result<IRole> The created role. A 422 both when the name breaks a
+     *                        rule and when a slug names a permission nothing ever
+     *                        declared, naming every offending slug; a 403 or 500
+     *                        otherwise.
      *
      * @copyright 2026 Tachyon
      *

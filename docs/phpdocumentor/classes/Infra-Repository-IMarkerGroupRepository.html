@@ -154,6 +154,10 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/infra-cache.html" class="">Cache</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/infra-config.html" class="">Config</a>
                 
             </li>
@@ -283,13 +287,13 @@ nothing could later find.</p>
 
                                     </dd>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Infra\Repository\Interno\MarkerGroupRegistry">MarkerGroupRegistry</abbr></span>
+                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Infra\Repository\Interno\CacheProcessMarkerGroupRepository">CacheProcessMarkerGroupRepository</abbr></span>
                                                                     <section class="phpdocumentor-description"><p>The implementation.</p>
 </section>
 
                                     </dd>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>docs/adr/0002-metadata-registries-in-the-database.md Why this lives in the database.</p>
+                                                                                                            <section class="phpdocumentor-description"><p>docs/adr/0011-cache-em-processo-openswoole.md Where the registry lives, and why.</p>
 </section>
 
                                     </dd>
@@ -361,13 +365,6 @@ nothing could later find.</p>
                                 &nbsp;: <a href="classes/Domain-Models-IMarkerGroup.html"><abbr title="\Domain\Models\IMarkerGroup">IMarkerGroup</abbr></a>|null    </span>
 </dt>
 <dd>The registered group for a slug.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Infra-Repository-IMarkerGroupRepository.html#method_has">has()</a>
-    <span>
-                                &nbsp;: bool    </span>
-</dt>
-<dd>Whether a slug has been registered.</dd>
 
     </dl>
 
@@ -670,79 +667,6 @@ stores.</p>
             </section>
 
 </article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_has">
-        has()
-        <a href="classes/Infra-Repository-IMarkerGroupRepository.html#method_has" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Repository/IMarkerGroupRepository.php"><a href="files/src-infra-repository-imarkergrouprepository.html"><abbr title="src/Infra/Repository/IMarkerGroupRepository.php">IMarkerGroupRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">110</span>
-
-            <a href="classes/Infra-Repository-IMarkerGroupRepository.html#source-view.110" class="phpdocumentor-element-found-in__source" data-line="110" data-modal="source-view" data-src="files/src/Infra/Repository/IMarkerGroupRepository.php.txt"></a>
-    </aside>
-
-        <p class="phpdocumentor-summary">Whether a slug has been registered.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">has</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$slug</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
-
-    <div class="phpdocumentor-label-line">
-            <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
-
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-argument-list__argument__name">$slug</span>
-                : <span class="phpdocumentor-argument-list__argument__type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Name the feature declared the group under.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="method_has_tags">
-        Tags
-        <a href="classes/Infra-Repository-IMarkerGroupRepository.html#method_has_tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                    <dt class="phpdocumentor-tag-list__entry">
-                <span class="phpdocumentor-tag__name">copyright</span>
-            </dt>
-                            <dd class="phpdocumentor-tag-list__definition">
-                                                                                                            <section class="phpdocumentor-description"><p>2026 Tachyon</p>
-</section>
-
-                                    </dd>
-                        </dl>
-
-        
-    
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">bool</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>True when it is in the catalogue.</p>
-</section>
-
-            </section>
-
-</article>
             </section>
 
         <div class="phpdocumentor-modal" id="source-view">
@@ -861,7 +785,6 @@ stores.</p>
                                                     <li class=""><a href="classes/Infra-Repository-IMarkerGroupRepository.html#method_all">all()</a></li>
                                                     <li class=""><a href="classes/Infra-Repository-IMarkerGroupRepository.html#method_getById">getById()</a></li>
                                                     <li class=""><a href="classes/Infra-Repository-IMarkerGroupRepository.html#method_getBySlug">getBySlug()</a></li>
-                                                    <li class=""><a href="classes/Infra-Repository-IMarkerGroupRepository.html#method_has">has()</a></li>
                                             </ul>
                 </li>
             

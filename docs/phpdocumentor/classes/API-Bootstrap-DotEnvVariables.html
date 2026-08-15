@@ -154,6 +154,10 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/infra-cache.html" class="">Cache</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/infra-config.html" class="">Config</a>
                 
             </li>
@@ -319,6 +323,42 @@ rejects it explicitly.</p>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -case -">
+    <a class="" href="classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_CACHE_ENTRIES">APP_CACHE_ENTRIES</a>
+    <span>
+                &nbsp;= &#039;APP_CACHE_ENTRIES&#039;                    </span>
+</dt>
+<dd>How many entries the shared cache holds. OpenSwoole rounds it up to a
+power of two and allocates conflict slots on top, so the memory cost is
+roughly this times {@see APP_CACHE_PAYLOAD_BYTES} times two.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -case -">
+    <a class="" href="classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_CACHE_HIGH_WATER">APP_CACHE_HIGH_WATER</a>
+    <span>
+                &nbsp;= &#039;APP_CACHE_HIGH_WATER&#039;                    </span>
+</dt>
+<dd>Occupancy, between 0 and 1, at which the sweeper starts evicting entries
+that have not expired yet. `OpenSwoole\Table` has no LRU, so something has
+to make room before a write finds the table full.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -case -">
+    <a class="" href="classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_CACHE_PAYLOAD_BYTES">APP_CACHE_PAYLOAD_BYTES</a>
+    <span>
+                &nbsp;= &#039;APP_CACHE_PAYLOAD_BYTES&#039;                    </span>
+</dt>
+<dd>Width of the cache&#039;s payload column, in bytes. Fixed-width and padded, so
+it is charged on every entry whatever it holds — and a view serialising
+past it is not cached at all.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -case -">
+    <a class="" href="classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_CACHE_SWEEP_INTERVAL">APP_CACHE_SWEEP_INTERVAL</a>
+    <span>
+                &nbsp;= &#039;APP_CACHE_SWEEP_INTERVAL&#039;                    </span>
+</dt>
+<dd>Milliseconds between two runs of the cache sweeper. Governs when memory
+comes back, never whether a stale entry can be served — reads filter on
+expiry themselves.</dd>
+
             <dt class="phpdocumentor-table-of-contents__entry -case -">
     <a class="" href="classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_DB_CHARSET">APP_DB_CHARSET</a>
     <span>
@@ -1292,6 +1332,126 @@ bytes.</p>
 
         
     </article>
+                    <article
+        class="
+            phpdocumentor-element
+            -enum-case
+        "
+>
+    <h4 class="phpdocumentor-element__name" id="enumcase_APP_CACHE_ENTRIES">
+        APP_CACHE_ENTRIES
+        <a href="classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_CACHE_ENTRIES" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Bootstrap/DotEnvVariables.php"><a href="files/src-api-bootstrap-dotenvvariables.html"><abbr title="src/API/Bootstrap/DotEnvVariables.php">DotEnvVariables.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">185</span>
+
+            <a href="classes/API-Bootstrap-DotEnvVariables.html#source-view.185" class="phpdocumentor-element-found-in__source" data-line="185" data-modal="source-view" data-src="files/src/API/Bootstrap/DotEnvVariables.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">How many entries the shared cache holds. OpenSwoole rounds it up to a
+power of two and allocates conflict slots on top, so the memory cost is
+roughly this times {@see APP_CACHE_PAYLOAD_BYTES} times two.</p>
+
+    
+    
+    
+    
+
+        
+    </article>
+                    <article
+        class="
+            phpdocumentor-element
+            -enum-case
+        "
+>
+    <h4 class="phpdocumentor-element__name" id="enumcase_APP_CACHE_PAYLOAD_BYTES">
+        APP_CACHE_PAYLOAD_BYTES
+        <a href="classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_CACHE_PAYLOAD_BYTES" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Bootstrap/DotEnvVariables.php"><a href="files/src-api-bootstrap-dotenvvariables.html"><abbr title="src/API/Bootstrap/DotEnvVariables.php">DotEnvVariables.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">192</span>
+
+            <a href="classes/API-Bootstrap-DotEnvVariables.html#source-view.192" class="phpdocumentor-element-found-in__source" data-line="192" data-modal="source-view" data-src="files/src/API/Bootstrap/DotEnvVariables.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">Width of the cache&#039;s payload column, in bytes. Fixed-width and padded, so
+it is charged on every entry whatever it holds — and a view serialising
+past it is not cached at all.</p>
+
+    
+    
+    
+    
+
+        
+    </article>
+                    <article
+        class="
+            phpdocumentor-element
+            -enum-case
+        "
+>
+    <h4 class="phpdocumentor-element__name" id="enumcase_APP_CACHE_SWEEP_INTERVAL">
+        APP_CACHE_SWEEP_INTERVAL
+        <a href="classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_CACHE_SWEEP_INTERVAL" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Bootstrap/DotEnvVariables.php"><a href="files/src-api-bootstrap-dotenvvariables.html"><abbr title="src/API/Bootstrap/DotEnvVariables.php">DotEnvVariables.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">199</span>
+
+            <a href="classes/API-Bootstrap-DotEnvVariables.html#source-view.199" class="phpdocumentor-element-found-in__source" data-line="199" data-modal="source-view" data-src="files/src/API/Bootstrap/DotEnvVariables.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">Milliseconds between two runs of the cache sweeper. Governs when memory
+comes back, never whether a stale entry can be served — reads filter on
+expiry themselves.</p>
+
+    
+    
+    
+    
+
+        
+    </article>
+                    <article
+        class="
+            phpdocumentor-element
+            -enum-case
+        "
+>
+    <h4 class="phpdocumentor-element__name" id="enumcase_APP_CACHE_HIGH_WATER">
+        APP_CACHE_HIGH_WATER
+        <a href="classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_CACHE_HIGH_WATER" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/API/Bootstrap/DotEnvVariables.php"><a href="files/src-api-bootstrap-dotenvvariables.html"><abbr title="src/API/Bootstrap/DotEnvVariables.php">DotEnvVariables.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">206</span>
+
+            <a href="classes/API-Bootstrap-DotEnvVariables.html#source-view.206" class="phpdocumentor-element-found-in__source" data-line="206" data-modal="source-view" data-src="files/src/API/Bootstrap/DotEnvVariables.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">Occupancy, between 0 and 1, at which the sweeper starts evicting entries
+that have not expired yet. `OpenSwoole\Table` has no LRU, so something has
+to make room before a write finds the table full.</p>
+
+    
+    
+    
+    
+
+        
+    </article>
             </section>
 
         
@@ -1433,6 +1593,10 @@ bytes.</p>
                                                     <li class=""><a href="classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_JWT_COOKIE_SECURE">APP_JWT_COOKIE_SECURE</a></li>
                                                     <li class=""><a href="classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_REFRESH_COOKIE_NAME">APP_REFRESH_COOKIE_NAME</a></li>
                                                     <li class=""><a href="classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_REFRESH_TTL">APP_REFRESH_TTL</a></li>
+                                                    <li class=""><a href="classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_CACHE_ENTRIES">APP_CACHE_ENTRIES</a></li>
+                                                    <li class=""><a href="classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_CACHE_PAYLOAD_BYTES">APP_CACHE_PAYLOAD_BYTES</a></li>
+                                                    <li class=""><a href="classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_CACHE_SWEEP_INTERVAL">APP_CACHE_SWEEP_INTERVAL</a></li>
+                                                    <li class=""><a href="classes/API-Bootstrap-DotEnvVariables.html#enumcase_APP_CACHE_HIGH_WATER">APP_CACHE_HIGH_WATER</a></li>
                                             </ul>
                 </li>
             

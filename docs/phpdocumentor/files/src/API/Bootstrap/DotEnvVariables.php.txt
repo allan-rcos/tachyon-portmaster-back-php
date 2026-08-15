@@ -176,4 +176,32 @@ enum DotEnvVariables: string
      * Seconds a refresh token stays valid.
      */
     case APP_REFRESH_TTL = 'APP_REFRESH_TTL';
+
+    /**
+     * How many entries the shared cache holds. OpenSwoole rounds it up to a
+     * power of two and allocates conflict slots on top, so the memory cost is
+     * roughly this times {@see APP_CACHE_PAYLOAD_BYTES} times two.
+     */
+    case APP_CACHE_ENTRIES = 'APP_CACHE_ENTRIES';
+
+    /**
+     * Width of the cache's payload column, in bytes. Fixed-width and padded, so
+     * it is charged on every entry whatever it holds — and a view serialising
+     * past it is not cached at all.
+     */
+    case APP_CACHE_PAYLOAD_BYTES = 'APP_CACHE_PAYLOAD_BYTES';
+
+    /**
+     * Milliseconds between two runs of the cache sweeper. Governs when memory
+     * comes back, never whether a stale entry can be served — reads filter on
+     * expiry themselves.
+     */
+    case APP_CACHE_SWEEP_INTERVAL = 'APP_CACHE_SWEEP_INTERVAL';
+
+    /**
+     * Occupancy, between 0 and 1, at which the sweeper starts evicting entries
+     * that have not expired yet. `OpenSwoole\Table` has no LRU, so something has
+     * to make room before a write finds the table full.
+     */
+    case APP_CACHE_HIGH_WATER = 'APP_CACHE_HIGH_WATER';
 }

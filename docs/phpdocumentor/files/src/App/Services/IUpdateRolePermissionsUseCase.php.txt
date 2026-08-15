@@ -47,7 +47,10 @@ interface IUpdateRolePermissionsUseCase
      *                                                 and the whole new slug
      *                                                 set.
      * @return Result<IRole> The updated role, or 404 when it does not exist; 422
-     *                       when a slug is refused, a 403 or 500 otherwise.
+     *                        when a slug names a permission nothing ever declared,
+     *                        naming every offending one, and the whole update is
+     *                        refused rather than partially applied; a 403 or 500
+     *                        otherwise.
      *
      * @copyright 2026 Tachyon
      *

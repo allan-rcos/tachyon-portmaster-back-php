@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace API\Bootstrap;
 
 use API\Bootstrap\Chain\ApiChain;
+use API\Bootstrap\Chain\CacheChain;
 use API\Bootstrap\Chain\DatabaseChain;
 use API\Bootstrap\Chain\DomainChain;
 use API\Bootstrap\Chain\JwtChain;
@@ -98,7 +99,8 @@ final class DotEnvStarter
         $head->then(new DomainChain())
             ->then(new DatabaseChain())
             ->then(new JwtChain())
-            ->then(new LogChain());
+            ->then(new LogChain())
+            ->then(new CacheChain());
 
         return $head;
     }

@@ -154,6 +154,10 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/infra-cache.html" class="">Cache</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/infra-config.html" class="">Config</a>
                 
             </li>
@@ -253,22 +257,23 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Config/CacheLimits.php"><a href="files/src-infra-config-cachelimits.html"><abbr title="src/Infra/Config/CacheLimits.php">CacheLimits.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 
-            <a href="classes/Infra-Config-CacheLimits.html#source-view.36" class="phpdocumentor-element-found-in__source" data-line="36" data-modal="source-view" data-src="files/src/Infra/Config/CacheLimits.php.txt"></a>
+            <a href="classes/Infra-Config-CacheLimits.html#source-view.38" class="phpdocumentor-element-found-in__source" data-line="38" data-modal="source-view" data-src="files/src/Infra/Config/CacheLimits.php.txt"></a>
     </aside>
 
-            <p class="phpdocumentor-summary">How long a cached read stays valid.</p>
+            <p class="phpdocumentor-summary">How long a cached entry stays valid, and how long a key may be.</p>
 
 
     <section class="phpdocumentor-description"><p>A namespace rather than a value object: there is nothing to construct and
-nothing to inject, and unlike <a href="classes/Infra-Config-DatabaseConfig.html"><abbr title="\Infra\Config\DatabaseConfig">DatabaseConfig</abbr></a> it reads no environment.
-The lifetime of a cache entry is a policy decision rather than a deployment
-one.</p>
-<p>The payload ceiling is deliberately <strong>not</strong> here — it belongs to
-<abbr title="\Infra\Repository\Interno\SqlViewCacheRepository">SqlViewCacheRepository</abbr>, being an artefact of
-the column that implementation writes into. Neither is the row capacity, which
-<code class="prettyprint">max_heap_table_size</code> enforces and the engine reports reaching.</p>
+nothing to inject, and unlike <a href="classes/Infra-Config-CacheConfig.html"><abbr title="\Infra\Config\CacheConfig">CacheConfig</abbr></a> it reads no environment. What
+lives here is policy — a decision about correctness — while how much RAM the
+cache may take and how often it is swept is deployment, and lives there.</p>
+<p>The TTLs here are <strong>defaults</strong>, applied by whichever
+<a href="classes/Infra-Cache-CacheProcessDatabaseConfig.html"><abbr title="\Infra\Cache\CacheProcessDatabaseConfig">CacheProcessDatabaseConfig</abbr></a> names them. A single write can
+still override its own through
+<a href="classes/Infra-Cache-CacheProcessEntryConfig.html#property_ttlSeconds"><abbr title="\Infra\Cache\CacheProcessEntryConfig::$ttlSeconds">CacheProcessEntryConfig::$ttlSeconds</abbr></a>, which is what markers
+do.</p>
 </section>
 
 
@@ -282,8 +287,14 @@ the column that implementation writes into. Neither is the row capacity, which
                 <span class="phpdocumentor-tag__name">see</span>
             </dt>
                             <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Infra-Repository-IViewCacheRepository.html"><abbr title="\Infra\Repository\IViewCacheRepository">IViewCacheRepository</abbr></a></span>
-                                                                    <section class="phpdocumentor-description"><p>What applies this.</p>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Infra-Cache-ICacheProcessDatabase.html"><abbr title="\Infra\Cache\ICacheProcessDatabase">ICacheProcessDatabase</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>What applies these.</p>
+</section>
+
+                                    </dd>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Infra-Config-CacheConfig.html"><abbr title="\Infra\Config\CacheConfig">CacheConfig</abbr></a></span>
+                                                                    <section class="phpdocumentor-description"><p>The deployment half.</p>
 </section>
 
                                     </dd>
@@ -326,7 +337,25 @@ the column that implementation writes into. Neither is the row capacity, which
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a class="" href="classes/Infra-Config-CacheLimits.html#constant_TTL_SECONDS">TTL_SECONDS</a>
+    <a class="" href="classes/Infra-Config-CacheLimits.html#constant_LOGICAL_KEY_MAX_BYTES">LOGICAL_KEY_MAX_BYTES</a>
+    <span>
+        &nbsp;: int&nbsp;= 191                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Infra-Config-CacheLimits.html#constant_MARKER_TTL_SECONDS">MARKER_TTL_SECONDS</a>
+    <span>
+        &nbsp;: int&nbsp;= 1209600                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Infra-Config-CacheLimits.html#constant_TTL_FOREVER">TTL_FOREVER</a>
+    <span>
+        &nbsp;: int&nbsp;= 0                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Infra-Config-CacheLimits.html#constant_VIEW_TTL_SECONDS">VIEW_TTL_SECONDS</a>
     <span>
         &nbsp;: int&nbsp;= 30                            </span>
 </dt>
@@ -346,18 +375,18 @@ the column that implementation writes into. Neither is the row capacity, which
 
         </h3>
                     <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_TTL_SECONDS">
-        TTL_SECONDS
-        <a href="classes/Infra-Config-CacheLimits.html#constant_TTL_SECONDS" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="constant_LOGICAL_KEY_MAX_BYTES">
+        LOGICAL_KEY_MAX_BYTES
+        <a href="classes/Infra-Config-CacheLimits.html#constant_LOGICAL_KEY_MAX_BYTES" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Config/CacheLimits.php"><a href="files/src-infra-config-cachelimits.html"><abbr title="src/Infra/Config/CacheLimits.php">CacheLimits.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">53</span>
+    <span class="phpdocumentor-element-found-in__line">102</span>
 
-            <a href="classes/Infra-Config-CacheLimits.html#source-view.53" class="phpdocumentor-element-found-in__source" data-line="53" data-modal="source-view" data-src="files/src/Infra/Config/CacheLimits.php.txt"></a>
+            <a href="classes/Infra-Config-CacheLimits.html#source-view.102" class="phpdocumentor-element-found-in__source" data-line="102" data-modal="source-view" data-src="files/src/Infra/Config/CacheLimits.php.txt"></a>
     </aside>
 
     
@@ -365,21 +394,147 @@ the column that implementation writes into. Neither is the row capacity, which
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">int</span>
-    <span class="phpdocumentor-signature__name">TTL_SECONDS</span>
+    <span class="phpdocumentor-signature__name">LOGICAL_KEY_MAX_BYTES</span>
+    = <span class="phpdocumentor-signature__default-value">191</span>
+</code>
+
+
+    
+        <section class="phpdocumentor-description"><p>Longest logical key that gets stored, in bytes.</p>
+<p>Keys are short by construction — a listing's filters and its cursor
+position — but a caller is free to send a search term of any length, and
+that term is part of the query's identity and therefore part of the key.
+Truncating it would make two different searches share an entry, so an
+over-long key means the query is not cached instead. That is also what
+keeps a <code class="prettyprint">?limit=100000</code> from occupying an entry it would never be read
+from again.</p>
+<p>It is not the <code class="prettyprint">OpenSwoole\Table</code> key limit, which is 63 bytes and is dealt
+with by hashing — see
+<abbr title="\Infra\Cache\Interno\TableCacheProcessDatabase">TableCacheProcessDatabase</abbr>. This is the width of
+the column the <em>logical</em> key is kept in so that a prefix clean can match
+against it.</p>
+</section>
+
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_MARKER_TTL_SECONDS">
+        MARKER_TTL_SECONDS
+        <a href="classes/Infra-Config-CacheLimits.html#constant_MARKER_TTL_SECONDS" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Config/CacheLimits.php"><a href="files/src-infra-config-cachelimits.html"><abbr title="src/Infra/Config/CacheLimits.php">CacheLimits.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">72</span>
+
+            <a href="classes/Infra-Config-CacheLimits.html#source-view.72" class="phpdocumentor-element-found-in__source" data-line="72" data-modal="source-view" data-src="files/src/Infra/Config/CacheLimits.php.txt"></a>
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">MARKER_TTL_SECONDS</span>
+    = <span class="phpdocumentor-signature__default-value">1209600</span>
+</code>
+
+
+    
+        <section class="phpdocumentor-description"><p>Fallback lifetime for a marker that does not state its own.</p>
+<p>Markers are the one family whose lifetime belongs to the caller rather
+than to this file: a refresh-token marker has to outlive exactly the token
+it tracks, and the next marker written will have some other reason to
+expire when it does. <a href="classes/Infra-Repository-IMarkerRepository.html#method_set"><abbr title="\Infra\Repository\IMarkerRepository::set()">IMarkerRepository::set()</abbr></a>
+therefore takes the TTL as an argument and passes it through, and this
+constant only covers a write that names none.</p>
+<p>Fourteen days, matching the <code class="prettyprint">APP_REFRESH_TTL</code> default, so the fallback errs
+towards keeping a revocation rather than forgetting one. Nothing reaches
+it today — the one caller always states its own — and that is the point of
+it being generous rather than tight.</p>
+</section>
+
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TTL_FOREVER">
+        TTL_FOREVER
+        <a href="classes/Infra-Config-CacheLimits.html#constant_TTL_FOREVER" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Config/CacheLimits.php"><a href="files/src-infra-config-cachelimits.html"><abbr title="src/Infra/Config/CacheLimits.php">CacheLimits.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">83</span>
+
+            <a href="classes/Infra-Config-CacheLimits.html#source-view.83" class="phpdocumentor-element-found-in__source" data-line="83" data-modal="source-view" data-src="files/src/Infra/Config/CacheLimits.php.txt"></a>
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">TTL_FOREVER</span>
+    = <span class="phpdocumentor-signature__default-value">0</span>
+</code>
+
+
+    
+        <section class="phpdocumentor-description"><p>Never-expires sentinel, for a database whose entries are the
+catalogue itself.</p>
+<p>The permission and marker-group registries are filled from code at
+<code class="prettyprint">WorkerStart</code> and are correct for as long as the process lives; expiring
+them would mean a worker forgetting what it is allowed to do. The sweeper
+skips any entry carrying this.</p>
+</section>
+
+    
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_VIEW_TTL_SECONDS">
+        VIEW_TTL_SECONDS
+        <a href="classes/Infra-Config-CacheLimits.html#constant_VIEW_TTL_SECONDS" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Infra/Config/CacheLimits.php"><a href="files/src-infra-config-cachelimits.html"><abbr title="src/Infra/Config/CacheLimits.php">CacheLimits.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">55</span>
+
+            <a href="classes/Infra-Config-CacheLimits.html#source-view.55" class="phpdocumentor-element-found-in__source" data-line="55" data-modal="source-view" data-src="files/src/Infra/Config/CacheLimits.php.txt"></a>
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">VIEW_TTL_SECONDS</span>
     = <span class="phpdocumentor-signature__default-value">30</span>
 </code>
 
 
     
-        <section class="phpdocumentor-description"><p>How long a cached query result keeps being served, in seconds.</p>
-<p>Short on purpose. The cache here absorbs bursts of repeated reads; it does
-not stand in for the database. Every write invalidates the group it
-touched, so the window in which stale data can be served is the gap
-between two reads of an untouched group, not this TTL.</p>
+        <section class="phpdocumentor-description"><p>A cached query result keeps being served for this many seconds.</p>
+<p>Short on purpose. The cache absorbs bursts of repeated reads; it does not
+stand in for the database. Every write invalidates the group it touched,
+so the window in which stale data can be served is the gap between two
+reads of an untouched group, not this TTL.</p>
 <p>It is also the only thing bounding staleness <em>across</em> groups, which is
 where the number earns being this low: a container write drops the
-<code class="prettyprint">container</code> group and deliberately leaves <code class="prettyprint">metrics</code> alone, so the
-occupancy panel is behind by at most this long. See
+<code class="prettyprint">container</code> group and deliberately leaves <code class="prettyprint">metrics</code> alone, so the occupancy
+panel is behind by at most this long. See
 <a href="classes/Infra-Repository-ViewCacheGroup.html"><abbr title="\Infra\Repository\ViewCacheGroup">ViewCacheGroup</abbr></a> for why one write never reaches
 into another group.</p>
 </section>
@@ -504,7 +659,10 @@ into another group.</p>
                             <li class="phpdocumentor-on-this-page-section__title">Constants</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Infra-Config-CacheLimits.html#constant_TTL_SECONDS">TTL_SECONDS</a></li>
+                                                    <li class=""><a href="classes/Infra-Config-CacheLimits.html#constant_LOGICAL_KEY_MAX_BYTES">LOGICAL_KEY_MAX_BYTES</a></li>
+                                                    <li class=""><a href="classes/Infra-Config-CacheLimits.html#constant_MARKER_TTL_SECONDS">MARKER_TTL_SECONDS</a></li>
+                                                    <li class=""><a href="classes/Infra-Config-CacheLimits.html#constant_TTL_FOREVER">TTL_FOREVER</a></li>
+                                                    <li class=""><a href="classes/Infra-Config-CacheLimits.html#constant_VIEW_TTL_SECONDS">VIEW_TTL_SECONDS</a></li>
                                             </ul>
                 </li>
             

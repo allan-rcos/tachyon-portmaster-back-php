@@ -154,6 +154,10 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
+                <a href="namespaces/infra-cache.html" class="">Cache</a>
+                
+            </li>
+                    <li>
                 <a href="namespaces/infra-config.html" class="">Config</a>
                 
             </li>
@@ -250,9 +254,9 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/App/AppRegister.php"><a href="files/src-app-appregister.html"><abbr title="src/App/AppRegister.php">AppRegister.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
-            <a href="classes/App-AppRegister.html#source-view.41" class="phpdocumentor-element-found-in__source" data-line="41" data-modal="source-view" data-src="files/src/App/AppRegister.php.txt"></a>
+            <a href="classes/App-AppRegister.html#source-view.42" class="phpdocumentor-element-found-in__source" data-line="42" data-modal="source-view" data-src="files/src/App/AppRegister.php.txt"></a>
     </aside>
 
             <p class="phpdocumentor-summary">Composition entry point for the application layer.</p>
@@ -369,16 +373,16 @@ delegates here.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/App/AppRegister.php"><a href="files/src-app-appregister.html"><abbr title="src/App/AppRegister.php">AppRegister.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">70</span>
 
-            <a href="classes/App-AppRegister.html#source-view.63" class="phpdocumentor-element-found-in__source" data-line="63" data-modal="source-view" data-src="files/src/App/AppRegister.php.txt"></a>
+            <a href="classes/App-AppRegister.html#source-view.70" class="phpdocumentor-element-found-in__source" data-line="70" data-modal="source-view" data-src="files/src/App/AppRegister.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">Composes all three layers and hands back the application&#039;s façade.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">execute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Domain-Config-DomainConfig.html"><abbr title="\Domain\Config\DomainConfig">DomainConfig</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$domain</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Infra-Config-DatabaseConfig.html"><abbr title="\Infra\Config\DatabaseConfig">DatabaseConfig</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$database</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Infra-Config-LogConfig.html"><abbr title="\Infra\Config\LogConfig">LogConfig</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$log</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$serverId</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/App-IAppProvider.html"><abbr title="\App\IAppProvider">IAppProvider</abbr></a></span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">execute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type"><a href="classes/Domain-Config-DomainConfig.html"><abbr title="\Domain\Config\DomainConfig">DomainConfig</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$domain</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Infra-Config-DatabaseConfig.html"><abbr title="\Infra\Config\DatabaseConfig">DatabaseConfig</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$database</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Infra-Config-LogConfig.html"><abbr title="\Infra\Config\LogConfig">LogConfig</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$log</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$serverId</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type"><a href="classes/Infra-IOpenSwooleExtensionProvider.html"><abbr title="\Infra\IOpenSwooleExtensionProvider">IOpenSwooleExtensionProvider</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$extension</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/App-IAppProvider.html"><abbr title="\App\IAppProvider">IAppProvider</abbr></a></span></code>
 
     <div class="phpdocumentor-label-line">
             <div class="phpdocumentor-label phpdocumentor-label--success"><span>API</span><span>Yes</span></div>
@@ -427,6 +431,20 @@ the database is reachable.</p>
                     <section class="phpdocumentor-description"><p>Identifies this server within the Snowflake id
 scheme; two servers sharing one would mint
 colliding ids.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$extension</span>
+                : <span class="phpdocumentor-argument-list__argument__type"><a href="classes/Infra-IOpenSwooleExtensionProvider.html"><abbr title="\Infra\IOpenSwooleExtensionProvider">IOpenSwooleExtensionProvider</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The server's shared,
+pre-fork resources. Passed
+straight through — nothing
+in this layer reads it, and
+<abbr title="\Infra\Interno\InfraProvider">InfraProvider</abbr>
+is what consumes it.</p>
 </section>
 
             </dd>
